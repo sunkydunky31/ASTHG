@@ -6,14 +6,14 @@ It haves code parts from [Psych Engine](https://github.com/ShadowMario/FNF-Psych
 Call me on Discord if you want to talk with me (@sunkydunky31)
 
 # Plans
-[  ] Improve Mods menu
-[  ] Make editors in Game
-[  ] Insert Modding docs
-[  ] Fix characters physics
-[  ] Add more moddable resources
-[  ] Add mods functionallities
-[  ] Fix Title Screen
-[  ] Fix Settings Menu
+- [ ] Improve Mods menu
+- [ ] Make editors in Game
+- [ ] Insert Modding docs
+- [ ] Fix characters physics
+- [ ] Add more moddable resources
+- [ ] Add mods functionallities
+- [ ] Fix Title Screen
+- [ ] Fix Settings Menu
 
 # Compiling resources
 - This repo (lol)
