@@ -33,3 +33,5 @@ Modding is possible, but stil an test feature!
 * Executable 8x8 icon: SEGA from Sonic Pocket Adventure
 * "Mania.ttf" Font: SEGA from Sonic Mania (ttf file made by me)
 * Game Over font: [LoganMax0328](https://www.spriters-resource.com/profile/loganmax0328/) from [The Sprites Resource](https://www.spriters-resource.com/custom_edited/sonicthehedgehogcustoms/asset/222029/)
+* Game music and sounds: SEGA from Sonic Mania
+* Checkbox Sprite: ShadowMario from [PsychEngine](https://github.com/ShadowMario/FNF-PsychEngine/)
