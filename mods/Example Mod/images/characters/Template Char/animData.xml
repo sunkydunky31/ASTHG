@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animationData>
+
+	<!--
+		A little explanation of how this works
+		Every node in `animationData` need to have this infos (? are optional):
+		`name, id, ?fps, ?loopStart, ?rotate`
+		
+		name: Display name of the animation;
+		id: Identifier, MUST MATCH IN JSON DATA, used the same for all characters, be careful!;
+		fps: Velocity to play this animation, 0 becomes a static one
+        I recommend you use RSDK Animation Editor to set this;
+		loopStart: Where this animation should play again in loop after start
+		rotated: This is used for rotating in stages, like loops, PAY ATTENTION AT THIS!
+
+		rotated flags:
+		0: No rotation;
+		1: 45° rotated;
+		2: 120° rotated;
+		3: Full rotation (uses all ground angles);
+
+		after `animation` node, you will create another one called `frame`
+		it will be used in frame count for animations
+
+		`frame` infos (? are optional)
+		`x, y, width, height, ?centerX, ?centerY`
+
+		x: Left corner position of this frame;
+		y: Top corner position of this frame;
+		width: Width of this frame;
+		height: Height of this frame;
+		centerX: X offset of this frame
+		centerY: Y offset of this frame
+	-->
+
+    <!-- Base -->
+    <animation name="" id="" fps="" loopStart="" rotate=""/>
+        <frame x="" y="" width="" height="" centerX="" centerY=""/> <!-- Duplicate this if you want another frame -->
+    </animation>
+</animationData>

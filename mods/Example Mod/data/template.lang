@@ -1,0 +1,97 @@
+Language Name
+
+// This is a language file!
+// It manages translatable files and texts
+// First of all, the first line is ALWAYS the language name
+// any translatable phrase must follow this rule:
+// `key: "Your phrase"`
+// Note that the key rules isn't applied to images and resources files
+// Each line must be in LOWERCASE, without spaces and no comment lines
+// Good luck! -- @Sunkydev
+// Remove this info if you wanna do it
+
+// Main Menu
+mainmenu_title:			""
+mainmenu_save_select:	""
+mainmenu_time_attack:	""
+mainmenu_options:		""
+mainmenu_exit:			""
+
+// Mods Menu
+mods_title:	""
+
+// Gameplay
+hud_text:	""
+game_over:	""
+time_over:	""
+
+// Title Card ({1}: Current act number)
+zone:	""
+act:	"{1}"
+
+// Controls
+flxgamepad_ps_a:	""
+flxgamepad_ps_b:	""
+flxgamepad_ps_x:	""
+flxgamepad_ps_y:	""
+
+// Options Menu
+options_title:		""
+options_controls:	""
+options_graphics:	""
+options_gameplay:	""
+options_language:	""
+
+// Controls Menu
+
+// {1}: Delete key, {2}: Escape key
+keybind_change:			"{1}{2}"
+keybind_change_gamepad:	"{1}{2}"
+
+// {1}: Change tab key
+keybind_tab:			"{1}"
+keybind_keyboard:		""
+keybind_gamepad:		""
+
+// {1}: Current key to rebind
+controls_rebinding:		"{1}"
+controls_rebinding2:	""
+
+key_up:		""
+key_down:	""
+key_left:	""
+key_right:	""
+
+key_accept:		""
+key_back:		""
+key_jump:		""
+key_pause:		""
+key_auxiliar:	""
+
+key_volume_up:		""
+key_volume_down:	""
+key_volume_mute:	""
+
+// Settings - Graphics
+settings_hdfonts:	""
+
+// Settings - Gameplay
+setting_haptics:		""
+description_haptics:	""
+
+// Pause
+pause_title:		""
+pause_resume:		""
+pause_restart:		""
+pause_exit_to_menu:	""
+
+
+// Discord
+discordrpc_main_menu:		""
+discordrpc_save_select:		""
+discordrpc_options:			""
+discordrpc_options-main:	""
+discordrpc_playing:			""
+
+// {1}: Player name
+discordrpc_playing-player:	"{1}"

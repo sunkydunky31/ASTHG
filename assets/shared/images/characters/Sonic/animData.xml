@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animationData>
+	<animation name="Stopped"	id="0">
+		<frame x="0"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
+	</animation>
+	
+	<animation name="Waiting"	id="1"	fps="40"	loop="true"	loopStart="6">
+		<frame x="138"	y="2"	width="29"	height="39"	centerX="-15"	centerY="-19"/>
+		<frame x="138"	y="2"	width="29"	height="39"	centerX="-15"	centerY="-19"/>
+		<frame x="167"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="167"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="167"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="167"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
+	</animation>
+
+	<animation name="Bored!"	id="2"	fps="40"	loop="true"	loopStart="2">
+		<frame x="193"	y="42"	width="32"	height="32"	centerX="-11"	centerY="-12"/>
+		<frame x="193"	y="42"	width="32"	height="32"	centerX="-11"	centerY="-12"/>
+		<frame x="215"	y="82"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
+		<frame x="215"	y="82"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
+		<frame x="215"	y="82"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
+		<frame x="215"	y="107"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
+		<frame x="215"	y="107"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
+		<frame x="215"	y="107"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
+	</animation>
+
+	<animation name="Looking Up"	id="3"	fps="60">
+		<frame x="0"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
+		<frame x="28"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
+		<frame x="56"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
+	</animation>
+
+	<animation name="Looking Down"	id="4"	fps="60">
+		<frame x="0"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
+		<frame x="84"	y="1"	width="25"	height="40"	centerX="-11"	centerY="-20"/>
+		<frame x="109"	y="1"	width="29"	height="40"	centerX="-12"	centerY="-20"/>
+	</animation>
+
+	<animation name="Walking"	id="5"	fps="80" loop="true">
+		<frame x="1"	y="42"	width="26"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="28"	y="42"	width="29"	height="40"	centerX="-16"	centerY="-20"/>
+		<frame x="58"	y="42"	width="39"	height="40"	centerX="-20"	centerY="-21"/>
+		<frame x="98"	y="42"	width="39"	height="40"	centerX="-20"	centerY="-20"/>
+		<frame x="138"	y="42"	width="26"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="165"	y="42"	width="28"	height="40"	centerX="-15"	centerY="-20"/>
+		<frame x="1"	y="83"	width="40"	height="39"	centerX="-21"	centerY="-21"/>
+		<frame x="42"	y="83"	width="39"	height="39"	centerX="-20"	centerY="-20"/>
+	</animation>
+
+	<animation name="Running"	id="6"	fps="80" loop="true">
+		<frame x="82"	y="83"	width="32"	height="36"	centerX="-16"	centerY="-16"/>
+		<frame x="115"	y="83"	width="32"	height="36"	centerX="-16"	centerY="-16"/>
+		<frame x="148"	y="83"	width="31"	height="36"	centerX="-15"	centerY="-16"/>
+		<frame x="180"	y="83"	width="32"	height="36"	centerX="-16"	centerY="-16"/>
+	</animation>
+
+	<animation name="Skidding"	id="7"	fps="40"	loop="true"	loopStart="3">
+		<frame x="257"	y="1"	width="38"	height="39"	centerX="-18"	centerY="-19"/>
+		<frame x="296"	y="1"	width="38"	height="39"	centerX="-18"	centerY="-19"/>
+		<frame x="335"	y="1"	width="37"	height="39"	centerX="-17"	centerY="-19"/>
+		<frame x="486"	y="167"	width="26"	height="39"	centerX="-11"	centerY="-19"/>
+	</animation>
+
+	<animation name="Super Peel Out"	id="8"	fps="128" loop="true">
+		<frame x="68"	y="125"	width="40"	height="32"	centerX="-20"	centerY="-12"/>
+		<frame x="109"	y="125"	width="40"	height="32"	centerX="-20"	centerY="-12"/>
+		<frame x="150"	y="125"	width="40"	height="32"	centerX="-20"	centerY="-12"/>
+		<frame x="191"	y="125"	width="40"	height="32"	centerX="-20"	centerY="-12"/>
+	</animation>
+
+	<animation name="Spin Dash"	id="9"	fps="240" loop="true">
+		<frame x="1"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
+		<frame x="32"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
+		<frame x="1"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
+		<frame x="63"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
+		<frame x="1"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
+		<frame x="94"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
+		<frame x="1"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
+		<frame x="125"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
+		<frame x="1"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
+		<frame x="0"	y="184"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
+	</animation>
+
+	<animation name="Jumping"	id="10"	fps="240"	loop="true">
+		<frame x="34"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="1"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="67"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="1"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="100"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="1"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="133"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="1"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+	</animation>
+
+	<animation name="Bouncing"	id="11"	fps="60">
+		<frame x="154"	y="202"	width="24"	height="45"	centerX="-12"	centerY="-23"/>
+	</animation>
+
+	<animation name="Hurt"	id="12">
+		<frame x="215"	y="174"	width="40"	height="28"	centerX="-20"	centerY="-15"/>
+	</animation>
+
+	<animation name="Dying"	id="13">
+		<frame x="180"	y="198"	width="34"	height="43"	centerX="-17"	centerY="-22"/>
+	</animation>
+
+	<animation name="Drowning"	id="14">
+		<frame x="180"	y="157"	width="34"	height="40"	centerX="-17"	centerY="-19"/>
+	</animation>
+
+	<animation name="Fan Rotate"	id="15"	fps="30"	loop="true">
+		<frame x="165"	y="90"	width="45"	height="22"	centerX="-17"	centerY="-11"/>
+		<frame x="211"	y="90"	width="44"	height="22"	centerX="-22"	centerY="-11"/>
+		<frame x="170"	y="113"	width="45"	height="22"	centerX="-28"	centerY="-11"/>
+		<frame x="216"	y="113"	width="39"	height="23"	centerX="-25"	centerY="-11"/>
+		<frame x="216"	y="137"	width="39"	height="23"	centerX="-14"	centerY="-11"/>
+	</animation>
+
+	<animation name="Breathing"	id="16">
+		<frame x="175"	y="119"	width="39"	height="38"	centerX="-20"	centerY="-19"/>
+	</animation>
+
+	<animation name="Pushing"	id="17"	fps="9"	loop="true">
+		<frame x="31"	y="184"	width="29"	height="37"	centerX="-19"	centerY="-17"/>
+		<frame x="61"	y="184"	width="24"	height="37"	centerX="-14"	centerY="-17"/>
+		<frame x="86"	y="184"	width="28"	height="37"	centerX="-18"	centerY="-17"/>
+		<frame x="115"	y="184"	width="24"	height="37"	centerX="-14"	centerY="-17"/>
+	</animation>
+
+	<animation name="Flailing 1"	id="18"	fps="24"	loop="true">
+		<frame	 x="1"	y="169"	width="32"	height="37"	centerX="-16"	centerY="-17"/>
+		<frame x="33"	y="169"	width="35"	height="37"	centerX="-18"	centerY="-17"/>
+		<frame x="69"	y="169"	width="34"	height="37"	centerX="-17"	centerY="-17"/>
+		<frame x="33"	y="169"	width="35"	height="37"	centerX="-18"	centerY="-17"/>
+	</animation>
+
+	<animation name="Flailing 2"	id="19"	fps="12"	loop="true">
+		<frame x="131"	y="130"	width="32"	height="38"	centerX="-12"	centerY="-18"/>
+		<frame x="135"	y="168"	width="32"	height="38"	centerX="-12"	centerY="-18"/>
+	</animation>
+
+	<animation name="Flailing 3"	id="20"	fps="60"	loop="true">
+		<frame x="1"	y="131"	width="32"	height="37"	centerX="-16"	centerY="-17"/>
+		<frame x="34"	y="131"	width="29"	height="37"	centerX="-13"	centerY="-17"/>
+		<frame x="64"	y="131"	width="29"	height="37"	centerX="-13"	centerY="-17"/>
+		<frame x="94"	y="131"	width="36"	height="37"	centerX="-13"	centerY="-17"/>
+	</animation>
+
+	<animation name="Hanging"	id="21"	fps="11"	loop="true">
+		<frame x="1"	y="1"	width="37"	height="40"	centerX="-15"	centerY="-23"/>
+		<frame x="39"	y="1"	width="40"	height="40"	centerX="-15"	centerY="-23"/>
+	</animation>
+
+	<animation name="Grabbed"	id="22"	fps="30"	loop="true">
+		<frame x="165"	y="90"	width="45"	height="22"	centerX="-16"	centerY="-12"/>
+		<frame x="98"	y="222"	width="45"	height="23"	centerX="-16"	centerY="-12"/>
+	</animation>
+
+	<animation name="Clinging On"	id="23"	fps="45">
+		<frame x="1"	y="222"	width="48"	height="26"	centerX="-24"	centerY="-16"/>
+		<frame x="50"	y="222"	width="47"	height="26"	centerX="-24"	centerY="-16"/>
+	</animation>
+
+	<animation name="Twirl H"	id="24"	fps="40"	loop="true"	rotate="2">
+		<frame x="1"	y="207"	width="27"	height="37"	centerX="-14"	centerY="-17"/>
+		<frame x="29"	y="207"	width="29"	height="34"	centerX="-14"	centerY="-14"/>
+		<frame x="59"	y="207"	width="28"	height="26"	centerX="-13"	centerY="-14"/>
+		<frame x="88"	y="207"	width="28"	height="32"	centerX="-14"	centerY="-15"/>
+		<frame x="116"	y="207"	width="27"	height="29"	centerX="-12"	centerY="-10"/>
+		<frame x="143"	y="207"	width="30"	height="35"	centerX="-14"	centerY="-15"/>
+		<frame x="173"	y="207"	width="32"	height="36"	centerX="-15"	centerY="-16"/>
+		<frame x="205"	y="207"	width="27"	height="36"	centerX="-14"	centerY="-17"/>
+		<frame x="168"	y="174"	width="31"	height="33"	centerX="-14"	centerY="-16"/>
+		<frame x="200"	y="174"	width="29"	height="33"	centerX="-14"	centerY="-14"/>
+		<frame x="168"	y="140"	width="28"	height="33"	centerX="-13"	centerY="-15"/>
+		<frame x="117"	y="1"	width="29"	height="35"	centerX="-11"	centerY="-18"/>
+		<frame x="1"	y="207"	width="27"	height="37"	centerX="-14"	centerY="-17"/>
+		<frame x="29"	y="207"	width="29"	height="34"	centerX="-14"	centerY="-14"/>
+		<frame x="59"	y="207"	width="28"	height="26"	centerX="-13"	centerY="-14"/>
+		<frame x="88"	y="207"	width="28"	height="32"	centerX="-14"	centerY="-15"/>
+		<frame x="116"	y="207"	width="27"	height="29"	centerX="-12"	centerY="-10"/>
+		<frame x="143"	y="207"	width="30"	height="35"	centerX="-14"	centerY="-15"/>
+		<frame x="173"	y="207"	width="32"	height="36"	centerX="-15"	centerY="-16"/>
+		<frame x="205"	y="207"	width="27"	height="36"	centerX="-14"	centerY="-17"/>
+		<frame x="168"	y="174"	width="31"	height="33"	centerX="-14"	centerY="-16"/>
+		<frame x="200"	y="174"	width="29"	height="33"	centerX="-14"	centerY="-14"/>
+		<frame x="168"	y="140"	width="28"	height="33"	centerX="-13"	centerY="-15"/>
+		<frame x="117"	y="1"	width="29"	height="35"	centerX="-11"	centerY="-15"/>
+		<frame x="1"	y="207"	width="27"	height="37"	centerX="-14"	centerY="-17"/>
+	</animation>
+
+	<animation name="Twirl V"	id="25"	fps="60"	loop="true"	loopStart="1">
+		<frame x="104"	y="169"	width="30"	height="37"	centerX="-9"	centerY="-17"/>
+		<frame x="104"	y="169"	width="30"	height="37"	centerX="-9"	centerY="-17"/>
+	</animation>
+
+	<animation name="Water Slide"	id="26"	fps="30"	loop="true">
+		<frame x="215"	y="174"	width="40"	height="28"	centerX="-20"	centerY="-15"/>
+		<frame x="216"	y="203"	width="39"	height="27"	centerX="-20"	centerY="-15"/>
+	</animation>
+
+	<animation name="Continue"	id="27"	fps="40"	loop="true">
+		<frame x="215"	y="82"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
+		<frame x="215"	y="82"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
+		<frame x="215"	y="82"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
+		<frame x="215"	y="107"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
+		<frame x="215"	y="107"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
+		<frame x="215"	y="107"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
+	</animation>
+
+	<animation name="Continue Up"	id="28"	fps="60"	loop="true"	loopStart="1">
+		<frame x="224"	y="133"	width="31"	height="40"	centerX="-19"	centerY="-20"/>
+		<frame x="0"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
+		<frame x="0"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
+	</animation>
+
+	<animation name="Super Transform"	id="29"	fps="80"	loop="true"	loopStart="5">
+		<frame x="80"	y="1"	width="25"	height="32"	centerX="-14"	centerY="-16"/>
+		<frame x="80"	y="1"	width="25"	height="32"	centerX="-14"	centerY="-16"/>
+		<frame x="105"	y="1"	width="30"	height="44"	centerX="-16"	centerY="-23"/>
+		<frame x="105"	y="1"	width="30"	height="44"	centerX="-16"	centerY="-23"/>
+		<frame x="135"	y="1"	width="28"	height="47"	centerX="-14"	centerY="-24"/>
+		<frame x="164"	y="1"	width="28"	height="48"	centerX="-14"	centerY="-25"/>
+		<frame x="193"	y="1"	width="28"	height="47"	centerX="-14"	centerY="-24"/>
+	</animation>
+
+	<animation name="CD Twirl"	id="30"	fps="60"	loop="true">
+		<frame x="1"	y="1"	width="20"	height="44"	centerX="-11"	centerY="-22"/>
+		<frame x="22"	y="47"	width="29"	height="44"	centerX="-14"	centerY="-22"/>
+		<frame x="1"	y="47"	width="20"	height="44"	centerX="-8"	centerY="-22"/>
+		<frame x="48"	y="1"	width="25"	height="44"	centerX="-13"	centerY="-22"/>
+		<frame x="22"	y="1"	width="25"	height="44"	centerX="-11"	centerY="-22"/>
+	</animation>
+
+	<animation name="Sonic 2 Peelout"	id="31"	fps="128"	loop="true"	loopStart="1">
+		<frame x="68"	y="159"	width="40"	height="33"	centerX="-16"	centerY="-13"/>
+		<frame x="109"	y="158"	width="40"	height="34"	centerX="-16"	centerY="-14"/>
+		<frame x="151"	y="159"	width="39"	height="33"	centerX="-15"	centerY="-13"/>
+		<frame x="191"	y="158"	width="40"	height="34"	centerX="-16"	centerY="-14"/>
+	</animation>
+
+	<animation name="Mania Peelout"	id="32"	fps="128">
+		<frame x="68"	y="193"	width="38"	height="33"	centerX="-18"	centerY="-13"/>
+		<frame x="107"	y="194"	width="38"	height="32"	centerX="-18"	centerY="-12"/>
+		<frame x="146"	y="193"	width="38"	height="33"	centerX="-18"	centerY="-13"/>
+		<frame x="185"	y="194"	width="38"	height="32"	centerX="-18"	centerY="-12"/>
+	</animation>
+
+	<animation name="Hang Move"	id="33">
+		<frame x="29"	y="41"	width="32"	height="48"	centerX="-16"	centerY="-23"/>
+		<frame x="1"	y="41"	width="27"	height="50"	centerX="-13"	centerY="-23"/>
+		<frame x="62"	y="41"	width="32"	height="48"	centerX="-16"	centerY="-23"/>
+		<frame x="1"	y="41"	width="27"	height="50"	centerX="-13"	centerY="-23"/>
+	</animation>
+
+	<!-- Customs -->
+
+	<animation name="Beta Dash 0"	id="34"	fps="80">
+		<frame x="82"	y="83"	width="32"	height="36"	centerX="-16"	centerY="-16"/>
+		<frame x="115"	y="83"	width="32"	height="36"	centerX="-16"	centerY="-16"/>
+		<frame x="148"	y="83"	width="31"	height="36"	centerX="-15"	centerY="-16"/>
+		<frame x="180"	y="83"	width="32"	height="36"	centerX="-16"	centerY="-16"/>
+	</animation>
+
+	<animation name="Beta Dash 1"	id="35"	fps="128">
+		<frame x="1"	y="93"	width="36"	height="34"	centerX="-16"	centerY="-14"/>
+		<frame x="38"	y="92"	width="36"	height="35"	centerX="-16"	centerY="-15"/>
+		<frame x="75"	y="93"	width="35"	height="34"	centerX="-15"	centerY="-14"/>
+		<frame x="111"	y="92"	width="36"	height="35"	centerX="-16"	centerY="-15"/>
+	</animation>
+
+	<animation name="Drop Dash"	id="36"	fps="240"	loop="true">
+		<frame x="95"	y="26"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="128"	y="26"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="161"	y="26"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="194"	y="26"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="95"	y="26"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="128"	y="59"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="161"	y="26"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="194"	y="59"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+	</animation>
+</animationData>
