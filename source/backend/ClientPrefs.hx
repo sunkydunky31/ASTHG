@@ -3,7 +3,7 @@ package backend;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
 import flixel.util.FlxSave;
-import states.TitleState;
+import states.Init;
 
 // Add a variable here and it will get automatically saved
 @:structInit class SaveVariables {
@@ -42,8 +42,8 @@ class ClientPrefs {
 		'accept'		=> [A],
 		'back'			=> [S],
 		'jump'			=> [D],
-		'pause'			=> [ENTER],
 		'auxiliar'		=> [W],
+		'pause'			=> [ENTER],
 		
 		'volume_mute'	=> [NUMPADZERO],
 		'volume_up'		=> [NUMPADPLUS],
@@ -61,6 +61,7 @@ class ClientPrefs {
 		'auxiliar'		=> [Y],
 		'pause'			=> [START],
 	];
+
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 	public static var defaultButtons:Map<String, Array<FlxGamepadInputID>> = null;
 
@@ -182,15 +183,15 @@ class ClientPrefs {
 	}
 	public static function reloadVolumeKeys()
 	{
-		TitleState.muteKeys = keyBinds.get('volume_mute').copy();
-		TitleState.volumeDownKeys = keyBinds.get('volume_down').copy();
-		TitleState.volumeUpKeys = keyBinds.get('volume_up').copy();
+		Init.muteKeys = keyBinds.get('volume_mute').copy();
+		Init.volumeDownKeys = keyBinds.get('volume_down').copy();
+		Init.volumeUpKeys = keyBinds.get('volume_up').copy();
 		toggleVolumeKeys(true);
 	}
 	public static function toggleVolumeKeys(?turnOn:Bool = true)
 	{
-		FlxG.sound.muteKeys = turnOn ? TitleState.muteKeys : [];
-		FlxG.sound.volumeDownKeys = turnOn ? TitleState.volumeDownKeys : [];
-		FlxG.sound.volumeUpKeys = turnOn ? TitleState.volumeUpKeys : [];
+		FlxG.sound.muteKeys = turnOn ? Init.muteKeys : [];
+		FlxG.sound.volumeDownKeys = turnOn ? Init.volumeDownKeys : [];
+		FlxG.sound.volumeUpKeys = turnOn ? Init.volumeUpKeys : [];
 	}
 }

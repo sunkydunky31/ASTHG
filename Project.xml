@@ -2,15 +2,10 @@
 <project xmlns="http://lime.openfl.org/project/1.0.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
 
 	<!-- _________________________ Application Settings _________________________ -->
-	
-	<!-- Please, don'a ask about it -->
-	<app title="Unnamed Sonic Game"/>
-	<app file="ASTHG"/>
-	<app main="Main"/>
-	<app version="0.0.1"/>
-	<app company="Sunkydev31"/>
-	<app packageName="game.sunkydev.asthg"/>
-	<app preloader="flixel.system.FlxPreloader"/>
+
+	<app title="Unnamed Sonic Game" file="ASTHG" version="0.0.7"/> <!-- Main Game -->
+	<app company="Sunkydev31" packageName="game.sunkydev.asthg"/> <!-- Comapany Settings -->
+	<app main="Main" preloader="flixel.system.FlxPreloader"/> <!-- Internal -->
 
 	<!--Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2-->
 	<set name="SWF_VERSION" value="11.8"/>
@@ -25,14 +20,14 @@
 	<window if="html5" resizable="true"/>
 
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true"/>
-
+	
 	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0"/>
 
 	<!-- _______________________________  Defines _______________________________ -->
 	
-	<define name="MODS_ALLOWED"/>
-	<define name="DISCORD_ALLOWED" if="cpp"/>
-	<define name="TRANSLATIONS_ALLOWED"/>
+	<define name="MODS_ALLOWED"			unless="html5"/>
+	<define name="DISCORD_ALLOWED"		if="cpp"/>
+	<define name="TRANSLATIONS_ALLOWED"	/>
 
 	<!-- _____________________________ Path Settings ____________________________ -->
 

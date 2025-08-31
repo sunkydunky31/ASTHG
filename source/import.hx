@@ -12,6 +12,7 @@ import js.html.*;
 
 import backend.ClientPrefs;
 import backend.Controls;
+import backend.Constants;
 import backend.CoolUtil;
 import backend.Language;
 import backend.MusicBeatState;

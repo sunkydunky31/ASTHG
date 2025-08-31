@@ -1,7 +1,5 @@
 package backend;
 
-import haxe.Json;
-
 typedef ModsList = {
 	enabled:Array<String>,
 	disabled:Array<String>,
@@ -12,14 +10,14 @@ class Mods
 {
 	static public var currentModDirectory:String = '';
 	private static final modListConfig:Map<String, String> = [
-		"File" => "modsList",
-		"Split" => "=",
-		"Extension" => "txt",
-		"Enabled" => "1",
-		"Disabled" => "0"
+		"File"		=> "modsList",
+		"Split"		=> "=",
+		"Extension"	=> "txt",
+		"Enabled"	=> "1",
+		"Disabled"	=> "0"
 		/* Returns:
-			File + "." + Extension: (modsList.txt)
-			"Mod Name ([mod])" + Split + Enabled/Disabled = ([mod]=1/0)
+			File + "." + Extension -> "modsList.txt"
+			"Mod Name ([mod])" + Split + Enabled/Disabled -> "[mod]=1/0"
 		*/
 	];
 	public static var ignoreModFolders:Array<String> = [
@@ -158,7 +156,7 @@ class Mods
 	public static var updatedOnState:Bool = false;
 	inline public static function parseList():ModsList {
 		if(!updatedOnState) updateModList();
-		var list:ModsList = {enabled: [], disabled: [], all: []};
+		var list:ModsList = { enabled: [], disabled: [], all: [] };
 
 		#if MODS_ALLOWED
 		try {

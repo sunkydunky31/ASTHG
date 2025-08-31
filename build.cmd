@@ -1,6 +1,12 @@
 @echo off
 cls
-cd %1
+
+:: CONFIG
+set CWD="%UserProfile%/Documents/default/"
+set PLATFORM="cpp"
+set BUILD_FLAGS="-debug"
+
+cd %CWD%
 
 echo Building...
-lime test cpp -debug
+lime test %PLATFORM% %BUILD_FLAGS%

@@ -12,16 +12,12 @@ class Main extends Sprite
 		Sys.setCwd(lime.system.System.applicationStorageDirectory);
 		#end
 		super();
-		
-	/*	FlxG.sound.volumeUpKeys = [];
-		FlxG.sound.volumeDownKeys = [];
-		FlxG.sound.muteKeys = [];*/
 
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
 		
 		FlxG.save.bind('game', CoolUtil.getSavePath());
 
-		addChild(new FlxGame(0, 0, states.TitleState, #if (flixel < "5.0.0") 1, #end 60, 60, true));
+		addChild(new FlxGame(0, 0, states.Init, #if (flixel < "5.0.0") 1, #end 60, 60, true));
 	}
 }

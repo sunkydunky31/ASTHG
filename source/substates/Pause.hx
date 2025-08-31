@@ -40,7 +40,7 @@ class Pause extends MusicBeatSubstate {
 		grpOptions = new FlxTypedGroup<FlxText>();
 		add(grpOptions);
 
-		var titleTxt:FlxBitmapText = new FlxBitmapText(20, bottomFill.y - 6, Language.getPhrase("pause_title", "Paused"), Paths.fontBitmap("Roco"));
+		var titleTxt:FlxBitmapText = new FlxBitmapText(20, bottomFill.y - 6, Language.getPhrase("pause_title", "Paused"), Paths.getAngelCodeFont("Roco"));
 		#if (flixel >= "5.9.0")
 		titleTxt.setBorderStyle(FlxTextBorderStyle.SHADOW_XY(2, 2), FlxColor.BLACK, 1, 0);
 		#else

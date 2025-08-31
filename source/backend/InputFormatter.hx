@@ -61,7 +61,7 @@ class InputFormatter {
 		}
 	}
 
-	public static function getGamepadName(key:FlxGamepadInputID) {
+	public static function getGamepadName(key:FlxGamepadInputID):String {
 		var gamepad:FlxGamepad = FlxG.gamepads.firstActive;
 		var model:FlxGamepadModel = gamepad != null ? gamepad.detectedModel : UNKNOWN;
 
@@ -171,10 +171,21 @@ class InputFormatter {
 		}
 	}
 
-	/*public static function drawIcon(x:Float, y:Float, key:String) {
-		var rect = FlxRect(0, 0, 16, 16);
-		var sprite:FlxSprite = new FlxSprite(x, y);
-	}*/
+	public static function getControlNames(k:String):String {
+		var arr:Dynamic;
+		var b:Dynamic;
+		
+		if (Controls.instance.controllerMode) {
+			arr = ClientPrefs.gamepadBinds.get(k);
+			b = (arr != null && arr.length > 0) ? arr[0] : FlxGamepadInputID.NONE;
+		}
+		else {
+			arr = ClientPrefs.keyBinds.get(k);
+			b = (arr != null && arr.length > 0) ? arr[0] : FlxKey.NONE;
+		}
+	
+		return (Controls.instance.controllerMode) ? getGamepadName(b) : getKeyName(b);
+	}
 
 
 }

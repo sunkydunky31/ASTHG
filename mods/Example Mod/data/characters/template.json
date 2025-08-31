@@ -4,7 +4,7 @@
 		is for characters, this includes the dedicated character files in
 		images folder.
 
-		The name used in:
+		The name is used in:
 		* Results Cards
 		* Special folder in 'images/characters'
 		* And any other possibilities!
@@ -13,10 +13,10 @@
 	"lifeIcon": "liveIcon",
 
 	/*
-		How to use palette
+		How to use palettes
 
 		This still a beta yet! But here how it will work
-		Any line with "[]" (Object) is an palette index
+		Any line with "[]" (Objects) is an palette index
 		It is only used for Super forms, and the flashing transition
 		happens here
 

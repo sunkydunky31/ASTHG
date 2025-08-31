@@ -1,14 +1,24 @@
-Language Name
+Language (Region)
 
 // This is a language file!
 // It manages translatable files and texts
 // First of all, the first line is ALWAYS the language name
+// and if you want to add new keys for a existing file, the first line must be the same of the original
+//
+// This file should be named as "language-region" code (such as "en-US" for example)
+// specially for save managers and stuff
+//
 // any translatable phrase must follow this rule:
 // `key: "Your phrase"`
 // Note that the key rules isn't applied to images and resources files
 // Each line must be in LOWERCASE, without spaces and no comment lines
 // Good luck! -- @Sunkydev
 // Remove this info if you wanna do it
+// And please, if you fork this engine and add more texts
+// add it here immediately, translators will please you
+
+// Title Screen ({1}: ACCEPT button)
+titlescreen_press_start: "{1}"
 
 // Main Menu
 mainmenu_title:			""

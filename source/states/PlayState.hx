@@ -82,22 +82,22 @@ class PlayState extends MusicBeatState
 		camGame.follow(player, TOPDOWN, 1);
 		super.create();
 		
-		var hudTxt:FlxBitmapText = new FlxBitmapText(hudPos.x, hudPos.y, Language.getPhrase("hud_text", "Score\nTime\nRings"), Paths.fontBitmap("HUD"));
+		var hudTxt:FlxBitmapText = new FlxBitmapText(hudPos.x, hudPos.y, Language.getPhrase("hud_text", "Score\nTime\nRings"), Paths.getAngelCodeFont("HUD"));
 		hudTxt.scrollFactor.set();
 		uiGroup.add(hudTxt);
 
 		var hudX = hudTxt.x + hudTxt.width + 67;
-		scoreTxt = new FlxBitmapText(hudX, hudTxt.y, '', Paths.fontBitmap("HUD"));
+		scoreTxt = new FlxBitmapText(hudX, hudTxt.y, '', Paths.getAngelCodeFont("HUD"));
 		scoreTxt.scrollFactor.set();
 		scoreTxt.x -= (scoreTxt.width);
 		uiGroup.add(scoreTxt);
 
-		timeTxt = new FlxBitmapText(hudX, hudTxt.y + 16, '', Paths.fontBitmap("HUD"));
+		timeTxt = new FlxBitmapText(hudX, hudTxt.y + 16, '', Paths.getAngelCodeFont("HUD"));
 		timeTxt.scrollFactor.set();
 		timeTxt.x -= (timeTxt.width);
 		uiGroup.add(timeTxt);
 
-		ringsTxt = new FlxBitmapText(hudX, hudTxt.y + 32, '', Paths.fontBitmap("HUD"));
+		ringsTxt = new FlxBitmapText(hudX, hudTxt.y + 32, '', Paths.getAngelCodeFont("HUD"));
 		ringsTxt.scrollFactor.set();
 		ringsTxt.x -= (ringsTxt.width);
 		uiGroup.add(ringsTxt);
@@ -107,7 +107,7 @@ class PlayState extends MusicBeatState
 		livesIcon.y = FlxG.height - 26;
 		uiGroup.add(livesIcon);
 		
-		livesTxt = new FlxBitmapText(livesIcon.x + livesIcon.frameWidth + 1, livesIcon.y + 3, 'livesTxt', Paths.fontBitmap("HUD"));
+		livesTxt = new FlxBitmapText(livesIcon.x + livesIcon.frameWidth + 1, livesIcon.y + 3, 'livesTxt', Paths.getAngelCodeFont("HUD"));
 		livesTxt.scrollFactor.set();
 		uiGroup.add(livesTxt);
 
@@ -116,13 +116,13 @@ class PlayState extends MusicBeatState
 		posX.color = (player.x >= 0xFFFF) ? 0xFFFF0000 :  0xFFFFFF00;
 		uiGroup.add(posX);
 
-		posXTxt = new FlxBitmapText(posX.x + posX.width + 1, posX.y, '', Paths.fontBitmap("HUD"));
+		posXTxt = new FlxBitmapText(posX.x + posX.width + 1, posX.y, '', Paths.getAngelCodeFont("HUD"));
 		uiGroup.add(posXTxt);
 
 		var posY:FlxSprite = new FlxSprite(posX.x, hudPos.y + 13).loadGraphic(Paths.image("HUD/posY"));
 		posY.color = (player.y >= 0xFFFF) ? 0xFFFF0000 : 0xFFFFFF00;
 		uiGroup.add(posY);
-		posYTxt = new FlxBitmapText(posY.x + posY.width + 1, posY.y, '', Paths.fontBitmap("HUD"));
+		posYTxt = new FlxBitmapText(posY.x + posY.width + 1, posY.y, '', Paths.getAngelCodeFont("HUD"));
 		uiGroup.add(posYTxt);
 		#end
 
@@ -164,7 +164,7 @@ class PlayState extends MusicBeatState
 	}
 
 	function openPauseMenu() {
-		if (FlxG.sound.music != null) FlxG.sound.music.pause();
+		if (CoolUtil.mus != null) CoolUtil.mus.pause();
 
 		openSubState(new substates.Pause());
 	}
@@ -199,12 +199,12 @@ class PlayState extends MusicBeatState
 		backdrop.cameras = [camFront];
 		add(backdrop);
 
-		var actName:FlxBitmapText = new FlxBitmapText(FlxG.width - 90, 87, stageBase.jsonAct.titleCard, Paths.fontBitmap("Roco"));
+		var actName:FlxBitmapText = new FlxBitmapText(FlxG.width - 90, 87, stageBase.jsonAct.titleCard, Paths.getAngelCodeFont("Roco"));
 		actName.x -= actName.width;
 		actName.cameras = [camFront];
 		add(actName);
 
-		var zoneName:FlxBitmapText = new FlxBitmapText(FlxG.width - 90, 105, "ZONE", Paths.fontBitmap("Roco"));
+		var zoneName:FlxBitmapText = new FlxBitmapText(FlxG.width - 90, 105, "ZONE", Paths.getAngelCodeFont("Roco"));
 		zoneName.x -= (zoneName.width);
 		zoneName.cameras = [camFront];
 		add(zoneName);

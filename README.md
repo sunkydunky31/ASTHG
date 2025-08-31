@@ -1,7 +1,7 @@
 # ASTHG (An Sonic the Hedgehog Game)
 This is an Sonic engine, made just for fun! (Idk if someone will use this)
 
-It haves code parts from [Psych Engine](https://github.com/ShadowMario/FNF-PsychEngine/)... Sorry, I'm stil learning on how to make my own code and I stil have ideas to replace them
+It haves code parts from [Psych Engine](https://github.com/ShadowMario/FNF-PsychEngine/)... Sorry, I'm still learning on how to make my own code and I have ideas to replace them, but I don't know how to set them now.
 
 Call me on Discord if you want to talk with me (@sunkydunky31)
 
@@ -25,7 +25,7 @@ Call me on Discord if you want to talk with me (@sunkydunky31)
 - [HXDiscord RPC](https://github.com/FunkinCrew/hxdiscord_rpc)
 
 # Modding
-Modding is possible, but stil an test feature!
+Modding is possible, but still an test feature!
 
 # Resource Credits
 * Commom sprites and Font: [TeamForever](https://www.youtube.com/@teamforeverdev) from [Sonic 2 Absolute](https://teamforeveronline.wixsite.com/home/sonic-2-absolute)

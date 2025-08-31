@@ -1,11 +1,13 @@
 {
-	"name": "Sonic", //Used in char folder too
+	// Testing!
+
+	"name": "Sonic",
 	"hasSuper": true,
 	"continues": {
 		"sprite": "continue",
 		"animated": true,
 		"width": 16,
-		"height": 16
+		"height": 23
 	},
 	"palette": [
 		["#2020A0", "#2040C0", "#4040E0", "#6060E0"],
@@ -24,5 +26,10 @@
 		["#E0E000", "#E0E040", "#E0E080", "#E0E0C0"],
 		["#E0E000", "#E0E060", "#E0E0A0", "#E0E0E0"],
 		["#E0E000", "#E0E080", "#E0E0C0", "#E0E0E0"]
+	],
+	"extraAnimations": [
+		["ANI_BETA_DASH0", 34],
+		["ANI_BETA_DASH1", 35],
+		["ANI_DROPDASH", 36]
 	]
 }

@@ -103,8 +103,8 @@ class LoadingState extends MusicBeatState
 	
 	function onLoad()
 	{
-		if (stopMusic && FlxG.sound.music != null)
-			FlxG.sound.music.stop();
+		if (stopMusic && CoolUtil.mus != null)
+			CoolUtil.mus.stop();
 		
 		MusicBeatState.switchState(target);
 	}
@@ -130,8 +130,8 @@ class LoadingState extends MusicBeatState
 		if (!loaded)
 			return new LoadingState(target, stopMusic, directory);
 		#end*/
-		if (stopMusic && FlxG.sound.music != null)
-			FlxG.sound.music.stop();
+		if (stopMusic && CoolUtil.mus != null)
+			CoolUtil.mus.stop();
 		
 		return target;
 	}

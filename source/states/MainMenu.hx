@@ -1,5 +1,6 @@
 package states;
 
+import flixel.addons.plugin.FlxScrollingText;
 import options.OptionsState;
 import flixel.effects.FlxFlicker;
 import backend.MusicBeatState;
@@ -38,17 +39,21 @@ class MainMenu extends MusicBeatState {
 		backdFill.updateHitbox();
 		add(backdFill);
 
-		var titleTxt:FlxBitmapText = new FlxBitmapText(0, 2, Language.getPhrase("mainmenu_title", "Main Menu"), Paths.fontBitmap("HUD"));
+		var titleTxt:FlxBitmapText = new FlxBitmapText(0, 2, Language.getPhrase("mainmenu_title", "Main Menu"), Paths.getAngelCodeFont("HUD"));
+		
+		var titleSpr = FlxScrollingText.add(titleTxt, new openfl.geom.Rectangle(titleTxt.x, titleTxt.y, FlxG.width, titleTxt.height), 4, 0, titleTxt.text);
+		FlxScrollingText.startScrolling(titleSpr);
+		add(titleSpr);
 
-		var titleBackdrop:FlxBackdrop = new FlxBackdrop(titleTxt.graphic, X);
-		titleBackdrop.velocity.set(30, 0);
-		add(titleBackdrop);
+		var version:FlxBitmapText = new FlxBitmapText(0, 0, "v" + Std.string(CoolUtil.getProjectInfo('version')), FlxBitmapFont.fromMonospace("assets/fonts/AbsoluteSystem.png", Constants.ABSOLUTE_FONT_GLYPHDATA, FlxPoint.get(8, 8)));
+		version.setPosition(FlxG.width - version.width - 7, FlxG.height - version.height - 2);
+		add(version);
 
 		group = new FlxTypedGroup<FlxBitmapText>();
 		add(group);
 
 		for (num => str in options) {
-			var menu:FlxBitmapText = new FlxBitmapText(10, 30 + (18 * num), Language.getPhrase('mainmenu_$str', str), Paths.fontBitmap("HUD"));
+			var menu:FlxBitmapText = new FlxBitmapText(10, 30 + (18 * num), Language.getPhrase('mainmenu_$str', str), Paths.getAngelCodeFont("HUD"));
 			menu.ID = num;
 			group.add(menu);
 		}

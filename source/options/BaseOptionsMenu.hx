@@ -53,7 +53,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		descBox.alpha = 0.6;
 		add(descBox);
 
-		var titleText:FlxBitmapText = new FlxBitmapText(FlxG.width/2, 45, title, Paths.fontBitmap("Roco"));
+		var titleText:FlxBitmapText = new FlxBitmapText(FlxG.width/2, 45, title, Paths.getAngelCodeFont("Roco"));
 		titleText.x -= (titleText.width/2);
 		#if (flixel >= "5.9.0")
 		titleText.setBorderStyle(FlxTextBorderStyle.SHADOW_XY(2, 2), FlxColor.BLACK, 1, 0);

@@ -296,21 +296,10 @@ class Paths
 	}
 
 	/**
-	 * Gets a bitmap font
+	 * Gets a AngelCode bitmap font
 	 * @param key Name of the font file
-	 * @param type Type of the font: `angelcode` (Default), `monospace`, `xna`
-	 * @param letters (`XNA`/`Monospace`) Letters in font image 
-	 * @param bgColor (`XNA`) BG Color from char
-	 * @param charSize (`Monospace`) Each char size
-	 * @param region (`Monospace`) Font region in image, null to use the entire image as the font
-	 * @param spacing (`Monospace`) Char spacing 
 	 */
-	inline static public function fontBitmap(key:String, ?type:String = "angelcode", ?letters:String = FlxBitmapFont.DEFAULT_CHARS, ?bgColor:FlxColor = FlxColor.TRANSPARENT, ?charSize:FlxPoint, ?region:FlxRect, ?spacing:Int) {
-		if (type == "monospace")
-			return FlxBitmapFont.fromMonospace('assets/fonts/$key.png', letters, charSize);
-		else if (type == "xna")
-			return FlxBitmapFont.fromXNA('assets/fonts/$key.png', letters, bgColor);
-		else
+	inline static public function getAngelCodeFont(key:String) {
 			return FlxBitmapFont.fromAngelCode('assets/fonts/$key.png', 'assets/fonts/$key.fnt');
 	}
 

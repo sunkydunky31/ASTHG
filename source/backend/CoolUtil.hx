@@ -156,12 +156,23 @@ class CoolUtil
 		// #end
 	}
 
-	public static function setTextBorderFromString(text:FlxText, border:String)
+	public static function getProjectInfo(metaIndex:String) {
+		return FlxG.stage.application.meta.get(metaIndex);
+	}
+
+	public static function setTextBorderFromString(text:FlxText, border:String, ?x:Float, ?y:Float)
 	{
 		switch(border.toLowerCase().trim())
 		{
 			case 'shadow':
 				text.borderStyle = SHADOW;
+			case 'shadow_xy', 'shadowxy':
+				#if (flixel >= "5.9.0")
+				text.borderStyle = FlxTextBorderStyle.SHADOW_XY(x, y);
+				#else
+				text.borderStyle = FlxTextBorderStyle.SHADOW;
+				text.shadowOffset.set(x, y);
+				#end
 			case 'outline':
 				text.borderStyle = OUTLINE;
 			case 'outline_fast', 'outlinefast':
@@ -172,11 +183,11 @@ class CoolUtil
 	}
 
 	/**
-	 * Noticed that loopTime uses MILLISECONDS and not SAMPLES? this converts it into ms
-	 * @param sample Sample of your track
-	 * @param hz Hz of the file track, needs to be an entire Hz of the file, defaults to 44100
-	 * @return Float
-	 */
+	Noticed that loopTime uses MILLISECONDS and not SAMPLES? this converts it into ms
+	@param sample Sample of your track
+	@param hz Hz of the file track, needs to be an entire Hz of the file, defaults to 44100
+	@return Float
+	**/
 	inline public static function getSampleLoop(sample:Int, ?hz:Int = 44100):Float {
 		var loop:Float = sample*1000;
 		//trace('[getSampleLoop] Sample is ${loop/hz}');
@@ -184,16 +195,16 @@ class CoolUtil
 	}
 	
 	/**
-	 * Plays a sound
-	 * @param sound Sound file (or name if using the MAP)
-	 * @param fromMap see backend.Paths.hx
-	 * @param loop Loops or not the sound
-	 * @param volume Volume for this sound
-	 * @param group Sound group
-	 * @param autoDestroy 
-	 * @param onComplete Extra params for complete
-	 * @return FlxSound
-	 */
+	Plays a sound
+	@param sound Sound file (or name if using the MAP)
+	@param fromMap see backend.Paths.hx
+	@param loop Loops or not the sound
+	@param volume Volume for this sound
+	@param group Sound group
+	@param autoDestroy 
+	@param onComplete Extra params for complete
+	@return FlxSound
+	**/
 	inline public static function playSound(sound:String, ?fromMap:Bool = false, ?loop:Bool = false, ?volume:Float = 1.0) {
 		FlxG.sound.play(Paths.sound(sound, fromMap), volume, loop);
 	}
@@ -214,15 +225,14 @@ class CoolUtil
 	public static var mus:FlxSound;
 
 	/**
-	 * Custom music player!
-	 * @param sound Music name or path (starting from "assets/shared/music" or "[mod]/music")
-	 * @param loopStart Loops the music or not.
-	 * Set `0` for `No loop`, `1` for `looping from start` and another value to `loop in the given sample`
-	 * Usage: `{ sample: Your Sample, hz: Hz of your track }`
-	 * **Values must be in `Int` format, not `Float`**
-	 * @param volume Volume to play `this` music
-	 * @param group Sets a sound group for `this` music
-	 */
+	Custom music player!
+	@param sound Music name or path (starting from "assets/shared/music" or "[mod]/music")
+	@param loopStart Loops the music or not.
+	Usage: `{ sample: Your Sample, hz: Hz of your track }`
+	Settings: `0` -> No loop, `1` -> loop from start, `*another value*` -> loop in the given sample
+	@param volume Volume to play `this` music
+	@param group Sets a sound group for `this` music
+	**/
 	public static function playMusic(sound:String, loopStart:SoundLoop, ?volume:Float = 1.0, ?group:FlxSoundGroup) {
 		if (mus == null) { mus = new FlxSound(); }
 		else if (mus.active) { mus.stop(); }
@@ -231,15 +241,15 @@ class CoolUtil
 		switch (loopStart.sample) {
 		case 0:
 			mus.looped = false;
-			trace("Cur music will not loop");
+			//trace("Cur music will not loop");
 		case 1:
 			mus.looped = true;
-			trace("Cur music will loop from start");
+			//trace("Cur music will loop from start");
 		case v if (v > 1):
 			mus.looped = true;
-			mus.loopTime = CoolUtil.getSampleLoop(loopStart.sample, (loopStart.hz != null) ? 44100 : loopStart.hz);
+			mus.loopTime = CoolUtil.getSampleLoop(loopStart.sample, (loopStart.hz == null) ? 44100 : loopStart.hz);
 
-			trace("Cur music will loop in " + mus.loopTime);
+			//trace("Cur music will loop in " + mus.loopTime);
 		}
 		mus.volume = volume;
 		mus.persist = true;

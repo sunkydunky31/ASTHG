@@ -22,7 +22,7 @@ class SaveSelect extends MusicBeatState {
 		if (controls.justPressed('accept'))
 			LoadingState.loadAndSwitchState(new states.PlayState(), true);
 		if (controls.justPressed('back')) {
-			FlxG.sound.music.stop();
+			CoolUtil.mus.stop();
 			MusicBeatState.switchState(new MainMenu());
 		}
 	}

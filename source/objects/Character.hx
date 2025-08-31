@@ -66,7 +66,7 @@ class Character extends FlxSprite {
 
 		maxVelocity.set(90, 200);
 		acceleration.y = 0;
-		velocity.x = maxVelocity.x * 4;
+		velocity.x = 0;
 
 		setFacingFlip(LEFT, true, false);
 		setFacingFlip(RIGHT, false, false);
@@ -120,6 +120,11 @@ class Character extends FlxSprite {
 				case _:
 			}
 		}
+		else {
+			velocity.x = 0;
+			velocity.y = 0;
+			playAnim("ANI_STOPPED");
+		}
 	}
 
 	override function update(e:Float) {
@@ -138,8 +143,8 @@ class Character extends FlxSprite {
 
 		if (Reflect.hasField(json, "extraAnimations")) {
 			for (extra in json.extraAnimations) {
-		   		addAnim(extra.name, extra.ID);
-   			}
+		 		addAnim(extra[0], extra[1]);
+			}
 		}
 
 		loadAnimations();
@@ -149,13 +154,22 @@ class Character extends FlxSprite {
 	function loadAnimations() {
 		frames = Paths.getASTHGAtlas('characters/${json.name}/animData');
 		animData = new haxe.xml.Access(Xml.parse(Paths.getContent('images/characters/${json.name}/animData.xml', TEXT)).firstElement());
+
+		var frameRate:Float = 0;
 		
 		for (anim in animData.nodes.animation) {
 			var frameI:Array<Int> = [];
 			for (i in 0...anim.nodes.frame.length) {
 				frameI.push(i);
 			}
-			animation.addByIndices(anim.att.id, anim.att.id+"_", frameI, null, anim.has.fps ? Std.parseFloat(anim.att.fps) * frameI.length : 0, anim.has.loop ? CoolUtil.parseBool(anim.att.loop) : false);
+
+			if (anim.has.fps) {
+				var vel:Int = Std.parseInt(anim.att.fps);
+				var frameWidth:Int = Std.int(frames.frames[0].sourceSize.x);
+				frameRate = vel / frameWidth;
+			}
+
+			animation.addByIndices(anim.att.id, anim.att.id+"_", frameI, null, frameRate * 2.7, anim.has.loop ? CoolUtil.parseBool(anim.att.loop) : false);
 			animation.getByName(anim.att.id).loopPoint = anim.has.loopStart ? Std.parseInt(anim.att.loopStart) : 0;
 		}
 	}
@@ -170,7 +184,7 @@ class Character extends FlxSprite {
 	 * @param id Internal ID on the AnimData.xml file
 	 */
 	public function addAnim(name:String, id:Int) {
-		trace('[INFO] Added animation to the list. ("$name", $id)');
+		trace('[INFO] Added animation to the list. ($name, $id)');
 		AnimationList.set(name, id);
 	}
 
@@ -210,20 +224,8 @@ typedef CharacterData = {
 	@:default(false) @:optional
 	var hasSuper:Bool;
 
-	@:default([[]]) @:optional
-	var extraAnimations:Array<CharExtraAnimations>;
-}
-
-typedef CharExtraAnimations = {
-	/**
-	 * Display name, just to make it more easy to find
-	 */
-	var name:String;
-
-	/**
-	 * Identifier of `this` animation
-	 */
-	var ID:Int;
+	@:optional
+	var extraAnimations:Array<Dynamic>;
 }
 
 typedef CharContinues = {

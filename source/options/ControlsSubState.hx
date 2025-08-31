@@ -55,7 +55,7 @@ class ControlsSubState extends MusicBeatSubstate {
 		bg.updateHitbox();
 		add(bg);
 		
-		var title:FlxBitmapText = new FlxBitmapText(FlxG.width/2, 8, Language.getPhrase("options_controls", "Controls"), Paths.fontBitmap("Roco"));
+		var title:FlxBitmapText = new FlxBitmapText(FlxG.width/2, 8, Language.getPhrase("options_controls", "Controls"), Paths.getAngelCodeFont("Roco"));
 		#if (flixel >= "5.9.0")
 		title.setBorderStyle(FlxTextBorderStyle.SHADOW_XY(2, 2), FlxColor.BLACK, 1, 0);
 		#else

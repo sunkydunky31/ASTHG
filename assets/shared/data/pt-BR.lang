@@ -1,5 +1,8 @@
 Português (Brasil)
 
+// Title State
+titlescreen_press_start: "Pressione {1}"
+
 // Main Menu
 mainmenu_title:			"Menu Principal"
 mainmenu_save_select:	"Seleção de Saves"

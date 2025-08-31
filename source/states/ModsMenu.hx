@@ -34,13 +34,9 @@ class ModsMenu extends MusicBeatState {
 		bg.updateHitbox();
 		add(bg);
 
-		var title:FlxBitmapText = new FlxBitmapText(FlxG.width/2, 10, Language.getPhrase("mods_title", "Mods Menu"), Paths.fontBitmap("Roco"));
-		#if (flixel >= "5.9.0")
-		title.setBorderStyle(FlxTextBorderStyle.SHADOW_XY(2, 2), FlxColor.BLACK, 1, 0);
-		#else
+		var title:FlxBitmapText = new FlxBitmapText(FlxG.width/2, 10, Language.getPhrase("mods_title", "Mods Menu"), Paths.getAngelCodeFont("Roco"));
 		title.setBorderStyle(FlxTextBorderStyle.SHADOW, FlxColor.BLACK, 1, 0);
 		title.shadowOffset.set(2, 2);
-		#end
 		title.x -= title.width / 2;
 		add(title);
 
@@ -52,6 +48,7 @@ class ModsMenu extends MusicBeatState {
 				modItem.icon.color = 0xFF707070;
 			}
 			modsGroup.add(modItem);
+			trace('Found mod "${mod}"');
 		}
 
 		add(modsGroup);
@@ -61,12 +58,12 @@ class ModsMenu extends MusicBeatState {
 	override function update(e:Float) {
 		super.update(e);
 
-		if (controls.justPressed('back')) MusicBeatState.switchState(new MainMenu());
+		if (controls.justPressed('back'))
+			MusicBeatState.switchState(new MainMenu());
 	}
 }
 
-class ModItem extends FlxSpriteGroup
-{
+class ModItem extends FlxSpriteGroup {
 	public var selectBg:FlxSprite;
 	public var icon:FlxSprite;
 	public var text:FlxText;
@@ -76,30 +73,25 @@ class ModItem extends FlxSpriteGroup
 	public var name:String = 'Unknown Mod';
 	public var desc:String = 'No description provided.';
 	public var iconFps:Int = 10;
-	public var iconAnimated:Bool = false;
 	public var pack:Dynamic = null;
 	public var folder:String = 'unknownMod';
 	public var mustRestart:Bool = false;
 	public var settings:Array<Dynamic> = null;
-	public var iconSettings:Array<Dynamic> = [];
+	public var iconSettings:Dynamic = null;
 
-	public function new(folder:String)
-	{
+	public function new(folder:String) {
 		super();
 
 		this.folder = folder;
 		pack = Mods.getPack(folder);
 
 		var path:String = Paths.mods('$folder/data/settings.json');
-		if(FileSystem.exists(path))
-		{
-			try
-			{
+		if(FileSystem.exists(path)) {
+			try {
 				//trace('trying to load settings: $folder');
 				settings = tjson.TJSON.parse(File.getContent(path));
 			}
-			catch(e:Dynamic)
-			{
+			catch(e:Dynamic) {
 				var errorTitle = 'Mod name: ' + Mods.currentModDirectory;
 				var errorMsg = 'An error occurred: $e';
 				#if windows
@@ -142,25 +134,22 @@ class ModItem extends FlxSpriteGroup
 		}
 		
 		this.name = folder;
-		this.iconSettings = [
-			iconAnimated,
-			iconFps
-		];
+		if (iconSettings != null && Reflect.hasField(iconSettings, "framerate")) {
+			iconFps = Reflect.field(iconSettings, "framerate");
+		}
+
 		
 		if(pack != null) {
 			if(pack.name != null) this.name = pack.name;
 			if(pack.description != null) this.desc = pack.description;
 			if (pack.iconSettings != null) this.iconSettings = pack.iconSettings;
 			this.mustRestart = (pack.restart == true);
-
-			trace("Found pack.json", '\nName: ${pack.name}', '\nDescription: ${pack.description}', '\nIcon: ${pack.iconSettings}' #if DISCORD_ALLOWED , '\nDiscord Client: ${pack.discordClient}' #end);
 		}
 		text.text = this.name;
 
-		if(bmp != null)
-		{
+		if(bmp != null) {
 			totalFrames = Math.floor(bmp.width / iSize) * Math.floor(bmp.height / iSize);
-			icon.animation.add("icon", [for (i in 0...totalFrames) i], iconFps);
+			icon.animation.add("icon", [for (i in 0...totalFrames) i], 10);
 			icon.animation.play("icon");
 		}
 		selectBg.scale.set(width + 5, height + 5);

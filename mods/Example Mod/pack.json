@@ -14,6 +14,7 @@
     "description": "A mod that shows how mods work in the game",
     "discordClient": 0,
     "iconSettings": {
+        "animated": true,
         "framerate": 24
     }
 }

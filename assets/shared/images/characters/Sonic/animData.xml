@@ -15,27 +15,27 @@
 		
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="227"	y="1"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
+		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
 		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
@@ -311,13 +311,13 @@
 	</animation>
 
 	<animation name="Drop Dash"	id="36"	fps="240"	loop="true">
-		<frame x="95"	y="26"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="128"	y="26"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="161"	y="26"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="194"	y="26"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="95"	y="26"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="128"	y="59"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="161"	y="26"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="194"	y="59"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="331"	y="240"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="397"	y="244"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="364"	y="240"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="430"	y="244"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="331"	y="240"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="463"	y="244"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="364"	y="240"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
+		<frame x="342"	y="272"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
 	</animation>
 </animationData>

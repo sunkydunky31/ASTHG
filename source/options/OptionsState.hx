@@ -79,7 +79,7 @@ class OptionsState extends MusicBeatState {
 			CoolUtil.playSound("Menu Cancel", true);
 			if(onPlayState) {
 				LoadingState.loadAndSwitchState(new PlayState());
-				FlxG.sound.music.volume = 0;
+				CoolUtil.mus.volume = 0;
 			}
 			else MusicBeatState.switchState(new states.MainMenu());
 		}
