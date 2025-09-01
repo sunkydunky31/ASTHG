@@ -160,9 +160,6 @@ class Paths
 
 		return getPath('shaders/$key.$types', TEXT, library);
 	}
-	inline static public function lua(key:String, ?library:String) {
-		return getPath('$key.lua', TEXT, library);
-	}
 
 	static public function video(key:String) {
 		#if MODS_ALLOWED
@@ -472,7 +469,7 @@ class Paths
 				return fileToCheck;
 		}
 
-		for(mod in Mods.getGlobalMods())
+		for(mod in Mods.getModDirectories())
 		{
 			var fileToCheck:String = mods('$mod/$key');
 			if(FileSystem.exists(fileToCheck))

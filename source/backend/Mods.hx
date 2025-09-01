@@ -38,22 +38,6 @@ class Mods
 		'videos'
 	];
 
-	private static var globalMods:Array<String> = [];
-
-	inline public static function getGlobalMods()
-		return globalMods;
-
-	inline public static function pushGlobalMods() // prob a better way to do this but idc
-	{
-		globalMods = [];
-		for(mod in parseList().enabled)
-		{
-			var pack:Dynamic = getPack(mod);
-			if(pack != null && pack.runsGlobally) globalMods.push(mod);
-		}
-		return globalMods;
-	}
-
 	inline public static function getModDirectories():Array<String>
 	{
 		var list:Array<String> = [];
@@ -110,7 +94,7 @@ class Mods
 		if(mods)
 		{
 			// Global mods first
-			for(mod in Mods.getGlobalMods())
+			for(mod in Mods.getModDirectories())
 			{
 				var folder:String = Paths.mods('$mod/$fileToFind');
 				if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(folder);

@@ -59,7 +59,7 @@ class ModsMenu extends MusicBeatState {
 		super.update(e);
 
 		if (controls.justPressed('back'))
-			MusicBeatState.switchState(new MainMenu());
+			LoadingState.switchStates(new MainMenu());
 	}
 }
 

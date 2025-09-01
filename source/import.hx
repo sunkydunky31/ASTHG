@@ -19,6 +19,10 @@ import backend.MusicBeatState;
 import backend.MusicBeatSubstate;
 import backend.Paths;
 import states.LoadingState;
+
+#if MODS_ALLOWED
+import modding.Scripts;
+#end
 //---------------------------------//
 import flixel.FlxCamera;
 import flixel.FlxG;

@@ -21,6 +21,8 @@ class TitleState extends MusicBeatState {
 		pressStart.screenCenter(X);
 		add(pressStart);
 
+		FlxFlicker.flicker(pressStart, 17, 0.09, true);
+
 		CoolUtil.playMusic('TitleScreen', {sample: 0});
 
 		super.create();
@@ -30,6 +32,5 @@ class TitleState extends MusicBeatState {
 		if (controls.justPressed('accept'))
 			MusicBeatState.switchState(new PlayState());
 
-		FlxFlicker.flicker(pressStart, 17, 0.08, true);
 	}
 }

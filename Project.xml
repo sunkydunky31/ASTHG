@@ -43,6 +43,7 @@
 	<haxelib name="flixel"/>
 	<haxelib name="flixel-addons"/>
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
+	<haxelib name="hscript" if="MODS_ALLOWED"/> <!-- Only for modding! In game scripts will be only source -->
 	<haxelib name="tjson"/>
 
 	<!--In case you want to use the ui package-->

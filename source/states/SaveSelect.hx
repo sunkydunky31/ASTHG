@@ -20,7 +20,7 @@ class SaveSelect extends MusicBeatState {
 		super.update(e);
 
 		if (controls.justPressed('accept'))
-			LoadingState.loadAndSwitchState(new states.PlayState(), true);
+			LoadingState.switchStates(new states.PlayState(), true);
 		if (controls.justPressed('back')) {
 			CoolUtil.mus.stop();
 			MusicBeatState.switchState(new MainMenu());

@@ -10,6 +10,12 @@ class MusicBeatState extends FlxState
 		return Controls.instance;
 	}
 
+	public var scripts(get, never):Scripts;
+	private function get_scripts()
+	{
+		return Scripts.instance;
+	}
+
 	public var variables:Map<String, Dynamic> = new Map<String, Dynamic>();
 	public static function getVariables()
 		return getState().variables;
@@ -42,7 +48,9 @@ class MusicBeatState extends FlxState
 			trace("HOT RELOAD");
 			Paths.clearUnusedMemory();
 			Language.reloadPhrases();
+			Scripts.instance.reloadScripts();
 			resetState();
+			return;
 	}
 
 	public static function switchState(nextState:FlxState = null) {

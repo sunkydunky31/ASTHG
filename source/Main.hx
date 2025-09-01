@@ -15,6 +15,10 @@ class Main extends Sprite
 
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
+
+		#if MODS_ALLOWED
+		Scripts.instance = new Scripts();
+		#end
 		
 		FlxG.save.bind('game', CoolUtil.getSavePath());
 

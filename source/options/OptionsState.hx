@@ -78,7 +78,7 @@ class OptionsState extends MusicBeatState {
 		if (controls.justPressed('back')) {
 			CoolUtil.playSound("Menu Cancel", true);
 			if(onPlayState) {
-				LoadingState.loadAndSwitchState(new PlayState());
+				LoadingState.switchStates(new PlayState());
 				CoolUtil.mus.volume = 0;
 			}
 			else MusicBeatState.switchState(new states.MainMenu());

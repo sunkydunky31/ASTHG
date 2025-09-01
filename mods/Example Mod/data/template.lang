@@ -32,6 +32,8 @@ mods_title:	""
 
 // Gameplay
 hud_text:	""
+hud_time_text: ""
+hud_rings_text: ""
 game_over:	""
 time_over:	""
 
@@ -83,7 +85,8 @@ key_volume_down:	""
 key_volume_mute:	""
 
 // Settings - Graphics
-settings_hdfonts:	""
+setting_low_quality:		""
+description_low_quality:	""
 
 // Settings - Gameplay
 setting_haptics:		""
@@ -95,6 +98,8 @@ pause_resume:		""
 pause_restart:		""
 pause_exit_to_menu:	""
 
+//Loading Screen
+loading: ""
 
 // Discord
 discordrpc_main_menu:		""

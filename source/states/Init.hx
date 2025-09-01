@@ -3,21 +3,24 @@ package states;
 import flixel.input.keyboard.FlxKey;
 
 class Init extends MusicBeatState {
-    public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
-    public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
-    public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
+	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
+	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
+	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
 
-    override public function create() {
-        trace('Init created');
+	override public function create() {
+		trace('Init created');
 
-        FlxG.fixedTimestep = false;
-        FlxG.game.focusLostFramerate = 60;
-        ClientPrefs.loadPrefs();
-        Language.reloadPhrases();
+		FlxG.fixedTimestep = false;
+		FlxG.game.focusLostFramerate = 60;
+		ClientPrefs.loadPrefs();
+		Language.reloadPhrases();
+		scripts.reloadScripts();
 
-        FlxTransitionableState.skipNextTransIn = true;
-        FlxTransitionableState.skipNextTransOut = true;
+		scripts.callHook('onGameStart', []);
 
-        MusicBeatState.switchState(new TitleState());
-    }
+		FlxTransitionableState.skipNextTransIn = true;
+		FlxTransitionableState.skipNextTransOut = true;
+
+		MusicBeatState.switchState(new TitleState());
+	}
 }

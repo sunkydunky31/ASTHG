@@ -80,6 +80,8 @@ class PlayState extends MusicBeatState
 		// Player init
 		add(player);
 		camGame.follow(player, TOPDOWN, 1);
+		
+		scripts.callHook('onCreate', []);
 		super.create();
 		
 		var hudTxt:FlxBitmapText = new FlxBitmapText(hudPos.x, hudPos.y, Language.getPhrase("hud_text", "Score\nTime\nRings"), Paths.getAngelCodeFont("HUD"));

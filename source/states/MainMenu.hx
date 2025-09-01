@@ -93,12 +93,12 @@ class MainMenu extends MusicBeatState {
 
 							switch (daChoice.toLowerCase()) {
 								case 'save select':
-									LoadingState.loadAndSwitchState(new SaveSelect(), true);
+									LoadingState.switchStates(new SaveSelect(), true);
 								case 'options':
-									LoadingState.loadAndSwitchState(new OptionsState());
+									LoadingState.switchStates(new OptionsState());
 									OptionsState.onPlayState = false;
 								case 'mods':
-									LoadingState.loadAndSwitchState(new ModsMenu());
+									LoadingState.switchStates(new ModsMenu());
 								case 'exit':
 									Sys.exit(0);
 							}

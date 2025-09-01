@@ -15,6 +15,8 @@ mods_title:	"Menu de Mods"
 
 // Gameplay
 hud_text:	"Pontos\nTempo\nAnéis"
+hud_time_text: "Tempo"
+hud_rings_text: "Anéis"
 game_over:	"Fim de Jogo"
 time_over:	"Fim de Tempo"
 
@@ -62,6 +64,9 @@ key_volume_down:	"Diminuir Volume"
 key_volume_mute:	"Silenciar"
 
 // Settings - Graphics
+setting_low_quality:		"Baixa Qualidade"
+description_low_quality:	"Faz o jogo possuir alta performance em plataformas mais fracas"
+
 settings_hdfonts:	"Não gosta de fontes em pixel? Sem problema!\nIsso fará a maioria das fontes bitmap usarem outro formato"
 
 // Settings - Gameplay
@@ -74,6 +79,8 @@ pause_resume:		"Retomar"
 pause_restart:		"Reiniciar"
 pause_exit_to_menu:	"Sair ao Menu"
 
+// Loading Screen
+loading: "Carregando..."
 
 // Discord
 discordrpc_main_menu:		"Menu Principal"
