@@ -37,5 +37,4 @@
     <animation name="" id="" fps="" loopStart="" rotate=""/>
         <frame x="" y="" width="" height="" centerX="" centerY=""/> <!-- Duplicate this if you want another frame -->
     </animation>
-	
 </animationData>
