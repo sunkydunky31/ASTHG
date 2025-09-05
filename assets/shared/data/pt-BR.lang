@@ -67,8 +67,6 @@ key_volume_mute:	"Silenciar"
 setting_low_quality:		"Baixa Qualidade"
 description_low_quality:	"Faz o jogo possuir alta performance em plataformas mais fracas"
 
-settings_hdfonts:	"Não gosta de fontes em pixel? Sem problema!\nIsso fará a maioria das fontes bitmap usarem outro formato"
-
 // Settings - Gameplay
 setting_haptics:		"Hápticos"
 description_haptics:	"Faz seu dispositivo vibrar dependendo dos menus e da tela"

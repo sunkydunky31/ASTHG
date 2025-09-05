@@ -129,7 +129,7 @@ class CoolUtil
 
 			#if linux
 			var command:String = '/usr/bin/xdg-open';
-			#else
+			#elseif windows
 			var command:String = 'explorer.exe';
 			#end
 			Sys.command(command, [folder]);
@@ -255,6 +255,20 @@ class CoolUtil
 		mus.persist = true;
 		mus.group = (group == null) ? FlxG.sound.defaultMusicGroup : group;
 		mus.play();
+	}
+
+	/**
+	 * Switches S2 Sonic colors into a char palette index!
+	 * @param sprite Sprite to apply the palette
+	 * @param palIndex Palette array index to use
+	 * 
+	 * Note that the character must be added or loaded to work
+	 */
+	public static function applyPalette(sprite:FlxSprite, palIndex:Int) {
+		sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[0]), FlxColor.fromString(states.PlayState.player.json.palettes[palIndex][0]));
+		sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[1]), FlxColor.fromString(states.PlayState.player.json.palettes[palIndex][1]));
+		sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[2]), FlxColor.fromString(states.PlayState.player.json.palettes[palIndex][2]));
+		sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[3]), FlxColor.fromString(states.PlayState.player.json.palettes[palIndex][3]));
 	}
 }
 

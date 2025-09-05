@@ -1,7 +1,6 @@
 package backend;
 
 #if DISCORD_ALLOWED
-import Sys.sleep;
 import lime.app.Application;
 import hxdiscord_rpc.Discord;
 import hxdiscord_rpc.Types;
@@ -36,29 +35,27 @@ class DiscordClient {
 		trace('[DISCORD] Client has connected!');
 
 		final username:String = request[0].username;
-		final globalName:String = request[0].username;
 		final discriminator:Null<Int> = Std.parseInt(request[0].discriminator);
 
 		if (discriminator != null && discriminator != 0)
 		{
-			trace('[DISCORD] User: ${username}#${discriminator} (${globalName})');
+			trace('[DISCORD] User: ${username}#${discriminator}');
 		}
 		else
 		{
-			trace('[DISCORD] User: @${username} (${globalName})');
+			trace('[DISCORD] User: @${username}');
 		}
 	}
 
 	private static function onError(errorCode:Int, message:cpp.ConstCharStar):Void {
-		trace('Discord: Error ($errorCode: ${cast(message, String)})');
+		trace('[DISCORD] Error ($errorCode: ${cast(message, String)})');
 	}
 
 	private static function onDisconnected(errorCode:Int, message:cpp.ConstCharStar):Void {
-		trace('Discord: Disconnected ($errorCode: ${cast(message, String)})');
+		trace('[DISCORD] Disconnected ($errorCode: ${cast(message, String)})');
 	}
 
-	public static function initialize()
-	{
+	public static function initialize() {
 		var discordHandlers:DiscordEventHandlers = DiscordEventHandlers.create();
 		discordHandlers.ready = cpp.Function.fromStaticFunction(onReady);
 		discordHandlers.disconnected = cpp.Function.fromStaticFunction(onDisconnected);
@@ -84,23 +81,26 @@ class DiscordClient {
 		isInitialized = true;
 	}
 
-	public static function changePresence(?details:String = 'In the Menus', ?state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float)
-	{
+	public static function changePresence(?details:String = "In the Menus", ?state:Null<String>, ?imageLargeKey:String, ?imageLargeText:String, ?imageSmallKey:String, ?imageSmallText:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
 		var startTimestamp:Float = 0;
 		if (hasStartTimestamp) startTimestamp = Date.now().getTime();
 		if (endTimestamp > 0) endTimestamp = startTimestamp + endTimestamp;
 
+		presence.largeImageKey = (imageLargeKey != null) ? imageLargeKey : "icon";
+		presence.largeImageText = (imageLargeText != null) ? imageLargeText : "In menus";
+		
+		if (imageSmallKey != null)
+			presence.smallImageKey = imageSmallKey;
+		if (imageSmallText != null)
+			presence.smallImageText = imageSmallText;
+
 		presence.details = details;
 		presence.state = state;
-		presence.largeImageKey = 'icon';
-		presence.largeImageText = 'Sorry for using the S2A icon ;-;';
-		presence.smallImageKey = smallImageKey;
+
 		// Obtained times are in milliseconds so they are divided so Discord can use it
 		presence.startTimestamp = Std.int(startTimestamp / 1000);
 		presence.endTimestamp = Std.int(endTimestamp / 1000);
 		updatePresence();
-
-		//trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');
 	}
 
 	public static function updatePresence()
@@ -109,8 +109,7 @@ class DiscordClient {
 	public static function resetClientID()
 		clientID = _defaultID;
 
-	private static function set_clientID(newID:String)
-	{
+	private static function set_clientID(newID:String) {
 		var change:Bool = (clientID != newID);
 		clientID = newID;
 
@@ -124,8 +123,7 @@ class DiscordClient {
 	}
 
 	#if MODS_ALLOWED
-	public static function loadModRPC()
-	{
+	public static function loadModRPC() {
 		var pack:Dynamic = Mods.getPack();
 		if(pack != null && pack.discordRPC != null && pack.discordRPC != clientID)
 		{
@@ -134,18 +132,17 @@ class DiscordClient {
 		}
 	}
 	#end
+}
 
-	#if LUA_ALLOWED
-	public static function addLuaCallbacks(lua:State) {
-		Lua_helper.add_callback(lua, "changeDiscordPresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
-			changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
-		});
+typedef DiscordImagePresence = {
+	@:optional
+	var keyLarge:String;
+	@:optional
+	var textLarge:String;
 
-		Lua_helper.add_callback(lua, "changeDiscordClientID", function(?newID:String = null) {
-			if(newID == null) newID = _defaultID;
-			clientID = newID;
-		});
-	}
-	#end
+	@:optional
+	var keySmall:Null<String>;
+	@:optional
+	var textSmall:Null<String>;
 }
 #end

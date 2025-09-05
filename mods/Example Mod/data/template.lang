@@ -25,6 +25,7 @@ mainmenu_title:			""
 mainmenu_save_select:	""
 mainmenu_time_attack:	""
 mainmenu_options:		""
+mainmenu_mods:  		""
 mainmenu_exit:			""
 
 // Mods Menu
@@ -110,3 +111,4 @@ discordrpc_playing:			""
 
 // {1}: Player name
 discordrpc_playing-player:	"{1}"
+discordrpc_editor_mode-edt: ""
