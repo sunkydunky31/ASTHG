@@ -21,6 +21,6 @@ class Init extends MusicBeatState {
 		FlxTransitionableState.skipNextTransIn = true;
 		FlxTransitionableState.skipNextTransOut = true;
 
-		MusicBeatState.switchState(new TitleState());
+		MusicBeatState.switchState(new states.MainMenu());
 	}
 }

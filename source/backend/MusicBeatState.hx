@@ -5,14 +5,12 @@ import flixel.FlxState;
 class MusicBeatState extends FlxState
 {
 	public var controls(get, never):Controls;
-	private function get_controls()
-	{
+	private function get_controls() {
 		return Controls.instance;
 	}
 
 	public var scripts(get, never):Scripts;
-	private function get_scripts()
-	{
+	private function get_scripts() {
 		return Scripts.instance;
 	}
 
@@ -33,8 +31,7 @@ class MusicBeatState extends FlxState
 	}
 
 	public static var timePassedOnState:Float = 0;
-	override function update(elapsed:Float)
-	{
+	override function update(elapsed:Float) {
 		if(FlxG.save.data != null) FlxG.save.data.fullscreen = FlxG.fullscreen;
 
 		super.update(elapsed);
@@ -42,6 +39,8 @@ class MusicBeatState extends FlxState
 		if (FlxG.keys.justPressed.F5) {
 			hotReload();
 		}
+
+		FlxG.watch.addQuick("Elapsed update", elapsed);
 	}
 
 	public static function hotReload() {
@@ -73,8 +72,7 @@ class MusicBeatState extends FlxState
 	}
 
 	// Custom made Trans in
-	public static function startTransition(nextState:FlxState = null)
-	{
+	public static function startTransition(nextState:FlxState = null) {
 		if(nextState == null)
 			nextState = FlxG.state;
 

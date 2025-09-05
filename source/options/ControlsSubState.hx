@@ -51,7 +51,7 @@ class ControlsSubState extends MusicBeatSubstate {
 		
 		var bg:FlxSprite = new FlxSprite().makeGraphic(1, 1, 0xFF000000);
 		bg.scale.set(FlxG.width, FlxG.height);
-		bg.alpha = 0.75;
+		bg.alpha = 0.6;
 		bg.updateHitbox();
 		add(bg);
 		

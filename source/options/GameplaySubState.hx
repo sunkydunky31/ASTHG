@@ -7,6 +7,12 @@ class GameplaySubState extends BaseOptionsMenu {
         
         var option:Option = new Option("Haptics", "Make your device vibrate depending of the content on the screen", "haptics", BOOL);
         addOption(option);
+        
+        var option:Option = new Option("Haptics", "Make your device vibrate depending of the content on the screen", "haptics", BOOL);
+        addOption(option);
+        
+        var option:Option = new Option("Haptics", "Make your device vibrate depending of the content on the screen", "haptics", BOOL);
+        addOption(option);
 
         super();
     }

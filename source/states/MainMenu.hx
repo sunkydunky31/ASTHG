@@ -41,9 +41,9 @@ class MainMenu extends MusicBeatState {
 
 		var titleTxt:FlxBitmapText = new FlxBitmapText(0, 2, Language.getPhrase("mainmenu_title", "Main Menu"), Paths.getAngelCodeFont("HUD"));
 		
-		var titleSpr = FlxScrollingText.add(titleTxt, new openfl.geom.Rectangle(titleTxt.x, titleTxt.y, FlxG.width, titleTxt.height), 4, 0, titleTxt.text);
-		FlxScrollingText.startScrolling(titleSpr);
+		var titleSpr = FlxScrollingText.add(titleTxt, new openfl.geom.Rectangle(titleTxt.x, titleTxt.y, titleTxt.width, titleTxt.height), 1, 0, titleTxt.text);
 		add(titleSpr);
+		FlxScrollingText.startScrolling(titleSpr);
 
 		var version:FlxBitmapText = new FlxBitmapText(0, 0, "v" + Std.string(CoolUtil.getProjectInfo('version')), FlxBitmapFont.fromMonospace("assets/fonts/AbsoluteSystem.png", Constants.ABSOLUTE_FONT_GLYPHDATA, FlxPoint.get(8, 8)));
 		version.setPosition(FlxG.width - version.width - 7, FlxG.height - version.height - 2);
@@ -53,7 +53,8 @@ class MainMenu extends MusicBeatState {
 		add(group);
 
 		for (num => str in options) {
-			var menu:FlxBitmapText = new FlxBitmapText(10, 30 + (18 * num), Language.getPhrase('mainmenu_$str', str), Paths.getAngelCodeFont("HUD"));
+			var menu:FlxBitmapText = new FlxBitmapText(10, 30, Language.getPhrase('mainmenu_$str', str), Paths.getAngelCodeFont("HUD"));
+			menu.y += (18 * num);
 			menu.ID = num;
 			group.add(menu);
 		}
@@ -107,6 +108,9 @@ class MainMenu extends MusicBeatState {
 				});
 			}
 		}
+
+		if (FlxG.keys.justPressed.SEVEN)
+			LoadingState.switchStates(new states.editors.MainMenuEdt());
 		super.update(elapsed);
 	}
 

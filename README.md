@@ -18,14 +18,11 @@ Call me on Discord if you want to talk with me (@sunkydunky31)
 # Compiling resources
 - This repo (lol)
 - [Haxe 4.3.2](https://haxe.org/download/version/4.3.2/)
-- Flixel 5.5.0
-- Flixel Addons
-- OpenFL (any version) and Lime 8.1.2(Haxelib)
-- TJSON (Tolerant JSON, Haxelib)
-- [HXDiscord RPC](https://github.com/FunkinCrew/hxdiscord_rpc)
+
+[Docs](/docs/building/) contains building scripts to install dependencies, and includes an extra script for Windows (Visual Studio Installer resource).
 
 # Modding
-Modding is possible, but still an test feature!
+Check [Modding Docs](docs/modding/README.md)
 
 # Resource Credits
 * Commom sprites and Font: [TeamForever](https://www.youtube.com/@teamforeverdev) from [Sonic 2 Absolute](https://teamforeveronline.wixsite.com/home/sonic-2-absolute)

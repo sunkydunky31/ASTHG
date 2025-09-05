@@ -32,6 +32,7 @@ class PlayState extends MusicBeatState
 	public static var stageBase:StageBase = null;
 	public static var stage:Stage = null;
 	static var isSuper:Bool;
+	private var curPalette:Int = 0;
 
 	public static var livesIcon:LifeIcon;
 
@@ -51,7 +52,7 @@ class PlayState extends MusicBeatState
 		hudPos = new FlxPoint(8,10);
 
 		#if DISCORD_ALLOWED
-		DiscordClient.changePresence(Language.getPhrase('discordrpc_playing', "Testing PlayState"), Language.getPhrase("discordrpc_playing-player", "Playing as {1}", [player.json.name]));
+		DiscordClient.changePresence(Language.getPhrase('discordrpc_playing', "Testing PlayState"), Language.getPhrase("discordrpc_playing-player", "Playing as {1}", [player.json.name]), "icon", "", player.json.name.toLowerCase(), player.json.name);
 		#end
 		Paths.clearStoredMemory();
 
@@ -78,6 +79,7 @@ class PlayState extends MusicBeatState
 		add(uiGroup);
 		
 		// Player init
+		CoolUtil.applyPalette(player, curPalette);
 		add(player);
 		camGame.follow(player, TOPDOWN, 1);
 		
@@ -102,11 +104,13 @@ class PlayState extends MusicBeatState
 		ringsTxt = new FlxBitmapText(hudX, hudTxt.y + 32, '', Paths.getAngelCodeFont("HUD"));
 		ringsTxt.scrollFactor.set();
 		ringsTxt.x -= (ringsTxt.width);
+		ringsTxt.x = timeTxt.x = scoreTxt.x;
 		uiGroup.add(ringsTxt);
 
 		livesIcon = new LifeIcon(player.lifeIcon);
 		livesIcon.x = hudPos.x;
 		livesIcon.y = FlxG.height - 26;
+		CoolUtil.applyPalette(livesIcon, curPalette);
 		uiGroup.add(livesIcon);
 		
 		livesTxt = new FlxBitmapText(livesIcon.x + livesIcon.frameWidth + 1, livesIcon.y + 3, 'livesTxt', Paths.getAngelCodeFont("HUD"));
@@ -144,10 +148,9 @@ class PlayState extends MusicBeatState
 		livesTxt.text = Std.string(lives);
 		
 		#if debug
-		posXTxt.text = StringTools.hex(Std.int(player.x), 4);
-		posYTxt.text = StringTools.hex(Std.int(player.y), 4);
+		posXTxt.text = StringTools.hex(Std.int(player.x), 5);
+		posYTxt.text = StringTools.hex(Std.int(player.y), 5);
 		#end
-		livesIcon.animation.curAnim.curFrame = (isSuper == true) ? 1 : 0;
 		
 		if (FlxG.keys.justPressed.NINE && isSuper == false) {
 			isSuper = true;

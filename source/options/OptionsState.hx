@@ -38,17 +38,17 @@ class OptionsState extends MusicBeatState {
 		add(grpOptions);
 
 		for (num => option in options) {
-			var optionText:FlxText = new FlxText(0, FlxG.height/2-40, 0, Language.getPhrase('options_$option', option));
+			var optionText:FlxText = new FlxText(0, FlxG.height/2-20, 0, Language.getPhrase('options_$option', option));
 			optionText.setFormat(Paths.font("Mania.ttf"), 16, FlxColor.WHITE, CENTER);
 			optionText.y += (20 * (num - (options.length / 2))) + optionText.size;
 			optionText.screenCenter(X);
 			grpOptions.add(optionText);
 		}
 
-		selectorLeft = new FlxText(0, 0, 0, '>');
+		selectorLeft = new FlxText(0, 0, 0, '>>');
 		selectorLeft.setFormat(Paths.font("Mania.ttf"), grpOptions.members[curSelected].size, FlxColor.WHITE, CENTER);
 		add(selectorLeft);
-		selectorRight = new FlxText(0, 0, 0, '<');
+		selectorRight = new FlxText(0, 0, 0, '<<');
 		selectorRight.setFormat(Paths.font("Mania.ttf"), grpOptions.members[curSelected].size, FlxColor.WHITE, CENTER);
 		add(selectorRight);
 
@@ -105,7 +105,7 @@ class OptionsState extends MusicBeatState {
 				item.alpha = 1;
 				selectorLeft.x = item.x - 25;
 				selectorLeft.y = item.y;
-				selectorRight.x = item.x + item.width + 15;
+				selectorRight.x = item.x + item.width + 10;
 				selectorRight.y = item.y;
 			}
 		}

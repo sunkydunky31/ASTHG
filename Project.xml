@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://lime.openfl.org/project/1.0.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
 
-	<!-- _________________________ Application Settings _________________________ -->
+	<!-- ========================= Application Settings ========================= -->
 
 	<app title="Unnamed Sonic Game" file="ASTHG" version="0.0.7"/> <!-- Main Game -->
 	<app company="Sunkydev31" packageName="game.sunkydev.asthg"/> <!-- Comapany Settings -->
@@ -10,7 +10,7 @@
 	<!--Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2-->
 	<set name="SWF_VERSION" value="11.8"/>
 
-	<!-- ____________________________ Window Settings ___________________________ -->
+	<!-- ============================ Window Settings =========================== -->
 
 	<!-- 426:228 is commom on Retro Sonic games, so why not -->
 	<window width="426" height="228" fps="60" background="#000000" hardware="true" vsync="false"/>
@@ -23,13 +23,13 @@
 	
 	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0"/>
 
-	<!-- _______________________________  Defines _______________________________ -->
+	<!-- ===============================  Defines =============================== -->
 	
 	<define name="MODS_ALLOWED"			unless="html5"/>
 	<define name="DISCORD_ALLOWED"		if="cpp"/>
 	<define name="TRANSLATIONS_ALLOWED"	/>
 
-	<!-- _____________________________ Path Settings ____________________________ -->
+	<!-- ============================= Path Settings ============================ -->
 
 	<set name="BUILD_DIR" value="export"/>
 	<source path="source"/>
@@ -38,21 +38,21 @@
 	<assets path="assets/fonts" embed="true"/>
 	<assets path="mods" embed="false" type="template"/>
 
-	<!-- _______________________________ Libraries ______________________________ -->
+	<!-- =============================== Libraries ============================== -->
 
 	<haxelib name="flixel"/>
 	<haxelib name="flixel-addons"/>
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
 	<haxelib name="hscript" if="MODS_ALLOWED"/> <!-- Only for modding! In game scripts will be only source -->
+	<haxelib name="haxeui-core"/>
+	<haxelib name="haxeui-openfl"/>
+	<haxelib name="haxeui-flixel"/>
 	<haxelib name="tjson"/>
-
-	<!--In case you want to use the ui package-->
-	<!--<haxelib name="flixel-ui"/>-->
 
 	<!--In case you want to use nape with flixel-->
 	<!--<haxelib name="nape-haxe4"/>-->
 
-	<!-- ______________________________ Haxedefines _____________________________ -->
+	<!-- ============================== Haxedefines ============================= -->
 	
 	<!--Enable the Flixel core recording system-->
 	<!--<haxedef name="FLX_RECORD"/>-->
@@ -88,7 +88,7 @@
 	<!-- pretty (haxeflixel default), indent, classic (haxe compiler default) -->
 	<haxedef name="message.reporting" value="pretty"/>
 
-	<!-- _________________________________ Custom _______________________________ -->
+	<!-- ================================= Custom =============================== -->
 
 
 	<icon path="executable/icon8.png" size="8"/>

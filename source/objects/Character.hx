@@ -132,7 +132,7 @@ class Character extends FlxSprite {
 		super.update(e);
 	}
 
-	function changeChar(char:String) {
+	public function changeChar(char:String) {
 		if (Paths.fileExists('data/characters/$char.json', TEXT)) {
 			json = cast tjson.TJSON.parse(Paths.getContent('data/characters/$char.json', TEXT));
 		}

@@ -106,9 +106,11 @@ class ModItem extends FlxSpriteGroup {
 		selectBg.visible = false;
 		add(selectBg);
 
-		icon = new FlxSprite(5, 5);
-		icon.antialiasing = ClientPrefs.data.antialiasing;
-		add(icon);
+		if (FileSystem.exists(Paths.mods('$folder/pack.png'))) {
+			icon = new FlxSprite(5, 5);
+			icon.antialiasing = ClientPrefs.data.antialiasing;
+			add(icon);
+		}
 
 		text = new FlxText(95, 38, 230, "", 16);
 		text.setFormat(Paths.font("Mania.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -124,7 +126,7 @@ class ModItem extends FlxSpriteGroup {
 		var iSize:Float = 0;
 		if(FileSystem.exists(file)) {
 			var iSize = Math.round(icon.width / icon.height);
-			if (pack.icon.animated == true)
+			if (pack.iconSettings.animated == true)
 				icon.loadGraphic(Paths.cacheBitmap(file, bmp), true, Std.int(icon.width), Std.int(icon.height));
 			else
 				icon.loadGraphic(Paths.cacheBitmap(file, bmp), true, Math.round(icon.width / iSize), Std.int(icon.height));

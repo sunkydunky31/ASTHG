@@ -28,16 +28,24 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	public var rpcState:String;
 
 	public var bg:FlxSprite;
-	public function new()
-	{
+	
+	var camMenu:FlxCamera = new FlxCamera();
+	public function new() {
+		FlxG.cameras.add(camMenu);
 		super();
 
-		if(title == null) title = Language.getPhrase('options_title', 'Options');
-		if(rpcTitle == null) rpcTitle = Language.getPhrase('discordrpc_options', 'Options Menu');
+		if (title == null) title = Language.getPhrase('options_title', 'Options');
+		if (rpcTitle == null) rpcTitle = Language.getPhrase('discordrpc_options', 'Options Menu');
 				
 		#if DISCORD_ALLOWED
 		DiscordClient.changePresence(rpcTitle, rpcState);
 		#end
+
+		if (bg == null) {
+			bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+			bg.alpha = 0.6;
+			add(bg);
+		}
 
 		// avoids lagspikes while scrolling through menus!
 		grpOptions = new FlxTypedGroup<FlxText>();
@@ -69,15 +77,13 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		descText.borderSize = 1.5;
 		add(descText);
 
-		for (i in 0...optionsArray.length)
-		{
+		for (i in 0...optionsArray.length) {
 			var optionText:FlxText = new FlxText(100, 40, 150, optionsArray[i].name, 16);
 			optionText.font = Paths.font("Mania.ttf");
 			optionText.y += (20 * (i - (optionsArray.length / 2))) + optionText.size;
 			grpOptions.add(optionText);
 
-			if(optionsArray[i].type == BOOL)
-			{
+			if (optionsArray[i].type == BOOL) {
 				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x + 80, optionText.y, Std.string(optionsArray[i].getValue()) == 'true');
 				checkbox.sprTracker = optionText;
 				checkbox.ID = i;
@@ -99,13 +105,15 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			//optionText.snapToPosition(); //Don't ignore me when i ask for not making a fucking pull request to uncomment this line ok
 			updateTextFrom(optionsArray[i]);
 		}
+		grpOptions.cameras = [camMenu];
+		checkboxGroup.cameras = [camMenu];
 
 		changeSelection();
 		reloadCheckboxes();
 	}
 
 	public function addOption(option:Option) {
-		if(optionsArray == null || optionsArray.length < 1) optionsArray = [];
+		if (optionsArray == null || optionsArray.length < 1) optionsArray = [];
 		optionsArray.push(option);
 		return option;
 	}
@@ -119,31 +127,27 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	var bindingBlack:FlxSprite;
 	var bindingText:FlxText;
 	var bindingText2:FlxText;
-	override function update(elapsed:Float)
-	{
+	override function update(elapsed:Float) {
 		super.update(elapsed);
 
-		if(bindingKey)
-		{
+		if (bindingKey) {
 			bindingKeyUpdate(elapsed);
 			return;
 		}
 
 		if (controls.justPressed('up')) changeSelection(-1);
 		if (controls.justPressed('down')) changeSelection(1);
+		if (FlxG.mouse.wheel != 0) changeSelection(FlxG.mouse.wheel * 1);
 
 		if (controls.justPressed('back')) {
 			close();
 			CoolUtil.playSound("Menu Cancel");
 		}
 
-		if(nextAccept <= 0)
-		{
-			switch(curOption.type)
-			{
+		if (nextAccept <= 0) {
+			switch(curOption.type) {
 				case BOOL:
-					if(controls.justPressed('accept'))
-					{
+					if (controls.justPressed('accept')) {
 						CoolUtil.playSound("Menu Change", true);
 						curOption.setValue((curOption.getValue() == true) ? false : true);
 						curOption.change();
@@ -151,8 +155,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 					}
 
 				case KEYBIND:
-					if(controls.justPressed('accept'))
-					{
+					if (controls.justPressed('accept')) {
 						bindingBlack = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 						bindingBlack.scale.set(FlxG.width, FlxG.height);
 						bindingBlack.updateHitbox();
@@ -174,25 +177,22 @@ class BaseOptionsMenu extends MusicBeatSubstate
 					}
 
 				default:
-					if(controls.pressed('left') || controls.pressed('right'))
-					{
+					if (controls.pressed('left') || controls.pressed('right')) {
 						var pressed = (controls.justPressed('left') || controls.justPressed('right'));
-						if(holdTime > 0.5 || pressed)
+						if (holdTime > 0.5 || pressed)
 						{
-							if(pressed)
-							{
+							if (pressed){
 								var add:Dynamic = null;
-								if(curOption.type != STRING)
+								if (curOption.type != STRING)
 									add = controls.pressed('left') ? -curOption.changeValue : curOption.changeValue;
 		
-								switch(curOption.type)
-								{
+								switch(curOption.type) {
 									case INT, FLOAT, PERCENT:
 										holdValue = curOption.getValue() + add;
-										if(holdValue < curOption.minValue) holdValue = curOption.minValue;
+										if (holdValue < curOption.minValue) holdValue = curOption.minValue;
 										else if (holdValue > curOption.maxValue) holdValue = curOption.maxValue;
 		
-										if(curOption.type == INT)
+										if (curOption.type == INT)
 										{
 											holdValue = Math.round(holdValue);
 											curOption.setValue(holdValue);
@@ -205,12 +205,12 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		
 									case STRING:
 										var num:Int = curOption.curOption; //lol
-										if(controls.justPressed('left')) --num;
+										if (controls.justPressed('left')) --num;
 										else num++;
 		
-										if(num < 0)
+										if (num < 0)
 											num = curOption.options.length - 1;
-										else if(num >= curOption.options.length)
+										else if (num >= curOption.options.length)
 											num = 0;
 		
 										curOption.curOption = num;
@@ -223,14 +223,12 @@ class BaseOptionsMenu extends MusicBeatSubstate
 								curOption.change();
 								CoolUtil.playSound("Menu Change", true);
 							}
-							else if(curOption.type != STRING)
-							{
+							else if (curOption.type != STRING){
 								holdValue += curOption.scrollSpeed * elapsed * (controls.pressed('left') ? -1 : 1);
-								if(holdValue < curOption.minValue) holdValue = curOption.minValue;
+								if (holdValue < curOption.minValue) holdValue = curOption.minValue;
 								else if (holdValue > curOption.maxValue) holdValue = curOption.maxValue;
 		
-								switch(curOption.type)
-								{
+								switch(curOption.type) {
 									case INT:
 										curOption.setValue(Math.round(holdValue));
 									
@@ -244,30 +242,25 @@ class BaseOptionsMenu extends MusicBeatSubstate
 							}
 						}
 		
-						if(curOption.type != STRING)
+						if (curOption.type != STRING)
 							holdTime += elapsed;
 					}
-					else if(controls.justReleased('left') || controls.justReleased('right'))
-					{
-						if(holdTime > 0.5) CoolUtil.playSound("Menu Change", true);
+					else if (controls.justReleased('left') || controls.justReleased('right')) {
+						if (holdTime > 0.5) CoolUtil.playSound("Menu Change", true);
 						holdTime = 0;
 					}
 			}
 
-			if(FlxG.keys.pressed.DELETE)
-			{
+			if (FlxG.keys.pressed.DELETE) {
 				var leOption:Option = optionsArray[curSelected];
-				if(leOption.type != KEYBIND)
-				{
+				if (leOption.type != KEYBIND) {
 					leOption.setValue(leOption.defaultValue);
-					if(leOption.type != BOOL)
-					{
-						if(leOption.type == STRING) leOption.curOption = leOption.options.indexOf(leOption.getValue());
+					if (leOption.type != BOOL) {
+						if (leOption.type == STRING) leOption.curOption = leOption.options.indexOf(leOption.getValue());
 						updateTextFrom(leOption);
 					}
 				}
-				else
-				{
+				else {
 					leOption.setValue(!Controls.instance.controllerMode ? leOption.defaultKeys.keyboard : leOption.defaultKeys.gamepad);
 					updateBind(leOption);
 				}
@@ -277,27 +270,22 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			}
 		}
 
-		if(nextAccept > 0) {
+		if (nextAccept > 0) {
 			nextAccept -= 1;
 		}
 	}
 
-	function bindingKeyUpdate(elapsed:Float)
-	{
-		if(FlxG.keys.pressed.ESCAPE || FlxG.gamepads.anyPressed(B))
-		{
+	function bindingKeyUpdate(elapsed:Float) {
+		if (FlxG.keys.pressed.ESCAPE || FlxG.gamepads.anyPressed(B)) {
 			holdingEsc += elapsed;
-			if(holdingEsc > 0.5)
-			{
+			if (holdingEsc > 0.5) {
 				CoolUtil.playSound("Menu Cancel", true);
 				closeBinding();
 			}
 		}
-		else if (FlxG.keys.pressed.BACKSPACE || FlxG.gamepads.anyPressed(BACK))
-		{
+		else if (FlxG.keys.pressed.BACKSPACE || FlxG.gamepads.anyPressed(BACK)) {
 			holdingEsc += elapsed;
-			if(holdingEsc > 0.5)
-			{
+			if (holdingEsc > 0.5) {
 				if (!controls.controllerMode) curOption.keys.keyboard = NONE;
 				else curOption.keys.gamepad = NONE;
 				updateBind(!controls.controllerMode ? InputFormatter.getKeyName(NONE) : InputFormatter.getGamepadName(NONE));
@@ -309,71 +297,59 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		{
 			holdingEsc = 0;
 			var changed:Bool = false;
-			if(!controls.controllerMode)
-			{
-				if(FlxG.keys.justPressed.ANY || FlxG.keys.justReleased.ANY)
-				{
+			if (!controls.controllerMode) {
+				if (FlxG.keys.justPressed.ANY || FlxG.keys.justReleased.ANY) {
 					var keyPressed:FlxKey = cast (FlxG.keys.firstJustPressed(), FlxKey);
 					var keyReleased:FlxKey = cast (FlxG.keys.firstJustReleased(), FlxKey);
 
-					if(keyPressed != NONE && keyPressed != ESCAPE && keyPressed != BACKSPACE)
-					{
+					if (keyPressed != NONE && keyPressed != ESCAPE && keyPressed != BACKSPACE) {
 						changed = true;
 						curOption.keys.keyboard = keyPressed;
 					}
-					else if(keyReleased != NONE && (keyReleased == ESCAPE || keyReleased == BACKSPACE))
-					{
+					else if (keyReleased != NONE && (keyReleased == ESCAPE || keyReleased == BACKSPACE)) {
 						changed = true;
 						curOption.keys.keyboard = keyReleased;
 					}
 				}
 			}
-			else if(FlxG.gamepads.anyJustPressed(ANY) || FlxG.gamepads.anyJustPressed(LEFT_TRIGGER) || FlxG.gamepads.anyJustPressed(RIGHT_TRIGGER) || FlxG.gamepads.anyJustReleased(ANY))
-			{
+			else if (FlxG.gamepads.anyJustPressed(ANY) || FlxG.gamepads.anyJustPressed(LEFT_TRIGGER) || FlxG.gamepads.anyJustPressed(RIGHT_TRIGGER) || FlxG.gamepads.anyJustReleased(ANY)) {
 				var keyPressed:FlxGamepadInputID = NONE;
 				var keyReleased:FlxGamepadInputID = NONE;
-				if(FlxG.gamepads.anyJustPressed(LEFT_TRIGGER))
+				if (FlxG.gamepads.anyJustPressed(LEFT_TRIGGER))
 					keyPressed = LEFT_TRIGGER; //it wasnt working for some reason
-				else if(FlxG.gamepads.anyJustPressed(RIGHT_TRIGGER))
+				else if (FlxG.gamepads.anyJustPressed(RIGHT_TRIGGER))
 					keyPressed = RIGHT_TRIGGER; //it wasnt working for some reason
-				else
-				{
-					for (i in 0...FlxG.gamepads.numActiveGamepads)
-					{
+				else {
+					for (i in 0...FlxG.gamepads.numActiveGamepads) {
 						var gamepad:FlxGamepad = FlxG.gamepads.getByID(i);
-						if(gamepad != null)
+						if (gamepad != null)
 						{
 							keyPressed = gamepad.firstJustPressedID();
 							keyReleased = gamepad.firstJustReleasedID();
-							if(keyPressed != NONE || keyReleased != NONE) break;
+							if (keyPressed != NONE || keyReleased != NONE) break;
 						}
 					}
 				}
 
-				if(keyPressed != NONE && keyPressed != FlxGamepadInputID.BACK && keyPressed != FlxGamepadInputID.B)
-				{
+				if (keyPressed != NONE && keyPressed != FlxGamepadInputID.BACK && keyPressed != FlxGamepadInputID.B) {
 					changed = true;
 					curOption.keys.gamepad = keyPressed;
 				}
-				else if(keyReleased != NONE && (keyReleased == FlxGamepadInputID.BACK || keyReleased == FlxGamepadInputID.B))
-				{
+				else if (keyReleased != NONE && (keyReleased == FlxGamepadInputID.BACK || keyReleased == FlxGamepadInputID.B)) {
 					changed = true;
 					curOption.keys.gamepad = keyReleased;
 				}
 			}
 
-			if(changed)
-			{
+			if (changed) {
 				var key:String = null;
-				if(!controls.controllerMode)
-				{
-					if(curOption.keys.keyboard == null) curOption.keys.keyboard = 'NONE';
+				if (!controls.controllerMode) {
+					if (curOption.keys.keyboard == null) curOption.keys.keyboard = 'NONE';
 					curOption.setValue(curOption.keys.keyboard);
 					key = InputFormatter.getKeyName(FlxKey.fromString(curOption.keys.keyboard));
 				}
-				else
-				{
-					if(curOption.keys.gamepad == null) curOption.keys.gamepad = 'NONE';
+				else {
+					if (curOption.keys.gamepad == null) curOption.keys.gamepad = 'NONE';
 					curOption.setValue(curOption.keys.gamepad);
 					key = InputFormatter.getGamepadName(FlxGamepadInputID.fromString(curOption.keys.gamepad));
 				}
@@ -385,15 +361,13 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	}
 
 	final MAX_KEYBIND_WIDTH = 320;
-	function updateBind(?text:String = null, ?option:Option = null)
-	{
-		if(option == null) option = curOption;
-		if(text == null)
-		{
+	function updateBind(?text:String = null, ?option:Option = null) {
+		if (option == null) option = curOption;
+		if (text == null) {
 			text = option.getValue();
-			if(text == null) text = 'NONE';
+			if (text == null) text = 'NONE';
 
-			if(!controls.controllerMode)
+			if (!controls.controllerMode)
 				text = InputFormatter.getKeyName(FlxKey.fromString(text));
 			else
 				text = InputFormatter.getGamepadName(FlxGamepadInputID.fromString(text));
@@ -411,8 +385,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		bind.destroy();
 	}
 
-	function closeBinding()
-	{
+	function closeBinding() {
 		bindingKey = false;
 		bindingBlack.destroy();
 		remove(bindingBlack);
@@ -425,31 +398,34 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	}
 
 	function updateTextFrom(option:Option) {
-		if(option.type == KEYBIND)
-		{
+		if (option.type == KEYBIND) {
 			updateBind(option);
 			return;
 		}
 
 		var text:String = option.displayFormat;
 		var val:Dynamic = option.getValue();
-		if(option.type == PERCENT) val *= 100;
+		if (option.type == PERCENT) val *= 100;
 		var def:Dynamic = option.defaultValue;
 		option.text = text.replace('%v', val).replace('%d', def);
 	}
-	
-	function changeSelection(change:Int = 0)
-	{
+
+	var visibleRows = 7;
+	var optionHeight = 16;
+	function changeSelection(change:Int = 0) {
 		curSelected = FlxMath.wrap(curSelected + change, 0, optionsArray.length - 1);
+		if (grpOptions.length > 7) {
+			camMenu.scroll.y = curSelected * optionHeight - (visibleRows / 2) * optionHeight;
+		}
 
 		descText.text = optionsArray[curSelected].description;
 		descText.screenCenter(Y);
 		descText.y += 80;
 
-		for (num => item in grpOptions) {
-			item.alpha = (item.ID != curSelected) ? 0.6 : 1;
-			trace('Changed item: ${item.text} (ID ${item.ID})');
+		for (item in 0...grpOptions.length) {
+			grpOptions.members[item].alpha = (item != curSelected) ? 0.6 : 1;
 		}
+
 		for (text in grpTexts) {
 			text.alpha = (text.ID != curSelected) ? 0.6 : 1;
 		}
