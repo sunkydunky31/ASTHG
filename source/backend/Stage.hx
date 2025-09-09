@@ -15,7 +15,7 @@ class Stage extends flixel.group.FlxGroup {
         super();
 		instance = this;
         loadAssets(folder, act);
-		FlxG.collide(states.PlayState.player, walls);
+		FlxG.collide(states.PlayState.instance.player, walls);
 	}
     
 	public function loadAssets(folder:String, act:Int) {
@@ -32,7 +32,7 @@ class Stage extends flixel.group.FlxGroup {
 	{
 		if (entity.name == "player")
 		{
-			states.PlayState.player.setPosition(entity.x, entity.y);
+			states.PlayState.instance.player.setPosition(entity.x, entity.y);
 		}
 	}
 }

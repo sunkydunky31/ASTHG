@@ -14,13 +14,15 @@ class Init extends MusicBeatState {
 		FlxG.game.focusLostFramerate = 60;
 		ClientPrefs.loadPrefs();
 		Language.reloadPhrases();
+		#if MODS_ALLOWED
 		scripts.reloadScripts();
 
 		scripts.callHook('onGameStart', []);
+		#end
 
 		FlxTransitionableState.skipNextTransIn = true;
 		FlxTransitionableState.skipNextTransOut = true;
 
-		MusicBeatState.switchState(new states.MainMenu());
+		MusicBeatState.switchState(new states.SaveSelect());
 	}
 }

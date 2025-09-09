@@ -1,5 +1,6 @@
 package backend;
 
+import openfl.display.BitmapData;
 import flixel.sound.FlxSoundGroup;
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
@@ -160,7 +161,7 @@ class CoolUtil
 		return FlxG.stage.application.meta.get(metaIndex);
 	}
 
-	public static function setTextBorderFromString(text:FlxText, border:String, ?x:Float, ?y:Float)
+	public static function setTextBorderFromString(text:FlxText, border:String, ?options:Array<Dynamic>)
 	{
 		switch(border.toLowerCase().trim())
 		{
@@ -168,10 +169,16 @@ class CoolUtil
 				text.borderStyle = SHADOW;
 			case 'shadow_xy', 'shadowxy':
 				#if (flixel >= "5.9.0")
-				text.borderStyle = FlxTextBorderStyle.SHADOW_XY(x, y);
+				if (Std.isOfType(options[0], Int) && Std.isOfType(options[1], Int))
+					text.borderStyle = FlxTextBorderStyle.SHADOW_XY(options[0], options[1]);
+				else
+					text.borderStyle = FlxTextBorderStyle.SHADOW_XY(1, 1);
 				#else
 				text.borderStyle = FlxTextBorderStyle.SHADOW;
-				text.shadowOffset.set(x, y);
+				if (Std.isOfType(options[0], Int) && Std.isOfType(options[1], Int))
+					text.shadowOffset.set(options[0], options[1]);
+				else
+					text.shadowOffset.set(1, 1);
 				#end
 			case 'outline':
 				text.borderStyle = OUTLINE;
@@ -234,6 +241,7 @@ class CoolUtil
 	@param group Sets a sound group for `this` music
 	**/
 	public static function playMusic(sound:String, loopStart:SoundLoop, ?volume:Float = 1.0, ?group:FlxSoundGroup) {
+
 		if (mus == null) { mus = new FlxSound(); }
 		else if (mus.active) { mus.stop(); }
 		
@@ -248,12 +256,11 @@ class CoolUtil
 		case v if (v > 1):
 			mus.looped = true;
 			mus.loopTime = CoolUtil.getSampleLoop(loopStart.sample, (loopStart.hz == null) ? 44100 : loopStart.hz);
-
 			//trace("Cur music will loop in " + mus.loopTime);
 		}
 		mus.volume = volume;
 		mus.persist = true;
-		mus.group = (group == null) ? FlxG.sound.defaultMusicGroup : group;
+		group = (group == null) ? FlxG.sound.defaultMusicGroup : group;
 		mus.play();
 	}
 
@@ -264,11 +271,11 @@ class CoolUtil
 	 * 
 	 * Note that the character must be added or loaded to work
 	 */
-	public static function applyPalette(sprite:FlxSprite, palIndex:Int) {
-		sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[0]), FlxColor.fromString(states.PlayState.player.json.palettes[palIndex][0]));
-		sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[1]), FlxColor.fromString(states.PlayState.player.json.palettes[palIndex][1]));
-		sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[2]), FlxColor.fromString(states.PlayState.player.json.palettes[palIndex][2]));
-		sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[3]), FlxColor.fromString(states.PlayState.player.json.palettes[palIndex][3]));
+	public static function applyPalette(sprite:FlxSprite, pal:Array<Dynamic>) {
+			sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[0]), FlxColor.fromString(pal[0]));
+			sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[1]), FlxColor.fromString(pal[1]));
+			sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[2]), FlxColor.fromString(pal[2]));
+			sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[3]), FlxColor.fromString(pal[3]));
 	}
 }
 

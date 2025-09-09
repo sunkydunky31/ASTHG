@@ -1,0 +1,225 @@
+import hxp.*;
+import lime.tools.*;
+
+// TODO: finish this
+class Project extends HXProject {
+	static final TITLE = "Unnamed Sonic Game";
+	static final VERSION = "0.0.8";
+	static final COMPANY = "Sunkydev31";
+	static final PACKAGE_NAME = "game.sunkydev.asthg";
+
+	static final FILE = "ASTHG";
+	static final MAIN_CLASS = "Main";
+	static final PRELOADER = "flixel.system.FlxPreloader";
+
+	static final MODS_ALLOWED = "MODS_ALLOWED";
+	static final DISCORD_ALLOWED = "DISCORD_ALLOWED";
+	static final TRANSLATIONS_ALLOWED = "TRANSLATIONS_ALLOWED";
+	static final HAPTICS_ALLOWED = "HAPTICS_ALLOWED";
+
+	static var EXCLUDE_ASSETS:Array<String> = [];
+	static var customDefines:Array<String> = [];
+
+	public function new() {
+		super();
+		
+		this.meta.title = TITLE;
+		this.meta.version = VERSION;
+		this.meta.company = COMPANY;
+		this.meta.packageName = PACKAGE_NAME;
+
+		this.app.file = FILE;
+		this.app.main = MAIN_CLASS;
+		this.app.preloader = PRELOADER;
+		this.app.path = 'export/${isBuildFlag("debug") ? "debug" : "release"}';
+
+
+		if (isTarget("mobile")) {
+			this.window.width = 0;
+			this.window.height = 0;
+			this.window.fullscreen = true;
+		}
+		else
+		{
+			this.window.width = 426;
+			this.window.height = 228;
+		}
+		this.window.orientation = Orientation.LANDSCAPE;
+		this.window.fps = 60;
+		this.window.background = (isBuildFlag("debug")) ? 0xff00ff : 0x000000;
+		this.window.resizable = (isTarget("html5") || isTarget("desktop")) ? true : false;
+
+		setFlag(MODS_ALLOWED, (isTarget("html5")) ? "false" : "true");
+		setFlag(DISCORD_ALLOWED, (isTarget("cpp")) ? "true" : "false");
+		setFlag(TRANSLATIONS_ALLOWED, "true");
+		setFlag(HAPTICS_ALLOWED, (isTarget("mobile") ? "true" : "false"));
+
+		syncDefines();
+
+
+		if (isTarget("html5") || isTarget("flash")) {
+			EXCLUDE_ASSETS.push("*.ogg");
+		}
+		else {
+			EXCLUDE_ASSETS.push("*.mp3");
+		}
+
+		if (isBuildFlag("debug")) {
+			echo("");
+			echo('$TITLE v$VERSION');
+			echo("-----------------------------------------");
+			echo('Company.................${COMPANY}');
+			echo('Package.................${PACKAGE_NAME}');
+			echo('App file................${FILE}');
+			echo('');
+			echo('MODS_ALLOWED............${getFlag(MODS_ALLOWED)}');
+			echo('DISCORD_ALLOWED.........${getFlag(DISCORD_ALLOWED)}');
+			echo('TRANSLATIONS_ALLOWED....${getFlag(TRANSLATIONS_ALLOWED)}');
+			echo('HAPTICS_ALLOWED.........${getFlag(HAPTICS_ALLOWED)}');
+			echo('');
+		}
+
+		includeAssets("assets/shared", null, null, EXCLUDE_ASSETS);
+		includeAssets("assets/translations", "assets/", null, EXCLUDE_ASSETS);
+		includeAssets("assets/fonts", null);
+		if (hasFlag(MODS_ALLOWED))
+			includeAssets("mods");
+
+		sources.push("source");
+
+		haxelibs.push(new Haxelib("flixel"));
+		haxelibs.push(new Haxelib("flixel-addons"));
+		haxelibs.push(new Haxelib("haxeui-core"));
+		haxelibs.push(new Haxelib("haxeui-openfl"));
+		haxelibs.push(new Haxelib("haxeui-flixel"));
+		haxelibs.push(new Haxelib("tjson"));
+
+		if (isTarget("cpp") && defines.exists(DISCORD_ALLOWED))
+			haxelibs.push(new Haxelib("hxdiscord_rpc"));
+		
+		if (defines.exists(MODS_ALLOWED))
+			haxelibs.push(new Haxelib("hscript"));
+
+		if (isTarget("mobile")) {
+			haxedefs.set("FLX_NO_MOUSE", null);
+			haxedefs.set("FLX_NO_KEYBOARD", null);
+		}
+
+		if (isTarget("desktop")) {
+			haxedefs.set("FLX_NO_TOUCH", null);
+		}
+
+		if (!isBuildFlag("debug")) {
+			haxedefs.set("FLX_NO_DEBUG", null);
+			haxedefs.set("NAPE_RELEASE_BUILD", null);
+		}
+		haxedefs.set("message.reporting", "pretty");
+
+		icons.push(new Icon("executable/icon8.png",		8));
+		icons.push(new Icon("executable/icon16.png",	16));
+		icons.push(new Icon("executable/icon_expand.png"));
+	}
+
+	/**
+	Gets a bool if the project is runnning on the selected
+	platform
+	@param key Platform target
+	**/
+	function isTarget(key:String) {
+		switch (key.toLowerCase()) {
+			case "air":
+				return this.target == Platform.AIR;
+			case "android":
+				return this.target == Platform.ANDROID;
+			case "blackberry":
+				return this.target == Platform.BLACKBERRY;
+			case "console":
+				return this.platformType == PlatformType.CONSOLE;
+			case "console_pc", "console-pc", "consolepc":
+				return this.target == Platform.CONSOLE_PC;
+			case "cpp", "cs", "hl", "java", "mingw", "neko", "nodejs", "uwp", "winjs":
+				return this.targetFlags.exists(key);
+			case "desktop":
+				return this.platformType == PlatformType.DESKTOP;
+			case "emscripten", "emscript":
+				return this.target == Platform.EMSCRIPTEN;
+			case "firefox":
+				return this.target == Platform.FIREFOX;
+			case "flash":
+				return this.target == Platform.FLASH;
+			case "html5":
+				return this.target == Platform.HTML5;
+			case "ios", "iphone", "ipad":
+				return this.target == Platform.IOS;
+			case "linux":
+				return this.target == Platform.LINUX;
+			case "mac":
+				return this.target == Platform.MAC;
+			case "mobile":
+				return this.platformType == PlatformType.MOBILE;
+			case "ps3":
+				return this.target == Platform.PS3;
+			case "ps4":
+				return this.target == Platform.PS4;
+			case "tizen":
+				return this.target == Platform.TIZEN;
+			case "tvos", "tv_os":
+				return this.target == Platform.TVOS;
+			case "vita":
+				return this.target == Platform.VITA;
+			case "webassembly", "webassem", "web_assembly":
+				return this.target == Platform.WEB_ASSEMBLY;
+			case "webos": // wtf LG WebOS support??
+				return this.target == Platform.WEBOS;
+			case "web":
+				return this.platformType == PlatformType.WEB;
+			case "wiiu", "wii_u":
+				return this.target == Platform.WIIU;
+			case "windows":
+				return this.target == Platform.WINDOWS;
+			case "xbox", "xbox1":
+				return this.target == Platform.XBOX1;
+			default: return false;
+		}
+	}
+
+	function isBuildFlag(key:String) {
+		switch (key.toLowerCase()) {
+			case "release": return !this.debug;
+			case "debug": return this.debug;
+			default: return false;
+		}
+	}
+
+	function hasFlag(key:String) {
+		return this.defines.exists(key);
+	}
+
+	function setFlag(key:String, value:Dynamic) {
+		if (!customDefines.contains(key)) //Prevents "key" to be added again
+			customDefines.push(key);
+		return this.defines.set(key, Std.string(value));
+	}
+
+	function getFlag(key:String) {
+		return this.defines.get(key);
+	}
+
+	function syncDefines():Void {
+		for (key in customDefines) {
+			var value = this.defines.get(key);
+			if (value == null || value == "true") {
+				this.haxedefs.set(key, null);
+			//	echo('Added "$key" to HaxeDef');
+			}
+			else if (value != "false") {
+				this.haxedefs.set(key, value);
+			//	echo('Added ("$key", "$value") to HaxeDef');
+			}
+		}
+	}
+
+	function echo(value:String)
+		return Sys.println(value);
+
+}

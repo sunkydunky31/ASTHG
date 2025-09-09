@@ -1,5 +1,6 @@
 package states;
 
+import flixel.ui.FlxBar;
 import objects.Character;
 import lime.app.Promise;
 import lime.app.Future;
@@ -39,7 +40,7 @@ class LoadingState extends MusicBeatState
 	}
 
 	var loadingTxt:FlxText;
-	var loadBar:FlxSprite;
+	var loadBar:FlxBar;
 	var player:Character;
 	override function create()
 	{
@@ -53,8 +54,8 @@ class LoadingState extends MusicBeatState
 		loadingTxt = new FlxText(0, 70, 0, Language.getPhrase("loading", "Loading..."), 16);
 		add(loadingTxt);
 
-		loadBar = new FlxSprite(0, FlxG.height - 20).makeGraphic(FlxG.width, 10, 0xffff16d2);
-		loadBar.screenCenter(X);
+		loadBar = new FlxBar(0, FlxG.height - 20, FlxBarFillDirection.LEFT_TO_RIGHT, FlxG.width, 10);
+		loadBar.createFilledBar(0xFF404040, 0xffff16d2);
 		add(loadBar);
 		super.create();
 	}

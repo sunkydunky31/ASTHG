@@ -27,6 +27,10 @@ class MainMenu extends MusicBeatState {
 		var bg:FlxSprite = CoolUtil.makeBGGradient([0xFF793BFF, 0xFF95EDFF], 4, 32, false);
 		add(bg);
 
+		var bgLayer:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		bgLayer.alpha = ClientPrefs.data.backLayers;
+		add(bgLayer);
+
 		var backd:FlxBackdrop = new FlxBackdrop(Paths.image("UI/backdropX"), X);
 		backd.y = 15;
 		backd.flipY = true;

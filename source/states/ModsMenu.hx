@@ -1,6 +1,5 @@
 package states;
 import openfl.display.BitmapData;
-import backend.Mods;
 
 class ModsMenu extends MusicBeatState {
 	var bg:FlxSprite;
@@ -29,21 +28,22 @@ class ModsMenu extends MusicBeatState {
 		DiscordClient.changePresence(Language.getPhrase('discordrpc_mods_menu', "Mods Menu"), null);
 		#end
 
-		bg = new FlxSprite().makeGraphic(1, 1, 0xFF350000);
-		bg.scale.set(FlxG.width, FlxG.height);
-		bg.updateHitbox();
+		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFF350000);
 		add(bg);
 
+		var bgLayer:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		bgLayer.alpha = ClientPrefs.data.backLayers;
+		add(bgLayer);
+
 		var title:FlxBitmapText = new FlxBitmapText(FlxG.width/2, 10, Language.getPhrase("mods_title", "Mods Menu"), Paths.getAngelCodeFont("Roco"));
-		title.setBorderStyle(FlxTextBorderStyle.SHADOW, FlxColor.BLACK, 1, 0);
-		title.shadowOffset.set(2, 2);
+		title.setBorderStyle(FlxTextBorderStyle.SHADOW, FlxColor.BLACK, 2, 0);
 		title.x -= title.width / 2;
 		add(title);
 
 		for (i => mod in modList.all) {
 			if (startMod == mod) curSelected = i;
 
-			var modItem:ModItem = new ModItem(mod);
+			var modItem:ModItem = new ModItem(mod, 0);
 			if (!Mods.getModEnabled(mod) && modItem.icon != null) {
 				modItem.icon.color = 0xFF707070;
 			}
@@ -79,7 +79,7 @@ class ModItem extends FlxSpriteGroup {
 	public var settings:Array<Dynamic> = null;
 	public var iconSettings:Dynamic = null;
 
-	public function new(folder:String) {
+	public function new(folder:String, id:Int) {
 		super();
 
 		this.folder = folder;
@@ -108,7 +108,6 @@ class ModItem extends FlxSpriteGroup {
 
 		if (FileSystem.exists(Paths.mods('$folder/pack.png'))) {
 			icon = new FlxSprite(5, 5);
-			icon.antialiasing = ClientPrefs.data.antialiasing;
 			add(icon);
 		}
 
@@ -130,7 +129,6 @@ class ModItem extends FlxSpriteGroup {
 				icon.loadGraphic(Paths.cacheBitmap(file, bmp), true, Std.int(icon.width), Std.int(icon.height));
 			else
 				icon.loadGraphic(Paths.cacheBitmap(file, bmp), true, Math.round(icon.width / iSize), Std.int(icon.height));
-			icon.antialiasing = false;
 			icon.scale.set(0.5, 0.5);
 			icon.updateHitbox();
 		}

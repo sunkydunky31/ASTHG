@@ -6,7 +6,8 @@ class OptionsState extends MusicBeatState {
 	var options:Array<String> = [
 		"Controls",
 		"Graphics",
-		"Gameplay"
+		"Gameplay",
+		"System"
 		#if TRANSLATIONS_ALLOWED , 'Language' #end
 	];
 	private var grpOptions:FlxTypedGroup<FlxText>;
@@ -19,6 +20,7 @@ class OptionsState extends MusicBeatState {
 			case 'Controls': openSubState(new options.ControlsSubState());
 			case 'Graphics': openSubState(new options.GraphicsSubState());
 			case 'Gameplay': openSubState(new options.GameplaySubState());
+			case 'System': openSubState(new options.SystemSubState());
 			case 'Language': openSubState(new options.LanguageSubState());
 		}
 	}
@@ -33,6 +35,10 @@ class OptionsState extends MusicBeatState {
 
 		var bg:FlxSprite = CoolUtil.makeBGGradient([0xFF561ECF, 0xFFEFFD26], 2, 37, false);
 		add(bg);
+
+		var bgLayer:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		bgLayer.alpha = ClientPrefs.data.backLayers;
+		add(bgLayer);
 
 		grpOptions = new FlxTypedGroup<FlxText>();
 		add(grpOptions);

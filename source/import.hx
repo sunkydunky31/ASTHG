@@ -3,6 +3,10 @@
 import backend.Discord;
 #end
 
+#if MODS_ALLOWED
+import backend.Mods;
+#end
+
 #if sys
 import sys.*;
 import sys.io.*;

@@ -9,14 +9,19 @@ import flixel.util.helpers.FlxBounds;
 
 class PlayState extends MusicBeatState
 {
-	public static var score:Int = 10;
-	public static var time:String = "0:00";
-	public static var rings:Int = 0;
-	public static var lives:Int = 3;
-	public static var hudPos:FlxPoint;
+	public static var instance:PlayState;
+
+	public var score:Int = 10;
+	public var time:String = "0:00";
+	public var rings:Int = 0;
+	public var lives:Int = 3;
+
+	public var hudPos:FlxPoint;
+
 	public var camGame:FlxCamera;
 	public var camFront:FlxCamera;
 	public var camHUD:FlxCamera;
+
 	public var uiGroup:FlxSpriteGroup;
 
 	var scoreTxt:FlxBitmapText;
@@ -28,15 +33,18 @@ class PlayState extends MusicBeatState
 	var posYTxt:FlxBitmapText;
 	#end
 
-	public static var player:Character = null;
-	public static var stageBase:StageBase = null;
-	public static var stage:Stage = null;
-	static var isSuper:Bool;
-	private var curPalette:Int = 0;
+	public var player:Character = null;
+	public var stageBase:StageBase = null;
+	public var stage:Stage = null;
 
-	public static var livesIcon:LifeIcon;
+	public var livesIcon:LifeIcon;
 
 	override public function create() {
+		instance = this;
+
+		score = 0;
+		time = "0:00";
+		rings = 0;
 		stageBase = new StageBase("greenHill", 1);
 		player = new Character(50, 50, Character.defaultPlayer);
 
@@ -79,11 +87,12 @@ class PlayState extends MusicBeatState
 		add(uiGroup);
 		
 		// Player init
-		CoolUtil.applyPalette(player, curPalette);
 		add(player);
 		camGame.follow(player, TOPDOWN, 1);
 		
+		#if MODS_ALLOWED
 		scripts.callHook('onCreate', []);
+		#end
 		super.create();
 		
 		var hudTxt:FlxBitmapText = new FlxBitmapText(hudPos.x, hudPos.y, Language.getPhrase("hud_text", "Score\nTime\nRings"), Paths.getAngelCodeFont("HUD"));
@@ -110,7 +119,6 @@ class PlayState extends MusicBeatState
 		livesIcon = new LifeIcon(player.lifeIcon);
 		livesIcon.x = hudPos.x;
 		livesIcon.y = FlxG.height - 26;
-		CoolUtil.applyPalette(livesIcon, curPalette);
 		uiGroup.add(livesIcon);
 		
 		livesTxt = new FlxBitmapText(livesIcon.x + livesIcon.frameWidth + 1, livesIcon.y + 3, 'livesTxt', Paths.getAngelCodeFont("HUD"));
@@ -152,12 +160,12 @@ class PlayState extends MusicBeatState
 		posYTxt.text = StringTools.hex(Std.int(player.y), 5);
 		#end
 		
-		if (FlxG.keys.justPressed.NINE && isSuper == false) {
-			isSuper = true;
-		}
-		else if (FlxG.keys.justPressed.NINE && isSuper == true) {
-			isSuper = false;
-		}
+		CoolUtil.applyPalette(livesIcon, [
+			player.json.palettes[player.curPalette][0],
+			player.json.palettes[player.curPalette][1],
+			player.json.palettes[player.curPalette][2],
+			player.json.palettes[player.curPalette][3]
+		]);
 
 		if (FlxG.keys.justPressed.SIX) { 
 			rings += 10;

@@ -1,12 +1,19 @@
 package objects;
 
 class LifeIcon extends FlxSprite {
-	var charObj:Character = states.PlayState.player;
+	var charObj:Character;
+	public var originalSprite:openfl.display.BitmapData;
 	public function new(char:String) {
 		super();
+
+		if (states.PlayState.instance != null)
+			charObj = states.PlayState.instance.player;
+
 		init(char);
 
 		scrollFactor.set();
+
+		originalSprite = this.pixels.clone();
 	}
 
 	/**
@@ -24,7 +31,7 @@ class LifeIcon extends FlxSprite {
 	
 		if (!Paths.fileExists("images/" + img + ".png", IMAGE)) {
 			img = "characters/Sonic/liveIcon";
-			trace("[LIFEICON] Not found again! Getting BLANK placeholder");
+			trace("[LIFEICON] Not found again! Getting placeholder");
 		}
 		var graphic = Paths.image(img);
 

@@ -4,7 +4,7 @@ cls
 title ASTHG Build State
 
 :: ------------- CONFIG -----------------
-set CWD="%UserProfile%/Documents/default/"
+set CWD="%UserProfile%/Documents/ASTHG/"
 set PLATFORM="cpp"
 set BUILD_FLAGS="-debug"
 :: --------------------------------------

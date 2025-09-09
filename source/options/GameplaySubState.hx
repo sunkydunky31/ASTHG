@@ -5,13 +5,13 @@ class GameplaySubState extends BaseOptionsMenu {
         title = Language.getPhrase("options_gameplay", 'Gameplay');
         rpcState = Language.getPhrase("discordrpc_options-gameplay", "Gameplay Substate");
         
-        var option:Option = new Option("Haptics", "Make your device vibrate depending of the content on the screen", "haptics", BOOL);
+        var option:Option = new Option("Auto Pause", "", "autoPause", BOOL);
         addOption(option);
         
-        var option:Option = new Option("Haptics", "Make your device vibrate depending of the content on the screen", "haptics", BOOL);
+        var option:Option = new Option("Flashing Lights", "", "flashing", BOOL);
         addOption(option);
         
-        var option:Option = new Option("Haptics", "Make your device vibrate depending of the content on the screen", "haptics", BOOL);
+        var option:Option = new Option("Hide Hud", "", "hideHud", BOOL);
         addOption(option);
 
         super();

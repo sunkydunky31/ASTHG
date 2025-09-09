@@ -57,18 +57,13 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		checkboxGroup = new FlxTypedGroup<CheckboxThingie>();
 		add(checkboxGroup);
 
-		descBox = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
+		descBox = new FlxSprite().makeGraphic(FlxG.width, 1, FlxColor.BLACK);
 		descBox.alpha = 0.6;
 		add(descBox);
 
 		var titleText:FlxBitmapText = new FlxBitmapText(FlxG.width/2, 10, title, Paths.getAngelCodeFont("Roco"));
 		titleText.x -= (titleText.width/2);
-		#if (flixel >= "5.9.0")
-		titleText.setBorderStyle(FlxTextBorderStyle.SHADOW_XY(2, 2), FlxColor.BLACK, 1, 0);
-		#else
-		titleText.setBorderStyle(FlxTextBorderStyle.SHADOW, FlxColor.BLACK, 1, 0);
-		titleText.shadowOffset.set(2, 2);
-		#end
+		titleText.setBorderStyle(FlxTextBorderStyle.SHADOW, FlxColor.BLACK, 2, 0);
 		add(titleText);
 
 		descText = new FlxText(0, 190, FlxG.width, "");
@@ -78,7 +73,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		add(descText);
 
 		for (i in 0...optionsArray.length) {
-			var optionText:FlxText = new FlxText(100, 40, 150, optionsArray[i].name, 16);
+			var optionText:FlxText = new FlxText(100, 80, 0, optionsArray[i].name, 16);
 			optionText.font = Paths.font("Mania.ttf");
 			optionText.y += (20 * (i - (optionsArray.length / 2))) + optionText.size;
 			grpOptions.add(optionText);
@@ -430,8 +425,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			text.alpha = (text.ID != curSelected) ? 0.6 : 1;
 		}
 
-		descBox.setPosition(0, descText.y - 8);
-		descBox.setGraphicSize(FlxG.width, Std.int(descText.height + 23));
+		descBox.setPosition(0, descText.y - 6);
+		descBox.setGraphicSize(1, Std.int(descText.height + 23));
 		descBox.updateHitbox();
 
 		curOption = optionsArray[curSelected]; //shorter lol

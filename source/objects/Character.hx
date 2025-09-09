@@ -13,6 +13,12 @@ class Character extends FlxSprite {
 	public var json:CharacterData;
 	public var animData:Access; 
 	public final lifeIcon:String = "liveIcon";
+	
+	// Special events
+	public var curPalette:Int = 0;
+
+	// Changing pal n' stuff
+	public var originalSprite:openfl.display.BitmapData;
 
 	/**
 	 * Contains default animations used by all characters
@@ -63,7 +69,7 @@ class Character extends FlxSprite {
 	public function new(x:Float, y:Float, ?char:String) {
 		super(x, y);
 		changeChar(char);
-
+		
 		maxVelocity.set(90, 200);
 		acceleration.y = 0;
 		velocity.x = 0;
@@ -73,6 +79,8 @@ class Character extends FlxSprite {
 
 		origin.set(width/2, height);
 		updateHitbox();
+
+		originalSprite = this.pixels.clone();
 	}
 
 	function updateMoves() {
@@ -93,14 +101,8 @@ class Character extends FlxSprite {
 		if (inputLEFT && inputRIGHT)
 			inputLEFT = inputRIGHT = false; 
 
-		if (inputUP || inputDOWN || inputLEFT || inputRIGHT) {
-			if (inputUP) {
-				facing = UP;
-			}
-			else if (inputDOWN) {
-				facing = DOWN;
-			}
-			else if (inputLEFT) {
+		if (inputLEFT || inputRIGHT) {
+			if (inputLEFT) {
 				facing = LEFT;
 			}
 			else if (inputRIGHT) {
@@ -108,10 +110,6 @@ class Character extends FlxSprite {
 			}
 		
 			switch (facing) {
-				case UP:
-					playAnim("ANI_LOOK_UP");
-				case DOWN:
-					playAnim("ANI_LOOK_DOWN");
 				case LEFT, RIGHT:
 					if ((velocity.x != 0) && touching == NONE)
 						playAnim("ANI_WALKING");
@@ -121,13 +119,25 @@ class Character extends FlxSprite {
 			}
 		}
 		else {
+			if (inputUP) {
+				facing = UP;
+				playAnim("ANI_LOOK_UP");
+			}
+			else if (inputDOWN) {
+				facing = DOWN;
+				playAnim("ANI_LOOK_DOWN");
+			}
+			else
+				playAnim("ANI_STOPPED");
 			velocity.x = 0;
 			velocity.y = 0;
-			playAnim("ANI_STOPPED");
 		}
 	}
 
+	public var isSuper:Bool = false;
+
 	override function update(e:Float) {
+
 		updateMoves();
 		super.update(e);
 	}
@@ -175,6 +185,7 @@ class Character extends FlxSprite {
 	}
 
 	public function playAnim(name:String, force:Bool = false, reversed:Bool = false, frame:Int = 0) {
+		trace('Playing Animation (Name: $name', 'Force: $force', 'Reversed: $reversed', 'Frame: $frame)');
 		animation.play(Std.string(AnimationList.get(name)), force, reversed, frame);
 	}
 
@@ -190,7 +201,7 @@ class Character extends FlxSprite {
 
 	public function animExists(name:String):Bool {
 		if (!AnimationList.exists(name))
-			trace("[WARNING] Animation " + name + " doesn't exists in the list!");
+			throw '[WARNING] Animation "$name" doesn\'t exists in the list!';
 		return AnimationList.exists(name);
 	}
 }

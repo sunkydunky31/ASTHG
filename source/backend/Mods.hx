@@ -165,7 +165,7 @@ class Mods
 	
 	private static function updateModList()
 	{
-		#if MODS_ALLOWED
+		#if (MODS_ALLOWED)
 		// Find all that are already ordered
 		var list:Array<Array<Dynamic>> = [];
 		var added:Array<String> = [];

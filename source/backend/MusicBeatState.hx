@@ -9,10 +9,12 @@ class MusicBeatState extends FlxState
 		return Controls.instance;
 	}
 
+	#if MODS_ALLOWED
 	public var scripts(get, never):Scripts;
 	private function get_scripts() {
 		return Scripts.instance;
 	}
+	#end
 
 	public var variables:Map<String, Dynamic> = new Map<String, Dynamic>();
 	public static function getVariables()

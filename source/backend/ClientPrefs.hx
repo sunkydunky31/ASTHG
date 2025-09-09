@@ -7,24 +7,27 @@ import states.Init;
 
 // Add a variable here and it will get automatically saved
 @:structInit class SaveVariables {
-	public var showFPS:Bool = true;
-	public var flashing:Bool = true;
-	public var autoPause:Bool = true;
-	public var antialiasing:Bool = true;
-	public var lowQuality:Bool = false;
-	public var cacheOnGPU:Bool = #if !switch false #else true #end; //From Stilic
-	public var framerate:Int = 60;
-	public var camZooms:Bool = true;
-	public var hideHud:Bool = false;
-	public var checkForUpdates:Bool = true;
 	public var gameplaySettings:Map<String, Dynamic> = [
 		'practice' => false
 	];
-
+	
+	// ----------- System -----------
+	public var cacheOnGPU:Bool = #if !switch false #else true #end; //From Stilic
+	public var checkForUpdates:Bool = true;
 	public var discordRPC:Bool = true;
-	public var language:String = 'en-US';
 	public var haptics:Bool = true;
-	public var hdFonts:Bool = false;
+	public var language:String = 'en-US'; //Default
+
+	// ----------- Graphics -----------
+	public var backLayers:Float = 0.0;
+	public var framerate:Int = 60;
+	public var lowQuality:Bool = false;
+	public var showFPS:Bool = true;
+
+	// ----------- Gameplay -----------
+	public var autoPause:Bool = true;
+	public var flashing:Bool = true;
+	public var hideHud:Bool = false;
 }
 
 class ClientPrefs {
