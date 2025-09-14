@@ -20,11 +20,6 @@ import openfl.utils.Assets as OpenFlAssets;
 import backend.Mods;
 #end
 
-enum ShaderTypes {
-	VERTEX;
-	FRAGMENT;
-}
-
 class Paths
 {
 	inline public static var SOUND_EXT = #if (web || flash) "mp3" #else "ogg" #end;
@@ -151,14 +146,9 @@ class Paths
 		return 'assets/$file';
 	}
 
-	inline static public function shader(key:String, type:ShaderTypes, ?library:String) {
-		var types:String;
-		switch (type) {
-			case VERTEX: types = 'vert';
-			case FRAGMENT: types = 'frag';
-		}
+	inline static public function file(key:String, ?type:AssetType = TEXT, ?library:String) {
 
-		return getPath('shaders/$key.$types', TEXT, library);
+		return getPath(key, type, library);
 	}
 
 	static public function video(key:String) {

@@ -17,7 +17,7 @@ class TitleState extends MusicBeatState {
             Controls.instance.controllerMode = true;
         }
 
-		pressStart = new FlxBitmapText(0, FlxG.height - 20, Language.getPhrase("titlescreen_press_start", "Press {1}", [backend.InputFormatter.getControlNames('accept')]));
+		pressStart = new FlxBitmapText(0, FlxG.height - 20, Language.getPhrase("titlescreen_press_start", "Press {1}", [backend.InputFormatter.getControlNames('accept')]), Paths.getAngelCodeFont("HUD"));
 		pressStart.screenCenter(X);
 		add(pressStart);
 

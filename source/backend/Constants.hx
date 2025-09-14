@@ -8,7 +8,7 @@ class Constants {
     public static final SCRIPTS_PATH:String = Paths.modFolders("scripts");
 
     // Characters
-    public static final PALETTE_OVERRIDE:Array<String> = ["#2020A0", "#2040C0", "#4040E0", "#6060E0"];
+    public static final PALETTE_OVERRIDE:Array<FlxColor> = [0xffff00ff, 0xff2020A0, 0xff2040C0, 0xff4040E0, 0xff6060E0];
 
     // Save Select
     public static final SAVE_ENTRY_LIMIT:Int = 7;

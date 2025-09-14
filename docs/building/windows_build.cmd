@@ -3,11 +3,11 @@ cls
 
 title ASTHG Build State
 
-:: ------------- CONFIG -----------------
+rem ------------- CONFIG -----------------
 set CWD="%UserProfile%/Documents/ASTHG/"
 set PLATFORM="cpp"
 set BUILD_FLAGS="-debug"
-:: --------------------------------------
+rem --------------------------------------
 
 echo Current configuration:
 echo CWD: %CWD%

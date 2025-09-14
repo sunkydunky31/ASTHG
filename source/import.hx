@@ -22,11 +22,12 @@ import backend.Language;
 import backend.MusicBeatState;
 import backend.MusicBeatSubstate;
 import backend.Paths;
-import states.LoadingState;
 
 #if MODS_ALLOWED
 import modding.Scripts;
 #end
+
+import states.LoadingState;
 //---------------------------------//
 import flixel.FlxCamera;
 import flixel.FlxG;

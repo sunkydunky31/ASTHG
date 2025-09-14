@@ -271,12 +271,38 @@ class CoolUtil
 	 * 
 	 * Note that the character must be added or loaded to work
 	 */
-	public static function applyPalette(sprite:FlxSprite, pal:Array<Dynamic>) {
-			sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[0]), FlxColor.fromString(pal[0]));
-			sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[1]), FlxColor.fromString(pal[1]));
-			sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[2]), FlxColor.fromString(pal[2]));
-			sprite.replaceColor(FlxColor.fromString(Constants.PALETTE_OVERRIDE[3]), FlxColor.fromString(pal[3]));
+	public static function applyPalette(sprite:FlxSprite, pal:Array<FlxColor>) {
+		//trace(Constants.PALETTE_OVERRIDE.length);
+		var bmp = sprite.pixels;
+		for (y in 0...bmp.height) {
+				for (x in 0...bmp.width) {
+						var px = bmp.getPixel(x, y);
+						trace('Pixel ($x,$y) = 0x' + StringTools.hex(px, 8));
+				}
+		}
+		for (i in 0...Constants.PALETTE_OVERRIDE.length - 1) {
+			sprite.replaceColor(Constants.PALETTE_OVERRIDE[i], pal[i]);
+		}
 	}
+
+	public static function readEnv(path:String = ".env"):Map<String,String> {
+		var m = new Map<String,String>();
+		if (!sys.FileSystem.exists(path)) return m;
+		else throw "Env file doesn't even exists!";
+		for (line in sys.io.File.getContent(path).split('\n')) {
+			var l = line.trim();
+			if (l == "" || l.startsWith("#")) continue;
+			var parts = l.split("=");
+			if (parts.length >= 2) {
+				var k = parts.shift().trim();
+				var v = parts.join("=").trim();
+				m.set(k, v);
+			}
+		}
+		return m;
+	}
+
+
 }
 
 typedef SoundLoop = {

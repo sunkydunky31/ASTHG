@@ -9,6 +9,7 @@ class SaveSelect extends MusicBeatState {
 	var curSelected:Int = 0;
 
 	override function create() {
+		Paths.clearUnusedMemory();
 		Paths.clearStoredMemory();
 
 		saveGroup = new FlxTypedGroup<SaveEntry>();
@@ -18,12 +19,13 @@ class SaveSelect extends MusicBeatState {
 		#end
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xff4d4dff);
+		//bg.brightness = ClientPrefs.data.backLayers;
 		add(bg);
-
+		
 		var bgLayer:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bgLayer.alpha = ClientPrefs.data.backLayers;
 		add(bgLayer);
-
+		
 		var title:FlxBitmapText = new FlxBitmapText(FlxG.width/2, FlxG.height - 26, Language.getPhrase("save_select", "Save Select"), Paths.getAngelCodeFont("Roco"));
 		title.setBorderStyle(FlxTextBorderStyle.SHADOW, FlxColor.BLACK, 2, 0);
 		title.x -= title.width / 2;
@@ -43,21 +45,19 @@ class SaveSelect extends MusicBeatState {
 		FlxTween.color(selectSave, 0.2, FlxColor.fromString(Constants.SAVE_SELECTED_FRAME_COLOR1), FlxColor.fromString(Constants.SAVE_SELECTED_FRAME_COLOR2), {type: FlxTweenType.PINGPONG, ease: FlxEase.linear});
 		add(selectSave);
 
-		var selectUpZone:FlxSprite = new FlxSprite(saveGroup.members[curSelected].x + 50, saveGroup.members[curSelected].y).loadGraphic(Paths.image("saveSelect/selectArrow"));
+		var selectUpZone:FlxSprite = new FlxSprite(saveGroup.members[curSelected].x + 30, saveGroup.members[curSelected].y + 14).loadGraphic(Paths.image("saveSelect/selectArrow"));
 		selectUpZone.color = FlxColor.fromString(Constants.SAVE_SELECTED_ARROW_COLOR1);
 		add(selectUpZone);
 
-		var selectUpChar:FlxSprite = new FlxSprite(saveGroup.members[curSelected].x + 50, saveGroup.members[curSelected].y + 50).loadGraphic(Paths.image("saveSelect/selectArrow"));
+		var selectUpChar:FlxSprite = new FlxSprite(saveGroup.members[curSelected].x + 30, saveGroup.members[curSelected].y + 65).loadGraphic(Paths.image("saveSelect/selectArrow"));
 		selectUpChar.color = FlxColor.fromString(Constants.SAVE_SELECTED_ARROW_COLOR2);
 		add(selectUpChar);
 
-		var selectDownZone:FlxSprite = new FlxSprite(selectUpZone.x, selectUpZone.y + 18).loadGraphic(Paths.image("saveSelect/selectArrow"));
-		selectDownZone.flipY = true;
+		var selectDownZone:FlxSprite = new FlxSprite(selectUpZone.x, selectUpZone.y + 18).loadGraphic(Paths.image("saveSelect/selectArrowFlip"));
 		selectDownZone.color = selectUpZone.color;
 		add(selectDownZone);
 
-		var selectDownChar:FlxSprite = new FlxSprite(selectUpChar.x, selectUpChar.y + 30).loadGraphic(Paths.image("saveSelect/selectArrow"));
-		selectDownChar.flipY = true;
+		var selectDownChar:FlxSprite = new FlxSprite(selectUpChar.x, selectUpChar.y + 30).loadGraphic(Paths.image("saveSelect/selectArrowFlip"));
 		selectDownChar.color = selectUpChar.color;
 		add(selectDownChar);
 
@@ -78,35 +78,33 @@ class SaveSelect extends MusicBeatState {
 }
 
 class SaveEntry extends FlxSpriteGroup {
-	//public var character:Character = null;
+	public var character:Character = null;
 	public var emeralds:Array<FlxSprite> = new Array<FlxSprite>();
 	public function new(id:Int) {
 		super();
-	//	this.character = new Character(0, 0, "sonic");
-	//	add(character);
 
-		var save:FlxSprite = new FlxSprite().loadGraphic(Paths.image("saveSelect/save"));
+		var save:FlxSprite = new FlxSprite().loadGraphic(Paths.image("saveSelect/save", null, false)); //false -> Allow pixel reading
 		add(save);
 
-		var colors:Array<Array<String>> = [
-			["#0080e0", "#00b4cc", "#00c0e0", "#80e0e0"],
-			["#ff0000", "#da0000", "#ae0000", "#790000"],
-			["#ff0000", "#da0000", "#ae0000", "#790000"],
-			["#ff0000", "#da0000", "#ae0000", "#790000"],
-			["#ff0000", "#da0000", "#ae0000", "#790000"],
-			["#ff0000", "#da0000", "#ae0000", "#790000"],
-			["#ff0000", "#da0000", "#ae0000", "#790000"],
+		var colors:Array<Array<FlxColor>> = [
+			[0xff0080e0, 0xff00b4cc, 0xff00c0e0, 0xff80e0e0],
+			[0xffff0000, 0xffda0000, 0xffae0000, 0xff790000],
+			[0xffff0000, 0xffda0000, 0xffae0000, 0xff790000],
+			[0xffff0000, 0xffda0000, 0xffae0000, 0xff790000],
+			[0xffff0000, 0xffda0000, 0xffae0000, 0xff790000],
+			[0xffff0000, 0xffda0000, 0xffae0000, 0xff790000],
+			[0xffff0000, 0xffda0000, 0xffae0000, 0xff790000],
 		];
 
 		for (i in 0...7) {
-			var emerald = new FlxSprite(2, save.height - 12);
-			emerald.loadGraphic(Paths.image("saveSelect/emerald"));
+			var emerald:FlxSprite = new FlxSprite(2, save.height - 12);
 			emerald.x += (emerald.width * i) + i;
 			CoolUtil.applyPalette(emerald, [colors[i][0], colors[i][1], colors[i][2], colors[i][3]]);
 			add(emerald);
 			emeralds.push(emerald);
 		}
 		
-
+		character = new Character(30, 80, "sonic");
+		add(character);
 	}
 }

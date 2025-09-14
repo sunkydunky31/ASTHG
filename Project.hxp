@@ -83,7 +83,7 @@ class Project extends HXProject {
 		includeAssets("assets/translations", "assets/", null, EXCLUDE_ASSETS);
 		includeAssets("assets/fonts", null);
 		if (hasFlag(MODS_ALLOWED))
-			includeAssets("mods");
+			includeAssets("mods", null);
 
 		sources.push("source");
 
@@ -98,7 +98,7 @@ class Project extends HXProject {
 			haxelibs.push(new Haxelib("hxdiscord_rpc"));
 		
 		if (defines.exists(MODS_ALLOWED))
-			haxelibs.push(new Haxelib("hscript"));
+			haxelibs.push(new Haxelib("hscript-iris"));
 
 		if (isTarget("mobile")) {
 			haxedefs.set("FLX_NO_MOUSE", null);

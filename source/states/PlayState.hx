@@ -119,6 +119,12 @@ class PlayState extends MusicBeatState
 		livesIcon = new LifeIcon(player.lifeIcon);
 		livesIcon.x = hudPos.x;
 		livesIcon.y = FlxG.height - 26;
+		CoolUtil.applyPalette(livesIcon, [
+			FlxColor.fromString(player.json.palettes[player.curPalette][0]),
+			FlxColor.fromString(player.json.palettes[player.curPalette][1]),
+			FlxColor.fromString(player.json.palettes[player.curPalette][2]),
+			FlxColor.fromString(player.json.palettes[player.curPalette][3])
+		]);
 		uiGroup.add(livesIcon);
 		
 		livesTxt = new FlxBitmapText(livesIcon.x + livesIcon.frameWidth + 1, livesIcon.y + 3, 'livesTxt', Paths.getAngelCodeFont("HUD"));
@@ -159,13 +165,6 @@ class PlayState extends MusicBeatState
 		posXTxt.text = StringTools.hex(Std.int(player.x), 5);
 		posYTxt.text = StringTools.hex(Std.int(player.y), 5);
 		#end
-		
-		CoolUtil.applyPalette(livesIcon, [
-			player.json.palettes[player.curPalette][0],
-			player.json.palettes[player.curPalette][1],
-			player.json.palettes[player.curPalette][2],
-			player.json.palettes[player.curPalette][3]
-		]);
 
 		if (FlxG.keys.justPressed.SIX) { 
 			rings += 10;

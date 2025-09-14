@@ -7,7 +7,9 @@ discord rpc
 
 ## Setup
 Windows:
- - Microsoft Visual Studio with Windows 10 SDK 19041
+ - Microsoft Visual Studio
+   - Windows 10 SDK (10.0.19041)
+   - MSVC v142 - VS 2019 C++ x64/x86 build tools (latest)
    - Use the batch file ("windows_setup-msvc") for easy setup
 Start "windows_setup" to install all needed libraries and then,
 Start the "windows_build" file (I recommend you to edit the settings in it)

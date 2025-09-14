@@ -2,8 +2,8 @@ package modding;
 
 import objects.Character.CharacterData;
 #if MODS_ALLOWED
-import hscript.Interp;
-import hscript.Parser;
+import crowplexus.hscript.Interp;
+import crowplexus.hscript.Parser;
 #end
 
 class Scripts {
@@ -26,23 +26,15 @@ class Scripts {
 		instance = this;
 
 		var gameData = {
-			'version': Std.string(CoolUtil.getProjectInfo('version'))
+			'name': Std.string(CoolUtil.getProjectInfo('title')),
+			'version': Std.string(CoolUtil.getProjectInfo('version')),
+			'filename': Std.string(CoolUtil.getProjectInfo('file'))
 		}
 
 		addVar("trace", haxe.Log.trace);
 		addVar("Type", Type);
 
 		addVar("game", gameData);
-		addVar("ClientPrefs", backend.ClientPrefs);
-		addVar("CoolUtil", backend.CoolUtil);
-		addVar("Controls", backend.Controls.instance);
-		addVar("Language", backend.Language);
-		addVar("Mods", backend.Mods);
-		addVar("Paths", backend.Paths);
-		addVar("LifeIcon", objects.LifeIcon);
-		addVar("Player", objects.Character);
-		addVar("PlayState", states.PlayState);
-		addVar("Pause", substates.Pause);
 	}
 
 	public function addVar(name:String, vars:Dynamic):Void {

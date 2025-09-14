@@ -185,7 +185,7 @@ class Character extends FlxSprite {
 	}
 
 	public function playAnim(name:String, force:Bool = false, reversed:Bool = false, frame:Int = 0) {
-		trace('Playing Animation (Name: $name', 'Force: $force', 'Reversed: $reversed', 'Frame: $frame)');
+	//	trace('Playing Animation (Name: $name', 'Force: $force', 'Reversed: $reversed', 'Frame: $frame)');
 		animation.play(Std.string(AnimationList.get(name)), force, reversed, frame);
 	}
 
