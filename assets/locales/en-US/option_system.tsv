@@ -1,0 +1,7 @@
+flag	content
+cache_on_gpu	Cache on GPU
+cache_on_gpu_desc	This causes the game to create caches on the GPU.<N>Turn this off if your graphics card is poor.
+discord_rich_presence	Discord Rich Presence
+discord_rich_presence_desc	Determines whether the game should display your statuses on your Discord profile.
+haptics	Haptics
+haptics_desc	Make your device vibrate depending of the content on the screen

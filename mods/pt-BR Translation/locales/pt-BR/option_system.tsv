@@ -1,0 +1,9 @@
+flag	content
+cache_on_gpu	Cache na GPU
+cache_on_gpu_desc	Faz o jogo criar caches na GPU<N>Desligue isso se sua placa gráfica é ruim
+check_for_updates	Buscar por Atualizações
+check_for_updates_desc	Faz o jogo procurar por atualizações no Github
+discord_rich_presence	Presença Avançada Discord
+discord_rich_presence_desc	Determina se o jogo deve mostrar seus estados no seu perfil do Discord
+haptics	Hápticos
+haptics_desc	Faz seu dispositivo vibrar dependendo dos menus e da tela

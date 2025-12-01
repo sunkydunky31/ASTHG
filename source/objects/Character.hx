@@ -1,3 +1,9 @@
+/*
+	By Sunkydev31
+	2025.11.30
+	You are allowed to copy, modify and distribute the code in this file.
+*/
+
 package objects;
 
 import flixel.math.FlxRect;
@@ -7,62 +13,14 @@ import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxFrame;
 import haxe.xml.Access;
 
-
 class Character extends FlxSprite {
 	public static final defaultPlayer:String = "sonic";
 	public var json:CharacterData;
-	public var animData:Access; 
+	public static var exAnim:Dynamic = {}; // Data store for new animations
 	public final lifeIcon:String = "liveIcon";
 	
 	// Special events
 	public var curPalette:Int = 0;
-
-	// Changing pal n' stuff
-	public var originalSprite:openfl.display.BitmapData;
-
-	/**
-	 * Contains default animations used by all characters
-	 * 
-	 * use `addAnim()` if you want to add a new one
-	 * 
-	 * `playAnim()` handles it by default
-	 */
-	public var AnimationList:Map<String, Int> = [
-		"ANI_STOPPED"			=>	0,
-		"ANI_WAITING"			=>	1,
-		"ANI_BORED"				=>	2,
-		"ANI_LOOK_UP"			=>	3,
-		"ANI_LOOK_DOWN"			=>	4,
-		"ANI_WALKING"			=>	5,
-		"ANI_RUNNING"			=>	6,
-		"ANI_SKIDDING"			=>	7,
-		"ANI_SUPER_PEEL_OUT"	=>	8,
-		"ANI_SPINDASH"			=>	9,
-		"ANI_JUMPING"			=>	10,
-		"ANI_BOUNCING"			=>	11,
-		"ANI_HURT"				=>	12,
-		"ANI_DYING"				=>	13,
-		"ANI_DROWNING"			=>	14,
-		"ANI_FAN_ROTATE"		=>	15,
-		"ANI_BREATHING"			=>	16,
-		"ANI_PUSHING"			=>	17,
-		"ANI_FLAILING1"			=>	18,
-		"ANI_FLAILING2"			=>	19,
-		"ANI_FLAILING3"			=>	20,
-		"ANI_HANGING"			=>	21,
-		"ANI_GRABBED"			=>	22,
-		"ANI_CLINGING_ON"		=>	23,
-		"ANI_TWIRL_H"			=>	24,
-		"ANI_TWIRL_V"			=>	25,
-		"ANI_WATER_SLIDE"		=>	26,
-		"ANI_CONTINUE"			=>	27,
-		"ANI_CONTINUE_UP"		=>	28,
-		"ANI_SUPER_TRANSFORM"	=>	29,
-		"ANI_CD_TWIRL"			=>	30,
-		"ANI_S2_PEELOUT"		=>	31,
-		"ANI_MANIA_PEELOUT"		=>	32,
-		"ANI_HANG_MOVE"			=>	33,
-	];
 
 	// Anim name help
 
@@ -79,81 +37,26 @@ class Character extends FlxSprite {
 
 		origin.set(width/2, height);
 		updateHitbox();
-
-		originalSprite = this.pixels.clone();
-	}
-
-	function updateMoves() {
-		acceleration.x = 0;
-
-		var inputUP:Bool = false;
-		var inputDOWN:Bool = false;
-		var inputLEFT:Bool = false;
-		var inputRIGHT:Bool = false;
-
-		inputUP = Controls.instance.pressed('up');
-		inputDOWN = Controls.instance.pressed('down');
-		inputLEFT = Controls.instance.pressed('left');
-		inputRIGHT = Controls.instance.pressed('right');
-
-		if (inputUP && inputDOWN)
-			inputUP = inputDOWN = false;
-		if (inputLEFT && inputRIGHT)
-			inputLEFT = inputRIGHT = false; 
-
-		if (inputLEFT || inputRIGHT) {
-			if (inputLEFT) {
-				facing = LEFT;
-			}
-			else if (inputRIGHT) {
-				facing = RIGHT;
-			}
-		
-			switch (facing) {
-				case LEFT, RIGHT:
-					if ((velocity.x != 0) && touching == NONE)
-						playAnim("ANI_WALKING");
-
-					acceleration.x = (facing == LEFT) ? -maxVelocity.x * 4 : maxVelocity.x * 4;
-				case _:
-			}
-		}
-		else {
-			if (inputUP) {
-				facing = UP;
-				playAnim("ANI_LOOK_UP");
-			}
-			else if (inputDOWN) {
-				facing = DOWN;
-				playAnim("ANI_LOOK_DOWN");
-			}
-			else
-				playAnim("ANI_STOPPED");
-			velocity.x = 0;
-			velocity.y = 0;
-		}
 	}
 
 	public var isSuper:Bool = false;
 
 	override function update(e:Float) {
-
-		updateMoves();
 		super.update(e);
 	}
 
 	public function changeChar(char:String) {
 		if (Paths.fileExists('data/characters/$char.json', TEXT)) {
-			json = cast tjson.TJSON.parse(Paths.getContent('data/characters/$char.json', TEXT));
+			json = cast Paths.parseJson('data/characters/$char');
 		}
 		else {
-			json = cast tjson.TJSON.parse(Paths.getContent('data/characters/sonic.json', TEXT));
+			json = cast Paths.parseJson('data/characters/sonic');
 			trace('Character not found, using default ($defaultPlayer)');
 		}
 
 		if (Reflect.hasField(json, "extraAnimations")) {
 			for (extra in json.extraAnimations) {
-		 		addAnim(extra[0], extra[1]);
+		 		addAnim(extra.name);
 			}
 		}
 
@@ -162,98 +65,128 @@ class Character extends FlxSprite {
 	}
 	
 	function loadAnimations() {
-		frames = Paths.getASTHGAtlas('characters/${json.name}/animData');
-		animData = new haxe.xml.Access(Xml.parse(Paths.getContent('images/characters/${json.name}/animData.xml', TEXT)).firstElement());
-
-		var frameRate:Float = 0;
+		frames = Paths.getSparrowAtlas('characters/${json.name}/animData');
 		
-		for (anim in animData.nodes.animation) {
-			var frameI:Array<Int> = [];
-			for (i in 0...anim.nodes.frame.length) {
-				frameI.push(i);
+		var anims = json.animations;
+		if(anims != null && anims.length > 0) {
+			for (anim in anims) {
+				if(anim.indices != null && anim.indices.length > 0)
+					animation.addByIndices(Std.string(anim.name), Reflect.hasField(anim, "prefix")? anim.prefix : anim.name, anim.indices, "", anim.fps, anim.loop);
+				else
+					animation.addByPrefix(Std.string(anim.name), Reflect.hasField(anim, "prefix")? anim.prefix : anim.name, anim.fps, anim.loop);
 			}
-
-			if (anim.has.fps) {
-				var vel:Int = Std.parseInt(anim.att.fps);
-				var frameWidth:Int = Std.int(frames.frames[0].sourceSize.x);
-				frameRate = vel / frameWidth;
-			}
-
-			animation.addByIndices(anim.att.id, anim.att.id+"_", frameI, null, frameRate * 2.7, anim.has.loop ? CoolUtil.parseBool(anim.att.loop) : false);
-			animation.getByName(anim.att.id).loopPoint = anim.has.loopStart ? Std.parseInt(anim.att.loopStart) : 0;
 		}
 	}
 
-	public function playAnim(name:String, force:Bool = false, reversed:Bool = false, frame:Int = 0) {
-	//	trace('Playing Animation (Name: $name', 'Force: $force', 'Reversed: $reversed', 'Frame: $frame)');
-		animation.play(Std.string(AnimationList.get(name)), force, reversed, frame);
+	public function playAnim(name:AnimList, force:Bool = false, reversed:Bool = false, frame:Int = 0) {
+		animation.play(name, force, reversed, frame);
 	}
 
 	/**
-	 * Adds an animation to the list
-	 * @param name Name of this animation (Prefered style: `ANI_ANIMATION`, e.g. `ANI_ROLLING`)
-	 * @param id Internal ID on the AnimData.xml file
-	 */
-	public function addAnim(name:String, id:Int) {
-		trace('[INFO] Added animation to the list. ($name, $id)');
-		AnimationList.set(name, id);
+		Adds an animation to the list
+		@param name Name of this animation (Prefered style: `ANI_ANIMATION`, e.g. `ANI_ROLLING`)
+	**/
+	public function addAnim(name:String):Void {
+		trace('[INFO] Added animation to the list. ($name)');
+		Reflect.setField(exAnim, name, name);
 	}
 
-	public function animExists(name:String):Bool {
-		if (!AnimationList.exists(name))
-			throw '[WARNING] Animation "$name" doesn\'t exists in the list!';
-		return AnimationList.exists(name);
+	public function animExists(name:AnimList):Bool {
+		if (Reflect.hasField(exAnim, name)){
+			var nameN:String = Std.string(Reflect.field(exAnim, name));
+        	return nameN != null && animation.getByName(nameN) != null;
+		}
+		
+		trace('[WARNING] Animation "$name" doesn\'t exists in the list!');
+		return false;
 	}
+}
+
+typedef AnimData = {
+	var name:String;
+	var sheets:String;
+
+	/**
+		Name in SparrowAtlas file
+	**/
+	@:optional var prefix:String;
+
+	@:optional var fps:Float;
+	@:optional var loop:Bool;
+
+	/**
+		Offset on character
+	**/
+	@:optional var offset:Array<Int>;
+	@:optional var indices:Array<Int>;
+
 }
 
 typedef CharacterData = {
 	/**
-	 * Name of this character
-	 * Used on IDs, and for results text
-	 */
-	@:default("Unknown")
+		Name of this character
+		Used on IDs, and for results text
+	**/
 	var name:String;
-
-	@:default({animated: false}) @:optional
-	var continues:Array<CharContinues>;
-
-	@:optional @:default("liveIcon")
-	var liveIcon:String;
+	@:optional var liveIcon:String;
 
 	/**
-	 * Color that this character uses
-	 * 
-	 * Used for Normal palette showing, super, etc.
-	 */
-	@:default([['#0000F0', '#0000A0', '#000080', '#000060']])
+		Color that this character uses
+		
+		Used for Normal palette showing, super, etc.
+	**/
 	var palettes:Array<Array<String>>;
 
 	/**
-	 * Some characters doesn't achieve Super forms, so there you are!
-	 * NOTE: If set to `true`, the live icon needs to have 2 frames!
-	 */
-	@:default(false) @:optional
+		Some characters doesn't achieve Super forms, so there you are!
+		NOTE: If set to `true`, the live icon needs to have 2 frames!
+	**/
 	var hasSuper:Bool;
 
-	@:optional
-	var extraAnimations:Array<Dynamic>;
+	@:optional var animations:Array<AnimData>;
+	@:optional var extraAnimations:Array<AnimData>;
 }
 
-typedef CharContinues = {
-	@:default("continue")
-	var sprite:String;
+
+/**
+	Contains default animations used by all characters
 	
-	var animated:Bool;
+	use `addAnim()` if you want to add a new one	
+**/
+enum abstract AnimList(String) {
+	var ANI_STOPPED			= "ANI_STOPPED";
+	var ANI_WAITING			= "ANI_WAITING";
+	var ANI_BORED			= "ANI_BORED";
+	var ANI_LOOK_UP			= "ANI_LOOK_UP";
+	var ANI_LOOK_DOWN		= "ANI_LOOK_DOWN";
+	var ANI_WALKING			= "ANI_WALKING";
+	var ANI_RUNNING			= "ANI_RUNNING";
+	var ANI_SKIDDING		= "ANI_SKIDDING";
+	var ANI_SUPER_PEEL_OUT	= "ANI_SUPER_PEEL_OUT";
+	var ANI_SPINDASH		= "ANI_SPINDASH";
+	var ANI_JUMPING			= "ANI_JUMPING";
+	var ANI_BOUNCING		= "ANI_BOUNCING";
+	var ANI_HURT			= "ANI_HURT";
+	var ANI_DYING			= "ANI_DYING";
+	var ANI_DROWNING		= "ANI_DROWNING";
+	var ANI_FAN_ROTATE		= "ANI_FAN_ROTATE";
+	var ANI_BREATHING		= "ANI_BREATHING";
+	var ANI_PUSHING			= "ANI_PUSHING";
+	var ANI_FLAILING1		= "ANI_FLAILING1";
+	var ANI_FLAILING2		= "ANI_FLAILING2";
+	var ANI_FLAILING3		= "ANI_FLAILING3";
+	var ANI_HANGING			= "ANI_HANGING";
+	var ANI_GRABBED			= "ANI_GRABBED";
+	var ANI_CLINGING_ON		= "ANI_CLINGING_ON";
+	var ANI_TWIRL_H			= "ANI_TWIRL_H";
+	var ANI_TWIRL_V			= "ANI_TWIRL_V";
+	var ANI_WATER_SLIDE		= "ANI_WATER_SLIDE";
+	var ANI_CONTINUE		= "ANI_CONTINUE";
+	var ANI_CONTINUE_UP		= "ANI_CONTINUE_UP";
+	var ANI_SUPER_TRANSFORM	= "ANI_SUPER_TRANSFORM";
+	var ANI_CD_TWIRL		= "ANI_CD_TWIRL";
+	var ANI_HANG_MOVE		= "ANI_HANG_MOVE";
 
-	/**
-	 * Frame Width
-	 */
-	@:optional
-	var width:Int;
-
-	/**
-	 * Frame Height
-	 */
-	@:optional
-	var height:Int;
+	@:from static function fromString(s:String):AnimList return cast s;
+	@:to public function toString():String return (this : String);
 }

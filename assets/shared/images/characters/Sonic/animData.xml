@@ -1,323 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-<animationData>
-	<animation name="Stopped"	id="0">
-		<frame x="0"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
-	</animation>
+<TextureAtlas imagePath="animData.png">
+	<!--
+		Created manually by Sunkydev31
+		Using RetroED as animation exporter
+
+		Original sprites by SEGA, Gotten sheet by TeamForever
+	-->
+
+	<SubTexture	name="ANI_STOPPED0000" x="0" y="1" width="28" height="40" centerX="-16" centerY="-20"/>
 	
-	<animation name="Waiting"	id="1"	fps="40"	loop="true"	loopStart="6">
-		<frame x="138"	y="2"	width="29"	height="39"	centerX="-15"	centerY="-19"/>
-		<frame x="138"	y="2"	width="29"	height="39"	centerX="-15"	centerY="-19"/>
-		<frame x="167"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="167"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="167"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="167"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="341"	y="306"	width="29"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="226"	y="42"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="197"	y="1"	width="30"	height="40"	centerX="-14"	centerY="-20"/>
-	</animation>
+	<SubTexture	name="ANI_WAITING0000" x="138" y="2" width="29" height="39" centerX="-15" centerY="-19"/>
+	<SubTexture	name="ANI_WAITING0001" x="138" y="2" width="29" height="39" centerX="-15" centerY="-19"/>
+	<SubTexture	name="ANI_WAITING0002" x="167" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0003" x="167" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0004" x="167" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0005" x="167" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0006" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0007" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0008" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0009" x="341" y="306" width="29" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0010" x="341" y="306" width="29" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0011" x="341" y="306" width="29" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0012" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0013" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0014" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0015" x="341" y="306" width="29" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0016" x="341" y="306" width="29" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0017" x="341" y="306" width="29" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0018" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0019" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0020" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0021" x="341" y="306" width="29" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0022" x="341" y="306" width="29" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0023" x="341" y="306" width="29" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0024" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0025" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0026" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0027" x="341" y="306" width="29" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0028" x="341" y="306" width="29" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0029" x="341" y="306" width="29" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0030" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0031" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0032" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0033" x="226" y="42" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0034" x="226" y="42" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0035" x="226" y="42" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0036" x="226" y="42" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0037" x="226" y="42" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0038" x="226" y="42" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0039" x="226" y="42" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0040" x="226" y="42" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0041" x="226" y="42" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0042" x="226" y="42" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0043" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0044" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WAITING0045" x="197" y="1" width="30" height="40" centerX="-14" centerY="-20"/>
 
-	<animation name="Bored!"	id="2"	fps="40"	loop="true"	loopStart="2">
-		<frame x="193"	y="42"	width="32"	height="32"	centerX="-11"	centerY="-12"/>
-		<frame x="193"	y="42"	width="32"	height="32"	centerX="-11"	centerY="-12"/>
-		<frame x="215"	y="82"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
-		<frame x="215"	y="82"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
-		<frame x="215"	y="82"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
-		<frame x="215"	y="107"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
-		<frame x="215"	y="107"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
-		<frame x="215"	y="107"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
-	</animation>
+	<SubTexture	name="ANI_BORED0000" x="193" y="42" width="32" height="32" centerX="-11" centerY="-12"/>
+	<SubTexture	name="ANI_BORED0001" x="193" y="42" width="32" height="32" centerX="-11" centerY="-12"/>
+	<SubTexture	name="ANI_BORED0002" x="215" y="82" width="40" height="25" centerX="-18" centerY="-5"/>
+	<SubTexture	name="ANI_BORED0003" x="215" y="82" width="40" height="25" centerX="-18" centerY="-5"/>
+	<SubTexture	name="ANI_BORED0004" x="215" y="82" width="40" height="25" centerX="-18" centerY="-5"/>
+	<SubTexture	name="ANI_BORED0005" x="215" y="107" width="40" height="25" centerX="-18" centerY="-5"/>
+	<SubTexture	name="ANI_BORED0006" x="215" y="107" width="40" height="25" centerX="-18" centerY="-5"/>
+	<SubTexture	name="ANI_BORED0007" x="215" y="107" width="40" height="25" centerX="-18" centerY="-5"/>
 
-	<animation name="Looking Up"	id="3"	fps="60">
-		<frame x="0"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
-		<frame x="28"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
-		<frame x="56"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
-	</animation>
+	<SubTexture	name="ANI_LOOK_UP0000" x="0" y="1" width="28" height="40" centerX="-16" centerY="-20"/>
+	<SubTexture	name="ANI_LOOK_UP0001" x="28" y="1" width="28" height="40" centerX="-16" centerY="-20"/>
+	<SubTexture	name="ANI_LOOK_UP0002" x="56" y="1" width="28" height="40" centerX="-16" centerY="-20"/>
 
-	<animation name="Looking Down"	id="4"	fps="60">
-		<frame x="0"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
-		<frame x="84"	y="1"	width="25"	height="40"	centerX="-11"	centerY="-20"/>
-		<frame x="109"	y="1"	width="29"	height="40"	centerX="-12"	centerY="-20"/>
-	</animation>
+	<SubTexture	name="ANI_LOOK_DOWN0000" x="0" y="1" width="28" height="40" centerX="-16" centerY="-20"/>
+	<SubTexture	name="ANI_LOOK_DOWN0001" x="84" y="1" width="25" height="40" centerX="-11" centerY="-20"/>
+	<SubTexture	name="ANI_LOOK_DOWN0002" x="109" y="1" width="29" height="40" centerX="-12" centerY="-20"/>
 
-	<animation name="Walking"	id="5"	fps="80" loop="true">
-		<frame x="1"	y="42"	width="26"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="28"	y="42"	width="29"	height="40"	centerX="-16"	centerY="-20"/>
-		<frame x="58"	y="42"	width="39"	height="40"	centerX="-20"	centerY="-21"/>
-		<frame x="98"	y="42"	width="39"	height="40"	centerX="-20"	centerY="-20"/>
-		<frame x="138"	y="42"	width="26"	height="40"	centerX="-14"	centerY="-20"/>
-		<frame x="165"	y="42"	width="28"	height="40"	centerX="-15"	centerY="-20"/>
-		<frame x="1"	y="83"	width="40"	height="39"	centerX="-21"	centerY="-21"/>
-		<frame x="42"	y="83"	width="39"	height="39"	centerX="-20"	centerY="-20"/>
-	</animation>
+	<SubTexture	name="ANI_WALKING0000" x="1" y="42" width="26" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WALKING0001" x="28" y="42" width="29" height="40" centerX="-16" centerY="-20"/>
+	<SubTexture	name="ANI_WALKING0002" x="58" y="42" width="39" height="40" centerX="-20" centerY="-21"/>
+	<SubTexture	name="ANI_WALKING0003" x="98" y="42" width="39" height="40" centerX="-20" centerY="-20"/>
+	<SubTexture	name="ANI_WALKING0004" x="138" y="42" width="26" height="40" centerX="-14" centerY="-20"/>
+	<SubTexture	name="ANI_WALKING0005" x="165" y="42" width="28" height="40" centerX="-15" centerY="-20"/>
+	<SubTexture	name="ANI_WALKING0006" x="1" y="83" width="40" height="39" centerX="-21" centerY="-21"/>
+	<SubTexture	name="ANI_WALKING0007" x="42" y="83" width="39" height="39" centerX="-20" centerY="-20"/>
 
-	<animation name="Running"	id="6"	fps="80" loop="true">
-		<frame x="82"	y="83"	width="32"	height="36"	centerX="-16"	centerY="-16"/>
-		<frame x="115"	y="83"	width="32"	height="36"	centerX="-16"	centerY="-16"/>
-		<frame x="148"	y="83"	width="31"	height="36"	centerX="-15"	centerY="-16"/>
-		<frame x="180"	y="83"	width="32"	height="36"	centerX="-16"	centerY="-16"/>
-	</animation>
+	<SubTexture	name="ANI_RUNNING0000" x="82" y="83" width="32" height="36" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_RUNNING0001" x="115" y="83" width="32" height="36" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_RUNNING0002" x="148" y="83" width="31" height="36" centerX="-15" centerY="-16"/>
+	<SubTexture	name="ANI_RUNNING0003" x="180" y="83" width="32" height="36" centerX="-16" centerY="-16"/>
 
-	<animation name="Skidding"	id="7"	fps="40"	loop="true"	loopStart="3">
-		<frame x="257"	y="1"	width="38"	height="39"	centerX="-18"	centerY="-19"/>
-		<frame x="296"	y="1"	width="38"	height="39"	centerX="-18"	centerY="-19"/>
-		<frame x="335"	y="1"	width="37"	height="39"	centerX="-17"	centerY="-19"/>
-		<frame x="486"	y="167"	width="26"	height="39"	centerX="-11"	centerY="-19"/>
-	</animation>
+	<SubTexture	name="ANI_SKIDDING0000" x="257" y="1" width="38" height="39" centerX="-18" centerY="-19"/>
+	<SubTexture	name="ANI_SKIDDING0001" x="296" y="1" width="38" height="39" centerX="-18" centerY="-19"/>
+	<SubTexture	name="ANI_SKIDDING0002" x="335" y="1" width="37" height="39" centerX="-17" centerY="-19"/>
+	<SubTexture	name="ANI_SKIDDING0003" x="486" y="167" width="26" height="39" centerX="-11" centerY="-19"/>
 
-	<animation name="Super Peel Out"	id="8"	fps="128" loop="true">
-		<frame x="68"	y="125"	width="40"	height="32"	centerX="-20"	centerY="-12"/>
-		<frame x="109"	y="125"	width="40"	height="32"	centerX="-20"	centerY="-12"/>
-		<frame x="150"	y="125"	width="40"	height="32"	centerX="-20"	centerY="-12"/>
-		<frame x="191"	y="125"	width="40"	height="32"	centerX="-20"	centerY="-12"/>
-	</animation>
+	<SubTexture	name="ANI_SUPER_PEEL_OUT0000" x="68" y="193" width="38" height="33" centerX="-18" centerY="-13"/>
+	<SubTexture	name="ANI_SUPER_PEEL_OUT0001" x="107" y="194" width="38" height="32" centerX="-18" centerY="-12"/>
+	<SubTexture	name="ANI_SUPER_PEEL_OUT0002" x="146" y="193" width="38" height="33" centerX="-18" centerY="-13"/>
+	<SubTexture	name="ANI_SUPER_PEEL_OUT0003" x="185" y="194" width="38" height="32" centerX="-18" centerY="-12"/>
 
-	<animation name="Spin Dash"	id="9"	fps="240" loop="true">
-		<frame x="1"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
-		<frame x="32"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
-		<frame x="1"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
-		<frame x="63"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
-		<frame x="1"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
-		<frame x="94"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
-		<frame x="1"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
-		<frame x="125"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
-		<frame x="1"	y="156"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
-		<frame x="0"	y="184"	width="30"	height="27"	centerX="-10"	centerY="-7"/>
-	</animation>
+	<SubTexture	name="ANI_SPINDASH0000" x="1" y="156" width="30" height="27" centerX="-10" centerY="-7"/>
+	<SubTexture	name="ANI_SPINDASH0001" x="32" y="156" width="30" height="27" centerX="-10" centerY="-7"/>
+	<SubTexture	name="ANI_SPINDASH0002" x="1" y="156" width="30" height="27" centerX="-10" centerY="-7"/>
+	<SubTexture	name="ANI_SPINDASH0003" x="63" y="156" width="30" height="27" centerX="-10" centerY="-7"/>
+	<SubTexture	name="ANI_SPINDASH0004" x="1" y="156" width="30" height="27" centerX="-10" centerY="-7"/>
+	<SubTexture	name="ANI_SPINDASH0005" x="94" y="156" width="30" height="27" centerX="-10" centerY="-7"/>
+	<SubTexture	name="ANI_SPINDASH0006" x="1" y="156" width="30" height="27" centerX="-10" centerY="-7"/>
+	<SubTexture	name="ANI_SPINDASH0007" x="125" y="156" width="30" height="27" centerX="-10" centerY="-7"/>
+	<SubTexture	name="ANI_SPINDASH0008" x="1" y="156" width="30" height="27" centerX="-10" centerY="-7"/>
+	<SubTexture	name="ANI_SPINDASH0009" x="0" y="184" width="30" height="27" centerX="-10" centerY="-7"/>
 
-	<animation name="Jumping"	id="10"	fps="240"	loop="true">
-		<frame x="34"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="1"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="67"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="1"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="100"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="1"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="133"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="1"	y="123"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-	</animation>
+	<SubTexture	name="ANI_JUMPING0000" x="34" y="123" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_JUMPING0001" x="1" y="123" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_JUMPING0002" x="67" y="123" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_JUMPING0003" x="1" y="123" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_JUMPING0004" x="100" y="123" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_JUMPING0005" x="1" y="123" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_JUMPING0006" x="133" y="123" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_JUMPING0007" x="1" y="123" width="32" height="32" centerX="-16" centerY="-16"/>
 
-	<animation name="Bouncing"	id="11"	fps="60">
-		<frame x="154"	y="202"	width="24"	height="45"	centerX="-12"	centerY="-23"/>
-	</animation>
+	<SubTexture	name="ANI_BOUNCING0000" x="154" y="202" width="24" height="45" centerX="-12" centerY="-23"/>
 
-	<animation name="Hurt"	id="12">
-		<frame x="215"	y="174"	width="40"	height="28"	centerX="-20"	centerY="-15"/>
-	</animation>
+	<SubTexture	name="ANI_HURT000" x="215" y="174" width="40" height="28" centerX="-20" centerY="-15"/>
 
-	<animation name="Dying"	id="13">
-		<frame x="180"	y="198"	width="34"	height="43"	centerX="-17"	centerY="-22"/>
-	</animation>
+	<SubTexture	name="ANI_DYING0000" x="180" y="198" width="34" height="43" centerX="-17" centerY="-22"/>
 
-	<animation name="Drowning"	id="14">
-		<frame x="180"	y="157"	width="34"	height="40"	centerX="-17"	centerY="-19"/>
-	</animation>
+	<SubTexture	name="ANI_DROWNING0000" x="180" y="157" width="34" height="40" centerX="-17" centerY="-19"/>
 
-	<animation name="Fan Rotate"	id="15"	fps="30"	loop="true">
-		<frame x="165"	y="90"	width="45"	height="22"	centerX="-17"	centerY="-11"/>
-		<frame x="211"	y="90"	width="44"	height="22"	centerX="-22"	centerY="-11"/>
-		<frame x="170"	y="113"	width="45"	height="22"	centerX="-28"	centerY="-11"/>
-		<frame x="216"	y="113"	width="39"	height="23"	centerX="-25"	centerY="-11"/>
-		<frame x="216"	y="137"	width="39"	height="23"	centerX="-14"	centerY="-11"/>
-	</animation>
+	<SubTexture	name="ANI_FAN_ROTATE0000" x="165" y="90" width="45" height="22" centerX="-17" centerY="-11"/>
+	<SubTexture	name="ANI_FAN_ROTATE0001" x="211" y="90" width="44" height="22" centerX="-22" centerY="-11"/>
+	<SubTexture	name="ANI_FAN_ROTATE0002" x="170" y="113" width="45" height="22" centerX="-28" centerY="-11"/>
+	<SubTexture	name="ANI_FAN_ROTATE0003" x="216" y="113" width="39" height="23" centerX="-25" centerY="-11"/>
+	<SubTexture	name="ANI_FAN_ROTATE0004" x="216" y="137" width="39" height="23" centerX="-14" centerY="-11"/>
 
-	<animation name="Breathing"	id="16">
-		<frame x="175"	y="119"	width="39"	height="38"	centerX="-20"	centerY="-19"/>
-	</animation>
+	<SubTexture	name="ANI_BREATHING0000" x="175" y="119" width="39" height="38" centerX="-20" centerY="-19"/>
 
-	<animation name="Pushing"	id="17"	fps="9"	loop="true">
-		<frame x="31"	y="184"	width="29"	height="37"	centerX="-19"	centerY="-17"/>
-		<frame x="61"	y="184"	width="24"	height="37"	centerX="-14"	centerY="-17"/>
-		<frame x="86"	y="184"	width="28"	height="37"	centerX="-18"	centerY="-17"/>
-		<frame x="115"	y="184"	width="24"	height="37"	centerX="-14"	centerY="-17"/>
-	</animation>
+	<SubTexture	name="ANI_PUSHING0000" x="31" y="184" width="29" height="37" centerX="-19" centerY="-17"/>
+	<SubTexture	name="ANI_PUSHING0001" x="61" y="184" width="24" height="37" centerX="-14" centerY="-17"/>
+	<SubTexture	name="ANI_PUSHING0002" x="86" y="184" width="28" height="37" centerX="-18" centerY="-17"/>
+	<SubTexture	name="ANI_PUSHING0003" x="115" y="184" width="24" height="37" centerX="-14" centerY="-17"/>
 
-	<animation name="Flailing 1"	id="18"	fps="24"	loop="true">
-		<frame	 x="1"	y="169"	width="32"	height="37"	centerX="-16"	centerY="-17"/>
-		<frame x="33"	y="169"	width="35"	height="37"	centerX="-18"	centerY="-17"/>
-		<frame x="69"	y="169"	width="34"	height="37"	centerX="-17"	centerY="-17"/>
-		<frame x="33"	y="169"	width="35"	height="37"	centerX="-18"	centerY="-17"/>
-	</animation>
+	<SubTexture name="ANI_FLAILING 10000" x="1" y="169" width="32" height="37" centerX="-16" centerY="-17"/>
+	<SubTexture	name="ANI_FLAILING 10001" x="33" y="169" width="35" height="37" centerX="-18" centerY="-17"/>
+	<SubTexture	name="ANI_FLAILING 10002" x="69" y="169" width="34" height="37" centerX="-17" centerY="-17"/>
+	<SubTexture	name="ANI_FLAILING 10003" x="33" y="169" width="35" height="37" centerX="-18" centerY="-17"/>
 
-	<animation name="Flailing 2"	id="19"	fps="12"	loop="true">
-		<frame x="131"	y="130"	width="32"	height="38"	centerX="-12"	centerY="-18"/>
-		<frame x="135"	y="168"	width="32"	height="38"	centerX="-12"	centerY="-18"/>
-	</animation>
+	<SubTexture	name="ANI_FLAILING 20000" x="131" y="130" width="32" height="38" centerX="-12" centerY="-18"/>
+	<SubTexture	name="ANI_FLAILING 20001" x="135" y="168" width="32" height="38" centerX="-12" centerY="-18"/>
 
-	<animation name="Flailing 3"	id="20"	fps="60"	loop="true">
-		<frame x="1"	y="131"	width="32"	height="37"	centerX="-16"	centerY="-17"/>
-		<frame x="34"	y="131"	width="29"	height="37"	centerX="-13"	centerY="-17"/>
-		<frame x="64"	y="131"	width="29"	height="37"	centerX="-13"	centerY="-17"/>
-		<frame x="94"	y="131"	width="36"	height="37"	centerX="-13"	centerY="-17"/>
-	</animation>
+	<SubTexture	name="ANI_FLAILING 30000" x="1" y="131" width="32" height="37" centerX="-16" centerY="-17"/>
+	<SubTexture	name="ANI_FLAILING 30001" x="34" y="131" width="29" height="37" centerX="-13" centerY="-17"/>
+	<SubTexture	name="ANI_FLAILING 30002" x="64" y="131" width="29" height="37" centerX="-13" centerY="-17"/>
+	<SubTexture	name="ANI_FLAILING 30003" x="94" y="131" width="36" height="37" centerX="-13" centerY="-17"/>
 
-	<animation name="Hanging"	id="21"	fps="11"	loop="true">
-		<frame x="1"	y="1"	width="37"	height="40"	centerX="-15"	centerY="-23"/>
-		<frame x="39"	y="1"	width="40"	height="40"	centerX="-15"	centerY="-23"/>
-	</animation>
+	<SubTexture	name="ANI_HANGING0000" x="1" y="1" width="37" height="40" centerX="-15" centerY="-23"/>
+	<SubTexture	name="ANI_HANGING0001" x="39" y="1" width="40" height="40" centerX="-15" centerY="-23"/>
 
-	<animation name="Grabbed"	id="22"	fps="30"	loop="true">
-		<frame x="165"	y="90"	width="45"	height="22"	centerX="-16"	centerY="-12"/>
-		<frame x="98"	y="222"	width="45"	height="23"	centerX="-16"	centerY="-12"/>
-	</animation>
+	<SubTexture	name="ANI_GRABBED0000" x="165" y="90" width="45" height="22" centerX="-16" centerY="-12"/>
+	<SubTexture	name="ANI_GRABBED0001" x="98" y="222" width="45" height="23" centerX="-16" centerY="-12"/>
 
-	<animation name="Clinging On"	id="23"	fps="45">
-		<frame x="1"	y="222"	width="48"	height="26"	centerX="-24"	centerY="-16"/>
-		<frame x="50"	y="222"	width="47"	height="26"	centerX="-24"	centerY="-16"/>
-	</animation>
+	<SubTexture	name="ANI_CLINGING_ON0001" x="1" y="222" width="48" height="26" centerX="-24" centerY="-16"/>
+	<SubTexture	name="ANI_CLINGING_ON0000" x="50" y="222" width="47" height="26" centerX="-24" centerY="-16"/>
 
-	<animation name="Twirl H"	id="24"	fps="40"	loop="true"	rotate="2">
-		<frame x="1"	y="207"	width="27"	height="37"	centerX="-14"	centerY="-17"/>
-		<frame x="29"	y="207"	width="29"	height="34"	centerX="-14"	centerY="-14"/>
-		<frame x="59"	y="207"	width="28"	height="26"	centerX="-13"	centerY="-14"/>
-		<frame x="88"	y="207"	width="28"	height="32"	centerX="-14"	centerY="-15"/>
-		<frame x="116"	y="207"	width="27"	height="29"	centerX="-12"	centerY="-10"/>
-		<frame x="143"	y="207"	width="30"	height="35"	centerX="-14"	centerY="-15"/>
-		<frame x="173"	y="207"	width="32"	height="36"	centerX="-15"	centerY="-16"/>
-		<frame x="205"	y="207"	width="27"	height="36"	centerX="-14"	centerY="-17"/>
-		<frame x="168"	y="174"	width="31"	height="33"	centerX="-14"	centerY="-16"/>
-		<frame x="200"	y="174"	width="29"	height="33"	centerX="-14"	centerY="-14"/>
-		<frame x="168"	y="140"	width="28"	height="33"	centerX="-13"	centerY="-15"/>
-		<frame x="117"	y="1"	width="29"	height="35"	centerX="-11"	centerY="-18"/>
-		<frame x="1"	y="207"	width="27"	height="37"	centerX="-14"	centerY="-17"/>
-		<frame x="29"	y="207"	width="29"	height="34"	centerX="-14"	centerY="-14"/>
-		<frame x="59"	y="207"	width="28"	height="26"	centerX="-13"	centerY="-14"/>
-		<frame x="88"	y="207"	width="28"	height="32"	centerX="-14"	centerY="-15"/>
-		<frame x="116"	y="207"	width="27"	height="29"	centerX="-12"	centerY="-10"/>
-		<frame x="143"	y="207"	width="30"	height="35"	centerX="-14"	centerY="-15"/>
-		<frame x="173"	y="207"	width="32"	height="36"	centerX="-15"	centerY="-16"/>
-		<frame x="205"	y="207"	width="27"	height="36"	centerX="-14"	centerY="-17"/>
-		<frame x="168"	y="174"	width="31"	height="33"	centerX="-14"	centerY="-16"/>
-		<frame x="200"	y="174"	width="29"	height="33"	centerX="-14"	centerY="-14"/>
-		<frame x="168"	y="140"	width="28"	height="33"	centerX="-13"	centerY="-15"/>
-		<frame x="117"	y="1"	width="29"	height="35"	centerX="-11"	centerY="-15"/>
-		<frame x="1"	y="207"	width="27"	height="37"	centerX="-14"	centerY="-17"/>
-	</animation>
+	<SubTexture	name="ANI_TWIRL_H0000" x="1" y="207" width="27" height="37" centerX="-14" centerY="-17"/>
+	<SubTexture	name="ANI_TWIRL_H0001" x="29" y="207" width="29" height="34" centerX="-14" centerY="-14"/>
+	<SubTexture	name="ANI_TWIRL_H0002" x="59" y="207" width="28" height="26" centerX="-13" centerY="-14"/>
+	<SubTexture	name="ANI_TWIRL_H0003" x="88" y="207" width="28" height="32" centerX="-14" centerY="-15"/>
+	<SubTexture	name="ANI_TWIRL_H0004" x="116" y="207" width="27" height="29" centerX="-12" centerY="-10"/>
+	<SubTexture	name="ANI_TWIRL_H0005" x="143" y="207" width="30" height="35" centerX="-14" centerY="-15"/>
+	<SubTexture	name="ANI_TWIRL_H0006" x="173" y="207" width="32" height="36" centerX="-15" centerY="-16"/>
+	<SubTexture	name="ANI_TWIRL_H0007" x="205" y="207" width="27" height="36" centerX="-14" centerY="-17"/>
+	<SubTexture	name="ANI_TWIRL_H0008" x="168" y="174" width="31" height="33" centerX="-14" centerY="-16"/>
+	<SubTexture	name="ANI_TWIRL_H0009" x="200" y="174" width="29" height="33" centerX="-14" centerY="-14"/>
+	<SubTexture	name="ANI_TWIRL_H0010" x="168" y="140" width="28" height="33" centerX="-13" centerY="-15"/>
+	<SubTexture	name="ANI_TWIRL_H0011" x="117" y="1" width="29" height="35" centerX="-11" centerY="-18"/>
+	<SubTexture	name="ANI_TWIRL_H0012" x="1" y="207" width="27" height="37" centerX="-14" centerY="-17"/>
+	<SubTexture	name="ANI_TWIRL_H0013" x="29" y="207" width="29" height="34" centerX="-14" centerY="-14"/>
+	<SubTexture	name="ANI_TWIRL_H0014" x="59" y="207" width="28" height="26" centerX="-13" centerY="-14"/>
+	<SubTexture	name="ANI_TWIRL_H0015" x="88" y="207" width="28" height="32" centerX="-14" centerY="-15"/>
+	<SubTexture	name="ANI_TWIRL_H0016" x="116" y="207" width="27" height="29" centerX="-12" centerY="-10"/>
+	<SubTexture	name="ANI_TWIRL_H0017" x="143" y="207" width="30" height="35" centerX="-14" centerY="-15"/>
+	<SubTexture	name="ANI_TWIRL_H0018" x="173" y="207" width="32" height="36" centerX="-15" centerY="-16"/>
+	<SubTexture	name="ANI_TWIRL_H0019" x="205" y="207" width="27" height="36" centerX="-14" centerY="-17"/>
+	<SubTexture	name="ANI_TWIRL_H0020" x="168" y="174" width="31" height="33" centerX="-14" centerY="-16"/>
+	<SubTexture	name="ANI_TWIRL_H0021" x="200" y="174" width="29" height="33" centerX="-14" centerY="-14"/>
+	<SubTexture	name="ANI_TWIRL_H0022" x="168" y="140" width="28" height="33" centerX="-13" centerY="-15"/>
+	<SubTexture	name="ANI_TWIRL_H0023" x="117" y="1" width="29" height="35" centerX="-11" centerY="-15"/>
+	<SubTexture	name="ANI_TWIRL_H0024" x="1" y="207" width="27" height="37" centerX="-14" centerY="-17"/>
 
-	<animation name="Twirl V"	id="25"	fps="60"	loop="true"	loopStart="1">
-		<frame x="104"	y="169"	width="30"	height="37"	centerX="-9"	centerY="-17"/>
-		<frame x="104"	y="169"	width="30"	height="37"	centerX="-9"	centerY="-17"/>
-	</animation>
+	<SubTexture	name="ANI_TWIRL_V0000" x="104" y="169" width="30" height="37" centerX="-9" centerY="-17"/>
+	<SubTexture	name="ANI_TWIRL_V0001" x="104" y="169" width="30" height="37" centerX="-9" centerY="-17"/>
 
-	<animation name="Water Slide"	id="26"	fps="30"	loop="true">
-		<frame x="215"	y="174"	width="40"	height="28"	centerX="-20"	centerY="-15"/>
-		<frame x="216"	y="203"	width="39"	height="27"	centerX="-20"	centerY="-15"/>
-	</animation>
+	<SubTexture	name="ANI_WATER_SLIDE0000" x="215" y="174" width="40" height="28" centerX="-20" centerY="-15"/>
+	<SubTexture	name="ANI_WATER_SLIDE0001" x="216" y="203" width="39" height="27" centerX="-20" centerY="-15"/>
 
-	<animation name="Continue"	id="27"	fps="40"	loop="true">
-		<frame x="215"	y="82"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
-		<frame x="215"	y="82"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
-		<frame x="215"	y="82"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
-		<frame x="215"	y="107"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
-		<frame x="215"	y="107"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
-		<frame x="215"	y="107"	width="40"	height="25"	centerX="-18"	centerY="-5"/>
-	</animation>
+	<SubTexture	name="ANI_CONTINUE0000" x="215" y="82" width="40" height="25" centerX="-18" centerY="-5"/>
+	<SubTexture	name="ANI_CONTINUE0001" x="215" y="82" width="40" height="25" centerX="-18" centerY="-5"/>
+	<SubTexture	name="ANI_CONTINUE0002" x="215" y="82" width="40" height="25" centerX="-18" centerY="-5"/>
+	<SubTexture	name="ANI_CONTINUE0003" x="215" y="107" width="40" height="25" centerX="-18" centerY="-5"/>
+	<SubTexture	name="ANI_CONTINUE0004" x="215" y="107" width="40" height="25" centerX="-18" centerY="-5"/>
+	<SubTexture	name="ANI_CONTINUE0005" x="215" y="107" width="40" height="25" centerX="-18" centerY="-5"/>
 
-	<animation name="Continue Up"	id="28"	fps="60"	loop="true"	loopStart="1">
-		<frame x="224"	y="133"	width="31"	height="40"	centerX="-19"	centerY="-20"/>
-		<frame x="0"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
-		<frame x="0"	y="1"	width="28"	height="40"	centerX="-16"	centerY="-20"/>
-	</animation>
+	<SubTexture	name="ANI_CONTINUE_UP0000" x="224" y="133" width="31" height="40" centerX="-19" centerY="-20"/>
+	<SubTexture	name="ANI_CONTINUE_UP0001" x="0" y="1" width="28" height="40" centerX="-16" centerY="-20"/>
+	<SubTexture	name="ANI_CONTINUE_UP0002" x="0" y="1" width="28" height="40" centerX="-16" centerY="-20"/>
 
-	<animation name="Super Transform"	id="29"	fps="80"	loop="true"	loopStart="5">
-		<frame x="80"	y="1"	width="25"	height="32"	centerX="-14"	centerY="-16"/>
-		<frame x="80"	y="1"	width="25"	height="32"	centerX="-14"	centerY="-16"/>
-		<frame x="105"	y="1"	width="30"	height="44"	centerX="-16"	centerY="-23"/>
-		<frame x="105"	y="1"	width="30"	height="44"	centerX="-16"	centerY="-23"/>
-		<frame x="135"	y="1"	width="28"	height="47"	centerX="-14"	centerY="-24"/>
-		<frame x="164"	y="1"	width="28"	height="48"	centerX="-14"	centerY="-25"/>
-		<frame x="193"	y="1"	width="28"	height="47"	centerX="-14"	centerY="-24"/>
-	</animation>
+	<SubTexture	name="ANI_SUPER_TRANSFORM0000" x="80" y="1" width="25" height="32" centerX="-14" centerY="-16"/>
+	<SubTexture	name="ANI_SUPER_TRANSFORM0001" x="80" y="1" width="25" height="32" centerX="-14" centerY="-16"/>
+	<SubTexture	name="ANI_SUPER_TRANSFORM0002" x="105" y="1" width="30" height="44" centerX="-16" centerY="-23"/>
+	<SubTexture	name="ANI_SUPER_TRANSFORM0003" x="105" y="1" width="30" height="44" centerX="-16" centerY="-23"/>
+	<SubTexture	name="ANI_SUPER_TRANSFORM0004" x="135" y="1" width="28" height="47" centerX="-14" centerY="-24"/>
+	<SubTexture	name="ANI_SUPER_TRANSFORM0005" x="164" y="1" width="28" height="48" centerX="-14" centerY="-25"/>
+	<SubTexture	name="ANI_SUPER_TRANSFORM0006" x="193" y="1" width="28" height="47" centerX="-14" centerY="-24"/>
 
-	<animation name="CD Twirl"	id="30"	fps="60"	loop="true">
-		<frame x="1"	y="1"	width="20"	height="44"	centerX="-11"	centerY="-22"/>
-		<frame x="22"	y="47"	width="29"	height="44"	centerX="-14"	centerY="-22"/>
-		<frame x="1"	y="47"	width="20"	height="44"	centerX="-8"	centerY="-22"/>
-		<frame x="48"	y="1"	width="25"	height="44"	centerX="-13"	centerY="-22"/>
-		<frame x="22"	y="1"	width="25"	height="44"	centerX="-11"	centerY="-22"/>
-	</animation>
+	<SubTexture	name="ANI_CD_TWIRL0000" x="1" y="1" width="20" height="44" centerX="-11" centerY="-22"/>
+	<SubTexture	name="ANI_CD_TWIRL0001" x="22" y="47" width="29" height="44" centerX="-14" centerY="-22"/>
+	<SubTexture	name="ANI_CD_TWIRL0002" x="1" y="47" width="20" height="44" centerX="-8" centerY="-22"/>
+	<SubTexture	name="ANI_CD_TWIRL0003" x="48" y="1" width="25" height="44" centerX="-13" centerY="-22"/>
+	<SubTexture	name="ANI_CD_TWIRL0004" x="22" y="1" width="25" height="44" centerX="-11" centerY="-22"/>
 
-	<animation name="Sonic 2 Peelout"	id="31"	fps="128"	loop="true"	loopStart="1">
-		<frame x="68"	y="159"	width="40"	height="33"	centerX="-16"	centerY="-13"/>
-		<frame x="109"	y="158"	width="40"	height="34"	centerX="-16"	centerY="-14"/>
-		<frame x="151"	y="159"	width="39"	height="33"	centerX="-15"	centerY="-13"/>
-		<frame x="191"	y="158"	width="40"	height="34"	centerX="-16"	centerY="-14"/>
-	</animation>
-
-	<animation name="Mania Peelout"	id="32"	fps="128">
-		<frame x="68"	y="193"	width="38"	height="33"	centerX="-18"	centerY="-13"/>
-		<frame x="107"	y="194"	width="38"	height="32"	centerX="-18"	centerY="-12"/>
-		<frame x="146"	y="193"	width="38"	height="33"	centerX="-18"	centerY="-13"/>
-		<frame x="185"	y="194"	width="38"	height="32"	centerX="-18"	centerY="-12"/>
-	</animation>
-
-	<animation name="Hang Move"	id="33">
-		<frame x="29"	y="41"	width="32"	height="48"	centerX="-16"	centerY="-23"/>
-		<frame x="1"	y="41"	width="27"	height="50"	centerX="-13"	centerY="-23"/>
-		<frame x="62"	y="41"	width="32"	height="48"	centerX="-16"	centerY="-23"/>
-		<frame x="1"	y="41"	width="27"	height="50"	centerX="-13"	centerY="-23"/>
-	</animation>
+	<SubTexture	name="ANI_HANG_MOVE0000" x="29" y="41" width="32" height="48" centerX="-16" centerY="-23"/>
+	<SubTexture	name="ANI_HANG_MOVE0001" x="1" y="41" width="27" height="50" centerX="-13" centerY="-23"/>
+	<SubTexture	name="ANI_HANG_MOVE0002" x="62" y="41" width="32" height="48" centerX="-16" centerY="-23"/>
+	<SubTexture	name="ANI_HANG_MOVE0003" x="1" y="41" width="27" height="50" centerX="-13" centerY="-23"/>
 
 	<!-- Customs -->
 
-	<animation name="Beta Dash 0"	id="34"	fps="80">
-		<frame x="82"	y="83"	width="32"	height="36"	centerX="-16"	centerY="-16"/>
-		<frame x="115"	y="83"	width="32"	height="36"	centerX="-16"	centerY="-16"/>
-		<frame x="148"	y="83"	width="31"	height="36"	centerX="-15"	centerY="-16"/>
-		<frame x="180"	y="83"	width="32"	height="36"	centerX="-16"	centerY="-16"/>
-	</animation>
+	<SubTexture	name="ANI_BETA_DASH 10000" x="82" y="83" width="32" height="36" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_BETA_DASH 10001" x="115" y="83" width="32" height="36" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_BETA_DASH 10002" x="148" y="83" width="31" height="36" centerX="-15" centerY="-16"/>
+	<SubTexture	name="ANI_BETA_DASH 10003" x="180" y="83" width="32" height="36" centerX="-16" centerY="-16"/>
 
-	<animation name="Beta Dash 1"	id="35"	fps="128">
-		<frame x="1"	y="93"	width="36"	height="34"	centerX="-16"	centerY="-14"/>
-		<frame x="38"	y="92"	width="36"	height="35"	centerX="-16"	centerY="-15"/>
-		<frame x="75"	y="93"	width="35"	height="34"	centerX="-15"	centerY="-14"/>
-		<frame x="111"	y="92"	width="36"	height="35"	centerX="-16"	centerY="-15"/>
-	</animation>
+	<SubTexture	name="ANI_BETA_DASH 20000" x="1" y="93" width="36" height="34" centerX="-16" centerY="-14"/>
+	<SubTexture	name="ANI_BETA_DASH 20001" x="38" y="92" width="36" height="35" centerX="-16" centerY="-15"/>
+	<SubTexture	name="ANI_BETA_DASH 20002" x="75" y="93" width="35" height="34" centerX="-15" centerY="-14"/>
+	<SubTexture	name="ANI_BETA_DASH 20003" x="111" y="92" width="36" height="35" centerX="-16" centerY="-15"/>
 
-	<animation name="Drop Dash"	id="36"	fps="240"	loop="true">
-		<frame x="331"	y="240"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="397"	y="244"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="364"	y="240"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="430"	y="244"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="331"	y="240"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="463"	y="244"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="364"	y="240"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-		<frame x="342"	y="272"	width="32"	height="32"	centerX="-16"	centerY="-16"/>
-	</animation>
-</animationData>
+	<SubTexture	name="ANI_DROPDASH0001" x="331" y="240" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_DROPDASH0002" x="397" y="244" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_DROPDASH0003" x="364" y="240" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_DROPDASH0004" x="430" y="244" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_DROPDASH0005" x="331" y="240" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_DROPDASH0006" x="463" y="244" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_DROPDASH0007" x="364" y="240" width="32" height="32" centerX="-16" centerY="-16"/>
+	<SubTexture	name="ANI_DROPDASH0008" x="342" y="272" width="32" height="32" centerX="-16" centerY="-16"/>
+</TextureAtlas>

@@ -1,0 +1,13 @@
+
+"flag	content
+setting_background_layers	Escuridão nos Fundos
+setting_background_layers_desc	Adiciona uma camada escura aos fundos fazendo-os não ser muito luminosos
+
+"setting_show_framerate	Mostrar Quadros
+setting_show_framerate_desc	Adiciona um contador fps no canto superior esquerdo da tela.
+
+"setting_framerate	Taxa de Quadros
+setting_framerate_desc	Define seu atual <Q>framerate<Q>
+
+"setting_low_quality	Baixa Qualidade
+setting_low_quality_desc	Faz o jogo possuir alta performance em plataformas mais fracas"

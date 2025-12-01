@@ -1,37 +1,27 @@
 package states;
 
-import flixel.ui.FlxBar;
 import objects.Character;
-import lime.app.Promise;
-import lime.app.Future;
 
 import flixel.FlxState;
+import flixel.ui.FlxBar;
+
+import lime.app.Future;
+import lime.app.Promise;
+import lime.utils.Assets as LimeAssets;
 
 import openfl.utils.Assets;
-import lime.utils.Assets as LimeAssets;
-import lime.utils.AssetLibrary;
-import lime.utils.AssetManifest;
 
 import haxe.io.Path;
 
-class LoadingState extends MusicBeatState
-{
-	inline static var MIN_TIME = 4.0;
 
-	// Browsers will load create(), you can make your song load a custom directory there
-	// If you're compiling to desktop (or something that doesn't use NO_PRELOAD_ALL), search for getNextState instead
-	// I'd recommend doing it on both actually lol
-	
-	// TO DO: Make this easier
-	
+class LoadingState extends StateManager {
 	var target:FlxState;
 	var stopMusic = false;
 	var directory:String;
 	var callbacks:MultiCallback;
-	var targetShit:Float = 0;
+	var targetTime:Float = 0;
 
-	function new(target:FlxState, stopMusic:Bool, directory:String)
-	{
+	function new(target:FlxState, stopMusic:Bool, directory:String) {
 		this.target = target;
 		this.stopMusic = stopMusic;
 		this.directory = directory;
@@ -41,40 +31,24 @@ class LoadingState extends MusicBeatState
 
 	var loadingTxt:FlxText;
 	var loadBar:FlxBar;
-	var player:Character;
-	override function create()
-	{
+
+	override function create() {
 		var bg:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xfff0f0f0);
 		add(bg);
-
-		player = new Character(FlxG.width/2, 60, Character.defaultPlayer);
-		player.playAnim("ANI_RUNNNING", true);
-		add(player);
 		
-		loadingTxt = new FlxText(0, 70, 0, Language.getPhrase("loading", "Loading..."), 16);
+		loadingTxt = new FlxText(0, 70, 0, Locale.getString("loading", "data", ["..."]), 16);
+		loadingTxt.setFormat(Paths.font("Mania.ttf"), 16, FlxColor.WHITE, "center");
 		add(loadingTxt);
 
-		loadBar = new FlxBar(0, FlxG.height - 20, FlxBarFillDirection.LEFT_TO_RIGHT, FlxG.width, 10);
-		loadBar.createFilledBar(0xFF404040, 0xffff16d2);
+		loadBar = new FlxBar(0, FlxG.height - 20, FlxBarFillDirection.LEFT_TO_RIGHT, FlxG.width * 0.8, 10);
+		loadBar.createFilledBar(0xFF303030, 0xFF8BE3FF);
 		add(loadBar);
 		super.create();
 	}
 	
-	function checkLoadSong(path:String)
-	{
-		if (!Assets.cache.hasSound(path))
-		{
-			var library = Assets.getLibrary("songs");
-			final symbolPath = path.split(":").pop();
-			var callback = callbacks.add("song:" + path);
-			Assets.loadSound(path).onComplete(function (_) { callback(); });
-		}
-	}
-	
 	function checkLibrary(library:String) {
 		trace(Assets.hasLibrary(library));
-		if (Assets.getLibrary(library) == null)
-		{
+		if (Assets.getLibrary(library) == null) {
 			@:privateAccess
 			if (!LimeAssets.libraryPaths.exists(library))
 				throw new haxe.Exception("Missing library: " + library);
@@ -84,42 +58,38 @@ class LoadingState extends MusicBeatState
 		}
 	}
 	
-	override function update(elapsed:Float)
-	{
+	override function update(elapsed:Float) {
 		super.update(elapsed);
 
 		if(callbacks != null) {
-			targetShit = FlxMath.remapToRange(callbacks.numRemaining / callbacks.length, 1, 0, 0, 1);
-			loadBar.scale.x += 0.5 * (targetShit - loadBar.scale.x);
+			targetTime = FlxMath.remapToRange(callbacks.numRemaining / callbacks.length, 1, 0, 0, 1);
+			loadBar.scale.x += 0.5 * (targetTime - loadBar.scale.x);
 		}
 	}
 	
-	function onLoad()
-	{
-		if (stopMusic && CoolUtil.mus != null)
-			CoolUtil.mus.stop();
+	function onLoad() {
+		if (stopMusic && FlxG.sound.music != null)
+			FlxG.sound.music.stop();
 		
-		MusicBeatState.switchState(target);
+		StateManager.switchState(target);
 	}
 	
 	inline static public function switchStates(target:FlxState, stopMusic = false)
-		MusicBeatState.switchState(getNextState(target, stopMusic));
+		StateManager.switchState(getNextState(target, stopMusic));
 	
-	static function getNextState(target:FlxState, stopMusic = false):FlxState
-	{
+	static function getNextState(target:FlxState, stopMusic = false):FlxState {
 		var directory:String = 'shared';
 
 		Paths.setCurrentLevel(directory);
-		trace('Setting asset folder to ' + directory);
+		trace('Setting asset folder to $directory');
 
-		if (stopMusic && CoolUtil.mus != null)
-			CoolUtil.mus.stop();
+		if (stopMusic && FlxG.sound.music != null)
+			FlxG.sound.music.stop();
 		
 		return target;
 	}
 	
-	override function destroy()
-	{
+	override function destroy() {
 		super.destroy();
 		
 		callbacks = null;
@@ -136,20 +106,17 @@ class MultiCallback
 	var unfired = new Map<String, Void->Void>();
 	var fired = new Array<String>();
 	
-	public function new (callback:Void->Void, logId:String = null)
-	{
+	public function new (callback:Void->Void, logId:String = null) {
 		this.callback = callback;
 		this.logId = logId;
 	}
 	
-	public function add(id = "untitled")
-	{
+	public function add(id = "untitled") {
 		id = '$length:$id';
 		length++;
 		numRemaining++;
 		var func:Void->Void = null;
-		func = function ()
-		{
+		func = function () {
 			if (unfired.exists(id))
 			{
 				unfired.remove(id);

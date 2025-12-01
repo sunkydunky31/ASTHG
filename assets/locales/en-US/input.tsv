@@ -1,0 +1,18 @@
+flag	content
+flxgamepad_ps_a	Cross
+flxgamepad_ps_b	Circle
+flxgamepad_ps_x	Square
+flxgamepad_ps_y	Triangle
+flxgamepad_ps4_back	Share
+flxgamepad_ps4_start	Options
+flxgamepad_xbox_back	Back
+flxgamepad_a	Action Down
+flxgamepad_b	Action Right
+flxgamepad_x	Action Left
+flxgamepad_y	Action Up
+flxgamepad_back	Select
+flxgamepad_start	Start
+flxgamepad_lshoulder	L. Bumper
+flxgamepad_rshoulder	R. Bumper
+flxgamepad_ltrigger	L. Trigger
+flxgamepad_rtrigger	R. Trigger

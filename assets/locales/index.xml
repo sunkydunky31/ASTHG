@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<file id="data"			value="data.tsv"/>
+	<file id="discord"		value="discord.tsv"/>
+	<file id="input"		value="input.tsv"/>
+	<file id="main_menu"	value="main_menu.tsv"/>
+	<file id="options"		value="option_controls.tsv"/>
+	<file id="options"		value="option_display.tsv"/>
+	<file id="options"		value="option_gameplay.tsv"/>
+	<file id="options"		value="option_menu.tsv"/>
+	<file id="options"		value="option_system.tsv"/>
+	<file id="pause"		value="pause.tsv"/>
+	<file id="save_select"	value="save_select.tsv"/>
+	<file id="title_screen"	value="title_screen.tsv"/>
+
+	<file id="files" value="files.xml"/>
+	<file id="fonts" value="fonts.xml"/>
+
+	<locale id="en-US" is_default="true" sort="0">	
+		<contributors value="Sunkydev31"/>
+		<ui language="Language" region="Region"/>
+		<label id="en-US,en-GB,en-CA" language="English" region="United States"/>
+	</locale>
+</data>

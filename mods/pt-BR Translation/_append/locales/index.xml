@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<locale>
+	    <merge key="id" value="en-US"/>
+	    <label id="pt-BR" language="Inglês" region="Estados Unidos"/>
+	</locale>
+
+	<locale id="pt-BR" sort="1">	
+		<contributors value="Sunkydev31"/>
+		<ui language="Idioma" region="Região"/>
+		<label id="en-US,en-GB,en-CA" language="Portuguese" region="Brazil"/>
+		<label id="pt-BR, pt-PT" language="Português" region="Brasil"/>
+	</locale>
+</data>

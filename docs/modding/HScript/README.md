@@ -1,43 +1,50 @@
 # Handbook
 
 ## Functions
-- `trace(v:Dynamic, ?infos:Null<haxe.PosInfos>)`
-    Display a text on the console
-    Note that it can only be visible with a build!
 
-- `onGameStart()`
-    Called when the game starts (`states.Init` is created)
+### `trace(v:Dynamic, ?infos:Null<haxe.PosInfos>)`
 
-- `onCreate()`
-    Called when a state are created.
-    Note that it works on every created state!
-    Be careful
- 
+- Display a text on the console
+
+- #### Usage
+
+  ```haxe
+  trace("Hello, Haxe!");
+  ```
+
+### `onGameStart()`
+
+Called when the game starts (`states.Init` is created)
+
+### `onCreate()`
+
+Called when a state are created.
+Note that it works on every created state!
+Be careful
+
 - `onUpdate(elapsed:Float)`
     Called when a state updates
 
 ## Variables
 
-- `game`
-    - `game` is a syntax for commom variables, like `version` or `name`
-    - Options:
-        - `version`: Game version;
-    - Usage:
-    ```
-    game.version
-    ```
+### `game`
 
-## Imported classes
+`game` is a syntax for commom variables, like `version` or `title`
 
-### Backend
-- `ClientPrefs`;
-- `CoolUtil`;
-- `Controls`; (With instance)
-- `Language`;
+---
 
-### Objects
-- `LifeIcon`;
-- `Character`; (As "Player")
+|Options    |Description          |
+|:----------|:--------------------|
+|company    |Game's company       |
+|file       |File name of the Game|
+|title      |Game's title         |
+|version    |Version of the Game  |
+|packageName|Version of the Game  |
 
-### Substates
-- `Pause`;
+---
+
+**Usage**:
+
+```haxe
+trace(game.version);
+```

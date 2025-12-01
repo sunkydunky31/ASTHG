@@ -2,13 +2,13 @@ package states;
 
 import flixel.effects.FlxFlicker;
 
-class TitleState extends MusicBeatState {
+class TitleState extends StateManager {
 	var pressStart:FlxBitmapText;
 
 	override function create() {
 		Paths.clearUnusedMemory();
 
-		var bg:FlxSprite = new FlxSprite().makeGraphic(1, 1, 0xFFF00000);
+		var bg:FlxSprite = new FlxSprite().makeGraphic(1, 1, 0xFF000000);
 		bg.scale.set(FlxG.width, FlxG.height);
 		bg.updateHitbox();
 		add(bg);
@@ -17,11 +17,12 @@ class TitleState extends MusicBeatState {
             Controls.instance.controllerMode = true;
         }
 
-		pressStart = new FlxBitmapText(0, FlxG.height - 20, Language.getPhrase("titlescreen_press_start", "Press {1}", [backend.InputFormatter.getControlNames('accept')]), Paths.getAngelCodeFont("HUD"));
+		pressStart = new FlxBitmapText(0, FlxG.height - 20, Locale.getString("press_start", "title_screen", [backend.InputFormatter.getControlNames('accept')]), Paths.getAngelCodeFont("HUD"));
 		pressStart.screenCenter(X);
 		add(pressStart);
 
-		FlxFlicker.flicker(pressStart, 17, 0.12, true);
+		if (!ClientPrefs.data.flashing)
+			FlxFlicker.flicker(pressStart, 17, 0.12, true);
 
 		CoolUtil.playMusic('TitleScreen', {sample: 0});
 
@@ -30,7 +31,7 @@ class TitleState extends MusicBeatState {
 
 	override function update(e:Float) {
 		if (controls.justPressed('accept'))
-			MusicBeatState.switchState(new MainMenu());
+			StateManager.switchState(new states.MainMenu());
 
 	}
 }

@@ -1,6 +1,6 @@
 package backend;
 
-class CustomFadeTransition extends MusicBeatSubstate {
+class CustomFadeTransition extends SubStateManager {
 	public static var finishCallback:Void->Void;
 	var isTransIn:Bool = false;
 	var transBlack:FlxSprite;

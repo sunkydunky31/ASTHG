@@ -1,12 +1,19 @@
 package states;
 
 import objects.Character;
-import openfl.geom.Rectangle;
 import flixel.tween.*;
 
-class SaveSelect extends MusicBeatState {
+class SaveSelect extends StateManager {
+	public var camFront:FlxCamera;
+
 	public var saveGroup:FlxTypedGroup<SaveEntry>;
 	var curSelected:Int = 0;
+
+	var selectSave:FlxSprite;
+	var selectUpZone:FlxSprite;
+	var selectUpChar:FlxSprite;
+	var selectDownZone:FlxSprite;
+	var selectDownChar:FlxSprite;
 
 	override function create() {
 		Paths.clearUnusedMemory();
@@ -15,65 +22,107 @@ class SaveSelect extends MusicBeatState {
 		saveGroup = new FlxTypedGroup<SaveEntry>();
 
 		#if DISCORD_ALLOWED
-		DiscordClient.changePresence(Language.getPhrase('discordrpc_save_select', 'Save Select'), null);
+		DiscordClient.changePresence(Locale.getString('save_select', 'discord'), null);
 		#end
 
+		camFront = new FlxCamera();
+		camFront.visible = true;
+		camFront.bgColor.alpha = 5;
+		FlxG.cameras.add(camFront, false);
+		
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xff4d4dff);
-		//bg.brightness = ClientPrefs.data.backLayers;
 		add(bg);
 		
 		var bgLayer:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bgLayer.alpha = ClientPrefs.data.backLayers;
 		add(bgLayer);
 		
-		var title:FlxBitmapText = new FlxBitmapText(FlxG.width/2, FlxG.height - 26, Language.getPhrase("save_select", "Save Select"), Paths.getAngelCodeFont("Roco"));
-		title.setBorderStyle(FlxTextBorderStyle.SHADOW, FlxColor.BLACK, 2, 0);
+		var title:FlxBitmapText = new FlxBitmapText(FlxG.width/2, FlxG.height - 26, Locale.getString("title", "save_select"), Paths.getAngelCodeFont("GameOver"));
 		title.x -= title.width / 2;
 		add(title);
 
 		for (i in 0...Constants.SAVE_ENTRY_LIMIT) {
 			var saveEntry:SaveEntry = new SaveEntry(i);
-			saveEntry.x = 90 * i;
-			saveEntry.y = 50;
+			saveEntry.setPosition(90 * i, 50);
+			saveEntry.cameras = [camFront];
 			saveGroup.add(saveEntry);
 		}
 		add(saveGroup);
 
-		var selectSave:FlxSprite = new FlxSprite().loadGraphic(Paths.image("saveSelect/selected"));
-		selectSave.x = saveGroup.members[curSelected].x;
-		selectSave.y = saveGroup.members[curSelected].y;
-		FlxTween.color(selectSave, 0.2, FlxColor.fromString(Constants.SAVE_SELECTED_FRAME_COLOR1), FlxColor.fromString(Constants.SAVE_SELECTED_FRAME_COLOR2), {type: FlxTweenType.PINGPONG, ease: FlxEase.linear});
+		//Do not touch the position of this sprite
+		selectSave = new FlxSprite(saveGroup.members[curSelected].x, saveGroup.members[curSelected].y).loadGraphic(Paths.image("saveSelect/selected"));
+		FlxTween.color(selectSave, 0.2, FlxColor.fromString(Constants.SAVE_SELECTED_FRAME_COLOR[0]), FlxColor.fromString(Constants.SAVE_SELECTED_FRAME_COLOR[1]), {type: FlxTweenType.PINGPONG, ease: FlxEase.linear});
+		selectSave.cameras = [camFront];
 		add(selectSave);
 
-		var selectUpZone:FlxSprite = new FlxSprite(saveGroup.members[curSelected].x + 30, saveGroup.members[curSelected].y + 14).loadGraphic(Paths.image("saveSelect/selectArrow"));
-		selectUpZone.color = FlxColor.fromString(Constants.SAVE_SELECTED_ARROW_COLOR1);
+		// Positions of all the sprites above are updated on `changeSelection()`
+		selectUpZone = new FlxSprite().loadGraphic(Paths.image("saveSelect/selectArrow"));
+		selectUpZone.color = FlxColor.fromString(Constants.SAVE_SELECTED_ARROW_COLOR[0]);
+		selectUpZone.cameras = [camFront];
 		add(selectUpZone);
 
-		var selectUpChar:FlxSprite = new FlxSprite(saveGroup.members[curSelected].x + 30, saveGroup.members[curSelected].y + 65).loadGraphic(Paths.image("saveSelect/selectArrow"));
-		selectUpChar.color = FlxColor.fromString(Constants.SAVE_SELECTED_ARROW_COLOR2);
+		selectUpChar = new FlxSprite().loadGraphic(Paths.image("saveSelect/selectArrow"));
+		selectUpChar.color = FlxColor.fromString(Constants.SAVE_SELECTED_ARROW_COLOR[1]);
+		selectUpChar.cameras = [camFront];
 		add(selectUpChar);
 
-		var selectDownZone:FlxSprite = new FlxSprite(selectUpZone.x, selectUpZone.y + 18).loadGraphic(Paths.image("saveSelect/selectArrowFlip"));
+		selectDownZone = new FlxSprite().loadGraphic(Paths.image("saveSelect/selectArrowFlip"));
 		selectDownZone.color = selectUpZone.color;
+		selectDownZone.cameras = [camFront];
 		add(selectDownZone);
 
-		var selectDownChar:FlxSprite = new FlxSprite(selectUpChar.x, selectUpChar.y + 30).loadGraphic(Paths.image("saveSelect/selectArrowFlip"));
+		selectDownChar = new FlxSprite().loadGraphic(Paths.image("saveSelect/selectArrowFlip"));
 		selectDownChar.color = selectUpChar.color;
+		selectDownChar.cameras = [camFront];
 		add(selectDownChar);
 
+		camFront.follow(selectSave, LOCKON, 40);
+		changeSelection();
+
 		super.create();
-		CoolUtil.playMusic("SaveSelect", {sample: 131290});
+		CoolUtil.playMusic("SaveSelect");
 	}
 
 	override function update(e:Float) {
 		super.update(e);
 
-		if (controls.justPressed('accept'))
+		if (controls.justPressed('accept')) {
 			LoadingState.switchStates(new states.PlayState(), true);
-		if (controls.justPressed('back')) {
-			CoolUtil.mus.stop();
-			MusicBeatState.switchState(new MainMenu());
 		}
+
+		if (controls.justPressed('back')) {
+			StateManager.switchState(new states.MainMenu());
+		}
+
+		if (controls.justPressed('left')) {
+			changeSelection(-1);
+		} else if (controls.justPressed('right')) {
+			changeSelection(1);
+		}
+	}
+
+	function changeSelection(count:Int = 0) {
+		curSelected = FlxMath.wrap(curSelected + count, 0, saveGroup.length - 1);
+
+		var member = cast saveGroup.members[curSelected];
+		if (member == null) return;
+
+		selectSave.x = member.x;
+		selectSave.y = member.y;
+
+		selectUpZone.x = member.x + 35;
+		selectUpZone.y = member.y + 14;
+
+		selectUpChar.x = selectUpZone.x;
+		selectUpChar.y = member.y + 65;
+
+		selectDownZone.x = selectUpZone.x;
+		selectDownZone.y = selectUpZone.y + 18;
+
+		selectDownChar.x = selectUpChar.x;
+		selectDownChar.y = selectUpChar.y + 30;
+
+		CoolUtil.playSound("MenuChange");
 	}
 }
 
@@ -83,7 +132,7 @@ class SaveEntry extends FlxSpriteGroup {
 	public function new(id:Int) {
 		super();
 
-		var save:FlxSprite = new FlxSprite().loadGraphic(Paths.image("saveSelect/save", null, false)); //false -> Allow pixel reading
+		var save:FlxSprite = new FlxSprite().loadGraphic(Paths.image("saveSelect/save", null, false));
 		add(save);
 
 		var colors:Array<Array<FlxColor>> = [
@@ -97,14 +146,11 @@ class SaveEntry extends FlxSpriteGroup {
 		];
 
 		for (i in 0...7) {
-			var emerald:FlxSprite = new FlxSprite(2, save.height - 12);
+			var emerald:FlxSprite = new FlxSprite(2, save.height - 12).loadGraphic(Paths.image("saveSelect/emerald"));
 			emerald.x += (emerald.width * i) + i;
 			CoolUtil.applyPalette(emerald, [colors[i][0], colors[i][1], colors[i][2], colors[i][3]]);
 			add(emerald);
 			emeralds.push(emerald);
 		}
-		
-		character = new Character(30, 80, "sonic");
-		add(character);
 	}
 }

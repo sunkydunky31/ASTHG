@@ -14,7 +14,7 @@ import states.Init;
 	// ----------- System -----------
 	public var cacheOnGPU:Bool = #if !switch false #else true #end; //From Stilic
 	public var checkForUpdates:Bool = true;
-	public var discordRPC:Bool = true;
+	public var discordRPC:Bool = #if DISCORD_ALLOWED true #else false #end;
 	public var haptics:Bool = true;
 	public var language:String = 'en-US'; //Default
 
@@ -22,7 +22,7 @@ import states.Init;
 	public var backLayers:Float = 0.0;
 	public var framerate:Int = 60;
 	public var lowQuality:Bool = false;
-	public var showFPS:Bool = true;
+	public var showFPS:Bool = false;
 
 	// ----------- Gameplay -----------
 	public var autoPause:Bool = true;
@@ -58,8 +58,8 @@ class ClientPrefs {
 		'down'			=> [DPAD_DOWN],
 		'right'			=> [DPAD_RIGHT],
 		
-		'accept'		=> [A],
-		'jump'			=> [X],
+		'accept'		=> [X],
+		'jump'			=> [A],
 		'back'			=> [B],
 		'auxiliar'		=> [Y],
 		'pause'			=> [START],

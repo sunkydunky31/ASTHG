@@ -1,13 +1,9 @@
 package states;
 
-import flixel.FlxSubState;
 import objects.Character;
 import objects.LifeIcon;
-import objects.StageBase;
-import backend.Stage;
-import flixel.util.helpers.FlxBounds;
 
-class PlayState extends MusicBeatState
+class PlayState extends StateManager
 {
 	public static var instance:PlayState;
 
@@ -34,8 +30,6 @@ class PlayState extends MusicBeatState
 	#end
 
 	public var player:Character = null;
-	public var stageBase:StageBase = null;
-	public var stage:Stage = null;
 
 	public var livesIcon:LifeIcon;
 
@@ -45,22 +39,12 @@ class PlayState extends MusicBeatState
 		score = 0;
 		time = "0:00";
 		rings = 0;
-		stageBase = new StageBase("greenHill", 1);
 		player = new Character(50, 50, Character.defaultPlayer);
-
-
-	/*	stage = new Stage(stageBase.json.folder, StageBase.curAct);
-		stage.map.loadEntities(stage.placeEntities, "entities");
-		add(stage); */
-
-		
-	//	FlxG.worldBounds.copyFrom(stage.bounds);
-	//	FlxG.camera.setBounds(0, 0, stage.bounds.width, stage.bounds.height, true);
 
 		hudPos = new FlxPoint(8,10);
 
 		#if DISCORD_ALLOWED
-		DiscordClient.changePresence(Language.getPhrase('discordrpc_playing', "Testing PlayState"), Language.getPhrase("discordrpc_playing-player", "Playing as {1}", [player.json.name]), "icon", "", player.json.name.toLowerCase(), player.json.name);
+		DiscordClient.changePresence(Locale.getString('playing', "discord"), Locale.getString("playing-player", "discord", [player.json.name]), "icon", "", player.json.name.toLowerCase(), player.json.name);
 		#end
 		Paths.clearStoredMemory();
 
@@ -71,14 +55,14 @@ class PlayState extends MusicBeatState
 
 		camHUD = new FlxCamera();
 		camHUD.visible = !ClientPrefs.data.hideHud;
+		camHUD.bgColor.alpha = 0; //I hate this so much
 		FlxG.cameras.add(camHUD, false);
 
 		camFront = new FlxCamera();
 		camFront.visible = true;
+		camFront.bgColor.alpha = 0;
 		FlxG.cameras.add(camFront, false);
 		
-		camHUD.bgColor.alpha = 0; //I hate this fucking little shi-
-		camFront.bgColor.alpha = 0;
 
 		//playTitleCard(["#000236", "#ffff00", "#ff0000"]);
 
@@ -89,28 +73,31 @@ class PlayState extends MusicBeatState
 		// Player init
 		add(player);
 		camGame.follow(player, TOPDOWN, 1);
-		
-		#if MODS_ALLOWED
-		scripts.callHook('onCreate', []);
-		#end
 		super.create();
-		
-		var hudTxt:FlxBitmapText = new FlxBitmapText(hudPos.x, hudPos.y, Language.getPhrase("hud_text", "Score\nTime\nRings"), Paths.getAngelCodeFont("HUD"));
-		hudTxt.scrollFactor.set();
-		uiGroup.add(hudTxt);
 
-		var hudX = hudTxt.x + hudTxt.width + 67;
-		scoreTxt = new FlxBitmapText(hudX, hudTxt.y, '', Paths.getAngelCodeFont("HUD"));
+		var hudTxtScore:FlxBitmapText = new FlxBitmapText(hudPos.x, hudPos.y, Locale.getString("hud_text_score"), Paths.getAngelCodeFont("HUD"));
+		hudTxtScore.scrollFactor.set();
+		uiGroup.add(hudTxtScore);
+		
+		var hudTxtTime:FlxBitmapText = new FlxBitmapText(hudPos.x, hudPos.y + 16, Locale.getString("hud_text_time"), Paths.getAngelCodeFont("HUD"));
+		hudTxtTime.scrollFactor.set();
+		uiGroup.add(hudTxtTime);
+
+		var hudTxtRings:FlxBitmapText = new FlxBitmapText(hudPos.x, hudPos.y + 32, Locale.getString("hud_text_rings"), Paths.getAngelCodeFont("HUD"));
+		hudTxtRings.scrollFactor.set();
+		uiGroup.add(hudTxtRings);
+
+		scoreTxt = new FlxBitmapText(hudTxtScore.x + hudTxtScore.width + 37, hudTxtScore.y, '', Paths.getAngelCodeFont("HUD"));
 		scoreTxt.scrollFactor.set();
 		scoreTxt.x -= (scoreTxt.width);
 		uiGroup.add(scoreTxt);
 
-		timeTxt = new FlxBitmapText(hudX, hudTxt.y + 16, '', Paths.getAngelCodeFont("HUD"));
+		timeTxt = new FlxBitmapText(hudTxtTime.x + hudTxtTime.width + 37, hudTxtTime.y + 16, '', Paths.getAngelCodeFont("HUD"));
 		timeTxt.scrollFactor.set();
 		timeTxt.x -= (timeTxt.width);
 		uiGroup.add(timeTxt);
 
-		ringsTxt = new FlxBitmapText(hudX, hudTxt.y + 32, '', Paths.getAngelCodeFont("HUD"));
+		ringsTxt = new FlxBitmapText(hudTxtRings.x + hudTxtRings.width + 37, hudTxtRings.y + 32, '', Paths.getAngelCodeFont("HUD"));
 		ringsTxt.scrollFactor.set();
 		ringsTxt.x -= (ringsTxt.width);
 		ringsTxt.x = timeTxt.x = scoreTxt.x;
@@ -142,11 +129,12 @@ class PlayState extends MusicBeatState
 		var posY:FlxSprite = new FlxSprite(posX.x, hudPos.y + 13).loadGraphic(Paths.image("HUD/posY"));
 		posY.color = (player.y >= 0xFFFF) ? 0xFFFF0000 : 0xFFFFFF00;
 		uiGroup.add(posY);
+		
 		posYTxt = new FlxBitmapText(posY.x + posY.width + 1, posY.y, '', Paths.getAngelCodeFont("HUD"));
 		uiGroup.add(posYTxt);
 		#end
 
-		CoolUtil.playMusic(stageBase.jsonAct.music, {sample: stageBase.jsonAct.musicLoop[0], hz: stageBase.jsonAct.musicLoop[1]});
+		CoolUtil.playMusic("GreenHill1");
 	}
 
 	override public function update(elapsed:Float) {
@@ -162,29 +150,32 @@ class PlayState extends MusicBeatState
 		livesTxt.text = Std.string(lives);
 		
 		#if debug
-		posXTxt.text = StringTools.hex(Std.int(player.x), 5);
-		posYTxt.text = StringTools.hex(Std.int(player.y), 5);
+		posXTxt.text = StringTools.hex(Std.int(player.x), 6);
+		posYTxt.text = StringTools.hex(Std.int(player.y), 6);
 		#end
 
 		if (FlxG.keys.justPressed.SIX) { 
 			rings += 10;
 			CoolUtil.playSound("Ring", true);
 		}
+
+		
+		updateMoves();
 		super.update(elapsed);
 
 		if (controls.justPressed('pause')) openPauseMenu();
 	}
 
 	function openPauseMenu() {
-		if (CoolUtil.mus != null) CoolUtil.mus.pause();
+		if (FlxG.sound.music != null) FlxG.sound.music.pause();
 
 		openSubState(new substates.Pause());
 	}
 
 	/**
-	 * Shows the title card
-	 * @param colors Order: Background, Bottom Backdrop, Left backdrop
-	 */
+		Shows the title card
+		@param colors Order: Background, Bottom Backdrop, Left backdrop
+	**/
 	public function playTitleCard(colors:Array<String>) {
 		// Sonic 2 title card because yes
 
@@ -203,7 +194,7 @@ class PlayState extends MusicBeatState
 		var backdrop2:FlxBackdrop = new FlxBackdrop(Paths.image("UI/backdropX"), X);
 		backdrop2.color = FlxColor.fromString(colors[1]);
 		backdrop2.cameras = [camFront];
-		backdrop2.y = FlxG.width - 50;
+		backdrop2.y = FlxG.height - 50;
 		add(backdrop2);
 
 		var backdrop:FlxBackdrop = new FlxBackdrop(Paths.image("UI/backdropY"), Y);
@@ -211,7 +202,7 @@ class PlayState extends MusicBeatState
 		backdrop.cameras = [camFront];
 		add(backdrop);
 
-		var actName:FlxBitmapText = new FlxBitmapText(FlxG.width - 90, 87, stageBase.jsonAct.titleCard, Paths.getAngelCodeFont("Roco"));
+		var actName:FlxBitmapText = new FlxBitmapText(FlxG.width - 90, 87, "STAGE NAME", Paths.getAngelCodeFont("Roco"));
 		actName.x -= actName.width;
 		actName.cameras = [camFront];
 		add(actName);
@@ -226,4 +217,56 @@ class PlayState extends MusicBeatState
 		FlxTween.tween(backdrop2, {x: 50}, 0.5);
 	}
 
+	
+	function updateMoves() {
+		player.acceleration.x = 0;
+
+		var inputUP:Bool = false;
+		var inputDOWN:Bool = false;
+		var inputLEFT:Bool = false;
+		var inputRIGHT:Bool = false;
+
+		inputUP = controls.pressed('up');
+		inputDOWN = controls.pressed('down');
+		inputLEFT = controls.pressed('left');
+		inputRIGHT = controls.pressed('right');
+
+		if (inputUP && inputDOWN)
+			inputUP = inputDOWN = false;
+		if (inputLEFT && inputRIGHT)
+			inputLEFT = inputRIGHT = false; 
+
+		if (inputLEFT || inputRIGHT) {
+			if (inputLEFT) {
+				player.facing = LEFT;
+			}
+			else if (inputRIGHT) {
+				player.facing = RIGHT;
+			}
+		
+			switch (player.facing) {
+				case LEFT, RIGHT:
+					if ((player.velocity.x != 0) && player.touching == NONE)
+						player.playAnim("ANI_WALKING");
+
+					player.acceleration.x = (player.facing == LEFT) ? -player.maxVelocity.x * 4 : player.maxVelocity.x * 4;
+				case _:
+			}
+		}
+		else {
+			if (inputUP) {
+				player.facing = UP;
+				player.playAnim("ANI_LOOK_UP");
+			}
+			else if (inputDOWN) {
+				player.facing = DOWN;
+				player.playAnim("ANI_LOOK_DOWN");
+			}
+			else
+				player.playAnim("ANI_STOPPED");
+			
+			player.velocity.x = 0;
+			player.velocity.y = 0;
+		}
+	}
 }

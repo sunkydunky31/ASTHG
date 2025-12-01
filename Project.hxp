@@ -1,21 +1,16 @@
 import hxp.*;
 import lime.tools.*;
 
-// TODO: finish this
+/**
+	List of all Features of the engine
+**/
+enum FeatureFlags {
+	MODS_ALLOWED;
+	DISCORD_ALLOWED;
+	TRANSLATIONS_ALLOWED;
+}
+
 class Project extends HXProject {
-	static final TITLE = "Unnamed Sonic Game";
-	static final VERSION = "0.0.8";
-	static final COMPANY = "Sunkydev31";
-	static final PACKAGE_NAME = "game.sunkydev.asthg";
-
-	static final FILE = "ASTHG";
-	static final MAIN_CLASS = "Main";
-	static final PRELOADER = "flixel.system.FlxPreloader";
-
-	static final MODS_ALLOWED = "MODS_ALLOWED";
-	static final DISCORD_ALLOWED = "DISCORD_ALLOWED";
-	static final TRANSLATIONS_ALLOWED = "TRANSLATIONS_ALLOWED";
-	static final HAPTICS_ALLOWED = "HAPTICS_ALLOWED";
 
 	static var EXCLUDE_ASSETS:Array<String> = [];
 	static var customDefines:Array<String> = [];
@@ -23,203 +18,256 @@ class Project extends HXProject {
 	public function new() {
 		super();
 		
-		this.meta.title = TITLE;
-		this.meta.version = VERSION;
-		this.meta.company = COMPANY;
-		this.meta.packageName = PACKAGE_NAME;
+		this.meta = {
+			title: "Unnamed Sonic Game",
+			
+			/*
+				Format: YEAR.MONTH.DAY.PATCH
+				YEAR.MONTH.DAY: Current date time of the update
+				PATCH: Only for bugfixes
+			*/
+			version: "2025.11.30.0",
+			company: "SunkyDev31",
+			packageName: "game.sunkydev31.asthg"
+		};
 
-		this.app.file = FILE;
-		this.app.main = MAIN_CLASS;
-		this.app.preloader = PRELOADER;
-		this.app.path = 'export/${isBuildFlag("debug") ? "debug" : "release"}';
+		this.app = {
+			file: "ASTHG",
+			main: "Main",
+			preloader: "flixel.system.FlxPreloader",
+			path: "export/" + (isBuildFlag("debug") ? "debug" : isBuildFlag("final") ? "final" : "release")
+		};
 
 
 		if (isTarget("mobile")) {
 			this.window.width = 0;
 			this.window.height = 0;
 			this.window.fullscreen = true;
-		}
-		else
-		{
+		} else {
 			this.window.width = 426;
 			this.window.height = 228;
 		}
 		this.window.orientation = Orientation.LANDSCAPE;
 		this.window.fps = 60;
 		this.window.background = (isBuildFlag("debug")) ? 0xff00ff : 0x000000;
-		this.window.resizable = (isTarget("html5") || isTarget("desktop")) ? true : false;
+		this.window.resizable = (isTarget("web") || isTarget("desktop")) ? true : false;
 
-		setFlag(MODS_ALLOWED, (isTarget("html5")) ? "false" : "true");
-		setFlag(DISCORD_ALLOWED, (isTarget("cpp")) ? "true" : "false");
-		setFlag(TRANSLATIONS_ALLOWED, "true");
-		setFlag(HAPTICS_ALLOWED, (isTarget("mobile") ? "true" : "false"));
+		if (isTarget("web")) EXCLUDE_ASSETS.push("*.ogg");
+		else EXCLUDE_ASSETS.push("*.mp3");
 
-		syncDefines();
-
-
-		if (isTarget("html5") || isTarget("flash")) {
-			EXCLUDE_ASSETS.push("*.ogg");
-		}
-		else {
-			EXCLUDE_ASSETS.push("*.mp3");
-		}
-
-		if (isBuildFlag("debug")) {
-			echo("");
-			echo('$TITLE v$VERSION');
-			echo("-----------------------------------------");
-			echo('Company.................${COMPANY}');
-			echo('Package.................${PACKAGE_NAME}');
-			echo('App file................${FILE}');
-			echo('');
-			echo('MODS_ALLOWED............${getFlag(MODS_ALLOWED)}');
-			echo('DISCORD_ALLOWED.........${getFlag(DISCORD_ALLOWED)}');
-			echo('TRANSLATIONS_ALLOWED....${getFlag(TRANSLATIONS_ALLOWED)}');
-			echo('HAPTICS_ALLOWED.........${getFlag(HAPTICS_ALLOWED)}');
-			echo('');
-		}
+		echo("");
+		echo('${this.meta.title} v' + this.meta.version + (this.meta.buildNumber != null ? '(${this.meta.buildNumber})' : ""));
+		echo("-----------------------------------------");
+		dotPad("Company", this.meta.company, 24, false);
+		dotPad("Package", this.meta.packageName, 24, false);
+		dotPad("App file", this.app.file, 24, false);
+		echo("-----------------------------------------");
 
 		includeAssets("assets/shared", null, null, EXCLUDE_ASSETS);
-		includeAssets("assets/translations", "assets/", null, EXCLUDE_ASSETS);
 		includeAssets("assets/fonts", null);
-		if (hasFlag(MODS_ALLOWED))
-			includeAssets("mods", null);
+		includeAssets("assets/locales", null);
 
 		sources.push("source");
 
-		haxelibs.push(new Haxelib("flixel"));
-		haxelibs.push(new Haxelib("flixel-addons"));
-		haxelibs.push(new Haxelib("haxeui-core"));
-		haxelibs.push(new Haxelib("haxeui-openfl"));
-		haxelibs.push(new Haxelib("haxeui-flixel"));
-		haxelibs.push(new Haxelib("tjson"));
+		setFlag(MODS_ALLOWED, false); // Polymod dependencies are breaking so it will be disabled by default
+		setFlag(DISCORD_ALLOWED, isTarget("cpp"));
+		setFlag(TRANSLATIONS_ALLOWED, false);
+		echo("-----------------------------------------", true);
 
-		if (isTarget("cpp") && defines.exists(DISCORD_ALLOWED))
-			haxelibs.push(new Haxelib("hxdiscord_rpc"));
-		
-		if (defines.exists(MODS_ALLOWED))
-			haxelibs.push(new Haxelib("hscript-iris"));
+		syncDefines();
 
-		if (isTarget("mobile")) {
-			haxedefs.set("FLX_NO_MOUSE", null);
-			haxedefs.set("FLX_NO_KEYBOARD", null);
-		}
+		if (hasFlag(MODS_ALLOWED))
+			includeAssets("mods", null);
 
-		if (isTarget("desktop")) {
-			haxedefs.set("FLX_NO_TOUCH", null);
+		// Adding Haxelibs
+		addHaxelib("flixel");
+		addHaxelib("flixel-addons");
+		addHaxelib("tjson");
+
+		addHaxelib("hxdiscord_rpc", (isTarget("cpp") && hasFlag(DISCORD_ALLOWED)));
+		//addHaxelib("hxcpp-debug-server", (isBuildFlag("debug")));
+
+		addHaxelib("polymod", hasFlag(MODS_ALLOWED));
+		addHaxelib("firetongue", true); // Do NOT disable this.
+
+		// Android configs
+		if (isAndroid()) {
+			addHaxelib("extension-androidtools");
+	
+			//Change game name to a translatable string
+			config.set("android.application", {"android:label": "@string/app_name"});
+			config.set("android.activity", {"android:label": "@string/app_name"});
 		}
 
 		if (!isBuildFlag("debug")) {
 			haxedefs.set("FLX_NO_DEBUG", null);
 			haxedefs.set("NAPE_RELEASE_BUILD", null);
 		}
+
+		haxedefs.set("FLX_NO_FOCUS_LOST_SCREEN", null);
 		haxedefs.set("message.reporting", "pretty");
 
-		icons.push(new Icon("executable/icon8.png",		8));
-		icons.push(new Icon("executable/icon16.png",	16));
-		icons.push(new Icon("executable/icon_expand.png"));
+		// Configure PolyMod
+		if (hasFlag(MODS_ALLOWED)) {
+			if (isBuildFlag("debug"))
+				haxedefs.set("POLYMOD_DEBUG",			true);
+			
+			haxedefs.set("POLYMOD_API_VERSION_MATCH",	"NONE");
+			haxedefs.set("POLYMOD_MOD_METADATA_FILE",	"mod.json");
+			haxedefs.set("POLYMOD_MOD_PACK_FILE",		"modpack.txt");
+			haxedefs.set("POLYMOD_MOD_ICON_FILE",		"mod.png");
+			haxedefs.set("POLYMOD_ROOT_PATH",			"scripts/");
+			haxedefs.set("POLYMOD_SCRIPT_EXT",			".hxs");
+			haxedefs.set("POLYMOD_SCRIPT_LIBRARY",		"scripts");
+		}
+
+		templatePaths.push("_project/templates");
+		
+		if (isAndroid()) {
+			/*
+				NOTE
+				This icons can be a drawable (VectorDrawable) or an mipmap (Image)
+				If you will use mipmaps, check "templates" folder
+
+				Uncomment the second config if you'll use Rounded Icons
+			*/
+
+			config.set("android.activity", {"android:icon": "@drawable/ic_launcher"});
+			//config.set("android.activity", {"android:roundIcon": "@drawable/ic_launcher_round"});
+		} else {
+			addIcon("icon",		"png",	8,	true);
+			addIcon("icon",		"png",	16,	true);
+			addIcon("icon",		"svg"); // Main
+		}
 	}
 
 	/**
-	Gets a bool if the project is runnning on the selected
-	platform
-	@param key Platform target
+		Gets a bool if the project is runnning on the selected platform
+		@param key Platform target
 	**/
 	function isTarget(key:String) {
-		switch (key.toLowerCase()) {
-			case "air":
-				return this.target == Platform.AIR;
-			case "android":
-				return this.target == Platform.ANDROID;
-			case "blackberry":
-				return this.target == Platform.BLACKBERRY;
-			case "console":
-				return this.platformType == PlatformType.CONSOLE;
-			case "console_pc", "console-pc", "consolepc":
-				return this.target == Platform.CONSOLE_PC;
-			case "cpp", "cs", "hl", "java", "mingw", "neko", "nodejs", "uwp", "winjs":
-				return this.targetFlags.exists(key);
-			case "desktop":
-				return this.platformType == PlatformType.DESKTOP;
-			case "emscripten", "emscript":
-				return this.target == Platform.EMSCRIPTEN;
-			case "firefox":
-				return this.target == Platform.FIREFOX;
-			case "flash":
-				return this.target == Platform.FLASH;
-			case "html5":
-				return this.target == Platform.HTML5;
-			case "ios", "iphone", "ipad":
-				return this.target == Platform.IOS;
-			case "linux":
-				return this.target == Platform.LINUX;
-			case "mac":
-				return this.target == Platform.MAC;
-			case "mobile":
-				return this.platformType == PlatformType.MOBILE;
-			case "ps3":
-				return this.target == Platform.PS3;
-			case "ps4":
-				return this.target == Platform.PS4;
-			case "tizen":
-				return this.target == Platform.TIZEN;
-			case "tvos", "tv_os":
-				return this.target == Platform.TVOS;
-			case "vita":
-				return this.target == Platform.VITA;
-			case "webassembly", "webassem", "web_assembly":
-				return this.target == Platform.WEB_ASSEMBLY;
-			case "webos": // wtf LG WebOS support??
-				return this.target == Platform.WEBOS;
-			case "web":
-				return this.platformType == PlatformType.WEB;
-			case "wiiu", "wii_u":
-				return this.target == Platform.WIIU;
-			case "windows":
-				return this.target == Platform.WINDOWS;
-			case "xbox", "xbox1":
-				return this.target == Platform.XBOX1;
-			default: return false;
+		switch ((StringTools.replace(key, ' ', '_')).toLowerCase()) { //Added only the ones this game uses
+			case "cpp", "hl", "neko": return this.targetFlags.exists(key);
+			case "desktop": return this.platformType == PlatformType.DESKTOP;
+			case "ios", "iphone", "ipad": return this.target == Platform.IOS;
+			case "linux": return this.target == Platform.LINUX;
+			case "mac", "macos", "macintoshos", "darwin": return this.target == Platform.MAC;
+			case "mobile": return this.platformType == PlatformType.MOBILE;
+			case "web": return this.platformType == PlatformType.WEB;
+			case "xbox", "xbox1", "xboxone": return this.target == Platform.XBOX1;
+			default:
+				echo("[Project.hxp::isTarget] Unknown value '"+ key +"'");
+				return false;
 		}
+	}
+
+	// Platform functions
+
+	function isAndroid() {
+		return (this.target == Platform.ANDROID && this.platformType == PlatformType.MOBILE);
+	}
+
+	function isWindows() {
+		return (this.target == Platform.WINDOWS && this.platformType == PlatformType.DESKTOP);
 	}
 
 	function isBuildFlag(key:String) {
 		switch (key.toLowerCase()) {
 			case "release": return !this.debug;
 			case "debug": return this.debug;
-			default: return false;
+			case "final": return this.targetFlags.exists("final");
+			default: trace('[Project.hxp::isBuildFlag] Unknown value \'$key\''); return false;
 		}
 	}
 
-	function hasFlag(key:String) {
-		return this.defines.exists(key);
+	function hasFlag(key:Dynamic) {
+		var flagKey:String = (Std.isOfType(key, FeatureFlags) ? Type.enumConstructor(key) : Std.string(key));
+		return this.defines.exists(flagKey);
 	}
 
-	function setFlag(key:String, value:Dynamic) {
-		if (!customDefines.contains(key)) //Prevents "key" to be added again
-			customDefines.push(key);
-		return this.defines.set(key, Std.string(value));
+	function setFlag(key:Dynamic, value:Dynamic) {
+		var flagKey:String = (Std.isOfType(key, FeatureFlags) ? Type.enumConstructor(key) : Std.string(key));
+
+		if (value == null)
+			value = false;
+
+		if (!customDefines.contains(flagKey)) //Prevents "key" to be added again
+			customDefines.push(flagKey);
+
+
+		dotPad(flagKey, (value == false)? "false" : "true");
+		return this.defines.set(flagKey, Std.string(value));
 	}
 
-	function getFlag(key:String) {
-		return this.defines.get(key);
+	function getFlag(key:Dynamic) {
+		var flagKey:String = (Std.isOfType(key, FeatureFlags) ? Type.enumConstructor(key) : Std.string(key));
+		return this.defines.get(flagKey);
 	}
 
 	function syncDefines():Void {
 		for (key in customDefines) {
-			var value = this.defines.get(key);
+			var value = getFlag(key);
 			if (value == null || value == "true") {
 				this.haxedefs.set(key, null);
-			//	echo('Added "$key" to HaxeDef');
 			}
 			else if (value != "false") {
 				this.haxedefs.set(key, value);
-			//	echo('Added ("$key", "$value") to HaxeDef');
 			}
 		}
 	}
 
-	function echo(value:String)
-		return Sys.println(value);
+	function addHaxelib(name:String, ?condition:Bool) {
+		if (condition == null || condition) {
+			this.haxelibs.push(new Haxelib(name));
+			dotPad(name, "true");
+		} else {
+			dotPad(name, "false");
+		}
+	}
 
+	/**
+		Prints a text to the console
+		@param value The text to print
+		@param debug If true, only prints if the build flag "debug" is enabled
+	**/
+	function echo(value:String, ?debug:Bool = false) {
+		if (debug) {
+			if (isBuildFlag("debug"))
+				return Sys.println(value);
+			else
+				return;
+		} else { return Sys.println(value); }
+	}
+
+	/**
+		Adds an icon for the application.
+		@param name Filename of the icon
+		@param format File extension (`png`, `jpg`, `svg`...), usually `png`
+		@param size Icon size to append, `null` will use this icon for all sizes
+		@param appendSizeTonName If true, the `size` argument will be added to the icon name, becoming `icon16.png` for example
+	**/
+	function addIcon(name:String, format:String = "png", ?size:Null<Int>, ?appendSizeToName:Null<Bool> = false) {
+		var path:String = "_project/icons/" + name;
+		if (size != null && appendSizeToName) path += Std.string(size);
+		path += '.$format';
+
+		echo('[Icon] Path: $path, Size: $size', true);
+		this.icons.push(new Icon(path, size));
+	}
+
+	/**
+		Prints a beauty log text like "My text......My value"
+		@param name Text on the Left
+		@param value Text on the Right
+		@param width Spacement width
+		@param debug Prints only if is a debug target
+	**/
+	function dotPad(name:String, value:Dynamic, ?width:Int = 30, ?debug:Bool = true) {
+		var dots = width - name.length;
+		if (dots < 1) dots = 1;
+
+		var padding = StringTools.lpad("", ".", dots);
+
+		echo(name + padding + Std.string(value), debug);
+	}
 }

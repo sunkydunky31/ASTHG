@@ -1,23 +1,23 @@
 # ASTHG (An Sonic the Hedgehog Game)
 This is an Sonic engine, made just for fun! (Idk if someone will use this)
 
-It haves code parts from [Psych Engine](https://github.com/ShadowMario/FNF-PsychEngine/)... Sorry, I'm still learning on how to make my own code and I have ideas to replace them, but I don't know how to set them now.
+It haves code parts from [Psych Engine](https://github.com/ShadowMario/FNF-PsychEngine/)... Sorry, I'm still learning on how to make my own code and I have ideas to replace them, but I don't know how to set it now.
 
 Call me on Discord if you want to talk with me (@sunkydunky31)
 
 # Plans
 - [ ] Improve Mods menu
-- [ ] Make editors in Game
+- [x] ~~Make editors in Game~~ Not planned anymore.
 - [ ] Insert Modding docs
 - [ ] Fix characters physics
 - [ ] Add more moddable resources
 - [ ] Add mods functionallities
-- [ ] Fix Title Screen
-- [ ] Fix Settings Menu
+- [x] ~~Fix Title Screen~~ It will take much time.
+- [x] Fix Settings Menu
 
 # Compiling resources
 - This repo (lol)
-- [Haxe 4.3.2](https://haxe.org/download/version/4.3.2/)
+- [Haxe 4.3](https://haxe.org/download/version/4.3.0/) Recommended v4.3.7
 
 [Docs](/docs/building/) contains building scripts to install dependencies, and includes an extra script for Windows (Visual Studio Installer resource).
 

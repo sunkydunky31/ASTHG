@@ -1,0 +1,7 @@
+"flag	content
+setting_auto_pause	Auto Pausa
+setting_auto_pause_desc	Se ativado, quando a janela do jogo perder o foco, irá <Q>congelar<Q>.
+setting_flashing_lights	Luzes Piscantes
+setting_flashing_lights_desc	Se desativado<C> luzes piscantes estarão sem <Q>flashing<Q><N>Desative isso se for sensível
+setting_hide_hud	Esconder HUD
+setting_hide_hud_desc	Textos como <Q>Pontos<Q><C> <Q>Tempo<Q> e etc. vão ficar invisíveis durante o jogo."

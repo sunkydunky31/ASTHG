@@ -1,0 +1,12 @@
+"flag"            , "content
+hud_text_score"  , "Pontos
+hud_text_time"   , "Tempo
+hud_text_rings"  , "Anéis
+game_over"       , "Fim de Jogo
+time_over"       , "Fim de Tempo
+zone"            , "Zona
+act"             , "Ato <1>
+setting-enabled" , "Ativado
+setting-disabled", "Desativado
+loading"         , "Carregando...
+fps_counter"     , "Quadros: <1><N>Memória: <2>"

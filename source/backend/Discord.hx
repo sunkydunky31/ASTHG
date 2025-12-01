@@ -1,6 +1,6 @@
 package backend;
 
-#if DISCORD_ALLOWED
+#if (DISCORD_ALLOWED && cpp)
 import lime.app.Application;
 import hxdiscord_rpc.Discord;
 import hxdiscord_rpc.Types;
@@ -121,28 +121,5 @@ class DiscordClient {
 		}
 		return newID;
 	}
-
-	#if MODS_ALLOWED
-	public static function loadModRPC() {
-		var pack:Dynamic = Mods.getPack();
-		if(pack != null && pack.discordRPC != null && pack.discordRPC != clientID)
-		{
-			clientID = pack.discordRPC;
-			//trace('Changing clientID! $clientID, $_defaultID');
-		}
-	}
-	#end
-}
-
-typedef DiscordImagePresence = {
-	@:optional
-	var keyLarge:String;
-	@:optional
-	var textLarge:String;
-
-	@:optional
-	var keySmall:Null<String>;
-	@:optional
-	var textSmall:Null<String>;
 }
 #end

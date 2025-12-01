@@ -1,0 +1,60 @@
+{
+  "dependencies": [
+    {
+      "name": "firetongue",
+      "type": "git",
+      "dir": null,
+      "ref": "dev",
+      "url": "https://github.com/larsiusprime/firetongue"
+    },
+    {
+      "name": "flixel",
+      "type": "haxelib",
+      "version": "5.6.1"
+    },
+    {
+      "name": "flixel-addons",
+      "type": "haxelib",
+      "version": "3.2.2"
+    },
+    {
+      "name": "flixel-tools",
+      "type": "haxelib",
+      "version": "1.2.1"
+    },
+    {
+      "name": "hxdiscord_rpc",
+      "type": "git",
+      "dir": null,
+      "ref": "82c47ecc1a454b7dd644e4fcac7e91155f176dec",
+      "url": "https://github.com/FunkinCrew/hxdiscord_rpc"
+    },
+    {
+      "name": "hxp",
+      "type": "haxelib",
+      "version": null
+    },
+    {
+      "name": "lime",
+      "type": "haxelib",
+      "version": "8.2.0"
+    },
+    {
+      "name": "openfl",
+      "type": "haxelib",
+      "version": "9.3.4"
+    },
+    {
+      "name": "polymod",
+      "type": "git",
+      "dir": null,
+      "ref": "develop",
+      "url": "https://github.com/larsiusprime/polymod"
+    },
+    {
+      "name": "tjson",
+      "type": "haxelib",
+      "version": null
+    }
+  ]
+}

@@ -73,7 +73,7 @@ class InputFormatter {
 			case LEFT_STICK_DIGITAL_DOWN: return "Down";
 			case LEFT_STICK_CLICK:
 				switch (model) {
-					case PS4: return "L3";
+					case PS4, PSVITA: return "L3";
 					case XINPUT: return "LS";
 					default: return "Analog Click";
 				}
@@ -84,7 +84,7 @@ class InputFormatter {
 			case RIGHT_STICK_DIGITAL_DOWN: return "C. Down";
 			case RIGHT_STICK_CLICK:
 				switch (model) {
-					case PS4: return "R3";
+					case PS4, PSVITA: return "R3";
 					case XINPUT: return "RS";
 					default: return "C. Click";
 				}
@@ -98,65 +98,69 @@ class InputFormatter {
 			// Top buttons
 			case LEFT_SHOULDER:
 				switch(model) {
-					case PS4: return "L1";
+					case PS4, PSVITA: return "L1";
 					case XINPUT: return "LB";
-					default: return "L. Bumper";
+					default: return Locale.getString("flxgamepad_lshoulder", "input");
 				}
 			case RIGHT_SHOULDER:
 				switch(model) {
-					case PS4: return "R1";
+					case PS4, PSVITA: return "R1";
 					case XINPUT: return "RB";
-					default: return "R. Bumper";
+					default: return Locale.getString("flxgamepad_rshoulder", "input");
 				}
 			case LEFT_TRIGGER, LEFT_TRIGGER_BUTTON:
 				switch(model) {
-					case PS4: return "L2";
+					case PS4, PSVITA: return "L2";
 					case XINPUT: return "LT";
-					default: return "L. Trigger";
+					default: return Locale.getString("flxgamepad_ltrigger", "input");
 				}
 			case RIGHT_TRIGGER, RIGHT_TRIGGER_BUTTON:
 				switch(model) {
-					case PS4: return "R2";
+					case PS4, PSVITA: return "R2";
 					case XINPUT: return "RT";
-					default: return "R. Trigger";
+					default: return Locale.getString("flxgamepad_rtrigger", "input");
 				}
 
 			// Buttons
 			case A:
 				switch (model) {
-					case PS4: return Language.getPhrase("flxgamepad_ps_a", "Cross");
+					case PS4, PSVITA: return Locale.getString("flxgamepad_ps_a", "input");
 					case XINPUT: return "A";
-					default: return "Action Down";
+					case OUYA: return "O";
+					default: return Locale.getString("flxgamepad_a", "input");
 				}
 			case B:
 				switch (model) {
-					case PS4: return Language.getPhrase("flxgamepad_ps_b", "Circle");
+					case PS4, PSVITA: return Locale.getString("flxgamepad_ps_b", "input");
 					case XINPUT: return "B";
-					default: return "Action Right";
+					case OUYA: return "A";
+					default: return Locale.getString("flxgamepad_b", "input");
 				}
 			case X:
 				switch (model) {
-					case PS4: return Language.getPhrase("flxgamepad_ps_x", "Square");
+					case PS4, PSVITA: return Locale.getString("flxgamepad_ps_x", "input");
 					case XINPUT: return "X";
-					default: return "Action Left";
+					case OUYA: return "U";
+					default: return Locale.getString("flxgamepad_x", "input");
 				}
 			case Y:
 				switch (model) { 
-					case PS4: return Language.getPhrase("flxgamepad_ps_y", "Triangle");
+					case PS4, PSVITA: return Locale.getString("flxgamepad_ps_y", "input");
 					case XINPUT: return "Y";
-					default: return "Action Up";
+					case OUYA: return "Y";
+					default: return Locale.getString("flxgamepad_y", "input");
 				}
 
 			case BACK:
 				switch(model) {
-					case PS4: return "Share";
-					case XINPUT: return "Back";
-					default: return "Select";
+					case PS4: return Locale.getString("flxgamepad_ps4_back", "input");
+					case XINPUT: return Locale.getString("flxgamepad_xbox_back", "input");
+					default: return Locale.getString("flxgamepad_back", "input");
 				}
 			case START:
 				switch(model) {
-					case PS4: return "Options";
-					default: return "Start";
+					case PS4: return Locale.getString("flxgamepad_ps4_start", "input");
+					default: return Locale.getString("flxgamepad_start", "input");
 				}
 
 			case NONE: return '---';

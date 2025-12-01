@@ -1,35 +1,38 @@
 package;
 
-import debug.FPSCounter;
-
 import flixel.FlxGame;
 import openfl.display.Sprite;
 
-class Main extends Sprite
-{
-	public static var fpsVar:FPSCounter;
+class Main extends Sprite {
+	public static var tongue:FireTongue;
+
 	public function new() {	
 		#if android
-		Sys.setCwd(Path.addTrailingSlash(Context.getExternalFilesDir()));
+		Sys.setCwd(haxe.io.Path.addTrailingSlash(extension.androidtools.content.Context.getExternalFilesDir()));
 		#elseif ios
-		Sys.setCwd(lime.system.System.applicationStorageDirectory);
+		Sys.setCwd(haxe.io.Path.addTrailingSlash(lime.system.System.documentsDirectory));
 		#end
 		super();
 
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
 
-		#if MODS_ALLOWED
-		Scripts.instance = new Scripts();
-		#end
-
-		haxe.ui.Toolkit.init();
+		tongue = new FireTongue(VanillaSys, Case.Unchanged);
 		
 		FlxG.save.bind('game', CoolUtil.getSavePath());
 
-		addChild(new FlxGame(0, 0, states.Init, #if (flixel < "5.0.0") 1, #end 60, 60, true));
+		#if MODS_ALLOWED
+		polymod.Polymod.init({
+			modRoot: "../mods/",
+			dirs:["pt-BR Translation"],
+			framework: OPENFL,
+			useScriptedClasses: false,
+			firetongue: tongue
+		});
+		#end
 
-		fpsVar = new FPSCounter(10, 3, 0xFFFFFF);
-		addChild(fpsVar);
+		var game:FlxGame = new FlxGame(0, 0, states.Init, #if (flixel < "5.0.0") 1, #end 60, 60, true);
+		game._customSoundTray = framework.SoundTray;
+		addChild(game);
 	}
 }

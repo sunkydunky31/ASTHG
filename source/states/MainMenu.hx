@@ -3,11 +3,11 @@ package states;
 import flixel.addons.plugin.FlxScrollingText;
 import options.OptionsState;
 import flixel.effects.FlxFlicker;
-import backend.MusicBeatState;
+import backend.StateManager;
 import flixel.input.mouse.FlxMouse;
 import flixel.group.FlxGroup;
 
-class MainMenu extends MusicBeatState {
+class MainMenu extends StateManager {
 	public static var curSelected:Int = 0;
 	var group:FlxTypedGroup<FlxBitmapText>;
 	var options:Array<String> = [
@@ -21,7 +21,7 @@ class MainMenu extends MusicBeatState {
 		Paths.clearStoredMemory();
 
 		#if DISCORD_ALLOWED
-		DiscordClient.changePresence(Language.getPhrase('discordrpc_main_menu', 'Main Menu'), null);
+		DiscordClient.changePresence(Locale.getString('main_menu', 'discord'), null);
 		#end
 
 		var bg:FlxSprite = CoolUtil.makeBGGradient([0xFF793BFF, 0xFF95EDFF], 4, 32, false);
@@ -43,13 +43,13 @@ class MainMenu extends MusicBeatState {
 		backdFill.updateHitbox();
 		add(backdFill);
 
-		var titleTxt:FlxBitmapText = new FlxBitmapText(0, 2, Language.getPhrase("mainmenu_title", "Main Menu"), Paths.getAngelCodeFont("HUD"));
+		var titleTxt:FlxBitmapText = new FlxBitmapText(0, 2, Locale.getString("title", "main_menu"), Paths.getAngelCodeFont("HUD"));
 		
-		var titleSpr = FlxScrollingText.add(titleTxt, new openfl.geom.Rectangle(titleTxt.x, titleTxt.y, titleTxt.width, titleTxt.height), 1, 0, titleTxt.text);
+		var titleSpr = FlxScrollingText.add(titleTxt, new openfl.geom.Rectangle(60, titleTxt.y, FlxG.width, titleTxt.height), 2, 0, titleTxt.text);
 		add(titleSpr);
 		FlxScrollingText.startScrolling(titleSpr);
 
-		var version:FlxBitmapText = new FlxBitmapText(0, 0, "v" + Std.string(CoolUtil.getProjectInfo('version')), FlxBitmapFont.fromMonospace("assets/fonts/AbsoluteSystem.png", Constants.ABSOLUTE_FONT_GLYPHDATA, FlxPoint.get(8, 8)));
+		var version:FlxBitmapText = new FlxBitmapText(0, 0, "v" + Std.string(CoolUtil.getProjectInfo('version')), FlxBitmapFont.fromMonospace(Paths.getFolderPath("AbsoluteSystem.png", "fonts"), Constants.ABSOLUTE_FONT_GLYPHDATA, FlxPoint.get(8, 8)));
 		version.setPosition(FlxG.width - version.width - 7, FlxG.height - version.height - 2);
 		add(version);
 
@@ -57,7 +57,7 @@ class MainMenu extends MusicBeatState {
 		add(group);
 
 		for (num => str in options) {
-			var menu:FlxBitmapText = new FlxBitmapText(10, 30, Language.getPhrase('mainmenu_$str', str), Paths.getAngelCodeFont("HUD"));
+			var menu:FlxBitmapText = new FlxBitmapText(10, 30, Locale.getString(str, "main_menu"), Paths.getAngelCodeFont("HUD"));
 			menu.y += (18 * num);
 			menu.ID = num;
 			group.add(menu);
@@ -65,7 +65,7 @@ class MainMenu extends MusicBeatState {
 
 		super.create();
 		changeItem();
-		CoolUtil.playMusic("MainMenu", {sample: 202752});
+		CoolUtil.playMusic("MainMenu");
 	}
 
 	
@@ -74,14 +74,16 @@ class MainMenu extends MusicBeatState {
 		if (!selectedSomethin) {
 			if (controls.justPressed('up')) {
 				changeItem(-1);
-				CoolUtil.playSound("Menu Change", true);
+				CoolUtil.playSound("MenuChange");
+				controls.vibrate(0.5, 0.2, 10);
 			}
 			if (controls.justPressed('down')) {
 				changeItem(1);
-				CoolUtil.playSound("Menu Change", true);
+				CoolUtil.playSound("MenuChange");
+				controls.vibrate(0.5, 0.2, 10);
 			}
 			if (controls.justPressed('accept')) {
-				CoolUtil.playSound("Menu Accept", true);
+				CoolUtil.playSound("MenuAccept");
 				selectedSomethin = true;
 				group.forEach(function(txt:FlxBitmapText) {
 					if (curSelected != txt.ID) {
@@ -93,7 +95,7 @@ class MainMenu extends MusicBeatState {
 						});
 					}
 					else {
-						FlxFlicker.flicker(txt, 1, 0.06, false, false, function(flick:FlxFlicker) {
+						FlxFlicker.flicker(txt, 1, (!ClientPrefs.data.flashing) ? 0.3: 0.06, false, false, function(flick:FlxFlicker) {
 							var daChoice:String = options[curSelected];
 
 							switch (daChoice.toLowerCase()) {
@@ -112,18 +114,13 @@ class MainMenu extends MusicBeatState {
 				});
 			}
 		}
-
-		if (FlxG.keys.justPressed.SEVEN)
-			LoadingState.switchStates(new states.editors.MainMenuEdt());
 		super.update(elapsed);
 	}
 
 	function changeItem(change:Int = 0) {
-		curSelected += change;
-
-		if (curSelected >= group.length) curSelected = 0;
-		if (curSelected < 0) curSelected = group.length - 1;
-		group.forEach(function(txt:FlxBitmapText) { //https://github.com/Jorge-SunSpirit/Doki-Doki-Takeover/blob/main/source/MainMenuState.hx#L390; Sorry
+		curSelected = FlxMath.wrap(curSelected + change, 0, group.length - 1);
+		
+		group.forEach(function(txt:FlxBitmapText) {
 			txt.color = (txt.ID == curSelected) ? 0xFFFF0000 : 0xFFFFFFFF;
 		});
 	}

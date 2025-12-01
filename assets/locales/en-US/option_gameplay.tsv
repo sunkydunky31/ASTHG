@@ -1,0 +1,7 @@
+"flag	content
+auto_pause	Auto Pause
+auto_pause_desc	Freezes the game if the window loses focus.
+flashing_lights	Flashing Lights
+flashing_lights_desc	When disabled, lights won't flash anymore
+hide_hud	Hide Hud
+hide_hud_desc	Texts like <Q>Score<Q>, <Q>Time<Q> and etc. Will be hidden in-game.

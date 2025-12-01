@@ -9,8 +9,9 @@
 		"width": 16,
 		"height": 23
 	},
+
 	"palettes": [
-		["#2020A0", "#2040C0", "#4040E0", "#6060E0"],
+		["#242490", "#2448d8", "#6c6cfc", "#6c6cfc"],
 
 		["#404080", "#4060A0", "#6060E0", "#8080E0"],
 		["#606060", "#6080A0", "#8080E0", "#A0A0E0"],
@@ -29,9 +30,74 @@
 		["#E0E000", "#E0E060", "#E0E0A0", "#E0E0E0"],
 		["#E0E000", "#E0E080", "#E0E0C0", "#E0E0E0"]
 	],
+
+	"animations": [
+		{
+			"name": "ANI_STOPPED",
+			"loop": false,
+			"offsets":  [0, 0]
+		},
+		{
+			"name": "ANI_CONTINUE_UP",
+			"loop": true,
+			"fps": 60,
+			"offsets":  [0, 0],
+			"indices": [0]
+		},
+		{
+			"name": "ANI_CONTINUE_UP-loop",
+			"loop": true,
+			"fps": 60,
+			"offsets":  [0, 0],
+			"indices": [1, 2]
+		},
+		{
+			"name": "ANI_SUPER_TRANSFORM",
+			"loop": true,
+			"fps": 60,
+			"offsets":  [0, 0],
+			"indices": [0, 1, 2, 3]
+		},
+		{
+			"name": "ANI_SUPER_TRANSFORM-loop",
+			"loop": true,
+			"fps": 80,
+			"offsets":  [0, 0],
+			"indices": [4, 5, 6]
+		},
+		{
+			"name": "ANI_CD_TWIRL",
+			"loop": true,
+			"fps": 60,
+			"offsets":  [0, 0]
+		},
+		{
+			"name": "ANI_HANG_MOVE",
+			"loop": false,
+			"offsets":  [0, 0]
+		}
+	],
+
 	"extraAnimations": [
-		["ANI_BETA_DASH0", 34],
-		["ANI_BETA_DASH1", 35],
-		["ANI_DROPDASH", 36]
+		{
+			"name": "ANI_BETA_DASH0",
+			"displayName": "Beta Dash 0",
+			"prefix": "ANI_BETA_DASH 10",
+			"loop": true,
+			"fps": 80
+		},
+		{
+			"name": "ANI_BETA_DASH1",
+			"displayName": "Beta Dash 1",
+			"prefix": "ANI_BETA_DASH 20",
+			"loop": true,
+			"fps": 128
+		},
+		{
+			"name": "ANI_DROPDASH",
+			"displayName": "Drop Dash",
+			"loop": true,
+			"fps": 240
+		}
 	]
 }

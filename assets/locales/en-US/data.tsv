@@ -1,0 +1,12 @@
+flag	content
+hud_text_score	Score
+hud_text_time	Time
+hud_text_rings	Rings
+game_over	Game Over
+time_over	Time Over
+zone	Zone
+act	Act <1>
+enabled	Enabled
+disabled	Disabled
+loading	Loading<1>
+fps_counter	FPS: <1><N>Memory: <2>

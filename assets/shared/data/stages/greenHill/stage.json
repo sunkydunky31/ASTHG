@@ -1,3 +1,14 @@
 {
-    "folder": "zone1"
+	"folder": "zone1",
+	"acts": 2,
+
+	"act1": {
+		"titleCard": "GREEN HILL",
+		"music": "GreenHill1"
+	},
+
+	"act2": {
+		"titleCard": "GREEN HILL",
+		"music": "GreenHill2"
+	}
 }

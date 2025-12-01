@@ -1,6 +1,6 @@
 package substates;
 
-class Pause extends MusicBeatSubstate {
+class Pause extends SubStateManager {
 	var curSelected:Int = 0;
 	var grpOptions:FlxTypedGroup<FlxText>;
 	var options:Array<String> = [];
@@ -40,7 +40,7 @@ class Pause extends MusicBeatSubstate {
 		grpOptions = new FlxTypedGroup<FlxText>();
 		add(grpOptions);
 
-		var titleTxt:FlxBitmapText = new FlxBitmapText(20, bottomFill.y - 6, Language.getPhrase("pause_title", "Paused"), Paths.getAngelCodeFont("Roco"));
+		var titleTxt:FlxBitmapText = new FlxBitmapText(20, bottomFill.y - 6, Locale.getString("title", "pause"), Paths.getAngelCodeFont("Roco"));
 		titleTxt.setBorderStyle(FlxTextBorderStyle.SHADOW, FlxColor.BLACK, 2, 0);
 		add(titleTxt);
 
@@ -62,25 +62,25 @@ class Pause extends MusicBeatSubstate {
 
 		if (controls.justPressed('up')) {
 			changeSelection(-1);
-			CoolUtil.playSound("Menu Change", true);
+			CoolUtil.playSound("MenuChange");
 		}
 
 		if (controls.justPressed('down')) {
-			CoolUtil.playSound("Menu Change", true);
+			CoolUtil.playSound("MenuChange");
 			changeSelection(1);
 		}
 
 		var selected:String = options[curSelected];
 		if (controls.justPressed('accept') && (cantUnpause <= 0)) {
-			CoolUtil.playSound("Menu Accept", true);
-			switch (selected) {
-				case 'Resume':
+			CoolUtil.playSound("MenuAccept");
+			switch (selected.toLowerCase()) {
+				case 'resume':
 					close();
-				case 'Restart':
-					MusicBeatState.resetState();
-				case 'Exit to Menu':
+				case 'restart':
+					StateManager.resetState();
+				case 'exit to menu':
 					#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
-					MusicBeatState.switchState(new states.MainMenu());
+					StateManager.switchState(new states.MainMenu());
 			}
 		}
 
@@ -96,7 +96,7 @@ class Pause extends MusicBeatSubstate {
 		}
 
 		for (num => str in options) {
-			var item:FlxText = new FlxText(backd.x + 67, 60, 0, Language.getPhrase("pause_"+str, str).toUpperCase());
+			var item:FlxText = new FlxText(backd.x + 67, 60, 0, Locale.getString(str, "pause").toUpperCase());
 			item.setFormat(Paths.font("Mania.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.SHADOW, 0xFF404040);
 			item.y += (30 * (num - (options.length / 2))) + item.size;
 			item.x -= (item.width/2);

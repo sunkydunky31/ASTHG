@@ -1,0 +1,20 @@
+flag	content
+keybind_change	Press a key<N><N><1>: Cancel bind<N><2>: Delete bind
+keybind_change_gamepad	Press a button<N><N><1>: Cancel bind<N><2>: Delete bind
+keybind_tab	Press <1> to switch sections.
+keybind_tab_gamepad	Press <1>/<2> to switch sections.
+keybind_keyboard	KEYBOARD
+keybind_gamepad	GAMEPAD
+controls_rebinding	Binding: <1>
+key_up	Move Up
+key_left	Move Left
+key_down	Move Down
+key_right	Move Right
+key_accept	Accept / Confirm
+key_back	Back / Cancel
+key_jump	Jump
+key_pause	Pause
+key_auxiliar	Auxiliary Action
+key_volume_up	Increase Volume
+key_volume_down	Decrease Volume
+key_volume_mute	Mute

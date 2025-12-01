@@ -1,11 +1,8 @@
 package objects;
-import backend.Stage;
 
 class StageBase {
-	@:allow(states.PlayState, backend.Stage)
+	@:allow(states.PlayState)
 	var json:StageFile;
-	@:allow(states.PlayState, backend.Stage)
-	var jsonAct:ActFile;
 
 	public static var curAct:Int;
 	public static var curStage:String;
@@ -14,12 +11,12 @@ class StageBase {
 		loadAct(act);
 	}
 
+	var path = 'stages/$stage/stage';
 	public function loadStage(stage:String) {
 			curStage = stage;
-			var jsonPath = 'stages/$stage/stage.json';
-			if (Paths.fileExists('data/$jsonPath', TEXT)) {
+			if (Paths.fileExists('data/$path.json', TEXT)) {
 				trace('Found stage $stage');
-				json = cast haxe.Json.parse(Paths.getContent('data/$jsonPath', TEXT));
+				json = cast Paths.parseJson('data/$path');
 			}
 			else {
 				trace("Stage file not found! Using Green Hill Zone instead");
@@ -32,41 +29,35 @@ class StageBase {
 	public function loadAct(act:Int) {
 		curAct = act;
 		//var path:String = 'assets/stages/${json.folder}/act$act.json';
-		var path:String = 'stages/$curStage/act$act.json';
 
-		if (Paths.fileExists('data/$path', TEXT)) {
+		if (Reflect.hasField(json)) {
 			trace('Found act $act');
-			jsonAct = cast haxe.Json.parse(Paths.getContent('data/$path', TEXT));
+			jsonAct = cast Paths.parseJson('data/$path');
 		}
 		else {
 			trace("Act file not found, using GHZ Act 1 instead");
 			jsonAct = {
 				titleCard: "GREEN HILL",
-				music: "GreenHill1",
-				musicLoop: [776160, 44100]
+				music: "GreenHill1"
 			}
 		}
 	}
 }
 
 typedef StageFile = {
-	var folder:String;
+	folder:String,
+	?acts:Int = 1,
+	
 }
 
 typedef ActFile = {
 	/**
-	 * Name for TitleCard
-	 */
+		Name for TitleCard
+	*/
 	var titleCard:String;
 
 	/**
-	 * Music that should play for this act
-	 */
+		Music that should play for this act
+	*/
 	var music:String;
-
-	/**
-	 * LoopStart of the music
-	 * Values: [Samples, Sound Hz]
-	 */
-	var musicLoop:Array<Int>;
 }
