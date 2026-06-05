@@ -1,52 +1,44 @@
 {
-	"$schema": "https://json-schema.org/draft-07/schema#",
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
 
-	"title": "ASTHG Characters",
-	"type": "object",
-	"properties": {
-		"name": {
-			"type": "string",
-			"description": "Name of this character\nUsed on IDs and results text",
-			"default": "Unknown"
-		},
+  "title": "ASTHG Characters",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of this character\nUsed on IDs and results text",
+      "default": "Unknown"
+    },
 
-		"liveIcon": {
-			"type": "string",
-			"description": "(OPTIONAL) A Custom character icon for the HUD"
-		},
+    "liveIcon": {
+      "type": "string",
+      "description": "(OPTIONAL) A Custom character icon for the HUD"
+    },
 
-		"palettes": {
-			"type": "array",
-			"description": "Colors of your character\nUsed for Normal palette showing, super, etc.",
-			"additionalItems": false,
-			"items": {
-				"type": "array",
-				"items": {
-					"description": "Color values in `#RRGGBB` format"
-				}
-			}
-		},
+    "palettes": {
+      "$ref": "./CharacterPalette.json"
+    },
 
-		"hasSuper": {
-			"type": "boolean",
-			"description": "Some characters doesn't achieve Super forms, so there you are!\nNOTE: If set to `true`, the live icon needs to have 2 frames!",
-			"default": false
-		},
+    "hasSuper": {
+      "type": "boolean",
+      "description": "Some characters doesn't achieve Super forms, so there you are!\nNOTE: If set to `true`, the live icon needs to have 2 frames!",
+      "default": false
+    },
 
-		"animations": {
-			"type": "array",
-			"description": "Animation definitions",
-			"items": {
-				"$ref": "./CharacterAnim.json"
-			}
-		},
+    "animations": {
+      "type": "array",
+      "description": "Animation definitions",
+      "items": {
+        "$ref": "./CharacterAnim.json"
+      }
+    },
 
-		"extraAnimations": {
-			"type": "array",
-			"description": "Extra animations that you want to add.",
-			"items": {
-				"$ref": "./CharacterAnim.json"
-			}
-		}
-	}
+    "extraAnimations": {
+      "type": "array",
+      "description": "Extra animations that you want to add.",
+      "items": {
+        "$ref": "./CharacterAnim.json"
+      }
+    }
+  }
 }

@@ -19,21 +19,40 @@ $Host.UI.RawUI.WindowTitle = $Msg.Title
 Clear-Host
 
 # Checker for Haxelib + Stops running if not found
-$haxelib = if (-not (Get-Command "haxelib" -ErrorAction SilentlyContinue)) {
-	Join-Path (Read-Host ($Msg.InsertHaxelib).Join("`n")) "haxelib"
+$haxelib = (Get-Command "haxelib" -ErrorAction SilentlyContinue)
+
+if ($haxelib -eq $null) {
+	$haxelib = (Join-Path (Read-Host ($Msg.InsertHaxelib).Join("`n")) "haxelib")
 }
-else { Get-Command "haxelib" -ErrorAction Stop }
+
+<#
+	.DESCRIPTION
+	Helper for set default values into a property,
+
+	.PARAMETER value
+	Sets the value to use
+	.PARAMETER default
+	Sets the default value if null or white space
+#>
+function Set-DefaultValue([string]$value, [string]$default) {
+	$value = if ($value -ne $null) { $value.Trim() } else { "" }
+	if ([string]::IsNullOrWhiteSpace($value)) {
+		return $default
+	}
+	return $value
+}
 
 # Start with default settings if not called on PowerShell terminal
 # CPP -> Windows / Linux / MacOS (depends on host)
-if ([string]::IsNullOrEmpty($Platform))  { $Platform  = if ($IsWindows -or $IsLinux -or $IsMacOS) { "cpp" } else { "hl" } }
-if ([string]::IsNullOrEmpty($Action))    { $Action    = "build" }
-if ([string]::IsNullOrEmpty($BuildType)) { $BuildType = "release" }
-if ([string]::IsNullOrEmpty($Is32Bits))  { $Is32Bits  = "false" }
+$Platform  = Set-DefaultValue $Platform  -default (($IsWindows -or $IsLinux -or $IsMacOS) ? "cpp" : "hl")
+$Action    = Set-DefaultValue $Action    "build"
+$Is32Bits  = Set-DefaultValue $Is32Bits  "false"
+$BuildType = Set-DefaultValue $BuildType "release"
 
 $Is32Bits = ($Is32Bits -in @("y", "yes", "true", "1"))
 
 $hxArgs = @("run", "lime", $Action, $Platform, "-$BuildType")
+$PlatformOG = ($Platform -eq "cpp" ? ($IsWindows ? "windows" : $IsLinux ? "linux" : "macos") : $Platform)
 
 <#
 	.DESCRIPTION
@@ -50,6 +69,25 @@ function Set-Pause {
 	}
 }
 
+function New-CleanOldFiles {
+	param(
+		[Parameter(Mandatory=$true, Position=0)]
+		[string]$CleanPath
+	)
+
+	$CleanPath = $CleanPath.Trim().Replace("\", "/")
+
+	try {
+		if (Test-Path $CleanPath) {
+			Write-Host $Msg.Cleaning
+				Remove-Item -Path $CleanPath -Recurse -Force
+		}
+	}
+	catch {
+		Write-Host ($Msg.CleaningError -f $_) -ForegroundColor Red
+	}
+}
+
 # Set the cwd to "ASTHG"
 Set-Location "$PSScriptRoot/../../"
 
@@ -59,15 +97,23 @@ if (-not [string]::IsNullOrEmpty($BuildFlags)) {
 }
 
 # Draw config info and pause
-foreach ($srt in $Msg["Config"].Keys) {
+foreach ($srt in @("Is32Bits", "Action", "Platform", "BuildType", "BuildFlags")) {
 	$val = Get-Variable -Name $srt -ValueOnly
-	Write-Host ($Msg.Config[$srt] -f "$val".toLower())
+	Write-Host ($Msg.Config[$srt] -f "$val")
 }
 Set-Pause
 
 # User confirmed, ready to go!
 Clear-Host
 Write-Host ($Msg.BuildTexts["$Action"])
+
+# We can't run the app if it doesn't exists lol
+if ($Action -in @("build", "test")) {
+	New-CleanOldFiles "$(Get-Location)/export/$BuildType/$PlatformOG/bin"
+	Start-Sleep 3
+}
+
+
 & $haxelib @hxArgs
 
 Set-Pause

@@ -5,28 +5,38 @@ It haves code parts from [Psych Engine][psych_engine]... I'm planning on replace
 
 Call me on Discord if you want to [talk with me][sunnydev_discord].
 
-## Compiling resources
+<details>
+<summary><h2>Compiling resources</h2></summary>
+
 - This repo (lol)
 - [Haxe 4.3.2][haxe] Recommended v4.3.7
 
 [Docs][docs_building] contains building scripts to install dependencies, and includes an extra script for Windows (Visual Studio BuildTools resource).
+</details>
 
-## Modding
+<details>
+<summary><h2>Modding</h2></summary>
+
 Check [Modding Docs][docs_modding_readme]
+</details>
 
-## Resource Credits
+<details>
+<summary><h2>Resource Credits</h2></summary>
+
 * Commom sprites and Font: [TeamForever][team_forever] from [Sonic 2 Absolute][sonic2absolute]
 * Executable icons (and DiscordRPC): [TeamForever][team_forever] from [Sonic 2 Absolute][sonic2absolute]
 * Executable 8x8 icon: SEGA from Sonic Pocket Adventure
 * "Mania.ttf" Font: SEGA from Sonic Mania (ttf file made by me)
-* Game Over font: [LoganMax0328](https://www.spriters-resource.com/profile/loganmax0328/) from [The Sprites Resource](https://www.spriters-resource.com/custom_edited/sonicthehedgehogcustoms/asset/222029/)
+* Game Over font: [LoganMax0328](https://www.spriters-resource.com/profile/loganmax0328/) from [The Spriters Resource](https://www.spriters-resource.com/custom_edited/sonicthehedgehogcustoms/asset/222029/)
 * Game music and sounds: SEGA from Sonic Mania
+</details>
 
-## About the Code used in this project
+<details>
+<summary><h2>About the Code used in this project</h2></summary>
 
 **The code from Psych Engine is getting referenced times by times**, but theres parts that I coded myself.
-
 If you see something wrong in this project, **PLEASE, CONTACT ME!**
+</details>
 
 <!-- My Discord link -->
 [sunnydev_discord]: <https://discordapp.com/users/525334699069931521> "Sunnydev's Discord profile"

@@ -1,0 +1,21 @@
+flag	content
+keybind_change	Pulse una tecla
+keybind_change_gamepad	Pulsa un botón
+keybind_actions	{1}: Cancelar la asignación<N>{2}: Eliminar la asignación
+keybind_tab	Pulsa {1} para cambiar de sección.
+keybind_tab_gamepad	Pulsa {1}/{2} para cambiar de sección.
+keybind_keyboard	KEYBOARD
+keybind_gamepad	GAMEPAD
+controls_rebinding	Encuadernación: {1}
+key_up	Mirar hacia arriba
+key_left	Mover a la Izquierda
+key_down	Move Down
+key_right	Mover a la Derecha
+key_accept	Aceptar  / Confirmar
+key_back	Atrás / Cancelar
+key_jump	Saltar
+key_pause	Pausar
+key_auxiliar	Acción Auxiliar
+key_volume_up	Aumentar el Volumen
+key_volume_down	Bajar el Volumen
+key_volume_mute	Silenciar

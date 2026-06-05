@@ -1,31 +1,27 @@
 #if !macro
 
-import framework.*;
+import asthg.framework.*;
 
-import backend.ClientPrefs;
-import backend.Controls;
-import backend.Constants;
-import backend.CoolUtil;
-
+import asthg.backend.ClientPrefs;
+import asthg.backend.Constants;
+import asthg.backend.CoolUtil;
 #if DISCORD_ALLOWED
-import backend.Discord;
+import asthg.backend.Discord;
 #end
-
-import backend.Locale;
-
+import asthg.backend.Locale;
 #if MODS_ALLOWED
-import backend.Mods;
+import asthg.backend.Mods;
 #end
-
-import backend.StateManager;
-import backend.SubStateManager;
-import backend.Paths;
-
-import states.LoadingState;
-
+import asthg.backend.Paths;
+import asthg.backend.StateManager;
+import asthg.backend.SubStateManager;
+import asthg.input.Controls;
+import asthg.states.LoadingState;
+import asthg.util.*;
 import util.*;
+using util.StringUtil;
+using asthg.util.Ansi;
 
-using util.Ansi;
 //---------------------------------//
 
 #if sys
@@ -37,17 +33,19 @@ import js.html.*;
 
 import flixel.FlxCamera;
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxState;
+import flixel.FlxSprite;
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.frames.FlxBitmapFont;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
+import flixel.sound.FlxSound;
 import flixel.text.FlxBitmapText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import flixel.sound.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 import flixel.util.FlxTimer;

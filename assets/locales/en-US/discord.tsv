@@ -3,4 +3,4 @@ main_menu	Main Menu
 save_select	Save Select
 options	Options Menu
 playing	Testing PlayState
-playing-player	Playing as <1>
+playing-player	Playing as {1}

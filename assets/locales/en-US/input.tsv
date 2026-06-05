@@ -16,10 +16,10 @@ flxgamepad_lshoulder	L. Bumper
 flxgamepad_rshoulder	R. Bumper
 flxgamepad_ltrigger	L. Trigger
 flxgamepad_rtrigger	R. Trigger
-flxgamepad_dpad_left	Left
-flxgamepad_dpad_right	Right
-flxgamepad_dpad_up	Up
-flxgamepad_dpad_down	Down
+flxgamepad_dpad_left	DPad Left
+flxgamepad_dpad_right	DPad Right
+flxgamepad_dpad_up	DPad Up
+flxgamepad_dpad_down	DPad Down
 flxgamepad_stickl_left	Left
 flxgamepad_stickl_right	Right
 flxgamepad_stickl_up	Up

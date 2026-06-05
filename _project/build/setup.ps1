@@ -23,20 +23,23 @@
 
 	.NOTES
 	Author: Sunnydev31 (@unreal.sunnydev)
-	Latest edition: 2026/04/10
+	Latest edition: 2026/06/01
 #>
 
 param(
 	[string]$StayOnMenu = "",
-	[int]$MenuOption = -1
+	[int]$MenuOption = -1,
+	[bool]$Transcript = $true
 )
 
 Import-LocalizedData -BindingVariable "Msg" -ErrorAction SilentlyContinue
 
 # Change the title of the windows
-$Host.UI.RawUI.WindowTitle = $Msg.Menu.Title
+$Host.UI.RawUI.WindowTitle = $Msg["Menu"].Title
 
-Start-Transcript -Path "$PSScriptRoot/setup.log"
+if ($Transcript) {
+	Start-Transcript -Path "$PSScriptRoot/setup.log"
+}
 
 <#
 	.DESCRIPTION
@@ -46,8 +49,22 @@ Start-Transcript -Path "$PSScriptRoot/setup.log"
 	This function calls "Command Prompt" if you're using Windows.
 #>
 function Set-Pause {
-		Write-Output ($Msg.PausePrompt)
-		[void][System.Console]::ReadKey($true)
+	Write-Message ($Msg["PausePrompt"])
+	[void][System.Console]::ReadKey($true)
+}
+
+function Write-Message {
+	param(
+		[Parameter(Mandatory = $true, Position = 0)] [string]$Message,
+		[Parameter(Position = 1)] [ConsoleColor]$Color = [ConsoleColor]::White
+	)
+
+	if ($Transcript) {
+		Write-Host $Message -ForegroundColor $Color
+	}
+	else {
+		Write-Output $Message
+	}
 }
 
 # MAIN FUNCTION to call haxelib
@@ -57,6 +74,9 @@ if (Get-Command "haxelib" -ErrorAction SilentlyContinue) {
 	$Haxelib = "haxelib"
 	$HasHaxelib = $true
 }
+else {
+	Write-Message ($Msg["Haxe"].NotFound) -Color Red
+}
 
 # Path to persist setup options
 $ConfigPath = Join-Path $PSScriptRoot 'setup_config.json'
@@ -65,6 +85,9 @@ $obj = @{ }
 <#
 	.DESCRIPTION
 	Function to get a setup configuration
+
+	.PARAMETER Name
+	The name of the setting to get
 
 	.OUTPUTS
 	Object
@@ -85,6 +108,11 @@ function Get-SetupConfig {
 	.DESCRIPTION
 	Function to save a setup configuration
 
+	.PARAMETER Name
+	The name of the setting to save
+	.PARAMETER Value
+	The value of this setting
+
 	.OUTPUTS
 	Void
 #>
@@ -99,11 +127,11 @@ function Set-SetupConfig {
 		$obj | ConvertTo-Json | Set-Content -Path $ConfigPath -Encoding UTF8
 	}
 	catch {
-		Write-Warning ($Msg.Config.FailedSave -f $_)
+		Write-Warning ($Msg["Config"].FailedSave -f $_)
 	}
 }
 
-if (-not $HasHaxelib) { Write-Output ($Msg.NotHaxe) }
+$ProjectPath = "$PSScriptRoot/../../"
 
 <#
 	.DESCRIPTION
@@ -117,10 +145,10 @@ function Set-SetupWindows {
 
 	try {
 		Invoke-WebRequest -Uri ("https://aka.ms/vs/16/release/{0}" -f $filename) -OutFile $filename
-		Write-Output ($Msg.InstallingMSVC.Prompt)
+		Write-Message ($Msg["InstallingMSVC"].Prompt)
 	}
 	catch {
-		Write-Warning ($Msg.InstallingMSVC.ErrorDownload -f $_)
+		Write-Warning ($Msg["InstallingMSVC"].ErrorDownload -f $_)
 		return
 	}
 
@@ -131,11 +159,12 @@ function Set-SetupWindows {
 		}
 	}
 	catch {
-		throw ($Msg.InstallingMSVC.ErrorPath -f $filename)
+		Write-Message ($Msg["InstallingMSVC"].ErrorPath -f $filename) -Color Red
 		Stop-Transcript
 	}
 
-	Write-Output ($Msg.Finished)
+	Write-Message ($Msg["Finished"])
+	Set-SetupConfig -Name SetupWindows -Value $true
 	Set-Pause
 	Clear-Host
 }
@@ -151,7 +180,7 @@ function Set-SetupWindows {
 	Custom Exception
 #>
 function Set-SetupMacOS {
-	Write-Output ($Msg.NotAvailable)
+	Write-Message ($Msg["NotAvailable"])
 }
 
 <#
@@ -167,19 +196,21 @@ function Set-SetupAndroid {
 	Set-SetupConfig -Name SetupAndroid -Value $true
 }
 
+$CompiledHXCPP = (Get-SetupConfig -Name CompiledHXCPP) ?? $false
 <#
 	.DESCRIPTION
 	Function to start a game setup
 	Install dependencies and configure lime
 #>
 function New-GameSetup {
-	Write-Output ($Msg.InstallingDependencies.Default)
+	Write-Message ($Msg["Dependencies"].InstallingDependencies.Default)
+	Write-Message ($Msg["Dependencies"].InstallingDependencies.SubText)
 	Set-Pause
 
 	& $Haxelib @("--global", "install", "hmm")
 	Start-Sleep 2
 
-	Set-Location "$PSScriptRoot/../../"
+	Set-Location $ProjectPath
 	& $Haxelib @("--global", "run", "hmm", "setup")
 	Start-Sleep 2
 
@@ -188,8 +219,21 @@ function New-GameSetup {
 
 	Start-Sleep 2
 	& $Haxelib @("run", "lime", "setup")
+	Set-Pause
 
-	Write-Output ($Msg.Finished)
+	Remove-RedundantHaxelibs
+
+	Write-Output "Building HXCPP Dev"
+
+	if (-not $CompiledHXCPP) {
+		Set-Location ".haxelib/hxcpp/git/tools/hxcpp"
+		& "haxe" "compile.hxml"
+		Set-Location "../../../../.."
+		Start-Sleep 2
+		Set-SetupConfig -Name CompiledHXCPP -Value $true
+	}
+
+	Write-Message ($Msg["Finished"])
 
 	if ($StayOnMenu) { Set-Location $PSScriptRoot }
 }
@@ -199,37 +243,115 @@ function New-GameSetup {
 	Function to remove setup of the game
 #>
 function Remove-GameSetup {
-	Write-Output $Msg.RemoveSetup.Dependencies
+	Write-Message $Msg["Dependencies"].RemoveSetup.Removing
 
 	<#
 		Search in config if setup has done or if ".haxelib" exists
 		If true, remove ALL dependencies
 	#>
-	if (((Get-SetupConfig -Name SetupDone) -eq $true) -or (Test-Path "$PSScriptRoot/../../.haxelib")) {
-		try { & "hmm" "clean" } catch { Stop-Transcript }
+	if (((Get-SetupConfig -Name SetupDone) -eq $true) -or (Test-Path "$ProjectPath/.haxelib")) {
+		try {
+			& "hmm" "clean"
+		}
+		catch {
+			Write-Message ($Msg["Dependencies"].RemoveSetup.FailedRemove -f $_) -Color Red
+			if ($Transcript) {
+				Stop-Transcript
+			}
+		}
 	}
 
 	if (Test-Path $ConfigPath) {
 		Remove-Item $ConfigPath -Force
 	}
 
-	Write-Output ($Msg.Finished)
+	Write-Message $Msg["Finished"]
+}
+
+<#
+	.DESCRIPTION
+	Function to remove redundant haxelibs
+	Removes all versions of a library except the one marked as ".current"
+
+	.OUTPUTS
+	Void
+
+	.NOTES
+	This function only works if you're using Haxelib portable mode (".haxelib" folder)
+#>
+function Remove-RedundantHaxelibs {
+	if ($HasHaxelib) {
+		Write-Message ($Msg["Dependencies"].Redundant.RemoveWarn)
+
+		$libPath = Join-Path $ProjectPath ".haxelib"
+		if (-not (Test-Path $libPath)) {
+			Write-Message ($Msg["Dependencies"].Redundant.FolderNotFound)
+			return
+		}
+
+		# For each lib...
+		Get-ChildItem $libPath | Where-Object { $_.PSIsContainer } | ForEach-Object {
+			$libName = $_.Name
+			$libDir = $_.FullName
+			$currentFile = Join-Path $libDir ".current"
+			if (Test-Path $currentFile) {
+				$currentVersion = (Get-Content $currentFile -Raw).Replace(".", ",")
+				Get-ChildItem $libDir | Where-Object { $_.PSIsContainer -and ($_.Name -ne $currentVersion) } | ForEach-Object {
+					try {
+						Remove-Item -Recurse -Force $_.FullName
+						Write-Message ($Msg["Dependencies"].Redundant.VersionRemoved -f $_.Name, $libName)
+					} catch {
+						Write-Message ($Msg["Dependencies"].Redundant.VersionRemoveFailed -f $_.Name, $libName, $_) -Color Yellow
+					}
+				}
+			}
+		}
+		Start-Sleep 1
+
+		Write-Message $Msg["Done"]
+	}
+	else {
+		Write-Message ($Msg["RemoveFullSetup"].AbortedWithReason -f $Msg["RemoveFullSetup"].ErrorReasons.NotHaxelib) -Color Red
+		return;
+	}
+}
+
+function Remove-FullSetup {
+	$Confirm = Read-Host ($Msg["RemoveFullSetup"].Confirm -f $Msg["Options"].Yes, $Msg["Options"].No)
+	if ($Confirm.ToLower() -ne $Msg["Options"].Yes) {
+		Write-Message ($Msg["RemoveFullSetup"].Aborted)
+		return
+	}
+
+	Remove-GameSetup
+
+	# This function also remove game builds!
+	if (Get-SetupConfig -Name SetupWindows) {
+		Write-Message ($Msg["RemoveFullSetup"].PlatformWarn.Windows)
+		& $haxelib @("run", "lime", "clean", "windows")
+	}
+
+	if (Get-SetupConfig -Name SetupAndroid) {
+		Write-Message ($Msg["RemoveFullSetup"].PlatformWarn.Android)
+		& $haxelib @("run", "lime", "clean", "android")
+	}
 }
 
 do {
-	Write-Output ("===== {0} =====" -f $Msg.Menu.Title)
-	foreach ($i in 0..($Msg["Menu"]["Options"].Count - 1)) {
-		if ($i -in ("0", "4")) {
-			$text = if ($HasHaxelib) { $Msg.Menu.Options[$i] } else { $Msg.Menu.NotAvailableOpt }
-			Write-Output ("{0}. {1}" -f $i, $text)
-			continue
+	[readonly][int]$NUM_OPTIONS = 7
+
+
+	Write-Message ("===== {0} =====" -f $Msg["Menu"].Title)
+	foreach ($i in 0..$NUM_OPTIONS) {
+		$text = $Msg["Menu"].Options[$i]
+		if (($i -in ("0", "4")) -and -not $HasHaxelib) {
+			$text = $Msg["Menu"].NotAvailable
 		}
-		else {
-			Write-Output ("{0}. {1}" -f $i, $Msg.Menu.Options[$i])
-			continue
-		}
+
+		Write-Message ("{0}. {1}" -f $i, $text)
+		continue
 	}
-	Write-Output ""
+	Write-Message "`n"
 	Write-Debug ""
 	Write-Debug "CURRENT LOCATION: $(Get-Location)"
 	Write-Debug ""
@@ -238,17 +360,19 @@ do {
 		$MenuOptionNow = $MenuOption
 	}
 	else {
-		$MenuOptionNow = Read-Host ($Msg.Menu.Prompt -f 0, ($Msg["Menu"]["Options"].Count - 1))
+		$MenuOptionNow = Read-Host ($Msg["Menu"].Prompt -f 0, $NUM_OPTIONS)
 	}
 
 	switch ($MenuOptionNow) {
-		"0" { if ($HasHaxelib)	{ New-GameSetup		} }
-		"1" { if ($IsWindows)	{ Set-SetupWindows	}	else { Write-Output ($Msg.Menu.ErrorOS) } }
-		"2" { if ($IsMacOS)		{ Set-SetupMacOS	}	else { Write-Output ($Msg.Menu.ErrorOS) } }
+		"0" { if ($HasHaxelib) { New-GameSetup            } }
+		"1" { if ($IsWindows)  { Set-SetupWindows         } else { Write-Message ($Msg["Menu"].ErrorOS) } }
+		"2" { if ($IsMacOS)    { Set-SetupMacOS           } else { Write-Message ($Msg["Menu"].ErrorOS) } }
 		"3" { Set-SetupAndroid }
-		"4" { if ($HasHaxelib)	{ Remove-GameSetup } }
-		"5" { exit }
-		default { Write-Output ($Msg.Menu.Error) }
+		"4" { if ($HasHaxelib) { Remove-GameSetup         } }
+		"5" { if ($HasHaxelib) { Remove-FullSetup         } }
+		"6" { if ($HasHaxelib) { Remove-RedundantHaxelibs } }
+		"7" { exit }
+		default { Write-Message ($Msg["Menu"].Error) }
 	}
 
 } while ($StayOnMenu.ToLower() -in @("y", "yes", "true", "1") -or $MenuOption -eq -1)

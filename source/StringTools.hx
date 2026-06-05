@@ -212,7 +212,7 @@ class StringTools {
 		#if (js && js_es >= 6)
 		return (cast s).includes(value);
 		#else
-		return s.indexOf(value) != -1;
+		return s.indexOf(value) != -1 #if php || value == "" #end;
 		#end
 	}
 
@@ -276,28 +276,25 @@ class StringTools {
 		Tells if the character in the string `s` at position `pos` is a space.
 
 		A character is considered to be a space character if its character code
-		is 9,10,11,12,13, 32, 173, 160, 8232, 10240...
+		is 9...13, 32, 173, 160, 8232, 10240...
 
 		If `s` is the empty String `""`, or if pos is not a valid position within
 		`s`, the result is false.
 	**/
 	public static function isSpace(s:String, pos:Int):Bool {
-		#if cs
-		return untyped char.IsWhiteSpace(s, pos);
-		#else
 		#if (python || lua)
 		if (s.length == 0 || pos < 0 || pos >= s.length)
 			return false;
 		#end
 		var c = s.charCodeAt(pos);
-		var w = [32, 0xA0, 0xAD, 0x2028, 0x2800, 0x200A, 0x200B, 0x3000];
+		var w = [0x20, 0x85, 0xA0, 0xAD, 0x34F, 0x61C, 0x1680, 0x2800, 0x3000, 0xFEFF];
 
-		for (i in w)
-			if (c == i)
-				return true;
+		if (w.contains(c))
+			return true;
 
-		return (c > 8 && c <= 15) || (c >= 0x2000 && c <= 0x200A) || (c >= 0x205F && c < 0x2065);
-		#end
+		// HELP, this list is so long, but is for sanitize strings powerfully
+		return (c >= 0x09 && c <= 0x0F) || (c >= 0x2000 && c <= 0x200F) || (c >= 0x202A && c <= 0x202F)
+		|| (c >= 0x205F && c <= 0x2064) || (c >= 0x2066 && c <= 0x2069);
 	}
 
 	/**
@@ -378,7 +375,10 @@ class StringTools {
 
 		If `c` is null, the result is unspecified.
 	**/
-	public static function lpad(s:String, c:String, l:Int):String {
+	public #if cs inline #end static function lpad(s:String, c:String, l:Int):String {
+		#if cs
+		return untyped s.PadLeft(l, cast c, ' ');
+		#else
 		if (c.length <= 0)
 			return s;
 
@@ -389,6 +389,7 @@ class StringTools {
 		}
 		buf.add(s);
 		return buf.toString();
+		#end
 	}
 
 	/**
@@ -403,7 +404,10 @@ class StringTools {
 
 		If `c` is null, the result is unspecified.
 	**/
-	public static function rpad(s:String, c:String, l:Int):String {
+	public #if cs inline #end static function rpad(s:String, c:String, l:Int):String {
+		#if cs
+		return untyped s.PadRight(l, cast c, ' ');
+		#else
 		if (c.length <= 0)
 			return s;
 
@@ -413,6 +417,7 @@ class StringTools {
 			buf.add(c);
 		}
 		return buf.toString();
+		#end
 	}
 
 	/**
@@ -426,16 +431,16 @@ class StringTools {
 		If `sub` or `by` are null, the result is unspecified.
 	**/
 	public static function replace(s:String, sub:String, by:String):String {
+		#if (java || cs)
+		if (sub.length == 0)
+			return s.split(sub).join(by);
+		else
+		#end
+
 		#if java
-		if (sub.length == 0)
-			return s.split(sub).join(by);
-		else
-			return (cast s : java.NativeString).replace(sub, by);
+		return (cast s : java.NativeString).replace(sub, by);
 		#elseif cs
-		if (sub.length == 0)
-			return s.split(sub).join(by);
-		else
-			return untyped s.Replace(sub, by);
+		return untyped s.Replace(sub, by);
 		#else
 		return s.split(sub).join(by);
 		#end
@@ -460,18 +465,9 @@ class StringTools {
 			n >>>= 4;
 		} while (n > 0);
 		#end
-		#if python
-		if (digits != null && s.length < digits) {
-			var diff = digits - s.length;
-			for (_ in 0...diff) {
-				s = "0" + s;
-			}
-		}
-		#else
+
 		if (digits != null)
-			while (s.length < digits)
-				s = "0" + s;
-		#end
+			s = lpad(s, "0", digits);
 		return s;
 	}
 

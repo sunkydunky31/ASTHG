@@ -1,68 +1,83 @@
 {
-	"files.associations": {
-		"*.hxp": "haxe",
-		"*.hxs": "haxe"
-	},
-	"files.exclude": {
-		"**/.discord": true,
-	},
-	"json.schemas": [
-		{
-			"fileMatch": ["/assets/shared/music/*.json"],
-			"url": "./vscode/schema/MusicMetadata.json"
-		},
-		{
-			"fileMatch": ["/assets/shared/data/characters/*.json"],
-			"url": "./vscode/schema/CharacterMeta.json"
-		}
-	],
-	"yaml.schemas": {
-		"./.github/workflows/*.yaml": "https://json.schemastore.org/github-workflow.json"
-	},
-	"files.watcherExclude": {
-		"**/.git/**": true,
-		"**/.haxelib/**": true,
-		"**/export/**": true
-	},
-	"lime.projectFile": "Project.hxp",
-	"lime.targets": [
-		{
-			"label": "HashLink",
-			"name": "hl",
-			"enabled": true
-		},
-		{
-			"label": "HTML5",
-			"name": "html5",
-			"enabled": true
-		},
-		{
-			"label": "Linux",
-			"name": "linux",
-			"enabled": true
-		},
-		{
-			"label": "NekoVM",
-			"name": "neko",
-			"enabled": true
-		},
-		{
-			"label": "MacOS",
-			"name": "mac",
-			"enabled": true
-		},
-		{
-			"label": "Windows",
-			"name": "windows",
-			"enabled": true
-		}
-	],
-	"haxe.exclude": [
-		"_project",
-		"docs",
-		"export/translations",
-		"export/resources",
-		"export/icons",
-		"export/build",
-	]
+  "explorer.excludeGitIgnore": true,
+  "files.associations": {
+    "*.hxp": "haxe", //Lime Project
+    "*.hxc": "haxe", // Polymod Haxe Class
+    "*.hxs": "haxe", // HaxeScript / HScript file
+    "*.fnt": "xml" // Angel Code font data
+  },
+  "files.exclude": {
+    "**/.discord": true
+  },
+  "files.watcherExclude": {
+    "**/.git/**": true,
+    "**/.haxelib/**": true,
+    "**/export/**": true
+  },
+  "haxe.exclude": [
+    "_project/**",
+    "export/**"
+  ],
+  "haxecheckstyle.sourceFolders": [
+    "source",
+  ],
+  "json.schemas": [
+    {
+      "fileMatch": ["/assets/default/data/characters/*.json"],
+      "url": ".vscode/schema/CharacterMeta.json"
+    },
+    {
+      "fileMatch": ["/mods/**/mod.json", "/mods/**/_polymod_metadata.json"],
+      "url": ".vscode/schema/Polymod Metadata.json"
+    },
+    {
+      "fileMatch": ["hmm.json"],
+      "url": ".vscode/schema/Haxe Module Manager.json"
+    }
+  ],
+  "lime.targets": [
+    {
+      "label": "HashLink",
+      "name": "hl",
+      "enabled": true
+    },
+    {
+      "label": "HTML5",
+      "name": "html5",
+      "enabled": true
+    },
+    {
+      "label": "Linux",
+      "name": "linux",
+      "enabled": true
+    },
+    {
+      "label": "NekoVM",
+      "name": "neko",
+      "enabled": true
+    },
+    {
+      "label": "MacOS",
+      "name": "mac",
+      "enabled": true
+    },
+    {
+      "label": "Windows",
+      "name": "windows",
+      "enabled": true
+    }
+  ],
+  "search.exclude": {
+    "./export/**": true,
+  },
+  "xml.fileAssociations": [
+    {
+      "pattern": "**/music/*.xml",
+      "systemId": ".vscode/schema/MusicMetadata.xsd"
+    },
+    {
+      "pattern": "**/fonts/*.fnt",
+      "systemId": ".vscode/schema/AngelCodeMetadata.xsd"
+    }
+  ]
 }

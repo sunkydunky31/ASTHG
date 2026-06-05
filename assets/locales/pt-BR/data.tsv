@@ -5,8 +5,8 @@ hud_text_rings	Anéis
 game_over	Fim de Jogo
 time_over	Tempo Esgotado
 zone	Zona
-act	Ato <1>
+act	Ato {1}
 enabled	Ativado
 disabled	Desativado
-loading	Carregando<1>
-fps_counter	QPS: <1><N>Memória: <2>
+loading	Carregando{1}
+fps_counter	QPS: {1}<N>Memória: {2}

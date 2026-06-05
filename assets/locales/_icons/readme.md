@@ -1,0 +1,1 @@
+This folder only contains blank images lol, only for FireTongue stops blaming so much about them.

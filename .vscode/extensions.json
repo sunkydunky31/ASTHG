@@ -1,6 +1,7 @@
 {
 	"recommendations": [
 		"openfl.lime-vscode-extension",
-		"wiggin77.codedox"
+		"wiggin77.codedox",
+		"nadako.vshaxe"
 	]
 }

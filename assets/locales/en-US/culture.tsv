@@ -1,3 +1,3 @@
 flag	content
-format_date	%Y<1>%m<2>%d
-format_hour	%H<1>%M<2>%S
+format_date	%Y{1}%m{2}%d
+format_hour	%H{1}%M{2}%S

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Haxe Module Manager Metadata",
+  "type": "object",
+  "properties": {
+    "dependencies": {
+      "description": "List of haxelib dependencies for this project.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of the dependency.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of this haxelib.",
+            "type": "string",
+            "enum": ["haxelib", "git", "hg", "dev"]
+          },
+          "version": {
+            "description": "Version of this Haxelib, must be on SemVer format.",
+            "type": ["string", "null"],
+            "pattern": "^(\\d+)\\.(\\d+)\\.(\\d+)(?:[-]([a-z0-9.-]+))?(?:[+]([a-z0-9.-]+))?$"
+          },
+          "dir": {
+            "description": "Directory of this dependency, used on `git` type.",
+            "type": ["null", "string"],
+            "default": null
+          },
+          "url": {
+            "description": "The URL to clone this dependency",
+            "type": "string"
+          },
+          "ref": {
+            "description": "Git/HG reference (commit, branch, tag, etc.)",
+            "type": "string"
+          }
+        },
+        "required": ["name", "type"],
+        "dependentSchemas": {
+          "type": {
+            "if": { "properties": { "type": { "const": "git" } } },
+            "then": { "required": ["url"] },
+            "else": {
+              "if": { "properties": { "type": { "const": "haxelib" } } },
+              "then": { "required": ["version"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,8 @@
 flag	content
-title	OPTIONS
-title_controls	CONTROLS
-title_display	DISPLAY
-title_gameplay	GAMEPLAY
-title_system	SYSTEM
-title_language	LANGUAGE
+title	Options
+title_controls	Controls
+title_display	Display
+title_gameplay	Gameplay
+title_system	System
+title_language	Language
+no_options	No options found for this substate!

@@ -3,6 +3,7 @@ package tools;
 import sys.io.File;
 import sys.FileSystem;
 
+using util.StringUtil;
 using StringTools;
 
 class Language {
@@ -10,7 +11,7 @@ class Language {
 	static var curLang:String = lime.system.Locale.currentLocale;
 
 	public static function load() {
-		
+
 		if (!FileSystem.exists('_project/translations/$curLang.txt') || curLang == null) {
 			curLang = "en_US";
 		}
@@ -30,14 +31,10 @@ class Language {
 		str ??= key;
 
 		if (replaces != null) {
-			for (num => i in replaces) {
-				str = str.replace('{$num}', i);
-			}
+			str = str.format(replaces);
 		}
 
-		str = str.replace("\\n", "\n")
-			.replace("\\t", "\t")
-			.replace("\\r", "\r");
+		str = str.replaceMulti(["\\n","\\t", "\\r"], ["\n", "\t", "\r"]);
 
 		return str;
 	}

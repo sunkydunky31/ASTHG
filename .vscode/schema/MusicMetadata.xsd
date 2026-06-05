@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="tags">
+    <xs:annotation>
+      <xs:documentation> Audacity XML Tag Data. Used for this project for getting information about the track</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="tag" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:attribute name="name" type="xs:string" use="required">
+              <xs:annotation>
+                <xs:documentation>
+                  Defines the tag key, like <code>TITLE</code><code>ARTIST</code>, <code>ALBUM</code>, etc.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="value" use="required">
+              <xs:annotation>
+                <xs:documentation>
+                  Defines the tag value.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

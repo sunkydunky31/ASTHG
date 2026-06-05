@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
 <resources>
-	<string name="app_name">Unnamed Sonic Game</string>
+	<string name="app_name">::APP_TITLE::</string>
 </resources>

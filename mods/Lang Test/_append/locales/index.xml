@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <locale id="es-US" sort="3">
+    <contributors value="Sunnydev31" />
+    <ui language="Idioma" region="Región" />
+    <label id="en-US, en-GB, en-CA" language="Spanish"  region="United States" />
+    <label id="es-US, es-ES"        language="Español"  region="Estados Unidos" />
+    <label id="pt-PT, pt-BR"        language="Espanhol" region="Estados Unidos" />
+  </locale>
+</data>

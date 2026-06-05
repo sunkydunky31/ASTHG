@@ -21,9 +21,14 @@ typedef AndroidSettings = {
 typedef AndroidSettings_Icons = {
 	/**
 		Adaptive icons (Android 8.0+) uses a foreground and background layer to create different shapes
-		Adds support for monochrome icons on Android 12+ too, this depends on how you configured the XML files. 
+		Adds support for monochrome icons on Android 12+ too, this depends on how you configured the XML files.
 	**/
 	adaptive:Bool,
+
+	/**
+		The icon path that all your adaptive icons are stored
+	**/
+	path:String,
 
 	/**
 		A circular version of the icon for devices that use round icons
@@ -33,7 +38,7 @@ typedef AndroidSettings_Icons = {
 }
 
 typedef WindowsSettings = {
-	
+
 	/**
 		If enabled, this will use Windows 8+ VisualElements for stiling
 

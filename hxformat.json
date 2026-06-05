@@ -1,23 +1,23 @@
 {
-	"indentation": {
-		"character": "tab",
-		"tabWidth": 4,
-		"trailingWhitespace": true
-	},
+  "indentation": {
+    "character": "tab",
+    "tabWidth": 4,
+    "trailingWhitespace": true
+  },
 
-	"lineEnds": {
-		"leftCurly": "both",
-		"rightCurly": "both",
-		"objectLiteralCurly": {
-			"leftCurly": "after"
-		}
-	},
+  "lineEnds": {
+    "leftCurly": "none",
+    "rightCurly": "both",
+    "objectLiteralCurly": {
+      "leftCurly": "after"
+    }
+  },
 
-	"sameLine": {
-		"ifBody": "same",
-		"ifElse": "next",
-		"doWhile": "next",
-		"tryBody": "next",
-		"tryCatch": "next"
-	}
+  "sameLine": {
+    "ifBody": "next",
+    "ifElse": "next",
+    "doWhile": "next",
+    "tryBody": "next",
+    "tryCatch": "next"
+  }
 }

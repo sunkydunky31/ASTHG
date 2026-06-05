@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
-	<file id="data" value="data.tsv" />
-	<file id="data" value="culture.tsv" />
-	<file id="discord" value="discord.tsv" />
-	<file id="input" value="input.tsv" />
-	<file id="main_menu" value="main_menu.tsv" />
-	<file id="mods_menu" value="mods_menu.tsv" />
-	<file id="editor_menu" value="editor_menu.tsv" />
-	<file id="options" value="option_controls.tsv" />
-	<file id="options" value="option_display.tsv" />
-	<file id="options" value="option_gameplay.tsv" />
-	<file id="options" value="option_menu.tsv" />
-	<file id="options" value="option_system.tsv" />
-	<file id="pause" value="pause.tsv" />
-	<file id="save_select" value="save_select.tsv" />
-	<file id="title_screen" value="title_screen.tsv" />
+  <file id="data"         value="data.tsv" />
+  <file id="data"         value="culture.tsv" />
+  <file id="discord"      value="discord.tsv" />
+  <file id="hints"        value="hints.tsv" />
+  <file id="input"        value="input.tsv" />
+  <file id="main_menu"    value="main_menu.tsv" />
+  <file id="mods_menu"    value="mods_menu.tsv" />
+  <file id="editor_menu"  value="editor_menu.tsv" />
+  <file id="options"      value="option_controls.tsv" />
+  <file id="options"      value="option_display.tsv" />
+  <file id="options"      value="option_gameplay.tsv" />
+  <file id="options"      value="option_menu.tsv" />
+  <file id="options"      value="option_system.tsv" />
+  <file id="pause"        value="pause.tsv" />
+  <file id="save_select"  value="save_select.tsv" />
+  <file id="title_screen" value="title_screen.tsv" />
 
-	<file id="files" value="files.csv" />
-	<file id="fonts" value="fonts.xml" />
+  <file id="files"        value="files.csv" />
+  <file id="fonts"        value="fonts.xml" />
 
-	<locale id="en-US" is_default="true" sort="0">
-		<contributors value="Sunnydev31" />
-		<ui language="Language" region="Region" />
-		<label id="en-US,en-GB,en-CA" language="English" region="United States" />
-		<label id="pt-PT,pt-BR" language="Inglês" region="Estados Unidos" />
-	</locale>
+  <locale id="en-US" is_default="true" sort="0">
+    <contributors value="Sunnydev31" />
+    <ui language="Language" region="Region" />
+    <label id="en-US, en-GB, en-CA" language="English" region="United States" />
+    <label id="pt-PT, pt-BR"        language="Inglês"  region="Estados Unidos" />
+  </locale>
 
-	<locale id="pt-BR" sort="1">
-		<contributors value="Sunnydev31" />
-		<ui language="Idioma" region="Região" />
-		<label id="en-US,en-GB,en-CA" language="Portuguese" region="Brazil" />
-		<label id="pt-PT,pt-BR" language="Português" region="Brasil" />
-	</locale>
+  <locale id="pt-BR" sort="1">
+    <contributors value="Sunnydev31" />
+    <ui language="Idioma" region="Região" />
+    <label id="en-US,en-GB,en-CA" language="Portuguese" region="Brazil" />
+    <label id="pt-PT,pt-BR"       language="Português"  region="Brasil" />
+  </locale>
 </data>

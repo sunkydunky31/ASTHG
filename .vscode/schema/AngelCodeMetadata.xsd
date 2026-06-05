@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="font">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="info">
+          <xs:complexType>
+            <xs:attribute name="face" type="xs:string">
+              <xs:annotation>
+                <xs:documentation> Font face name </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="size">
+              <xs:annotation>
+                <xs:documentation> </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="bold" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation> </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="italic" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation> </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="charset">
+              <xs:annotation>
+                <xs:documentation> </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="unicode" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation> </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="stretchH">
+              <xs:annotation>
+                <xs:documentation> </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="smooth" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation> </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="aa" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation>Determines if the font uses antialiasing or not</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="padding">
+              <xs:annotation>
+                <xs:documentation> </xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:pattern value="\d,\d,\d,\d" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="spacing">
+              <xs:annotation>
+                <xs:documentation> </xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:pattern value="\d,\d" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="common"></xs:element>
+        <xs:element name="pages"></xs:element>
+        <xs:element name="chars">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="char" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="id" type="xs:integer">
+                    <xs:annotation>
+                      <xs:documentation> The Unicode index for this glyph Example: <code>32</code>
+                        for <code>SPACE</code> (<code>U+0020</code>) </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="x" type="xs:float">
+                    <xs:annotation>
+                      <xs:documentation>Left position of the glyph on the image</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="y" type="xs:float">
+                    <xs:annotation>
+                      <xs:documentation>Top position of the glyph on the image</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="width" type="xs:float">
+                    <xs:annotation>
+                      <xs:documentation>Width of the glyph image</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="height" type="xs:float">
+                    <xs:annotation>
+                      <xs:documentation>Height of the glyph image </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="xoffset" default="0">
+                    <xs:annotation>
+                      <xs:documentation>How much should your glyph be offset horizontally</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="yoffset" default="0">
+                    <xs:annotation>
+                      <xs:documentation>How much should your glyph be offset vertically</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="xadvance" default="0">
+                    <xs:annotation>
+                      <xs:documentation>Spacement width of the glyph<br />Set to <code>0</code> will make the next glyph override this one</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="page" type="xs:integer" default="0">
+                    <xs:annotation>
+                      <xs:documentation></xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="chnl">
+                    <xs:annotation>
+                      <xs:documentation>Defines the number of image channels that this glyph uses</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="count" type="xs:integer" default="0">
+              <xs:annotation>
+                <xs:documentation>Number of glyphs that this font has </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

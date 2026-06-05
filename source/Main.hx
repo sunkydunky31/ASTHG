@@ -7,64 +7,98 @@ import openfl.display.Sprite;
 import openfl.events.UncaughtErrorEvent;
 
 class Main extends Sprite {
-	public static var tongue:FireTongue;
-	
+	public var GAME:Dynamic = {
+		width: 426,
+		height: 240,
+		initState: asthg.states.Init,
+		fps: 60
+	}
+
 	public function new() {
 		super();
 
+		function logFormat(v:Dynamic, infos:haxe.PosInfos):String {
+			var str = Std.string(v);
+
+			if (infos == null)
+				return str;
+
+			var pstr = '[${infos.className}::${infos.methodName}:${infos.lineNumber}]';
+			if (infos.customParams != null)
+				str = str.format(infos.customParams);
+
+			return pstr + " " + str;
+		}
+
+		var traces:Array<String> = []; // Collector of traces for log files;
+		haxe.Log.trace = function(v:Dynamic, ?infos:haxe.PosInfos) {
+			var msg = logFormat(v, infos);
+
+			traces.push(msg);
+			#if js
+			if (js.Syntax.typeof(untyped console) != "undefined" && (untyped console).log != null)
+				(untyped console).log(msg);
+			#elseif lua
+			untyped __define_feature__("use._hx_print", _hx_print(msg));
+			#elseif sys
+			Sys.println(msg);
+			#else
+			throw new haxe.exceptions.NotImplementedException()
+			#end
+		}
+
 		#if android
-		Sys.setCwd(haxe.io.Path.addTrailingSlash(extension.androidtools.content.Context.getExternalFilesDir())); // stupid android 16
+		Sys.setCwd(haxe.io.Path.addTrailingSlash(extension.androidtools.content.Context.getObbDir())); // stupid android 16
 		#end
+
+		// Load the accent color
+		SystemUtil.ACCENT_COLOR = SystemUtil.loadAccentColor();
 
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
-				
-		FlxG.save.bind('game', CoolUtil.getSavePath());
-		
-		#if MODS_ALLOWED
-		Mods.loadMods(Mods.getAllIds());
-		#end
+
+		FlxG.save.bind('game', ClientPrefs.getSavePath());
 
 		openfl.utils._internal.Log.level = openfl.utils._internal.Log.LogLevel.INFO;
 
-		tongue = new FireTongue(#if sys VanillaSys #else OPENFL #end, Case.Unchanged);
-		
-		var game:FlxGame = new FlxGame(0, 0, states.Init, #if (flixel < "5.0.0") 1, #end 60, 60, true);
-		
+		var game:FlxGame = new FlxGame(GAME.width, GAME.height, GAME.initState, #if (flixel < "5.0.0") 1, #end GAME.fps, GAME.fps, true);
+
 		#if web
 		// Tells the HTML to use pixelated images
 		Application.current.window.element.style.setProperty("image-rendering", "pixelated");
 		#end
 
+		Locale.tongue = new FireTongue(OPENFL, Case.Unchanged);
+
 		addChild(game);
-		
+
 		openfl.Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 	}
-	
+
 	public static function onCrash(e:UncaughtErrorEvent) {
 		final folderPath:String = "./crash/";
 		var date:String = DateTools.format(Date.now(),
 			Locale.getString("format_date", null, ["-", "-"]) + "_" + Locale.getString("format_hour", null, ["-", "-"]));
-			
+
 		var msg:String = "Error!\n";
-		
+
 		msg += e.error + "\n\nReport this in Github: https://github.com/unrealsunnydev/ASTHG/issues";
 
 		#if sys
 		if (!sys.FileSystem.exists(folderPath))
 			sys.FileSystem.createDirectory(folderPath);
-			
+
 		sys.io.File.saveContent(folderPath + 'ASTHG_${date}.log', msg);
-		
+
 		Sys.println(msg);
 		#end
-		
+
 		lime.app.Application.current.window.alert(msg, "Something is wrong...");
-		
+
 		#if DISCORD_ALLOWED
 		DiscordClient.shutdown();
 		#end
-		
+
 		#if sys
 		Sys.exit(1);
 		#end

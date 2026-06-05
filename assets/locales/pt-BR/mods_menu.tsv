@@ -1,2 +1,3 @@
 flag	content
-title	MENU DE MODS
+title	Menu de Mods
+no_mods_warn	Sem mods detectados<N><N>Por favor, instale um mod<n>antes de voltar à esse menu.

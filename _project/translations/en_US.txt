@@ -2,5 +2,3 @@ project_Company=Company
 project_Package=Package
 project_AppFile=App file
 feature_Removed={0} was removed from the list
-project_Icon_message=[Icon] Path: {0}, Size: {1}
-project_Icon_placeholder=placeholder

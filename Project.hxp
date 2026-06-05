@@ -11,400 +11,398 @@ import DateTools;
 import tools.Language as LNG;
 import tools.PlatformSettings;
 
+import util.*;
+using util.StringUtil;
+
 using StringTools;
 
 class Project extends HXProject {
-    //Change game settings here!
-    static var GAME:Map<String, Dynamic> = [
-        /**
-            Name of the project
-            Can be translated on android build (check below)
-        **/
-        "title" => "Unnamed Sonic Game",
-
-        /**
-            Rule: MAJOR.MINOR.BUGFIX-PATCH
-            Changed back to semantic version because of Polymod...
-        **/
-        "version" => "1.1.2",
-
-        /**
-            Name of the company, or developer
-        **/
-        "company" => "Sunnydev31",
-
-        /**
-            Package name for the project
-            Ussually in format: com.company.game
-        **/
-        "packageName" => "game.sunkydev.asthg",
-
-        /**
-            Name of the executable file (without extension)
-        **/
-        "file" => "ASTHG",
-
-        /**
-            List of supported languages that the game uses
-        **/
-        "languages" => ["en", "pt-BR"]
-    ];
-
-    /**
-        List of items to remove on the build
-        Assets like MP3/OGG are removed by platform
-    **/
-    static var EXCLUDE_ASSETS:Array<String> = ["*.aseprite"];
-
-    static var PLATFORM_SETTINGS:PlatformSettings = {
-        android: {
-            icons: {
-                adaptive: true, // I could leave the icons be named "ic_launcher" and maintain compatible with Android N- ...
-                hasRound: false
-            },
-            localizedStrings: true
-        },
-
-        windows: {
-            visualElements: true
-        }
-    };
-
-
-    public function new() {
-        super();
-        if (isWindows() && isCPP()) {
-            Sys.command("chcp", ["65001"]);
-            Sys.command("cls");
-        }
-        LNG.load();
-
-        setenv("PROJECT_BUILD", (isDebug() ? "debug" : isFinal() ? "final" : "release"));
-
-        // You can remove this line if your haxe is installed in the default path
-        setenv("HAXE_STD_PATH", Sys.getEnv("HAXEPATH") + "\\std");
-
-
-        this.meta.title = GAME.get("title");
-        this.meta.version = GAME.get("version");
-        this.meta.company = GAME.get("company");
-        this.meta.packageName = GAME.get("packageName").toLowerCase();
-
-        this.app.file = GAME.get("file");
-        this.app.main = "Main";
-        this.app.preloader = "flixel.system.FlxPreloader";
-        this.app.path = "export/" + Sys.getEnv("PROJECT_BUILD");
-
-        if (isTarget("mobile")) {
-            this.window.width = 0;
-            this.window.height = 0;
-            this.window.fullscreen = true;
-        }
-        else {
-            this.window.width = 426;
-            this.window.height = 240;
-        }
-
-        this.window.orientation = Orientation.LANDSCAPE;
-        this.window.fps = 60;
-        this.window.background = (isDebug() ? 0xFF00FF : 0x000000);
-        this.window.resizable = (isWeb() || isTarget("desktop")) ? true : false;
-        this.window.allowHighDPI = true;
-
-        if (isWeb()) EXCLUDE_ASSETS.push("*.ogg");
-        else		 EXCLUDE_ASSETS.push("*.mp3");
-
-
-        echo("");
-        echo('${GAME.get("title")} v${GAME.get("version")}');
-        echo("-----------------------------------------");
-        dotPad(LNG.translate("project_Company"), this.meta.company, null, false);
-        dotPad(LNG.translate("project_Package"), this.meta.packageName, null, false);
-        dotPad(LNG.translate("project_AppFile"), this.app.file, null, false);
-        echo("-----------------------------------------");
-
-        includeAssets("assets/default",	null, null, EXCLUDE_ASSETS);
-        includeAssets("assets/fonts",	null);
-        includeAssets("assets/other",	null);
-        includeAssets("assets/locales",	null);
-
-        templatePaths.push("_project/templates");
-
-        if (isWindows() && PLATFORM_SETTINGS.windows.visualElements)
-            includeAssets("_project/resources/windows", "");
-
-        sources.push("source");
-
-        MODS_ALLOWED.set(this, true);
-        DISCORD_ALLOWED.set(this, false);
-        TRANSLATIONS_ALLOWED.set(this, true);
-        echo("-----------------------------------------", true);
-
-        if (MODS_ALLOWED.has(this))
-            includeAssets("mods", null);
-
-        // Adding Haxelibs
-        addHaxelib("flixel");
-        addHaxelib("flixel-addons");
-
-        addHaxelib("hxdiscord_rpc", (isCPP() && DISCORD_ALLOWED.get(this)));
-        addHaxelib("polymod", MODS_ALLOWED.get(this));
-        addHaxelib("firetongue", true); // Do NOT disable this, or all texts will not load
-        echo("-----------------------------------------");
-
-        /*
-            --------------------
-                QUICK NOTICE
-            --------------------
-            I am only using HXCPP from The Funkin' Crew because the installation for Android
-            breaks when searching for CLANG++, until I fix that in the project, I maintain it
-            on the list.
-        */
-
-        // Android configs
-        if (isAndroid()) {
-            addHaxelib("extension-androidtools");
-
-            config.set("android.minimum-sdk-version", 29); // 10 - Q
-
-            if (PLATFORM_SETTINGS.android.localizedStrings) {
-                // Change game name to a translatable string
-                config.set("android.application", {"android:label": "@string/app_name"});
-                config.set("android.activity",	  {"android:label": "@string/app_name"});
-            }
-        }
-
-        if (!isDebug()) {
-            haxedefs.set("FLX_NO_DEBUG", null);
-            haxedefs.set("NAPE_RELEASE_BUILD", null);
-        }
-
-        // Removes the Flixel "Lost Focus" screen
-        haxedefs.set("FLX_NO_FOCUS_LOST_SCREEN", null);
-        haxedefs.set("message.reporting", "pretty");
-
-        // Configure PolyMod
-        if (MODS_ALLOWED.has(this)) {
-            if (isDebug())
-                this.haxedefs.set("POLYMOD_DEBUG", true);
-
-            this.haxedefs.set("POLYMOD_API_VERSION_MATCH",  "NONE");
-            this.haxedefs.set("POLYMOD_MOD_METADATA_FILE",  "mod.json");
-            this.haxedefs.set("POLYMOD_MOD_PACK_FILE",      "modpack.txt");
-            this.haxedefs.set("POLYMOD_MOD_ICON_FILE",      "mod.png");
-            this.haxedefs.set("POLYMOD_ROOT_PATH",          "scripts/");
-            this.haxedefs.set("POLYMOD_SCRIPT_EXT",         ".hxs");
-            this.haxedefs.set("POLYMOD_SCRIPT_LIBRARY",     "scripts");
-        }
-
-
-        if (isAndroid() && PLATFORM_SETTINGS.android.icons.adaptive) {
-            /*
-                ------------
-                    NOTE
-                ------------
-                This icons can be a vector or a image
-                If you will use images, check "templates" folder
-            */
-
-            // Usually, MipMap are the correct folder to insert Android icons, not Drawable
-            // But, it's fine placing them in Drawable folder, also, we can't change it I guess...
-
-            if (PLATFORM_SETTINGS.android.icons.adaptive) {
-                config.set("android.activity", {"android:icon": "@mipmap/ic_launcher"});
-                config.set("android.application", {"android:icon": "@mipmap/ic_launcher"});
-            //	adaptiveIcon = new AdaptiveIcon('_project/templates/android/template/app/src/main/res', true);
-            }
-            else {
-                addIcon("icon", "png", [36], true);
-                addIcon("icon", "png", [48], true);
-                addIcon("icon", "png", [72], true);
-                addIcon("icon", "png", [96], true);
-                addIcon("icon", "png", [144], true);
-                addIcon("icon", "png", [192], true);
-
-                // OUYA Icon
-                addIcon("icon", "png", [732, 412], true);
-
-                if (PLATFORM_SETTINGS.android.icons.hasRound)
-                    config.set("android.activity", {"android:roundIcon": "@mipmap/ic_launcher_round"});
-            }
-        }
-        else {
-            addIcon("icon", "png", [8], true);
-            addIcon("icon", "png", [16], true);
-            addIcon("icon", "png", [24], true);
-            addIcon("icon", "png", [32], true);
-            addIcon("icon", "png", [40], true);
-            addIcon("icon", "png", [48], true);
-            addIcon("icon", "png", [64], true);
-            addIcon("icon", "png", [96], true);
-            addIcon("icon", "png", [128], true);
-            addIcon("icon", "png", [256], true);
-            addIcon("icon", "png", [512], true);
-            addIcon("icon", "png", [768], true);
-        }
-    }
-
-    // Platform functions
-
-    function isAndroid():Bool {
-        return (this.target == Platform.ANDROID && this.platformType == PlatformType.MOBILE); // Ignoring Android TVs lol
-    }
-
-    function isIOS():Bool {
-        return (this.target == Platform.IOS && this.platformType == PlatformType.MOBILE);
-    }
-
-    function isWindows():Bool {
-        return (this.target == Platform.WINDOWS && this.platformType == PlatformType.DESKTOP);
-    }
-
-    function isLinux():Bool {
-        return (this.target == Platform.LINUX && this.platformType == PlatformType.DESKTOP);
-    }
-
-    function isMacOS():Bool {
-        return (this.target == Platform.MAC && this.platformType == PlatformType.DESKTOP);
-    }
-
-    function isCPP():Bool {
-        return (this.targetFlags.exists("cpp"));
-    }
-
-    function isWeb():Bool {
-        return (this.platformType == PlatformType.WEB || this.target == Platform.HTML5 || this.target == "winjs");
-    }
-
-    /**
-        Gets a bool if the project is runnning on the selected platform
-        @param key Platform target
-    **/
-    function isTarget(key:String):Bool {
-        return switch (key.trim().toLowerCase()) { // Added only the ones this game uses
-            case "hl", "neko": this.targetFlags.exists(key);
-            case "desktop": (this.platformType == PlatformType.DESKTOP);
-            case "mobile": (this.platformType == PlatformType.MOBILE);
-            case "web": (this.platformType == PlatformType.WEB);
-            default: false;
-        }
-    }
-
-    function isDebug():Bool
-        return this.debug;
-
-    function isFinal():Bool
-        return this.targetFlags.exists("final");
-
-    function addHaxelib(name:String, ?condition:Null<Bool>, ?version:Null<String>) {
-        if (condition == null || condition == true) {
-            if (isNull(version))
-                this.haxelibs.push(new Haxelib(name));
-            else
-                this.haxelibs.push(new Haxelib(name, version));
-            dotPad(name, true);
-        }
-        else { dotPad(name, false); }
-    }
-
-    /**
-        Prints a text to the console
-        @param value The text to print
-        @param debug If true, only prints if the build flag "debug" is enabled
-    **/
-    public function echo(value:Dynamic, ?debug:Bool = false) {
-        if (debug) {
-            if (isDebug())
-                return Sys.println(value);
-            else
-                return;
-        }
-        else { return Sys.println(value); }
-    }
-
-    /**
-        Adds an icon for the application.
-        @param name Filename of the icon
-        @param format File extension (`png`, `jpg`, `svg`...), usually `png`
-        @param size Icon size to append, `null` will use this icon for all sizes
-        @param appendSizeToName If true, the `size` argument will be added to the icon name, becoming `icon16.png` for example
-    **/
-    function addIcon(name:String, ?format:Null<String> = "png", ?size:Null<Array<Int>>, ?appendSizeToName:Null<Bool> = false) {
-        var path:String = '_project/icons/$name';
-        if (size != null && appendSizeToName) path += Std.string(size.join("x"));
-        path += '.$format';
-
-        echo(LNG.translate("project_Icon_message", [path, (size != null ? '${size.join("x")}' : LNG.translate("project_Icon_placeholder"))]), true); // A null size is a placeholder for all sizes
-
-        if (size != null || size[0] != null || size[1] != null)
-            this.icons.push(new Icon(path, size[0], size[1]));
-        else {
-            echo("Size is null!");
-            this.icons.push(new Icon(path));
-        }
-    }
-
-    /**
-        Prints a beauty log text like "My text......My value"
-        @param name Text on the Left
-        @param value Text on the Right
-        @param width Spacement width
-        @param debug Prints only if is a debug target
-    **/
-    public function dotPad(name:String, value:Dynamic, ?width:Null<Int> = 22, ?debug:Bool = true) {
-        var dots = width - name.length;
-        if (dots < 1) dots = 1;
-
-        var padding = StringTools.lpad("", ".", dots);
-
-        echo(name + padding + value, debug);
-    }
-
-
-    /**
-        Checks if `string` is `null` or empty
-        *Copied from `util.StringUtil` class, importing it will cause a lot of exceptions around `package;`*
-
-        @param string The string to check
-        @return Bool
-    **/
-    inline public static function isNull(string:Null<String>):Bool
-        return (string == null || string.trim()?.length <= 0);
+	//Change game settings here!
+	static var GAME:Map<String, Dynamic> = [
+		/**
+			Name of the project
+			Can be translated on android build (check below)
+		**/
+		"title" => "Another Sonic the Hedgehog Engine",
+
+		/**
+			Rule: MAJOR.MINOR.BUGFIX-PATCH
+		**/
+		"version" => "1.2.3",
+
+		/**
+			Name of the company, or developer
+		**/
+		"company" => "Sunnydev31",
+
+		/**
+			Package name for the project
+			Ussually in format: com.company.game
+		**/
+		"packageName" => "game.unrealsunnydev.asthg",
+
+		/**
+			Name of the executable file (without extension)
+		**/
+		"file" => "ASTHG",
+
+		/**
+			List of supported languages that the game uses
+		**/
+		"languages" => ["en", "pt-BR"],
+
+		"windowWidth" => 1280,
+		"windowHeight" => 720
+	];
+
+	/**
+		List of items to remove on the build
+		Assets like MP3/OGG are removed by platform
+	**/
+	static var EXCLUDE_ASSETS:Array<String> = ["*.aseprite"];
+
+	static var PLATFORM_SETTINGS:PlatformSettings = {
+		android: {
+			icons: {
+				adaptive: true,
+				path:     "_project/icons/android",
+				hasRound: false
+			},
+			localizedStrings: true
+		},
+
+		windows: {
+			visualElements: true
+		}
+	};
+
+
+	public function new() {
+		super();
+		if (isPlatform("windows") && isTarget("cpp")) {
+			Sys.command("chcp", ["65001"]);
+			Sys.command("cls");
+		}
+		LNG.load();
+
+		setenv("PROJECT_BUILD", (isDebug() ? "debug" : isFinal() ? "final" : "release"));
+
+		// You can remove this line if your haxe is installed in the default path
+		setenv("HAXE_STD_PATH", Sys.getEnv("HAXEPATH") + "\\std");
+
+
+		this.meta.title = GAME.get("title");
+		this.meta.version = GAME.get("version");
+		this.meta.company = GAME.get("company");
+		this.meta.packageName = GAME.get("packageName").toLowerCase();
+
+		this.app.file = GAME.get("file");
+		this.app.main = "Main";
+		this.app.preloader = "flixel.system.FlxPreloader";
+		this.app.path = "export/" + Sys.getEnv("PROJECT_BUILD");
+
+		if (isTarget("mobile")) {
+			this.window.width = 0;
+			this.window.height = 0;
+			this.window.fullscreen = true;
+		}
+		else {
+			this.window.width = GAME.get("windowWidth");
+			this.window.height = GAME.get("windowHeight");
+		}
+
+		this.window.orientation = Orientation.LANDSCAPE;
+		this.window.fps = 60;
+		this.window.background = (isDebug() ? 0xFF00FF : 0x000000);
+		this.window.resizable = (isPlatform("web") || isTarget("desktop")) ? true : false;
+		this.window.allowHighDPI = true;
+
+		if (isPlatform("web")) EXCLUDE_ASSETS.push("*.ogg");
+		else		 EXCLUDE_ASSETS.push("*.mp3");
+
+
+		echo("");
+		echo('${GAME.get("title")} v${GAME.get("version")}');
+		echo("-----------------------------------------");
+		dotPad(LNG.translate("project_Company"), this.meta.company, null, false);
+		dotPad(LNG.translate("project_Package"), this.meta.packageName, null, false);
+		dotPad(LNG.translate("project_AppFile"), this.app.file, null, false);
+		echo("-----------------------------------------");
+		MODS_ALLOWED.set(this, true);
+		DISCORD_ALLOWED.set(this, false);
+		TRANSLATIONS_ALLOWED.set(this, true);
+		if (isDebug()) echo("-----------------------------------------");
+
+		includeAssets("assets/default", null, null, EXCLUDE_ASSETS);
+		includeAssets("assets/fonts",   null);
+		if (TRANSLATIONS_ALLOWED.has(this))
+			includeAssets("assets/locales",        null);
+		else {
+			includeAssets("assets/locales/en-US", null);
+			includeAssets("assets/locales/_icons", null); // For FireTongue stop welling about icons
+			assets.push(new Asset("assets/locales/index.xml", null, AssetType.TEXT));
+		}
+
+		templatePaths.push("_project/templates");
+
+		if (isPlatform("windows") && PLATFORM_SETTINGS.windows.visualElements)
+			includeAssets("_project/resources/windows", "");
+
+		sources.push("source");
+
+
+		if (MODS_ALLOWED.has(this))
+			includeAssets("mods", null);
+
+		// Adding Haxelibs
+		addHaxelib("flixel");
+		addHaxelib("flixel-addons");
+
+		addHaxelib("hxdiscord_rpc", (isTarget("cpp") && DISCORD_ALLOWED.get(this)));
+		addHaxelib("polymod", MODS_ALLOWED.get(this));
+		addHaxelib("firetongue", true); // Do NOT disable this, or all texts will not load
+
+		/*
+			--------------------
+				QUICK NOTICE
+			--------------------
+			I am only using HXCPP from The Funkin' Crew because the installation for Android
+			breaks when searching for CLANG++, until I fix that in the project, I maintain it
+			on the list.
+		*/
+
+		// Android configs
+		if (isPlatform("android")) {
+			addHaxelib("extension-androidtools");
+
+			// Update Manifest to use Android resources
+			config.set("android.application", {"android:label": "@string/app_name"});
+			config.set("android.activity",    {"android:label": "@string/app_name"});
+		}
+		echo("-----------------------------------------");
+
+		if (!isDebug()) {
+			haxedefs.set("FLX_NO_DEBUG", null);
+			haxedefs.set("NAPE_RELEASE_BUILD", null);
+		}
+
+		// Removes the Flixel "Lost Focus" screen
+		haxedefs.set("FLX_NO_FOCUS_LOST_SCREEN", null);
+		haxedefs.set("message.reporting", "pretty");
+
+		// Configure PolyMod
+		if (MODS_ALLOWED.has(this)) {
+			if (isDebug())
+				this.haxedefs.set("POLYMOD_DEBUG", true);
+
+			this.haxedefs.set("POLYMOD_API_VERSION_MATCH",  "NONE");
+			this.haxedefs.set("POLYMOD_MOD_METADATA_FILE",  "mod.json");
+			this.haxedefs.set("POLYMOD_MOD_PACK_FILE",      "modpack.txt");
+			this.haxedefs.set("POLYMOD_MOD_ICON_FILE",      "mod.png");
+			this.haxedefs.set("POLYMOD_ROOT_PATH",          "scripts/");
+			this.haxedefs.set("POLYMOD_SCRIPT_EXT",         ".hxs");
+			this.haxedefs.set("POLYMOD_SCRIPT_LIBRARY",     "scripts");
+		}
+
+
+		if (isPlatform("android")) {
+			/*
+				------------
+					NOTE
+				------------
+				This icons can be a vector or a image
+				If you will use images, check "_project/icons/android" folder
+			*/
+
+			var icons = PLATFORM_SETTINGS.android.icons;
+
+			// Usually, MipMap are the correct folder to insert Android icons, not Drawable
+			config.set("android.application", {"android:icon": "@mipmap/ic_launcher"});
+			config.set("android.activity",    {"android:icon": "@mipmap/ic_launcher"});
+
+			if (icons.hasRound) {
+				config.set("android.application", {"android:roundIcon": "@mipmap/ic_launcher_round"});
+				config.set("android.activity",    {"android:roundIcon": "@mipmap/ic_launcher_round"});
+			}
+
+			// OUYA Icon
+			addIcon("icon_ouya", "png", [732, 412]);
+		}
+
+		// About the sizes, Windows seems to ignore 24x24 and use most the time the 32 one:
+		// Task Bar: 16 (small), 32 (default)
+		// Start Menu: 32
+		// Explorer: 16, 32 (depends on view)
+		// this is on Windows 11/10, idk about older versions, and 10 and 8 prefers VisualElements if available.
+
+		addIcon("icon", "png", [8], true);
+		addIcon("icon", "png", [16], true);
+		addIcon("icon", "png", [32], true);
+		addIcon("icon", "png", [64], true);
+		addIcon("icon", "svg", null);
+	}
+
+	// { region Platform functions
+	function isPlatform(name:String):Bool {
+		name = normalizePlatNames(name);
+
+		return switch (name) {
+			case "android": // Ignoring Android TVs lol
+				return (this.target == Platform.ANDROID && this.platformType == PlatformType.MOBILE);
+			case "ios":
+				return (this.target == Platform.IOS && this.platformType == PlatformType.MOBILE);
+			case "linux":
+				return (this.target == Platform.LINUX && this.platformType == PlatformType.DESKTOP);
+			case "mac":
+				return (this.target == Platform.MAC && this.platformType == PlatformType.DESKTOP);
+			case "web": // This not checks if its only a web target, but checks also if its HTML / WinJS targets too
+				return (this.platformType == PlatformType.WEB || this.target == Platform.HTML5 || this.target == "winjs");
+			case "windows": // Should I add UWP/WinUI here? (WinRT)
+				return (this.target == Platform.WINDOWS && this.platformType == PlatformType.DESKTOP);
+			default: false;
+		}
+	}
+
+	/**
+		Gets a bool if the project is runnning on the selected platform
+		@param key Platform target
+	**/
+	function isTarget(key:String):Bool {
+		key = normalizePlatNames(key);
+
+		return switch (key) { // Added only the ones this game uses
+			case "hl" | "neko" | "cpp": this.targetFlags.exists(key);
+			case "desktop": (this.platformType == PlatformType.DESKTOP);
+			case "mobile": (this.platformType == PlatformType.MOBILE);
+			case "web": (this.platformType == PlatformType.WEB);
+			default: false;
+		}
+	}
+
+	function normalizePlatNames(name:String):String {
+		var n = name.trim().toLowerCase().replace(" ", "_");
+
+		return switch (n) {
+			case "c++": "cpp";
+			case "hashlink": "nl";
+			case "macos" | "darwin": "mac";
+			case "nekovm": "neko";
+			case "windows_nt": "windows";
+			default: n;
+		}
+	}
+	// } end region
+
+	function isDebug():Bool
+		return this.debug;
+
+	function isFinal():Bool
+		return this.targetFlags.exists("final");
+
+	function addHaxelib(name:String, ?condition:Null<Bool>, ?version:Null<String>) {
+		if (condition == null || condition == true) {
+			this.haxelibs.push(new Haxelib(name, (version.isBlank() ? null : version)));
+			dotPad(name, true);
+		}
+		else {
+			dotPad(name, false);
+		}
+	}
+
+	/**
+		Adds an icon for the application.
+		@param name Filename of the icon
+		@param format File extension (`png`, `jpg`, `svg`...), usually `png`
+		@param size Icon size to append, `null` will use this icon for all sizes
+		@param appendSizeToName If true, the `size` argument will be added to the icon name, becoming `icon16.png` for example
+	**/
+	function addIcon(name:String, ?format:Null<String> = "png", ?size:Null<Array<Int>> = null, ?appendSizeToName:Null<Bool> = false) {
+		var path:String = '_project/icons/$name';
+		if (!ArrayUtil.isBlank(size) && appendSizeToName)
+			path += Std.string(size.join("x"));
+		path += '.$format';
+
+		if (!ArrayUtil.isBlank(size) && size.length >= 1)
+			this.icons.push(new Icon(path, size[0], (size[1] ?? null)));
+		else {
+			this.icons.push(new Icon(path));
+		}
+	}
+
+	/**
+		Prints a text to the console
+		@param value The text to print
+		@param debug If true, only prints if the build flag "debug" is enabled
+	**/
+	public function echo(value:Dynamic, ?infos:haxe.PosInfos) {
+		var str = Std.string(value);
+
+		if (infos == null) {
+			Sys.println(str);
+			return;
+		}
+
+		if (infos.customParams != null)
+			str = str.format(infos.customParams);
+
+		Sys.println(str);
+	}
+
+	/**
+		Prints a beauty log text like "My text......My value"
+		@param name Text on the Left
+		@param value Text on the Right
+		@param width Spacement width
+		@param debug Prints only if is a debug target
+	**/
+	public function dotPad(name:String, value:Dynamic, ?width:Null<Int> = 30, ?debug:Bool = true) {
+		var dots = width - name.length;
+		if (dots < 1) dots = 1;
+
+		var padding = StringTools.lpad("", ".", dots);
+
+		if (debug) {
+			if (isDebug())
+				echo(name + padding + value);
+		}
+		else
+			echo(name + padding + value);
+	}
 }
 
 /**
-    List of all Features of the engine
-    Contains also functions for enabling/disabling, get values and check existence
+	List of all Features of the engine
+	Contains also functions for enabling/disabling, get values and check existence
 **/
 enum abstract FeatureFlags(String) from String to String {
-    var MODS_ALLOWED		 = "MODS_ALLOWED";
-    var DISCORD_ALLOWED		 = "DISCORD_ALLOWED";
-    var TRANSLATIONS_ALLOWED = "TRANSLATIONS_ALLOWED";
-    //var VIDEOS_ALLOWED	 = "VIDEOS_ALLOWED";
+	var MODS_ALLOWED		 = "MODS_ALLOWED";
+	var DISCORD_ALLOWED		 = "DISCORD_ALLOWED";
+	var TRANSLATIONS_ALLOWED = "TRANSLATIONS_ALLOWED";
+	//var VIDEOS_ALLOWED	 = "VIDEOS_ALLOWED";
 
-    public function set(project:Project, ?enable:Bool = true) {
-        if (enable == true || enable == null) {
-            project.haxedefs.set(this, "");
-        }
-        else {
-            if (has(project)) {
-                project.echo(LNG.translate("feature_Disabled", [this]));
-                project.haxedefs.remove(this);
-            }
-            // Nothing
-        }
-        project.dotPad(this, enable != null ? '$enable' : 'false (fallback!)');
-    }
+	public function set(project:Project, ?enable:Bool = true) {
+		if (enable == true || enable == null) {
+			project.haxedefs.set(this, "");
+		}
+		else {
+			if (has(project)) {
+				project.echo(LNG.translate("feature_Disabled", [this]));
+				project.haxedefs.remove(this);
+			}
+			// Nothing
+		}
+		project.dotPad(this, enable != null ? '$enable' : 'false (fallback!)');
+	}
 
-    public function get(project:Project):Bool {
-        if (has(project)) {
-            return (project.haxedefs.get(this) == "");
-        }
+	public function get(project:Project):Bool {
+		if (has(project)) {
+			return (project.haxedefs.get(this) == "");
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    public function has(project:Project) {
-        return project.haxedefs.exists(this);
-    }
+	public function has(project:Project) {
+		return project.haxedefs.exists(this);
+	}
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="spritesheet.png">
+	<SubTexture name="circle0000" x="0" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="circle0001" x="0" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="square0000" x="17" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="square0001" x="17" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="triangle0000" x="34" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="triangle0001" x="34" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="cross0000" x="51" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="cross0001" x="51" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad left0000" x="0" y="17" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad left0001" x="0" y="17" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad right0000" x="17" y="17" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad right0001" x="17" y="17" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad down0000" x="34" y="17" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad down0001" x="34" y="17" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad up0000" x="51" y="17" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad up0001" x="51" y="17" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="options0000" x="0" y="34" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="options0001" x="0" y="34" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="share0000" x="17" y="34" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="share0001" x="17" y="34" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="L 10000" x="34" y="34" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="L 10001" x="34" y="34" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="R 10000" x="51" y="34" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="R 10001" x="51" y="34" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="L 20000" x="0" y="51" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="L 20001" x="0" y="51" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="R 20000" x="17" y="51" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="R 20001" x="17" y="51" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+</TextureAtlas>

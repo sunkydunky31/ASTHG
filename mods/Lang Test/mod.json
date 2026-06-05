@@ -1,0 +1,13 @@
+{
+  "title": "Lang Test",
+  "description": "Test of the FireTongue system with Polymod\nAdds the Spanish (US) language for selection",
+  "contributors": [
+    {
+      "name": "UnrealSunnydev",
+      "role": "Programmer",
+      "url": "https://discordapp.com/users/525334699069931521"
+    }
+  ],
+  "mod_version": "1.0.0",
+  "api_version": "1.2.3"
+}

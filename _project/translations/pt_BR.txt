@@ -2,5 +2,3 @@ project_Company=Empresa
 project_Package=Pacote
 project_AppFile=Arquivo de Aplicativo
 feature_Removed={0} foi removido da lista
-project_Icon_message=[Ícone] Caminho: {0}, Tamanho: {1}
-project_Icon_placeholder=extensívo

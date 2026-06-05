@@ -1,11 +1,12 @@
 flag	content
-keybind_change	Press a key<N><N><1>: Cancel bind<N><2>: Delete bind
-keybind_change_gamepad	Press a button<N><N><1>: Cancel bind<N><2>: Delete bind
-keybind_tab	Press <1> to switch sections.
-keybind_tab_gamepad	Press <1>/<2> to switch sections.
+keybind_change	Press a key
+keybind_change_gamepad	Press a button
+keybind_actions	{1}: Cancel bind<N>{2}: Delete bind
+keybind_tab	Press {1} to switch sections.
+keybind_tab_gamepad	Press {1}/{2} to switch sections.
 keybind_keyboard	KEYBOARD
 keybind_gamepad	GAMEPAD
-controls_rebinding	Binding: <1>
+controls_rebinding	Binding: {1}
 key_up	Move Up
 key_left	Move Left
 key_down	Move Down

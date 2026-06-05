@@ -1,6 +1,6 @@
 name: "USE (Unnamed Sonic Engine) Build"
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       # Most of these parameters are available on the Setup Script
@@ -61,20 +61,19 @@ jobs:
       - name: "Install Dependencies"
         shell: "pwsh"
         run: |
-          & "haxelib" @("--global", "install", "hmm")
+          & "haxelib" @("--global", "install", "hmm", "-q")
           Start-Sleep 2
 
           & "haxelib" @("--global", "run", "hmm", "setup")
           Start-Sleep 2
 
-          & "hmm" "install"
+          & "haxelib" @("--global", "run", "hmm", "install")
 
       - name: "Cache Haxe & Libraries"
         uses: actions/cache@v3
         with:
           path: ${{ runner.os == 'Windows' && '%USERPROFILE%\\.haxelib' || '~/.haxelib' }}
-          key: ${{ runner.os }}-haxelib-${{ hashFiles('*.hxml', 'hmm.json', 'Project.hxp') }}
-          restore-keys: ${{ runner.os }}-haxelib-
+          key: cache-libraries
 
 
   build:
@@ -88,7 +87,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ runner.os == 'Windows' && '%USERPROFILE%\\.haxelib' || '~/.haxelib' }}
-          key: ${{ runner.os }}-haxelib-${{ hashFiles('*.hxml', 'hmm.json', 'Project.hxp') }}
+          key: cache-libraries
 
       - name: "Build the Game"
         run: pwsh -File "./_project/build/build.ps1" -Platform ${{ github.event.inputs.platform }} -BuildType ${{ github.event.inputs.build-type }} -Action build -Is32Bits ${{ github.event.inputs.arch-32 }}
@@ -97,7 +96,7 @@ jobs:
       - run: echo "Uploading files..."
 
       - name: "Upload Build Artifacts"
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-${{ github.event.inputs.platform }}-${{ github.event.inputs.build-type }}
           path: export/${{ github.event.inputs.build-type }}/${{ github.event.inputs.platform }}/bin

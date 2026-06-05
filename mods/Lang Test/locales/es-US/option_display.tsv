@@ -1,0 +1,9 @@
+flag	content
+background_layers	Capas de fondo
+background_layers_desc	Añade una capa negra al fondo, lo que hace que no sea tan luminoso
+show_fps	Mostrar FPS
+show_fps_desc	Muestra un contador de FPS en la esquina superior izquierda de la pantalla
+framerate	Framerate
+framerate_desc	Define los FPS, ten en cuenta que un número bajo de FPS no es recomendable para jugar.
+low_quality	Baja calidad
+low_quality_desc	Mejora el rendimiento del juego en plataformas de gama baja

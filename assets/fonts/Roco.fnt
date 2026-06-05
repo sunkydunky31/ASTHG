@@ -39,5 +39,34 @@
 		<!-- X --> <char id="88" x="159" y="16" width="15" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
 		<!-- Y --> <char id="89" x="175" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
 		<!-- Z --> <char id="90" x="192" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
+
+		<!-- À --> <char id="192" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
+		<!-- Á --> <char id="193" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
+		<!-- Â --> <char id="194" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
+		<!-- Ã --> <char id="195" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
+		<!-- Ä --> <char id="196" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
+		<!-- Å --> <char id="197" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
+		<!-- Æ --> <char id="198" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
+		<!-- Ç --> <char id="199" x="33"  y="0"  width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
+		<!-- È --> <char id="200" x="67"  y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
+		<!-- É --> <char id="201" x="67"  y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
+		<!-- Ê --> <char id="202" x="67"  y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
+		<!-- Ë --> <char id="203" x="67"  y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
+		<!-- Ì --> <char id="204" x="133" y="0"  width="8"  height="16" xoffset="0" yoffset="0" xadvance="8"  page="0" chnl="15" />
+		<!-- Í --> <char id="205" x="133" y="0"  width="8"  height="16" xoffset="0" yoffset="0" xadvance="8"  page="0" chnl="15" />
+		<!-- Î --> <char id="206" x="133" y="0"  width="8"  height="16" xoffset="0" yoffset="0" xadvance="8"  page="0" chnl="15" />
+		<!-- Ï --> <char id="207" x="133" y="0"  width="8"  height="16" xoffset="0" yoffset="0" xadvance="8"  page="0" chnl="15" />
+		<!-- Ð --> <char id="208" x="50"  y="0"  width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
+		<!-- Ñ --> <char id="209" x="216" y="0"  width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
+		<!-- Ò --> <char id="210" x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
+		<!-- Ó --> <char id="211" x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
+		<!-- Ô --> <char id="212" x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
+		<!-- Õ --> <char id="213" x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
+		<!-- Ö --> <char id="214" x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
+		<!-- Ø --> <char id="216" x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
+		<!-- Ù --> <char id="217" x="102" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
+		<!-- Ú --> <char id="218" x="102" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
+		<!-- Û --> <char id="219" x="102" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
+		<!-- Ü --> <char id="220" x="102" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
 	</chars>
 </font>

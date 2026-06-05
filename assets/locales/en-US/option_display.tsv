@@ -5,5 +5,3 @@ show_fps	Show FPS
 show_fps_desc	Shows an FPS Counter on the top left corner of the screen
 framerate	Framerate
 framerate_desc	Defines the framerate, note that a low framerate should not be good for playing the game.
-low_quality	Low Quality
-low_quality_desc	Makes the game have a better performance for low-end platforms

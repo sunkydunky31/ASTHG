@@ -1,0 +1,13 @@
+flag	content
+cache_on_gpu	Caché en la GPU
+cache_on_gpu_desc	Esto hace que el juego cree cachés en la GPU.<N>Desactiva esta opción si tu tarjeta gráfica no es muy potente.
+discord_rich_presence	Discord Rich Presence
+discord_rich_presence_desc	Determina si el juego debe mostrar tus estados en tu perfil de Discord.
+haptics	Hápticos
+haptics_desc	Haz que tu dispositivo vibre según el contenido que aparezca en la pantalla
+accent_colors	Colores Destacados
+accent_colors_desc	Algunos colores se sustituirán por el color de acento de tu sistema actual. Por el momento, solo es compatible con Windows.
+music_volume	Volumen de la Música
+music_volume_desc	Ajusta el volumen de la Música.
+sfx_volume	Volumen de los Efectos de Sonido
+sfx_volume_desc	Adjusts the volume of the Sound Effects.

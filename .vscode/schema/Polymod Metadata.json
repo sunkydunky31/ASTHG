@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+
+  "title": "Polymod Mod Metadata v1.8.0",
+  "description": "Schema for creating mods for polymod easily",
+  "type": "object",
+  "properties": {
+    "title": {
+      "description": "Name of this mod",
+      "type": "string"
+    },
+
+    "description": {
+      "description": "Description of what this mod does.",
+      "type": "string"
+    },
+
+    "contributors": {
+      "description": "A list of contributors of this mod!",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of this contributor",
+            "type": "string"
+          },
+          "role": {
+            "description": "Role of this contributor",
+            "type": "string"
+          },
+          "email": {
+            "description": "E-mail of this contributor",
+            "type": "string"
+          },
+          "url": {
+            "description": "URL of this contributor",
+            "type": "string"
+          }
+        },
+        "required": ["name"]
+      }
+    },
+
+    "author": {
+      "description": "(DEPRECATED) Defines the author of the mod",
+      "type": "string",
+      "deprecated": true
+    },
+
+    "homepage": {
+      "description": "Defines the Homepage for your mod! (GameBanana, a forum, etc.)",
+      "type": "string"
+    },
+
+    "api_version": {
+      "description": "API (App/Game) semantic version required to use this mod.\nNote that this is used to reject outdated mods!",
+      "pattern": "^(\\d+)\\.(\\d+)\\.(\\d+)(?:[-]([a-z0-9.-]+))?(?:[+]([a-z0-9.-]+))?$",
+      "type": "string"
+    },
+
+    "mod_version": {
+      "description": "Semantic version of this mod.",
+      "pattern": "^(\\d+)\\.(\\d+)\\.(\\d+)(?:[-]([a-z0-9.-]+))?(?:[+]([a-z0-9.-]+))?$",
+      "type": "string"
+    },
+
+    "license": {
+      "description": "Does your mod use a license?",
+      "type": "string"
+    },
+
+    "dependencies": {
+      "description": "List of mods that this mod depends on.",
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^(\\d+)\\.(\\d+)\\.(\\d+)(?:[-]([a-z0-9.-]+))?(?:[+]([a-z0-9.-]+))?$",
+        "description": "Name of a dependent mod, the value should be the semantic version of it."
+      }
+    },
+
+    "optionalDependencies": {
+      "description": "List of mods that this mod depends on optionally.",
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^(\\d+)\\.(\\d+)\\.(\\d+)(?:[-]([a-z0-9.-]+))?(?:[+]([a-z0-9.-]+))?$",
+        "description": "Name of a optional dependent mod, the value should be the semantic version of it."
+      }
+    }
+  },
+  "required": [
+    "title",
+    "description",
+    "api_version",
+    "mod_version",
+    "contributors"
+  ]
+}

@@ -2,4 +2,3 @@ export/
 .haxelib/
 _project/build/setup.log
 _project/build/setup_config.json
-tools/build.txt

@@ -1,7 +1,8 @@
 flag	content
-title	OPÇÕES
-title_controls	CONTROLES
-title_display	TELA
-title_gameplay	JOGABILIDADE
-title_system	SISTEMA
-title_language	IDIOMA
+title	Opções
+title_controls	Controles
+title_display	Tela
+title_gameplay	Jogabilidade
+title_system	Sistema
+title_language	Idioma
+no_options	Nenhuma opção encontrada para esse substate!

@@ -1,53 +1,58 @@
 {
-	"$schema": "https://json-schema.org/draft-07/schema#",
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
 
-	"title": "ASTHG Character's Animation Data",
-	"type": "object",
-	"properties": {
-		"name": {
-			"type": "string",
-			"title": "object.name",
-			"description": "Name of the animation"
-		},
+  "title": "ASTHG Character's Animation Data",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Name of the animation",
+      "type": "string"
+    },
 
-		"displayName": {
-			"type": "string",
-			"description": "How should your animation be displayed?"
-		},
+    "displayName": {
+      "description": "How should your animation be displayed?",
+      "type": "string"
+    },
 
-		"sheets": {
-			"type": "string",
-			"description": "Show much spritesheets your animation use?\nSeparated by comma (`,`)"
-		},
+    "sheets": {
+      "description": "Show much spritesheets your animation use?\nSeparated by comma (`,`)",
+      "type": "string"
+    },
 
-		"prefix": {
-			"type": "string",
-			"description": "Reference of the animation on your SparrowAtlas V2 file"
-		},
+    "prefix": {
+      "description": "Reference of the animation on your SparrowAtlas V2 file",
+      "type": "string"
+    },
 
-		"fps": {
-			"type": "integer",
-			"description": "Frames per Second that this animation uses"
-		},
+    "fps": {
+      "description": "Frames per Second that this animation uses",
+      "type": "integer",
+      "default": 30
+    },
 
-		"loop": {
-			"type": "boolean",
-			"description": "Does this animation loops?"
-		},
+    "loop": {
+      "description": "Does this animation loops?",
+      "type": "boolean",
+      "default": false
+    },
 
-		"offset": {
-			"type": "array",
-			"items": {
-				"type": "integer",
-				"maximum": 2
-			}
-		},
+    "offset": {
+      "description": "Should this animation be offset?",
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "maximum": 2
+      },
+      "default": [0, 0]
+    },
 
-		"indices": {
-			"type": "array",
-			"items": {
-				"type": "integer"
-			}
-		}
-	}
+    "indices": {
+      "description": "List of frames that this animation should reproduce",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    }
+  },
+  "required": ["name", "prefix"]
 }

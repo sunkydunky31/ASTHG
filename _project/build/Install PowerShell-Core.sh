@@ -13,29 +13,33 @@ OS =$(uname -s)
 
 if [ "$OS" = "Linux" ]; then
 	# Install PowerShell Core on Linux
-	if [ -f /etc/os-release ]; then
-		. /etc/os-release
-		case "$ID" in
-			ubuntu|debian)
-				sudo apt-get update
-				sudo apt-get install -y wget apt-transport-https software-properties-common
-				wget -q https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb
-				sudo dpkg -i packages-microsoft-prod.deb
-				sudo apt-get update
-				sudo apt-get install -y powershell
-				;;
-			fedora)
-				sudo dnf install -y powershell
-				;;
-			*)
-				echo "Unsupported Linux distribution: $ID"
-				exit 1;
-				;;
-		esac
-	else
-		echo "Cannot determine Linux distribution."
-		exit 1;
-	fi
+	case "$ID" in
+		ubuntu)
+			sudo apt-get update
+			sudo apt-get install -y wget apt-transport-https software-properties-common
+			source /etc/os-release
+			wget -q https://packages.microsoft.com/config/ubuntu/$VERSION_ID/packages-microsoft-prod.deb
+			sudo dpkg -i packages-microsoft-prod.deb
+			sudo apt-get update
+			sudo apt-get install -y powershell
+			;;
+		debian)
+			sudo apt-get update
+			sudo apt-get install -y wget
+			source /etc/os-release
+			wget -q https://packages.microsoft.com/config/debian/$VERSION_ID/packages-microsoft-prod.deb
+			sudo dpkg -i packages-microsoft-prod.deb
+			rm packages-microsoft-prod.deb
+			sudo apt-get update
+			sudo apt-get install -y powershell
+		fedora)
+			sudo dnf install -y powershell
+			;;
+		*)
+			echo "Unsupported Linux distribution: $ID"
+			exit 1;
+			;;
+	esac
 elif [ "$OS" = "Darwin" ]; then
 	# Install PowerShell Core on macOS using Homebrew
 	if command -v brew > /dev/null 2>&1; then

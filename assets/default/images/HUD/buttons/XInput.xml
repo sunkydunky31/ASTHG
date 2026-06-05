@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="spritesheet.png">
+	<SubTexture name="B0000" x="0" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="B0001" x="0" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="X0000" x="16" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="X0001" x="16" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="Y0000" x="32" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="Y0001" x="32" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="A0000" x="48" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="A0001" x="48" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad left0000" x="0" y="16" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad left0001" x="0" y="16" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad right0000" x="16" y="16" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad right0001" x="16" y="16" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad down0000" x="32" y="16" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad down0001" x="32" y="16" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad up0000" x="48" y="16" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="dpad up0001" x="48" y="16" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="start0000" x="0" y="32" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="start0001" x="0" y="32" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="back0000" x="16" y="32" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="back0001" x="16" y="32" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="LB0000" x="32" y="32" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="LB0001" x="32" y="32" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="RB0000" x="48" y="32" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="RB0001" x="48" y="32" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="LT0000" x="0" y="48" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="LT0001" x="0" y="48" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="RT0000" x="16" y="48" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+	<SubTexture name="RT0001" x="16" y="48" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16" />
+</TextureAtlas>

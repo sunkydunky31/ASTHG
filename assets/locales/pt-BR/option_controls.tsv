@@ -1,12 +1,12 @@
 flag	content
 keybind_change	Pressione uma tecla
 keybind_change_gamepad	Pressione um botão
-keybind_actions	<N><N><1>: Cancel bind<N><2>: Delete bind
-keybind_tab	Pressione <1> para trocar de seções.
-keybind_tab_gamepad	Pressione <1>/<2> para trocar de seções.
+keybind_actions	{1}: Cancelar Mapeamento<N>{2}: Deletar mapeamento
+keybind_tab	Pressione {1} para trocar de seção.
+keybind_tab_gamepad	Pressione {1}/{2} para trocar de seção.
 keybind_keyboard	TECLADO
 keybind_gamepad	CONTROLE
-controls_rebinding	Binding: <1>
+controls_rebinding	Mapeando: {1}
 key_up	Mover para Cima
 key_left	Mover à Esquerda
 key_down	Mover para Baixo
