@@ -125,17 +125,20 @@ class HudGame extends FlxSpriteGroup {
 		timeValTxt = AsthgBitmapText.createAngelCode(0, 0, StringUtil.formatTime(time, ClientPrefs.data.options.showMiliseconds), "HUD");
 		ringsTxt = AsthgBitmapText.createAngelCode(0, 0, Locale.getString("hud_text_rings"), "HUD");
 		ringsValTxt = AsthgBitmapText.createAngelCode(0, 0, Std.string(rings), "HUD");
-		if (PlayState.instance != null)
+		if (PlayState.instance != null) {
 			livesIcon = new LifeIcon(PlayState.instance?.player.lifeIcon);
-		livesTxt = AsthgBitmapText.createAngelCode(0, 0, Std.string(lives), "HUD");
+			livesTxt = AsthgBitmapText.createAngelCode(0, 0, Std.string(lives), "HUD");
+		}
 
 		createScoreHud(x, y);
 		createTimeHud (x, y + 16);
 		createRingsHud(x, y + 32);
-		createLivesHud(
-			#if mobile FlxG.width - 64 #else 16 #end,
-			#if mobile 8 #else Math.round(FlxG.height * 0.9) #end
-		);
+		if (PlayState.instance != null) {
+			createLivesHud(
+				#if mobile FlxG.width - 64 #else 16 #end,
+				#if mobile 8 #else Math.round(FlxG.height * 0.9) #end
+			);
+		}
 		createDebugHud(FlxG.width - 60, y);
 	}
 
@@ -207,7 +210,7 @@ class HudGame extends FlxSpriteGroup {
 		livesIcon.setPosition(x, y);
 		add(livesIcon);
 
-		livesTxt.setPosition(x + livesIcon.frameWidth + 1, y);
+		livesTxt.setPosition(x + (livesIcon.frameWidth + 1), y);
 		livesTxt.scrollFactor.set();
 		add(livesTxt);
 	}
@@ -221,7 +224,7 @@ class HudGame extends FlxSpriteGroup {
 		posXTxt = AsthgBitmapText.createAngelCode(x + posX.width + 1, y, '?', "HUD");
 		add(posXTxt);
 
-		posY = AsthgSprite.create(posX.x, y + 13, "HUD/posY");
+		posY = AsthgSprite.create(x, y + 13, "HUD/posY");
 		posY.color = FlxColor.YELLOW;
 		add(posY);
 

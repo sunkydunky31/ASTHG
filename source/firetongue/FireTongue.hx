@@ -653,8 +653,9 @@ class FireTongue
 		}
 		catch (e:String)
 		{
-			return "ERROR: (" + id + ") for (" + locale + ") title not found";
+			trace("ERROR: ({0}) for ({1}) title not found", id, locale);
 		}
+
 		return "";
 	}
 
@@ -929,10 +930,15 @@ class FireTongue
 					if (!StringUtil.isBlank(raw_data))
 					{
 						var xml:Null<Fast> = new Fast(Xml.parse(raw_data));
+						var fileType:String = "";
 
 						if (xml != null)
 						{
-							processXML(xml, fileID);
+							if (fileData != null && fileData.node.file.has.type)
+							{
+								fileType = fileData.node.file.att.type;
+							}
+							processXML(xml, fileID, fileType);
 						}
 						else
 						{
@@ -1301,7 +1307,7 @@ class FireTongue
 
 		for (key in index.keys())
 		{
-			trace("..." + key + "," + index.get(key));
+			trace("...{0},{1}", key, index.get(key));
 		}
 		#end
 	}
@@ -1314,7 +1320,6 @@ class FireTongue
 	 */
 	private function processCSV(csv:Null<CSV>, id:String, checkVsDefault:Bool = false):Void
 	{
-
 		if (csv == null)
 			return;
 
@@ -1404,6 +1409,46 @@ class FireTongue
 		}
 	}
 
+	/**
+		Parses an Android String Resource file
+		@param xml XML Data
+		@param id The context group that this file uses
+		@returns Void
+	**/
+	private function processAndroidStringResource(xml:Fast, id:String):Void
+	{
+		if (indexData.exists(id) == false)
+		{
+			indexData.set(id, new Map<String, String>()); // create the index for this id
+		}
+
+		var index:Null<Map<String, String>> = indexData.get(id);
+
+		if (index == null) {
+			trace("ERROR: Failed parsing Android Resources data: index is null");
+			return;
+		}
+
+		if (xml != null && xml.hasNode.resources && xml.node.resources.hasNode.string)
+		{
+			for (strings in xml.node.resources.nodes.string)
+			{
+				writeIndex(index, strings.att.name, normalizeAndroidString((strings.innerData).trim()), id, false);
+			}
+		}
+	}
+
+	private function normalizeAndroidString(text:String):String
+	{
+		// Parse numbered placeholders
+		text = ~/(%(\d+)\$[sd])/g.map(text, function(re)
+		{
+			return "{" + (Std.parseInt(re.matched(2)) - 1) + "}";
+		});
+
+		return Replace.flags(text, ["\\@", "\\?", "\\n", "\\t", "\\'", '\\"'], ["@", "?", "\n", "\t", "'", '"']);
+	}
+
 	private function processPNG(img:String, id:String, checkVsDefault:Bool = false):Void
 	{
 		if (checkVsDefault && checkMissing)
@@ -1427,15 +1472,19 @@ class FireTongue
 		}
 	}
 
-	private function processXML(xml:Fast, id:String):Void
+	private function processXML(xml:Fast, id:String, type:String):Void
 	{
 		// what this does depends on the id
 		switch (id)
 		{
 			case "fonts":
 				processFonts(xml);
-			default:
-				// donothing
+			default: // parse XML by type or do nothing
+				switch (type) {
+					case "android-resources":
+						processAndroidStringResource(xml, id);
+					default: // nothing
+				}
 		}
 	}
 

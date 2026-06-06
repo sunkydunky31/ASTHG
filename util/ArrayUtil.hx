@@ -12,6 +12,7 @@ class ArrayUtil {
 		return @:nullSafety(Off) (arr == null || arr.length == 0);
 	}
 
+	#if flixel
 	/**
 		--- DESCRIPTION ---
 		Makes a array that parses into a FlxRect
@@ -25,7 +26,6 @@ class ArrayUtil {
 		@return FlxRect
 		@author Sunnydev31 (@unreal.sunnydev)
 	**/
-	#if flixel
 	public static function toRect(arr:Array<Float>):flixel.math.FlxRect {
 		if (arr.length < 4)
 			throw "WARNING: Array must have at least 4 values to convert to FlxRect";
@@ -33,7 +33,6 @@ class ArrayUtil {
 			trace("WARNING: Array has more than 4 values, the other ones will be ignored!");
 		return new flixel.math.FlxRect(arr[0], arr[1], arr[2], arr[3]);
 	}
-	#end
 
 	/**
 		Makes a array that parses into a FlxPoint
@@ -42,7 +41,6 @@ class ArrayUtil {
 		@return FlxPoint
 		@author Sunnydev31 (@unreal.sunnydev)
 	**/
-	#if flixel
 	public static function toPoint(arr:Array<Float>):flixel.math.FlxPoint {
 		if (arr.length < 2)
 			throw "WARNING: Array must have at least 2 values to convert to FlxPoint";

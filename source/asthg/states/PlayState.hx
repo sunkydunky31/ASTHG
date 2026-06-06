@@ -37,12 +37,12 @@ class PlayState extends StateManager {
 
 		camHUD = new FlxCamera();
 		camHUD.visible = !ClientPrefs.data.options.hideHud;
-		camHUD.bgColor.alpha = 0; //I hate this so much
+		camHUD.bgColor = FlxColor.TRANSPARENT; //I hate this so much
 		FlxG.cameras.add(camHUD, false);
 
 		camFront = new FlxCamera();
 		camFront.visible = true;
-		camFront.bgColor.alpha = 0;
+		camFront.bgColor = FlxColor.TRANSPARENT;
 		FlxG.cameras.add(camFront, false);
 
 		uiGroup = new FlxSpriteGroup();
@@ -54,8 +54,15 @@ class PlayState extends StateManager {
 		camGame.follow(player, TOPDOWN, 1);
 		super.create();
 
-		hud = new HudGame(8, 10);
+		hud = new HudGame(8, 6);
 		uiGroup.add(hud);
+
+		if (player != null) {
+			// Override variable values ...
+			hud.score = player.score;
+			hud.rings = player.rings;
+			hud.lives = player.lives;
+		}
 
 		ground = new AsthgSprite(0,FlxG.height - 40).createGraphic(FlxG.width, 40);
 		ground.immovable = true;

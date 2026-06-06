@@ -59,7 +59,7 @@ function Write-Message {
 		[Parameter(Position = 1)] [ConsoleColor]$Color = [ConsoleColor]::White
 	)
 
-	if ($Transcript) {
+	if (-not $Transcript) {
 		Write-Host $Message -ForegroundColor $Color
 	}
 	else {

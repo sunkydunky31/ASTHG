@@ -89,13 +89,10 @@ class Ansi {
 		}
 
 	public static function ansiApply(text:String, ansi:AnsiList, ?args:Null<Array<Dynamic>>):String {
-
 		var temp = ((enabled) ? ansi : "") + text;
 
 		if (args != null)
 			temp.format(args);
-
-		temp += AnsiList.RESET;
 
 		//Prevents RESET appear more than 1 time
 		if (StringTools.contains(temp, AnsiList.RESET) && enabled)

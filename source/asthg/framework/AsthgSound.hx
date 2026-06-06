@@ -4,6 +4,7 @@ using util.StringUtil;
 
 import flixel.sound.FlxSound;
 import flixel.sound.FlxSoundGroup;
+import openfl.media.Sound as OpenFLSound;
 
 class AsthgSound extends FlxSound {
 	static var tagData:Null<Xml> = null;
@@ -11,42 +12,6 @@ class AsthgSound extends FlxSound {
 
 	static var _soundn:String = "";
 	static var _params:Null<SoundParameters> = {};
-
-		/**
-		 * Obtém o sample rate de um arquivo de áudio (WAV, OGG, MP3).
-		 * @param path Caminho do arquivo de áudio.
-		 * @return Sample rate ou -1 se não conseguir ler.
-		 */
-		public static function getSampleRate(path:String):Int {
-			try {
-				var bytes = sys.io.File.getBytes(path);
-				// WAV
-				if (bytes.length > 28 && bytes.getString(0, 4) == "RIFF" && bytes.getString(8, 4) == "WAVE") {
-					// Sample rate está nos bytes 24-27 (little-endian)
-					return bytes.get(24) | (bytes.get(25) << 8) | (bytes.get(26) << 16) | (bytes.get(27) << 24);
-				}
-				// OGG Vorbis
-				if (bytes.length > 40 && bytes.getString(0, 4) == "OggS") {
-					// Procura pelo cabeçalho Vorbis ("vorbis" após o OggS)
-					for (i in 0...bytes.length - 36) {
-						if (bytes.getString(i, 6) == "vorbis") {
-							// Sample rate: 4 bytes little-endian, offset +12 após "vorbis"
-							var idx = i + 12;
-							return bytes.get(idx) | (bytes.get(idx+1) << 8) | (bytes.get(idx+2) << 16) | (bytes.get(idx+3) << 24);
-						}
-					}
-				}
-				// MP3 (procura primeiro frame válido)
-				if (bytes.length > 4 && (bytes.get(0) == 0xFF && (bytes.get(1) & 0xE0) == 0xE0)) {
-					// Tabela de sample rates para MPEG1 Layer III
-					var rates = [44100, 48000, 32000, -1];
-					var srIdx = (bytes.get(2) >> 2) & 0x03;
-					return rates[srIdx];
-				}
-			} catch(e:Dynamic) {}
-			return -1;
-		}
-
 
 	/**
 		Plays a sound
@@ -76,12 +41,14 @@ class AsthgSound extends FlxSound {
 
 		var asset = Paths.music(sound);
 
+		var OFLSound:OpenFLSound = OpenFLSound.fromAudioBuffer(lime.media.AudioBuffer.fromFile(Paths.getPath('music/$sound.ogg', MUSIC)));
+
 		if (Paths.fileExists('music/$sound.xml', TEXT)) {
 			try {
 				parseTags(Paths.getContent('music/$sound.xml') ?? "");
 			}
 			catch(e:Dynamic) {
-				trace('Failed to parse tag data for "$sound": $e.'.error());
+				trace('Failed to parse tag data for "{0}": {1}.'.error(), sound, e);
 			}
 		}
 		else
@@ -91,19 +58,20 @@ class AsthgSound extends FlxSound {
 		(getTag(TagElements.ANDROID_LOOP) ?? false) #end;
 
 		var loopTimeVal:Float = 0;
+		var sample:Int  = (getTag(TagElements.LOOP_SAMPLES) ?? 0);
 		if (looped && tags.exists(TagElements.LOOP_SAMPLES)) {
-			if ((getTag(TagElements.LOOP_SAMPLES) ?? 0) > 0) {
-				var sample:Int  = (getTag(TagElements.LOOP_SAMPLES) ?? 0);
-				loopTimeVal = getSampleLoop(sample);
+			if (sample > 0) {
+				loopTimeVal = getSampleLoop(sample, OFLSound.sampleRate);
 			}
-			else
+			else {
 				trace("Loop Sample is minor/equal than 0, skipping looping time".info());
+			}
 		}
 
-		FlxG.sound.music ??= new FlxSound();
-		if (FlxG.sound.music.active) {
+		if (FlxG.sound?.music == null)
+			FlxG.sound.music = new FlxSound();
+		else if (FlxG.sound?.music?.active)
 			FlxG.sound.music.stop();
-		}
 
 		FlxG.sound.music.loadEmbedded(asset, looped);
 
@@ -112,7 +80,7 @@ class AsthgSound extends FlxSound {
 		if (loopTimeVal > 0)
 			FlxG.sound.music.loopTime = loopTimeVal;
 		FlxG.sound.music.volume = ClientPrefs.data.options.musicVolume * (params?.volume ?? 1.0);
-		FlxG.sound.music.persist = (params?.persist ?? false);
+		FlxG.sound.music.persist = (params?.persist ?? true);
 		FlxG.sound.music.group = (params?.group ?? FlxG.sound.defaultMusicGroup);
 
 		if (params?.onComplete != null) {
@@ -194,7 +162,7 @@ class AsthgSound extends FlxSound {
 		}
 	}
 
-	public static function getTag(n:Null<String>):Dynamic {
+	public static function getTag(n:Null<String>):Null<Dynamic> {
 		if (n == null || n.trim().length <= 0) {
 			trace('Tag name is null/empty! ($n)'.warn());
 			return null;
@@ -214,8 +182,8 @@ class AsthgSound extends FlxSound {
 		@return Float
 		@author Sunnydev31 (@unreal.sunnydev)
 	**/
-	inline public static function getSampleLoop(sample:Int = 0):Float {
-		return ((sample ?? 0) * 1000) / getSampleRate(Paths.getPath('music/${_soundn}'));
+	inline public static function getSampleLoop(sample:Int = 0, hz:Int = 44100):Float {
+		return ((sample ?? 0) * 1000) / hz;
 	}
 }
 

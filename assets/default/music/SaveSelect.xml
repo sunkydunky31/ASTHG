@@ -1,12 +1,12 @@
 <tags>
-	<tag name="TITLE" value="Sunshine Cassete" />
-	<tag name="ARTIST" value="Tee Lopes, Falk Au Yeong" />
-	<tag name="ALBUM" value="Sonic Mania" />
-	<tag name="ALBUMARTIST" value="SEGA" />
-	<tag name="YEAR" value="2017" />
-	<tag name="TRACK" value="21" />
-	<tag name="GENRE" value="Game" />
+  <tag name="TITLE" value="Sunshine Cassete" />
+  <tag name="ARTIST" value="Tee Lopes, Falk Au Yeong" />
+  <tag name="ALBUM" value="Sonic Mania" />
+  <tag name="ALBUMARTIST" value="SEGA" />
+  <tag name="YEAR" value="2017" />
+  <tag name="TRACK" value="21" />
+  <tag name="GENRE" value="Game" />
 
-	<tag name="LOOP" value="true" />
-	<tag name="LOOP_SAMPLES" value="131290" />
+  <tag name="LOOP" value="true" />
+  <tag name="LOOP_SAMPLES" value="131290" />
 </tags>

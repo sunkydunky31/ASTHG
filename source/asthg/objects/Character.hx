@@ -29,22 +29,25 @@ class Character extends AsthgSprite {
 	// Game
 	public var score:Int = 0; // NOT IMPLEMENTED
 	public var rings:Int = 0; // NOT IMPLEMENTED
-	public var lives:Int = 0; // NOT IMPLEMENTED
+	public var lives:Int = 3; // NOT IMPLEMENTED
 	public var continues:Int = 0; // NOT IMPLEMENTED
 	public final lifeIcon:String = Constants.LIFE_ICON;
 
 	// Statistics
-	public var speed:FlxPoint = FlxPoint.get(0, 0);
 	public var state:StateList;
 	public var isSuper:Bool = false;
-	public var JUMP_SPEED:Int = -450;
-	public var GRAVITY:Int = 980;
+	public var JUMP_SPEED:Int      = -450;
+	public var GRAVITY:Int         =  980;
+	public var ACCELERATION:Int    =  600;
+	public var DESACCELERATION:Int =  400; // Drag value
+	public var MAX_SPEED:Int       =  300;
 
 	public function new(x:Float, y:Float, ?char:String) {
 		super(x, y);
 		changeChar(char);
 
 		acceleration.y = GRAVITY;
+		maxVelocity.x = MAX_SPEED;
 
 		origin.set(width / 2, height);
 		updateHitbox();
@@ -77,7 +80,7 @@ class Character extends AsthgSprite {
 
 		loadAnimations();
 		var palette:Array<String> = json.palettes?.normal;
-		if (palette == null || palette.length < 4) {
+		if (ArrayUtil.isBlank(palette) || palette.length < 4) {
 			palette = ["#FF0000", "#FF5000", "#00FF00", "#0000FF"];
 		}
 		this.applyPalette([
@@ -147,8 +150,14 @@ class Character extends AsthgSprite {
 	}
 
 	public function updateMoves() {
-		// Removed movements to replace it on the future
-		// So, characters will not be able to move and only jump
+		if (controls.LEFT_P || controls.RIGHT_P) {
+			acceleration.x = (controls.LEFT_P) ? -ACCELERATION : ACCELERATION;
+			state = WALKING;
+		}
+		else {
+			acceleration.x = 0;
+			state = IDLE;
+		}
 
 		// In PlayState, make action buttons act like jump buttons
 		if (controls.JUMP || controls.BACK) {
@@ -157,6 +166,7 @@ class Character extends AsthgSprite {
 	}
 
 	function updateAnimations(e:Float):Void {
+
 		if (controls.DOWN_P && state != ROLLING) {
 			playAnim("ANI_LOOK_DOWN");
 			return;

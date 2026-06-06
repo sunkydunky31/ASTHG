@@ -1,6 +1,6 @@
 package util;
 
-#if flixel // Maybe I can import this on lime... So maintaing flixel processor to it
+#if flixel
 import flixel.util.FlxStringUtil;
 #end
 
@@ -102,8 +102,7 @@ class StringUtil {
 		@param	ShowMS		Whether to show milliseconds after a `"` as well.  @default -> false.
 		@return	A nicely formatted String, like `1:03` or `5'19"43`.
 	**/
-	public static function formatTime(Seconds:Float, ShowMS:Bool = false):String
-	{
+	public static function formatTime(Seconds:Float, ShowMS:Bool = false):String {
 		var str = "";
 		var minSplit = ShowMS ? "'" : ":";
 		var secSplit = '"';
@@ -145,7 +144,6 @@ class StringUtil {
 
 		return s;
 	}
-
 
 	public static function replaceMulti(s:String, sub:Array<String>, by:Array<String>) {
 		if (by.length != sub.length)

@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
+
+  <!--
+    === FILES ===
+    Here is listed every file that FireTongue uses
+
+    === ATRIBUTE LIST ===
+    * 'id': Context name (second argument for Locale:getString)
+    * 'value': File name + extension
+
+    * 'delimeter': (CSV) Determines the delimeter per line
+    * 'quoted': (CSV) Determines if each value are quoted or not
+
+    * 'type': Used only on XML files to separate parsers (TODO: Make this with auto type detection)
+  -->
+
   <file id="data"         value="data.tsv" />
   <file id="data"         value="culture.tsv" />
   <file id="discord"      value="discord.tsv" />
