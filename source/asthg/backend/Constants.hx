@@ -1,5 +1,5 @@
 /*
-	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-03-27
+	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-06-07
 	You are allowed to use, modify and redistribute this code
 	But give credit where credit is due!
 */
@@ -28,12 +28,12 @@ class Constants {
 	public static final LIFE_ICON:String = "liveIcon";
 
 	/**
-		Stores the velocity of super palettes when glowing into white
+		Stores the velocity of super palettes when glowing into white in seconds
 	**/
-	public static final PALETTE_SUPER_VELOCITY = 1.5;
+	public static final PALETTE_SUPER_VELOCITY = 1;
 
 	// Save Select
-	public static final SAVE_ENTRY_LIMIT:Int = 7;
+	public static final SAVE_ENTRY_LIMIT:Int = 7; // Number of Save Slots
 	public static final SAVE_SELECTED_FRAME_COLOR:Array<FlxColor> = [0xffffffff, 0xffff0000];
 	public static final SAVE_SELECTED_ARROW_COLOR:Array<FlxColor> = [0xffff0059, 0xffff0059];
 

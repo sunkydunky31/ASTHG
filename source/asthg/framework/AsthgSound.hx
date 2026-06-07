@@ -4,14 +4,18 @@ using util.StringUtil;
 
 import flixel.sound.FlxSound;
 import flixel.sound.FlxSoundGroup;
-import openfl.media.Sound as OpenFLSound;
+import openfl.media.Sound;
 
 class AsthgSound extends FlxSound {
 	static var tagData:Null<Xml> = null;
 	public static var tags:Map<String, Dynamic> = new Map<String, Dynamic>();
 
+	public static var sampleRate:Int = 44100;
+
 	static var _soundn:String = "";
 	static var _params:Null<SoundParameters> = {};
+
+	private static var oflSound:Sound;
 
 	/**
 		Plays a sound
@@ -41,7 +45,9 @@ class AsthgSound extends FlxSound {
 
 		var asset = Paths.music(sound);
 
-		var OFLSound:OpenFLSound = OpenFLSound.fromAudioBuffer(lime.media.AudioBuffer.fromFile(Paths.getPath('music/$sound.ogg', MUSIC)));
+		oflSound = Sound.fromAudioBuffer(lime.media.AudioBuffer.fromFile(Paths.getPath('music/$sound.ogg', MUSIC)));
+		if (oflSound.sampleRate != 44100)
+			sampleRate = oflSound.sampleRate;
 
 		if (Paths.fileExists('music/$sound.xml', TEXT)) {
 			try {
@@ -59,21 +65,14 @@ class AsthgSound extends FlxSound {
 
 		var loopTimeVal:Float = 0;
 		var sample:Int  = (getTag(TagElements.LOOP_SAMPLES) ?? 0);
-		if (looped && tags.exists(TagElements.LOOP_SAMPLES)) {
-			if (sample > 0) {
-				loopTimeVal = getSampleLoop(sample, OFLSound.sampleRate);
-			}
-			else {
-				trace("Loop Sample is minor/equal than 0, skipping looping time".info());
-			}
+
+		if (looped && sample != 0) {
+			loopTimeVal = getSampleLoop(sample, this.sampleRate);
+		}
+		else {
+			trace("Loop Sample is minor/equal than 0, skipping looping time".info());
 		}
 
-		if (FlxG.sound?.music == null)
-			FlxG.sound.music = new FlxSound();
-		else if (FlxG.sound?.music?.active)
-			FlxG.sound.music.stop();
-
-		FlxG.sound.music.loadEmbedded(asset, looped);
 
 		// Applys metadata before playing to not break the loop
 		FlxG.sound.music.looped = looped;
@@ -81,7 +80,14 @@ class AsthgSound extends FlxSound {
 			FlxG.sound.music.loopTime = loopTimeVal;
 		FlxG.sound.music.volume = ClientPrefs.data.options.musicVolume * (params?.volume ?? 1.0);
 		FlxG.sound.music.persist = (params?.persist ?? true);
+		#if (flixel >= "5.7.0")
 		FlxG.sound.music.group = (params?.group ?? FlxG.sound.defaultMusicGroup);
+		#else
+		if (params?.group == null)
+			FlxG.sound.defaultMusicGroup(asset);
+		else
+			FlxG.sound.(params?.group).add(asset);
+		#end
 
 		if (params?.onComplete != null) {
 			FlxG.sound.music.onComplete = params.onComplete;
