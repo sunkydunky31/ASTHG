@@ -40,7 +40,7 @@ class OptionsState extends StateManager {
 		}
 
 		super.create();
-		updateTabVisuals();
+		changeSelection();
 	}
 
 	override function update(elapsed:Float) {
@@ -49,7 +49,7 @@ class OptionsState extends StateManager {
 		var mult:Int = (FlxG.keys.pressed.SHIFT) ? 4 : 1;
 		var scroll = FlxG.mouse.wheel;
 		if (controls.UP || controls.DOWN || scroll != 0) {
-			changeSelection((controls.UP ? -1 : 1) * mult - scroll);
+			changeSelection(((controls.UP ? -1 : 1) * mult) - -scroll);
 			AsthgSound.playSound(ConstantSound.MENU_SCROLL);
 		}
 
@@ -64,19 +64,14 @@ class OptionsState extends StateManager {
 		}
 	}
 
-	function updateTabVisuals():Void {
+	function changeSelection(change:Int = 0) {
+		curSelected = FlxMath.wrap(curSelected + change, 0, options.length - 1);
+
 		if (grpTabs != null) {
 			grpTabs.forEach(function(txt:AsthgBitmapText) {
 				txt.color = (txt.ID == curSelected) ? (ClientPrefs.data.options.accentColors ? SystemUtil.ACCENT_COLOR : FlxColor.YELLOW) : FlxColor.WHITE;
 			});
 		}
-		else
-			return;
-	}
-
-	function changeSelection(change:Int) {
-		curSelected = FlxMath.wrap(curSelected + change, 0, options.length - 1);
-		updateTabVisuals();
 	}
 
 	function openSelectedSubstate(lbl:String) {

@@ -29,23 +29,25 @@ class Init extends StateManager {
 		}
 
 		#if debug
-		trace("Running on debug mode!");
-		#elseif final
-		trace("Running on final mode... oh, creepy!");
-		#end
-
-		#if debug
 			#if PLAYSTATE
+			trace("Starting on PlayState...");
 			StateManager.switchState(new asthg.states.PlayState());
 			#elseif MODS
+			trace("Starting on Mods Menu...");
 			StateManager.switchState(new asthg.states.ModsMenu());
 			#elseif OPTIONS
+			trace("Starting on Options Menu...");
 			StateManager.switchState(new asthg.options.OptionsState());
 			#elseif (SAVESELECT || DATASELECT)
+			trace("Starting on Save Select...");
 			StateManager.switchState(new asthg.states.SaveSelect());
+			#else
+			trace("Starting on Main Menu...");
+			StateManager.switchState(new asthg.states.MainMenu());
 			#end
 		#else
 		// Fallbacks to Title Screen
+		trace("Starting on Title Screen...");
 		StateManager.switchState(new asthg.states.TitleState());
 		#end
 	}

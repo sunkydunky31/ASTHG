@@ -26,17 +26,18 @@ package firetongue;
 /*
 	-- MODIFICATIONS --
 	* Most string checkers now use the project function `StringUtil:isBlank` to catch
-	strings that are just whitespaces;
+	strings that are just whitespaces or null;
 
 	* `@:nullSafety` parcial implementation;
-
-	* Fixed `tongue.getIndexString(LanguageRegionNative)` breaking, I just used the code
-	from `LanguageNative` and `RegionNative` and seems to be functional, using the function breaks horribly;
-
+	* Fixed `tongue.getIndexString(LanguageRegionNative)` bug;
 	* Fixed `IndexString.Region` typo on checker.
 
+	--- ADDITIONS ---
+	* Added Android Strings Resource parser.
+
 	-- OTHER --
-	If you want to use this version in your project, you can totally use it! But following `FireTongue`'s license.
+	If you want to use this version in your project, you can totally use it!
+	But following `FireTongue`'s license.
 
 	- Sunnydev31 (@unreal.sunnydev)
 */
@@ -165,7 +166,7 @@ class FireTongue
 	{
 		forceFlagsToCase = (forceCase != null) ? forceCase : Case.Upper;
 		getter = new Getter(framework, checkFile, getText, getDirectoryContents);
-		if (locale == null) locale = defaultLocale;
+		if (StringUtil.isBlank(locale)) locale = defaultLocale;
 	}
 
 	/**
@@ -470,12 +471,12 @@ class FireTongue
 	 */
 	public function getIndexString(indexString:IndexString, targetLocale:String = "", currLocale:String = ""):String
 	{
-		if (currLocale.isBlank())
+		if (StringUtil.isBlank(currLocale))
 		{
 			currLocale = locale;
 		}
 
-		if (targetLocale.isBlank())
+		if (StringUtil.isBlank(targetLocale))
 		{
 			targetLocale = locale;
 		}
@@ -589,10 +590,7 @@ class FireTongue
 						reg = currLangNode.att.region;
 					}
 
-					if (!reg.isBlank())
-						return lang + " (" + reg + ")";
-					else
-						return lang;
+					return lang + (!StringUtil.isBlank(reg) ? " (" + reg + ")" : "");
 				}
 			case IndexString.LanguageRegionNative:
 				// return something like "English (United States)" in NATIVE language (ex: curr=spanish native=english)
@@ -610,7 +608,7 @@ class FireTongue
 						reg = nativeNode.att.region;
 					}
 
-					return lang + (!reg.isBlank() ? " (" + reg + ")" : "");
+					return lang + (!StringUtil.isBlank(reg) ? " (" + reg + ")" : "");
 				}
 			default:
 				// donothing
@@ -1001,7 +999,7 @@ class FireTongue
 
 		listFiles = new Array<Fast>();
 
-		if (index.isBlank())
+		if (StringUtil.isBlank(index))
 		{
 			throw("Couldn't load index.xml!");
 		}
@@ -1071,13 +1069,13 @@ class FireTongue
 		}
 
 		// If default locale is not defined yet, make it American English
-		if (defaultLocale.isBlank())
+		if (StringUtil.isBlank(defaultLocale))
 		{
 			defaultLocale = "en-US";
 		}
 
 		// If the current locale is not defined yet, make it the default
-		if (locale.isBlank())
+		if (StringUtil.isBlank(locale))
 		{
 			locale = defaultLocale;
 		}
@@ -1121,7 +1119,7 @@ class FireTongue
 		{
 			value = firstFile.node.file.att.value;
 		}
-		if (!value.isBlank())
+		if (!StringUtil.isBlank(value))
 		{
 			var testText:Null<String> = null;
 			try
@@ -1132,7 +1130,7 @@ class FireTongue
 			{
 				testText = null;
 			}
-			if (testText.isBlank())
+			if (StringUtil.isBlank(testText))
 			{
 				#if debug
 				trace("ERROR: default locale(" + locale + ") not found, searching for closest match...");
@@ -1141,7 +1139,7 @@ class FireTongue
 				#if debug
 				trace("--> going with: " + newLocale);
 				#end
-				if (!newLocale.isBlank())
+				if (!StringUtil.isBlank(newLocale))
 				{
 					locale = newLocale;
 				}
@@ -1214,7 +1212,7 @@ class FireTongue
 			if (str.indexOf(str2) == 0)
 			{
 				var tempstr = doReplace(orig_str, str2, "");
-				if (tempstr.isBlank() && tempstr.indexOf(":") == 0)
+				if (StringUtil.isBlank(tempstr) && tempstr.indexOf(":") == 0)
 				{
 					tempstr = tempstr.substr(1, tempstr.length - 1);
 					var loc = "";
@@ -1225,7 +1223,7 @@ class FireTongue
 							loc = key;
 						}
 					}
-					if (loc.isBlank())
+					if (StringUtil.isBlank(loc))
 					{
 						return getIndexString(str2, loc);
 					}
@@ -1438,15 +1436,40 @@ class FireTongue
 		}
 	}
 
+	// This function is more related to my project,
+	// If you want to use it, edit this code below
 	private function normalizeAndroidString(text:String):String
 	{
-		// Parse numbered placeholders
-		text = ~/(%(\d+)\$[sd])/g.map(text, function(re)
+		var place:EReg = ~/%[sdf]/g;
+		var numPlace:EReg = ~/(%(\d+)\$[sd])/g;
+
+		// Replace placeholders
+		var ind = 0;
+		text = place.map(text, function(re)
 		{
+			if (numPlace.match(text)) {
+				trace("WARNING: Found numbered placeholders on the text!");
+			}
+
+			return "{" + (ind++) + "}";
+		});
+
+		// Replace numbered placeholders
+		text = numPlace.map(text, function(re)
+		{
+			if (numPlace.match(text)) {
+				trace("WARNING: Found normal placeholders on the text!");
+			}
+
+			ind++;
 			return "{" + (Std.parseInt(re.matched(2)) - 1) + "}";
 		});
 
-		return Replace.flags(text, ["\\@", "\\?", "\\n", "\\t", "\\'", '\\"'], ["@", "?", "\n", "\t", "'", '"']);
+		// Replace common Android wrappers
+		return Replace.flags(text,
+			["\\@", "\\?", "\\n", "\\t", "\\'", '\\"'],
+			["@",   "?",   "\n",  "\t",  "'",   '"']
+		);
 	}
 
 	private function processPNG(img:String, id:String, checkVsDefault:Bool = false):Void
@@ -1498,7 +1521,7 @@ class FireTongue
 			match = str.substring(start, end + 1);
 			flag = str.substring(start + 5, end); // cut off the redirection and the brackets
 
-			if (flag.isBlank())
+			if (StringUtil.isBlank(flag))
 			{
 				return null;
 			}
@@ -1563,7 +1586,8 @@ class FireTongue
 			{
 				value = fileNode.node.file.att.value;
 			}
-			if (value != "")
+
+			if (!StringUtil.isBlank(value))
 			{
 				var task = {fileNode: fileNode, check: false};
 				tasks.push(task);
@@ -1596,7 +1620,7 @@ class FireTongue
 	{
 		var totalDiff:Int = 0;
 
-		if (a.trim() != "" && b.isBlank())
+		if (!StringUtil.isBlank(a) && StringUtil.isBlank(b))
 			return Math.POSITIVE_INFINITY;
 
 		if (caseSensitive == false)
@@ -1662,7 +1686,7 @@ class FireTongue
 			str = orig;
 		}
 
-		if (str == null && last != null)
+		if (StringUtil.isBlank(str) && !StringUtil.isBlank(last))
 		{
 			str = last;
 		}
@@ -1671,7 +1695,7 @@ class FireTongue
 
 	private function writeIndex(index:Map<String, String>, flag:String, value:String, id:String, checkVsDefault:Bool = false):Void
 	{
-		if (flag == null)
+		if (StringUtil.isBlank(flag))
 		{
 			return;
 		}

@@ -87,10 +87,6 @@ class Project extends HXProject {
 
 		setenv("PROJECT_BUILD", (isDebug() ? "debug" : isFinal() ? "final" : "release"));
 
-		// You can remove this line if your haxe is installed in the default path
-		setenv("HAXE_STD_PATH", Sys.getEnv("HAXEPATH") + "\\std");
-
-
 		this.meta.title = GAME.get("title");
 		this.meta.version = GAME.get("version");
 		this.meta.company = GAME.get("company");

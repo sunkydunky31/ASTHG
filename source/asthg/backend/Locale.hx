@@ -74,7 +74,7 @@ class Locale {
 
 		tongue.initialize({
 			locale: (ClientPrefs.data.options.language ?? Constants.LANGUAGE_DEFAULT),
-			replaceMissing: false,
+			replaceMissing: true,
 			checkMissing: true,
 			finishedCallback: onLoad
 		});
