@@ -39,15 +39,12 @@ class AsthgSound extends FlxSound {
 		@param group Sets a sound group for `this` music
 		@author Sunnydev31 (@unreal.sunnydev)
 	**/
-	public static function playMusic(sound:String, ?params:SoundParameters) {
-		_soundn = sound;
+	public static function playMusic(sound:String, ?params:SoundParameters) {_soundn = sound;
 		_params = params;
 
 		var asset = Paths.music(sound);
 
-		oflSound = Sound.fromAudioBuffer(lime.media.AudioBuffer.fromFile(Paths.getPath('music/$sound.ogg', MUSIC)));
-		if (oflSound.sampleRate != 44100)
-			sampleRate = oflSound.sampleRate;
+		var OFLSound:OpenFLSound = OpenFLSound.fromAudioBuffer(lime.media.AudioBuffer.fromFile(Paths.getPath('music/$sound.${Constants.SOUND_EXT}', MUSIC)));
 
 		if (Paths.fileExists('music/$sound.xml', TEXT)) {
 			try {
@@ -65,14 +62,19 @@ class AsthgSound extends FlxSound {
 
 		var loopTimeVal:Float = 0;
 		var sample:Int  = (getTag(TagElements.LOOP_SAMPLES) ?? 0);
-
-		if (looped && sample != 0) {
-			loopTimeVal = getSampleLoop(sample, this.sampleRate);
+		if (looped && sample > 0) {
+			loopTimeVal = getSampleLoop(sample, OFLSound.sampleRate);
 		}
 		else {
 			trace("Loop Sample is minor/equal than 0, skipping looping time".info());
 		}
 
+		if (FlxG.sound?.music == null)
+			FlxG.sound.music = new FlxSound();
+		else if (FlxG.sound?.music?.active)
+			FlxG.sound.music.stop();
+
+		FlxG.sound.music.loadEmbedded(asset, looped);
 
 		// Applys metadata before playing to not break the loop
 		FlxG.sound.music.looped = looped;
@@ -80,14 +82,7 @@ class AsthgSound extends FlxSound {
 			FlxG.sound.music.loopTime = loopTimeVal;
 		FlxG.sound.music.volume = ClientPrefs.data.options.musicVolume * (params?.volume ?? 1.0);
 		FlxG.sound.music.persist = (params?.persist ?? true);
-		#if (flixel >= "5.7.0")
 		FlxG.sound.music.group = (params?.group ?? FlxG.sound.defaultMusicGroup);
-		#else
-		if (params?.group == null)
-			FlxG.sound.defaultMusicGroup(asset);
-		else
-			FlxG.sound.(params?.group).add(asset);
-		#end
 
 		if (params?.onComplete != null) {
 			FlxG.sound.music.onComplete = params.onComplete;

@@ -51,7 +51,7 @@ class Project extends HXProject {
 		**/
 		"languages" => ["en", "pt-BR"],
 
-		"windowWidth" => 1280,
+		"windowWidth"  => 1280,
 		"windowHeight" => 720
 	];
 
