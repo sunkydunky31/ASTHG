@@ -14,13 +14,17 @@ class SaveSelect extends StateManager {
 	public var camFollow:FlxObject = new FlxObject(FlxG.width / 2, 0, 2, 2);
 
 	public var saveGroup:FlxTypedGroup<SaveEntry>;
-	var curSelected:Int = 0;
+	var curSlot:Int = 0;
+	var curChar:Int = 0;
+	var curZone:Int = 0;
 
 	var selectSave:AsthgSprite;
 	var arrow1:AsthgSprite;
 	var arrow2:AsthgSprite;
 	var arrow3:AsthgSprite;
 	var arrow4:AsthgSprite;
+
+	public var character:Character;
 
 	override function create() {
 		Paths.clearUnusedMemory();
@@ -58,12 +62,12 @@ class SaveSelect extends StateManager {
 		add(saveGroup);
 
 		//Do not touch the position of this sprite
-		selectSave = AsthgSprite.create(saveGroup.members[curSelected].x, saveGroup.members[curSelected].y, "menus/saveSelect/selected");
+		selectSave = AsthgSprite.create(saveGroup.members[curSlot].x, saveGroup.members[curSlot].y, "menus/saveSelect/selected");
 		FlxTween.color(selectSave, 0.2, Constants.SAVE_SELECTED_FRAME_COLOR[0], Constants.SAVE_SELECTED_FRAME_COLOR[1], {type: FlxTweenType.PINGPONG, ease: FlxEase.linear});
 		selectSave.cameras = [camFront];
 		add(selectSave);
 
-		// Positions of all the sprites above are updated on `changeSelection()`
+		// Positions of all the sprites above are updated on `changeSlot()`
 		arrow1 = AsthgSprite.create(0, 0, "menus/saveSelect/selectArrow");
 		arrow1.color = Constants.SAVE_SELECTED_ARROW_COLOR[0];
 		arrow1.cameras = [camFront];
@@ -84,7 +88,7 @@ class SaveSelect extends StateManager {
 		arrow4.cameras = [camFront];
 		add(arrow4);
 
-		changeSelection();
+		changeSlot();
 
 		super.create();
 		AsthgSound.playMusic("SaveSelect");
@@ -93,68 +97,118 @@ class SaveSelect extends StateManager {
 	override function update(e:Float) {
 		super.update(e);
 
-		if (controls.ACCEPT)
-			LoadingState.switchStates(new asthg.states.PlayState(), true);
+		if (controls.ACCEPT) {
+			if (getSaveState(curSlot) == InProgress) {
+				ClientPrefs.loadSlot(curSlot);
+				LoadingState.switchStates(new asthg.states.PlayState(), true);
+			}
+			else {
+				ClientPrefs.createSlot(curSlot, Constants.DEFAULT_CHARACTER);
+				LoadingState.switchStates(new asthg.states.PlayState(), true);
+			}
+
+		}
 
 		if (controls.BACK)
 			StateManager.switchState(new asthg.states.MainMenu());
 
-		if (controls.LEFT || controls.RIGHT)
-			changeSelection(controls.LEFT ? -1 : 1);
+		if (controls.UP || controls.DOWN) {
+			switch (getSaveState(curSlot)) {
+				case New:
+					changeCharacter(controls.UP ? -1 : 1);
+				case Clear:
+				default:
+			}
+		}
+
+		if (controls.LEFT || controls.RIGHT) {
+			changeSlot(controls.LEFT ? -1 : 1);
+			AsthgSound.playSound(ConstantSound.MENU_SCROLL);
+		}
 	}
 
-	function changeSelection(count:Int = 0) {
+	function changeSlot(count:Int = 0) {
 		if (ArrayUtil.isBlank(saveGroup.members))
 			return;
 
-		curSelected = FlxMath.wrap(curSelected + count, 0, saveGroup.length - 1);
+		curSlot = FlxMath.wrap(curSlot + count, 0, saveGroup.length - 1);
 
-		var member = cast saveGroup.members[curSelected];
+		var member = cast saveGroup.members[curSlot];
 		if (member == null) {
 			trace("member is null!".warn());
 			return;
 		}
 
-		selectSave.setPosition	(member.x,	member.y);
-		arrow1.setPosition		(member.x + (member.width / 2),	member.y + 14);
-		arrow2.setPosition		(member.x + (member.width / 2),	member.y + 65);
-		arrow3.setPosition		(member.x + (member.width / 2),	arrow1.y + 18);
-		arrow4.setPosition		(member.x + (member.width / 2),	arrow2.y + 30);
+		selectSave.setPosition  (member.x, member.y);
+		arrow1.setPosition      (member.x + (member.width / 2), member.y + 14);
+		arrow2.setPosition      (member.x + (member.width / 2), member.y + 65);
+		arrow3.setPosition      (member.x + (member.width / 2), arrow1.y + 18);
+		arrow4.setPosition      (member.x + (member.width / 2), arrow2.y + 30);
 
 		camFollow.setPosition(selectSave.x + (selectSave.width / 2), selectSave.y + (selectSave.height / 2));
+	}
 
-		AsthgSound.playSound(ConstantSound.MENU_SCROLL);
+	function changeCharacter(count:Int = 0) {
+		if (ArrayUtil.isBlank(saveGroup.members))
+			return;
+
+		curChar = FlxMath.wrap(curChar + count, 0, saveGroup.length - 1);
+	}
+
+	static function getSaveState(slot:Int):SaveState {
+		if (!ClientPrefs.slotExists(slot)) {
+			return New;
+		}
+
+		if (ClientPrefs.loadSlotData(slot).clear) {
+			return Clear;
+		}
+
+		return InProgress;
 	}
 }
 
-
 @:nullSafety
 class SaveEntry extends FlxSpriteGroup {
-	public var character:Null<Character>;
-	public var emeralds:Array<AsthgSprite> = new Array<AsthgSprite>();
 	public function new(id:Int) {
 		super();
+
+		var data = ClientPrefs.loadSlotData(id);
+
+		var portrait:AsthgSprite;
+		if (!ClientPrefs.slotExists(id)) {
+			portrait = AsthgSprite.create(2, 2, "menus/saveSelect/savePortrait_new");
+			add(portrait);
+		}
 
 		var save:AsthgSprite = AsthgSprite.create(0, 0, "menus/saveSelect/save");
 		add(save);
 
-		var colors:Array<Array<FlxColor>> = [
-			[0x0080E0, 0x00B4CC, 0x00C0E0, 0x80E0E0],
-			[0x790000, 0xAE0000, 0xDA0000, 0xFF0000],
-			[0x2BFF00, 0xDA0000, 0xAE0000, 0x790000],
-			[0xFBFF00, 0xDA0000, 0xAE0000, 0x790000],
-			[0xD4D4D4, 0xDA0000, 0xAE0000, 0x790000],
-			[0xFF0000, 0xDA0000, 0xAE0000, 0x790000],
-			[0xFF0000, 0xDA0000, 0xAE0000, 0x790000],
-			[0xFF00D4, 0xDA0000, 0xAE0000, 0x790000],
-		];
+		//var label:AsthgBitmapText =
 
 		for (i in 0...7) {
-			var emerald:AsthgSprite = AsthgSprite.create(2, save.height - 12, "menus/saveSelect/emerald");
-			emerald.x += (emerald.width * i) + i;
-			emerald.applyPalette(colors[i]);
+			var colors:Array<String> = [
+				"cyan", "red", "green", "yellow", "gray", "purple", "blue"
+			];
+
+			var _emerl = Paths.image("menus/saveSelect/emeralds");
+			var emerlSize = Math.round(_emerl.width / _emerl.height); // Sprite frames
+
+			var emerald:AsthgSprite = AsthgSprite.createSpriteSheet(2, save.height - 12, Math.round(_emerl.width / emerlSize), _emerl.height, "menus/saveSelect/emeralds");
+			emerald.x += ((emerald.width / emerlSize) * i) + i;
+
+			emerald.animation.add(colors[i], [i], false, false);
+
+			emerald.animation.play(colors[i]);
+
+			emerald.visible = (ClientPrefs.slotExists(id)) ? (data?.emeralds[i] ?? false) : false;
 			add(emerald);
-			emeralds.push(emerald);
 		}
 	}
+}
+
+enum SaveState {
+	New;
+	InProgress;
+	Clear;
 }

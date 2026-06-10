@@ -13,6 +13,7 @@ import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxFrame;
 import flixel.math.FlxRect;
 import flixel.math.FlxPoint;
+import flixel.system.FlxAssets.FlxGraphicAsset;
 
 /**
 	Custom instance for FlxSprite with better functions
@@ -20,7 +21,7 @@ import flixel.math.FlxPoint;
 	Example:
 	```haxe
 	var mySprite:AsthgSprite = new AsthgSprite();
-	mySprite.create("My Sprite"); // calls `loadGraphic(Paths.image("My Sprite"));`
+	mySprite.create(0, 0, "My Sprite"); // calls `loadGraphic(Paths.image("My Sprite"));` + `setPosition(0, 0);`
 	```
 **/
 class AsthgSprite extends FlxSprite {
@@ -175,6 +176,11 @@ class AsthgSprite extends FlxSprite {
 		@return AsthgSprite
 	**/
 	public function applyPalette(pal:Array<FlxColor>):AsthgSprite {
+		if (ClientPrefs.data.options.cacheOnGPU) {
+			trace("Caching sprites is enabled! Returning or it will throw an error...".warn());
+			return this;
+		}
+
 		if (pal == null) {
 			trace("Palette array is null! Cannot apply this palette into sprite".error());
 			return this;

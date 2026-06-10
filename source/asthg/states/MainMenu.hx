@@ -20,11 +20,6 @@ class MainMenu extends StateManager {
 		"Exit"
 	];
 
-	var hints:Array<Array<String>> = [
-		["Confirm", "accept"],
-		["Title Screen", "back"]
-	];
-
 	override function create() {
 		Paths.clearStoredMemory();
 
@@ -76,6 +71,7 @@ class MainMenu extends StateManager {
 			group.add(menu);
 		}
 
+		// Testing asset with Polymod and FireTongue but seems it doesn't work :P
 		var test:AsthgSprite = AsthgSprite.create(0, 0, "assetTest");
 		test.screenCenter();
 		add(test);
@@ -93,7 +89,7 @@ class MainMenu extends StateManager {
 			var mult:Int = (FlxG.keys.pressed.SHIFT) ? 4 : 1;
 			var scroll = FlxG.mouse.wheel;
 			if (controls.UP || controls.DOWN || scroll != 0) {
-				changeItem(((controls.UP ? -1 : 1) * mult) - scroll);
+				changeItem(((controls.UP ? -1 : 1) * mult) - -scroll);
 			}
 
 			if (controls.ACCEPT) {

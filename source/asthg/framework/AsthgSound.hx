@@ -44,7 +44,7 @@ class AsthgSound extends FlxSound {
 
 		var asset = Paths.music(sound);
 
-		var OFLSound:OpenFLSound = OpenFLSound.fromAudioBuffer(lime.media.AudioBuffer.fromFile(Paths.getPath('music/$sound.${Constants.SOUND_EXT}', MUSIC)));
+		var OFLSound:Sound = Sound.fromAudioBuffer(lime.media.AudioBuffer.fromFile(Paths.getPath('music/$sound.${Constants.SOUND_EXT}', MUSIC)));
 
 		if (Paths.fileExists('music/$sound.xml', TEXT)) {
 			try {

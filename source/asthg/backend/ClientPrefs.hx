@@ -65,8 +65,11 @@ class ClientPrefs {
 	];
 
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
-
 	public static var defaultButtons:Map<String, Array<FlxGamepadInputID>> = null;
+
+	private static var gameSave:FlxSave;
+	public static var gameplay:Null<GameData>;
+	public static var currentSlot:Int = -1;
 
 	/**
 		@see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/backend/CoolUtil.hx#L161
@@ -167,7 +170,7 @@ class ClientPrefs {
 			var save:FlxSave = new FlxSave();
 			save.bind('controls', getSavePath());
 
-			if(save?.data?.keyboard != null) {
+			if (save?.data?.keyboard != null) {
 				var loadedControls:Map<InputList, Array<Dynamic>> = save.data.keyboard;
 				for (control => rawKeys in loadedControls) {
 					if (!keyBinds.exists(control) || rawKeys == null) continue;
@@ -177,7 +180,7 @@ class ClientPrefs {
 				}
 			}
 
-			if(save?.data?.gamepad != null) {
+			if (save?.data?.gamepad != null) {
 				var loadedControls:Map<InputList, Array<Dynamic>> = save.data.gamepad;
 				for (control => rawKeys in loadedControls) {
 					if (!gamepadBinds.exists(control) || rawKeys == null)
@@ -208,7 +211,7 @@ class ClientPrefs {
 	}
 
 	public static function toggleVolumeKeys(?turnOn:Bool = true) {
-		FlxG.sound.muteKeys		  = turnOn ? Init.muteKeys		 : [];
+		FlxG.sound.muteKeys       = turnOn ? Init.muteKeys		 : [];
 		FlxG.sound.volumeDownKeys = turnOn ? Init.volumeDownKeys : [];
 		FlxG.sound.volumeUpKeys   = turnOn ? Init.volumeUpKeys	 : [];
 	}
@@ -225,6 +228,72 @@ class ClientPrefs {
 			trace("Error when resetting preferences: {0}".error(), e);
 		}
 	}
+
+	// ----------- GAMEPLAY SAVE DATA ----------- //
+
+	public static function createSlot(slot:Int, char:String):Void {
+		currentSlot = slot;
+
+		gameSave = new FlxSave();
+		gameSave.bind("slot" + slot, getSavePath());
+
+		gameplay = {
+			character: char,
+			emeralds: [false, false, false, false, false, false, false],
+			zoneId: 0, zoneAct: 0,
+			clear: false
+		}
+
+		gameSave.data.gameplay = gameplay;
+		gameSave.flush();
+	}
+
+	public static function saveSlot():Void {
+		if (gameSave == null){
+			trace("Cannot save game data! Slot is null".error());
+			return;
+		}
+
+		gameSave.bind("slot" + currentSlot, getSavePath());
+		gameSave.data.gameplay = gameplay;
+		gameSave.flush();
+	}
+
+	public static function loadSlot(slot:Int) {
+		currentSlot = slot;
+		if (gameSave == null)
+			gameSave = new FlxSave();
+
+		gameSave.bind("slot" + slot, getSavePath());
+
+		gameplay = gameSave.data.gameplay;
+	}
+
+	/**
+		Loads an slot data without overriding global parameters
+		@param slot Save slot to read
+		@return GameData
+	**/
+	public static function loadSlotData(slot:Int):GameData {
+		var save = new FlxSave();
+		save.bind("slot" + slot, getSavePath());
+
+		return save.data.gameplay;
+	}
+
+	public static function deleteSlot(slot:Int):Void {
+		var save = new FlxSave();
+		save.bind("slot" + slot, getSavePath());
+
+		save.erase();
+	}
+
+	public static function slotExists(slot:Int):Bool {
+		var save = new FlxSave();
+		save.bind("slot" + slot, getSavePath());
+
+		return save.data.gameplay != null;
+	}
 }
 
 /**
@@ -240,7 +309,7 @@ class ClientPrefs {
 	**/
 	public var version:String = "2.0.0";
 
-	// --------- Settings grouped by category --------- //
+	// --------- Settings --------- //
 	public var options:OptionsPrefs = {};
 	public var mods:ModPrefs = {};
 }
@@ -354,7 +423,6 @@ class ClientPrefs {
 	public var sfxVolume:Float = 0.4;
 }
 
-
 /**
 	Structure that stores mods preferences, like enabled mods and mod-specific settings.
 **/
@@ -371,4 +439,12 @@ class ClientPrefs {
 		@default `[]`
 	**/
 	public var modSettings:Map<String, Dynamic> = [];
+}
+
+@:structInit class GameData {
+	public var character:String = Constants.DEFAULT_CHARACTER;
+	public var emeralds:Array<Bool> = [false, false, false, false, false, false, false];
+	public var zoneId = 0;
+	public var zoneAct = 0;
+	public var clear:Bool = false;
 }
