@@ -7,66 +7,81 @@
 	-->
 
 	<info face="Roco" size="16" bold="0" italic="0" charset="utf-8" unicode="1" stretchH="100" smooth="0" aa="0" padding="1,1,1,1" spacing="1,1" />
-	<common lineHeight="16" base="14" scaleW="512" scaleH="48" pages="1" packed="0" />
+	<common lineHeight="16" base="14" scaleW="232" scaleH="104" pages="1" packed="0" />
 	<pages>
 		<page id="0" file="Roco.png" />
 	</pages>
 	<chars count="27">
-		<!--   --> <char id="32" x="0" y="0" width="0" height="0" xoffset="0" yoffset="0" xadvance="8" page="0" chnl="15" />
-		<!-- A --> <char id="65" x="0" y="0" width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- B --> <char id="66" x="16" y="0" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- C --> <char id="67" x="33K" y="0" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- D --> <char id="68" x="50" y="0" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- E --> <char id="69" x="67" y="0" width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- F --> <char id="70" x="83" y="0" width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- G --> <char id="71" x="99" y="0" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- H --> <char id="72" x="116" y="0" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- I --> <char id="73" x="133" y="0" width="8" height="16" xoffset="0" yoffset="0" xadvance="8" page="0" chnl="15" />
-		<!-- J --> <char id="74" x="142" y="0" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- K --> <char id="75" x="159" y="0" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- L --> <char id="76" x="176" y="0" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- M --> <char id="77" x="193" y="0" width="22" height="16" xoffset="0" yoffset="0" xadvance="22" page="0" chnl="15" />
-		<!-- N --> <char id="78" x="216" y="0" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- O --> <char id="79" x="0" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
-		<!-- P --> <char id="80" x="17" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- Q --> <char id="81" x="34" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- R --> <char id="82" x="51" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- S --> <char id="83" x="68" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- T --> <char id="84" x="85" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- U --> <char id="85" x="102" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- V --> <char id="86" x="119" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- W --> <char id="87" x="136" y="16" width="22" height="16" xoffset="0" yoffset="0" xadvance="22" page="0" chnl="15" />
-		<!-- X --> <char id="88" x="159" y="16" width="15" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- Y --> <char id="89" x="175" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- Z --> <char id="90" x="192" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
+		<!--   --> <char id="32"   x="0"   y="0"  width="0"  height="0"  xoffset="0" yoffset="0"  xadvance="8"  page="0" chnl="15" />
+		<!-- A --> <char id="65"   x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0"  xadvance="15" page="0" chnl="15" />
+		<!-- B --> <char id="66"   x="15"  y="0"  width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- C --> <char id="67"   x="33"  y="0"  width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- D --> <char id="68"   x="50"  y="0"  width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- E --> <char id="69"   x="67"  y="0"  width="15" height="16" xoffset="0" yoffset="0"  xadvance="15" page="0" chnl="15" />
+		<!-- F --> <char id="70"   x="83"  y="0"  width="15" height="16" xoffset="0" yoffset="0"  xadvance="15" page="0" chnl="15" />
+		<!-- G --> <char id="71"   x="99"  y="0"  width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- H --> <char id="72"   x="116" y="0"  width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- I --> <char id="73"   x="133" y="0"  width="8"  height="16" xoffset="0" yoffset="0"  xadvance="8"  page="0" chnl="15" />
+		<!-- J --> <char id="74"   x="142" y="0"  width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- K --> <char id="75"   x="159" y="0"  width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- L --> <char id="76"   x="176" y="0"  width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- M --> <char id="77"   x="193" y="0"  width="22" height="16" xoffset="0" yoffset="0"  xadvance="22" page="0" chnl="15" />
+		<!-- N --> <char id="78"   x="216" y="0"  width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- O --> <char id="79"   x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="17" page="0" chnl="15" />
+		<!-- P --> <char id="80"   x="17"  y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- Q --> <char id="81"   x="34"  y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- R --> <char id="82"   x="51"  y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- S --> <char id="83"   x="68"  y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- T --> <char id="84"   x="85"  y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- U --> <char id="85"   x="102" y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- V --> <char id="86"   x="119" y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- W --> <char id="87"   x="136" y="16" width="22" height="16" xoffset="0" yoffset="0"  xadvance="22" page="0" chnl="15" />
+		<!-- X --> <char id="88"   x="159" y="16" width="15" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- Y --> <char id="89"   x="175" y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- Z --> <char id="90"   x="192" y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- . --> <char id="46"   x="209" y="16" width="8"  height="6"  xoffset="0" yoffset="11" xadvance="9"  page="0" chnl="15" />
+		<!-- , --> <char id="44"   x="218" y="16" width="8"  height="6"  xoffset="0" yoffset="11" xadvance="9"  page="0" chnl="15" />
 
-		<!-- À --> <char id="192" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- Á --> <char id="193" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- Â --> <char id="194" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- Ã --> <char id="195" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- Ä --> <char id="196" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- Å --> <char id="197" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- Æ --> <char id="198" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- Ç --> <char id="199" x="33"  y="0"  width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- È --> <char id="200" x="67"  y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- É --> <char id="201" x="67"  y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- Ê --> <char id="202" x="67"  y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- Ë --> <char id="203" x="67"  y="0"  width="15" height="16" xoffset="0" yoffset="0" xadvance="15" page="0" chnl="15" />
-		<!-- Ì --> <char id="204" x="133" y="0"  width="8"  height="16" xoffset="0" yoffset="0" xadvance="8"  page="0" chnl="15" />
-		<!-- Í --> <char id="205" x="133" y="0"  width="8"  height="16" xoffset="0" yoffset="0" xadvance="8"  page="0" chnl="15" />
-		<!-- Î --> <char id="206" x="133" y="0"  width="8"  height="16" xoffset="0" yoffset="0" xadvance="8"  page="0" chnl="15" />
-		<!-- Ï --> <char id="207" x="133" y="0"  width="8"  height="16" xoffset="0" yoffset="0" xadvance="8"  page="0" chnl="15" />
-		<!-- Ð --> <char id="208" x="50"  y="0"  width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- Ñ --> <char id="209" x="216" y="0"  width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- Ò --> <char id="210" x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
-		<!-- Ó --> <char id="211" x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
-		<!-- Ô --> <char id="212" x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
-		<!-- Õ --> <char id="213" x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
-		<!-- Ö --> <char id="214" x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
-		<!-- Ø --> <char id="216" x="0"   y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="17" page="0" chnl="15" />
-		<!-- Ù --> <char id="217" x="102" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- Ú --> <char id="218" x="102" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- Û --> <char id="219" x="102" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
-		<!-- Ü --> <char id="220" x="102" y="16" width="16" height="16" xoffset="0" yoffset="0" xadvance="16" page="0" chnl="15" />
+		<!-- À --> <char id="192"  x="0"   y="32" width="15" height="19" xoffset="0" yoffset="-3" xadvance="15" page="0" chnl="15" />
+		<!-- Á --> <char id="193"  x="15"  y="32" width="15" height="19" xoffset="0" yoffset="-3" xadvance="15" page="0" chnl="15" />
+		<!-- Â --> <char id="194"  x="30"  y="32" width="15" height="19" xoffset="0" yoffset="-3" xadvance="15" page="0" chnl="15" />
+		<!-- Ã --> <char id="195"  x="45"  y="32" width="15" height="19" xoffset="0" yoffset="-3" xadvance="15" page="0" chnl="15" />
+		<!-- Ä --> <char id="196"  x="60"  y="32" width="15" height="19" xoffset="0" yoffset="-3" xadvance="15" page="0" chnl="15" />
+		<!-- Å --> <char id="197"  x="75"  y="32" width="15" height="20" xoffset="0" yoffset="-4" xadvance="15" page="0" chnl="15" />
+		<!-- Æ --> <char id="198"  x="90"  y="32" width="24" height="19" xoffset="0" yoffset="-3" xadvance="24" page="0" chnl="15" />
+		<!-- Ç --> <char id="199"  x="114" y="32" width="16" height="21" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- È --> <char id="200"  x="130" y="32" width="15" height="19" xoffset="0" yoffset="-3" xadvance="15" page="0" chnl="15" />
+		<!-- É --> <char id="201"  x="145" y="32" width="15" height="19" xoffset="0" yoffset="-3" xadvance="15" page="0" chnl="15" />
+		<!-- Ê --> <char id="202"  x="160" y="32" width="15" height="19" xoffset="0" yoffset="-3" xadvance="15" page="0" chnl="15" />
+		<!-- Ë --> <char id="203"  x="175" y="32" width="15" height="19" xoffset="0" yoffset="-3" xadvance="15" page="0" chnl="15" />
+		<!-- Ì --> <char id="204"  x="190" y="32" width="8"  height="19" xoffset="0" yoffset="-3" xadvance="8"  page="0" chnl="15" />
+		<!-- Í --> <char id="205"  x="198" y="32" width="8"  height="19" xoffset="0" yoffset="-3" xadvance="8"  page="0" chnl="15" />
+		<!-- Î --> <char id="206"  x="206" y="32" width="8"  height="19" xoffset="0" yoffset="-3" xadvance="8"  page="0" chnl="15" />
+		<!-- Ï --> <char id="207"  x="215" y="32" width="8"  height="19" xoffset="0" yoffset="-3" xadvance="8"  page="0" chnl="15" />
+		<!-- Ð --> <char id="208"  x="0"   y="51" width="18" height="16" xoffset="0" yoffset="0"  xadvance="18" page="0" chnl="15" />
+		<!-- Ñ --> <char id="209"  x="18"  y="51" width="16" height="19" xoffset="0" yoffset="-3" xadvance="16" page="0" chnl="15" />
+		<!-- Ò --> <char id="210"  x="34"  y="51" width="16" height="19" xoffset="0" yoffset="-3" xadvance="17" page="0" chnl="15" />
+		<!-- Ó --> <char id="211"  x="50"  y="51" width="16" height="19" xoffset="0" yoffset="-3" xadvance="17" page="0" chnl="15" />
+		<!-- Ô --> <char id="212"  x="66"  y="52" width="16" height="19" xoffset="0" yoffset="-3" xadvance="17" page="0" chnl="15" />
+		<!-- Õ --> <char id="213"  x="82"  y="52" width="16" height="19" xoffset="0" yoffset="-3" xadvance="17" page="0" chnl="15" />
+		<!-- Ö --> <char id="214"  x="98"  y="51" width="16" height="19" xoffset="0" yoffset="-3" xadvance="17" page="0" chnl="15" />
+		<!-- Ø --> <char id="216"  x="00"  y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="17" page="0" chnl="15" />
+		<!-- Ù --> <char id="217"  x="102" y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- Ú --> <char id="218"  x="102" y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- Û --> <char id="219"  x="102" y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- Ü --> <char id="220"  x="102" y="16" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+
+		<!-- А --> <char id="0410" x="0"   y="0"  width="15" height="16" xoffset="0" yoffset="0"  xadvance="15" page="0" chnl="15" />
+		<!-- Б --> <char id="0411" x="208" y="16" width="15" height="16" xoffset="0" yoffset="0"  xadvance="15" page="0" chnl="15" />
+		<!-- В --> <char id="0412" x="15"  y="0"  width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- Г --> <char id="0413" x="17"  y="32" width="15" height="16" xoffset="0" yoffset="0"  xadvance="15" page="0" chnl="15" />
+		<!-- Д --> <char id="0414" x="34"  y="32" width="15" height="16" xoffset="0" yoffset="0"  xadvance="15" page="0" chnl="15" />
+		<!-- Е --> <char id="0415" x="67"  y="0"  width="15" height="16" xoffset="0" yoffset="0"  xadvance="15" page="0" chnl="15" />
+		<!-- Ж --> <char id="0416" x="51"  y="72" width="26" height="16" xoffset="0" yoffset="0"  xadvance="26" page="0" chnl="15" />
+		<!-- З --> <char id="0417" x="77"  y="72" width="15" height="16" xoffset="0" yoffset="0"  xadvance="15" page="0" chnl="15" />
+		<!-- И --> <char id="0418" x="92"  y="72" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+		<!-- Й --> <char id="1047" x="108" y="72" width="16" height="16" xoffset="0" yoffset="0"  xadvance="16" page="0" chnl="15" />
+
+		<!-- У --> <char id="0423" x="156" y="72" width="15" height="16" xoffset="0" yoffset="0"  xadvance="15" page="0" chnl="15" />
 	</chars>
 </font>

@@ -4,11 +4,11 @@
 	But give credit where credit is due!
 */
 
-package asthg.objects;
+package asthe.objects;
 
 import flixel.math.FlxPoint;
 
-class LifeIcon extends AsthgSprite {
+class LifeIcon extends ASTHESprite {
 
 	public var character:String = null;
 	public var offsets:FlxPoint = FlxPoint.get(0, 0);
@@ -30,7 +30,7 @@ class LifeIcon extends AsthgSprite {
 	public function init(char:String):Void {
 		if (character == char) return;
 
-		final ps:Null<asthg.states.PlayState> = asthg.states.PlayState.instance;
+		final ps:Null<asthe.states.PlayState> = asthe.states.PlayState.instance;
 		if (ps == null || ps.player?.json == null) {
 			throw "PlayState or Character JSON not loaded!";
 		}
@@ -71,8 +71,8 @@ class LifeIcon extends AsthgSprite {
 	/**
 		Synchronizes the icon palette with the current player state.
 	**/
-	override public function updatePalette(pal:Array<FlxColor>):AsthgSprite {
-		final ps:Null<asthg.states.PlayState> = asthg.states.PlayState.instance;
+	override public function updatePalette(pal:Array<FlxColor>):ASTHESprite {
+		final ps:Null<asthe.states.PlayState> = asthe.states.PlayState.instance;
 		if (ps == null || ps.player?.json?.palettes == null) return this;
 
 		var palette:Array<String> = (ps.player.isSuper)

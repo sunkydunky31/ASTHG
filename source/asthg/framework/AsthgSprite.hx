@@ -4,7 +4,7 @@
 	But give credit where credit is due!
 */
 
-package asthg.framework;
+package asthe.framework;
 
 import flixel.FlxSprite;
 import flixel.addons.display.FlxSliceSprite;
@@ -20,12 +20,12 @@ import flixel.system.FlxAssets.FlxGraphicAsset;
 
 	Example:
 	```haxe
-	var mySprite:AsthgSprite = new AsthgSprite();
+	var mySprite:ASTHESprite = new ASTHESprite();
 	mySprite.create(0, 0, "My Sprite"); // calls `loadGraphic(Paths.image("My Sprite"));` + `setPosition(0, 0);`
 	```
 **/
-class AsthgSprite extends FlxSprite {
-	private static var fallback = flixel.system.FlxAssets.getBitmapData("flixel/images/logo/default");
+class ASTHESprite extends FlxSprite {
+	public var frameCount:Int = 0;
 
 	public function new(?x:Float = 0, ?y:Float = 0.0) {
 		super(x, y);
@@ -36,24 +36,11 @@ class AsthgSprite extends FlxSprite {
 		@param x Position of the sprite
 		@param y Position of the sprite
 		@param image The image to load
-		@return AsthgSprite
+		@return ASTHESprite
 	**/
-	public static function create(x:Float = 0, y:Float = 0, image:Null<String>):AsthgSprite {
-		var spr:AsthgSprite = new AsthgSprite(x, y);
-
-		if (!StringUtil.isBlank(image)) {
-			var graphic:FlxGraphic = Paths.image(image);
-			if (graphic != null) {
-				spr.loadGraphic(graphic);
-			} else {
-				trace("Image not found".warn());
-				spr.loadGraphic(fallback);
-			}
-		} else {
-			trace("'Image' argument is null/empty!".warn());
-			spr.loadGraphic(fallback);
-		}
-
+	public static function create(x:Float = 0, y:Float = 0, image:Null<String>):ASTHESprite {
+		var spr:ASTHESprite = new ASTHESprite(x, y);
+		spr.loadSprite(image);
 		return spr;
 	}
 
@@ -64,25 +51,23 @@ class AsthgSprite extends FlxSprite {
 		@param fWidth Width per frame
 		@param fHeight Height per frame
 		@param image The image to load
-		@return AsthgSprite
+		@return ASTHESprite
 	**/
-	public static function createSpriteSheet(x:Float = 0, y:Float = 0, fWidth:Int, fHeight:Int, image:Null<String> = null):AsthgSprite {
-		var spr:AsthgSprite = new AsthgSprite(x, y);
+	public static function createSpriteSheet(x:Float = 0, y:Float = 0, image:Null<String> = null, ?fWidth:Int, ?fHeight:Int):ASTHESprite {
+		return new ASTHESprite(x, y).loadSpriteSheet(image, fWidth, fHeight);
+	}
 
-		if (!StringUtil.isBlank(image)) {
-			var graphic:FlxGraphic = Paths.image(image);
-			if (graphic != null) {
-				spr.loadGraphic(graphic, true, fWidth, fHeight);
-			} else {
-				trace('Image not found: $image'.warn());
-				spr.loadGraphic(fallback);
-			}
-		} else {
-			trace("'Image' argument is null/empty!".warn());
-			spr.loadGraphic(fallback);
-		}
-
-		return spr;
+	/**
+		Creates a sprite sheet with adaptive sizes
+		@param x Position of the sprite
+		@param y Position of the sprite
+		@param fWidth Width per frame
+		@param fHeight Height per frame
+		@param image The image to load
+		@return ASTHESprite
+	**/
+	public static function createAdaptiveSpriteSheet(x:Float = 0, y:Float = 0, image:Null<String> = null):ASTHESprite {
+		return new ASTHESprite(x, y).loadAdaptiveSpriteSheet(image);
 	}
 
 	/**
@@ -90,27 +75,10 @@ class AsthgSprite extends FlxSprite {
 		@param x Horizontal position.
 		@param y Vertical position
 		@param image Image name
-		@return AsthgSprite
+		@return ASTHESprite
 	**/
-	public static function createSparrow(x:Float = 0, y:Float = 0, image:Null<String> = null):AsthgSprite {
-		var spr:AsthgSprite = new AsthgSprite(x, y);
-
-		if (!StringUtil.isBlank(image)) {
-			var frames = Paths.getSparrowAtlas(image);
-			if (frames != null) {
-				spr.frames = frames;
-			}
-			else {
-				trace('Atlas not found: $image'.warn());
-				spr.loadGraphic(fallback);
-			}
-		}
-		else {
-			trace("'Image' argument is null/empty!".warn());
-			spr.loadGraphic(fallback);
-		}
-
-		return spr;
+	public static function createSparrow(x:Float = 0, y:Float = 0, image:Null<String> = null):ASTHESprite {
+		return new ASTHESprite(x, y).loadSparrow(image);
 	}
 
 	/**
@@ -135,9 +103,9 @@ class AsthgSprite extends FlxSprite {
 		@param width The width of the rectangle
 		@param height The height of the rectangle
 		@param color The color to fill
-		@return AsthgSprite
+		@return ASTHESprite
 	**/
-	public function createGraphic(width:Float = 1, height:Float = 1, color:FlxColor = FlxColor.WHITE):AsthgSprite {
+	public function createGraphic(width:Float = 1, height:Float = 1, color:FlxColor = FlxColor.WHITE):ASTHESprite {
 		var graph:FlxGraphic = FlxG.bitmap.create(2, 2, color, false, 'graphic($width,$height,#${color.toWebString()})');
 		frames = graph.imageFrame;
 		scale.set(width / 2, height / 2);
@@ -165,6 +133,85 @@ class AsthgSprite extends FlxSprite {
 		return sliceSprite;
 	}
 
+	public function loadSprite(image:String):ASTHESprite {
+		if (StringUtil.isBlank(image)) {
+			trace("'Image' argument is null/empty!".error());
+			return this;
+		}
+
+		var graphic:FlxGraphic = Paths.image(image);
+
+		if (graphic != null) {
+			loadGraphic(graphic);
+		}
+		else {
+			trace("Image not found! ({0})".error(), image);
+		}
+
+		return this;
+	}
+
+	public function loadSpriteSheet(image:String, fWidth:Int, fHeight:Int):ASTHESprite {
+		if (StringUtil.isBlank(image)) {
+			trace("'Image' argument is null/empty!".error());
+			return this;
+		}
+
+		var graphic:FlxGraphic = Paths.image(image);
+
+		if (graphic != null) {
+			loadGraphic(graphic, true, fWidth, fHeight);
+		}
+		else {
+			trace("Image not found! ({0})".error(), image);
+		}
+
+		return this;
+	}
+
+	/**
+		Loads an sprite sheet, but with an adaptive Width and Height determining the amounts of frames
+		@param image
+		@return ASTHESprite
+	**/
+	public function loadAdaptiveSpriteSheet(image:String, ?fromVertical:Bool = false):ASTHESprite {
+		if (StringUtil.isBlank(image)) {
+			trace("'Image' argument is null/empty!".error());
+			return this;
+		}
+
+		var graphic:FlxGraphic = Paths.image(image);
+
+		if (graphic != null) {
+			this.frameCount = (!fromVertical) ? Math.round(graphic.width / graphic.height) : Math.round(graphic.height / graphic.width);
+			loadGraphic(graphic, true,
+				(!fromVertical) ? Math.round(graphic.width  / frameCount) : graphic.width,
+				 (fromVertical) ? Math.round(graphic.height / frameCount) : graphic.height);
+		}
+		else {
+			trace("Image not found! ({0})".error(), image);
+		}
+
+		return this;
+	}
+
+	public function loadSparrow(image:String):ASTHESprite {
+		if (StringUtil.isBlank(image)) {
+			trace("'Image' argument is null/empty!".warn());
+			return this;
+		}
+
+		var atlas = Paths.getSparrowAtlas(image);
+		if (atlas != null) {
+			frames = atlas;
+		}
+		else {
+			trace('Atlas not found: {0}'.warn(), image);
+		}
+
+		return this;
+	}
+
 	private var paletteApplied:Bool = false;
 	/**
 		Switches global colors into custom colors using GLSL shader
@@ -173,9 +220,9 @@ class AsthgSprite extends FlxSprite {
 
 		@param pal The colors to replace in order, Must match the length of Constants.PALETTE_OVERRIDE
 		@param tolerance Color matching tolerance (0.0 - 1.0, default 0.1)
-		@return AsthgSprite
+		@return ASTHESprite
 	**/
-	public function applyPalette(pal:Array<FlxColor>):AsthgSprite {
+	public function applyPalette(pal:Array<FlxColor>):ASTHESprite {
 		if (ClientPrefs.data.options.cacheOnGPU) {
 			trace("Caching sprites is enabled! Returning or it will throw an error...".warn());
 			return this;
@@ -221,9 +268,9 @@ class AsthgSprite extends FlxSprite {
 	/**
 		Updates the palette even if it was already applied (for dynamic palette changes)
 		@param pal The colors to replace in order
-		@return AsthgSprite
+		@return ASTHESprite
 	**/
-	public function updatePalette(pal:Array<FlxColor>):AsthgSprite {
+	public function updatePalette(pal:Array<FlxColor>):ASTHESprite {
 		paletteApplied = false;
 		return applyPalette(pal);
 	}
@@ -233,7 +280,7 @@ class AsthgSprite extends FlxSprite {
 		@param width The target width
 		@param height The target height
 		@param updateHitbox Whether to update the hitbox after scaling
-		@return AsthgSprite
+		@return ASTHESprite
 	**/
 	@:deprecated("This function will be removed soon, use `scale.set()` + `updateHitbox()`!")
 	public function scaleSet(width:Float, height:Float, ?updHitbox:Bool = true):Void {

@@ -1,5 +1,5 @@
 @{
-	Title = "Contruindo o ASTHG"
+	Title = "Contruindo o ASTHE"
 	PausePrompt = "Pressione qualquer tecla para continuar. . ." # Command prompt style message
 	BuildTexts = @{
 		"build" = "Construindo..."

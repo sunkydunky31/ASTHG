@@ -1,4 +1,4 @@
-package asthg.framework;
+package asthe.framework;
 
 using util.StringUtil;
 
@@ -6,7 +6,7 @@ import flixel.sound.FlxSound;
 import flixel.sound.FlxSoundGroup;
 import openfl.media.Sound;
 
-class AsthgSound extends FlxSound {
+class ASTHESound extends FlxSound {
 	static var tagData:Null<Xml> = null;
 	public static var tags:Map<String, Dynamic> = new Map<String, Dynamic>();
 
@@ -23,7 +23,7 @@ class AsthgSound extends FlxSound {
 		@param loop Loops or not the sound
 		@param volume Volume for this sound
 		@return FlxSound
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	inline public static function playSound(sound:String, ?params:SoundParameters) {
 		_soundn = sound;
@@ -37,7 +37,7 @@ class AsthgSound extends FlxSound {
 		@param sound Music name or path
 		@param volume Volume to play `this` music
 		@param group Sets a sound group for `this` music
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	public static function playMusic(sound:String, ?params:SoundParameters) {_soundn = sound;
 		_params = params;
@@ -94,7 +94,7 @@ class AsthgSound extends FlxSound {
 	/**
 		Parses a XML Tag data exported from Audacity, yes, from Audacity.
 		@param xml The XML data string
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	public static function parseTags(xml:String):Void {
 		if (StringUtil.isBlank(xml))
@@ -181,7 +181,7 @@ class AsthgSound extends FlxSound {
 		Noticed that loopTime uses MILLISECONDS and not SAMPLES? this converts it into `ms`
 		@param sample Sample of your track
 		@return Float
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	inline public static function getSampleLoop(sample:Int = 0, hz:Int = 44100):Float {
 		return ((sample ?? 0) * 1000) / hz;

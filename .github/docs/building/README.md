@@ -28,7 +28,7 @@ There's 2 ways on how to use the build script:
 ### Using PowerShell
 
 1. Open PowerShell (Core) terminal
-2. Navigate to the `build` folder (`Set-Location "[your_project_path]/ASTHG"`)
+2. Navigate to the `build` folder (`Set-Location "[your_project_path]/ASTHE"`)
 3. Call the script with `. ".\_project\build\build.ps1"`, you can add arguments if needed (it overrides the config file settings)
    Arguments:
 

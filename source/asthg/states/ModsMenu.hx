@@ -1,4 +1,4 @@
-package asthg.states;
+package asthe.states;
 
 #if MODS_ALLOWED
 import polymod.Polymod;
@@ -23,9 +23,9 @@ class ModsMenu extends StateManager {
 	public var hasMods:Bool = false;
 	var cachedMods:Array<ModMetadata> = [];
 
-	var vers:AsthgText = new AsthgText(0, 0, "");
-	var authors:AsthgText = new AsthgText(0, 0, "");
-	var desc:AsthgText = new AsthgText(0, 0, "");
+	var vers:ASTHEText = new ASTHEText(0, 0, "");
+	var authors:ASTHEText = new ASTHEText(0, 0, "");
+	var desc:ASTHEText = new ASTHEText(0, 0, "");
 
 	override function create() {
 		Paths.clearStoredMemory();
@@ -43,10 +43,10 @@ class ModsMenu extends StateManager {
 			hasMods = !ArrayUtil.isBlank(cachedMods);
 		}
 
-		var bg:AsthgSprite = AsthgSprite.create(0, 0, "menus/mods/bg");
+		var bg:ASTHESprite = ASTHESprite.create(0, 0, "menus/mods/bg");
 		add(bg);
 
-		var titleTxt:AsthgBitmapText = AsthgBitmapText.createAngelCode(FlxG.width/2, 2, Locale.getString("title", "mods_menu"), "Roco");
+		var titleTxt:ASTHEBitmapText = ASTHEBitmapText.createAngelCode(FlxG.width/2, 2, Locale.getString("title", "mods_menu"), "Roco");
 		titleTxt.x -= (titleTxt.width/2);
 		add(titleTxt);
 
@@ -56,42 +56,44 @@ class ModsMenu extends StateManager {
 		refreshList();
 
 		if (hasMods) {
-			var bottom:AsthgSprite = AsthgSprite.create(0, 156, "menus/mods/bottom");
+			var bottom:ASTHESprite = ASTHESprite.create(0, 156, "menus/mods/bottom");
 			add(bottom);
 
-			vers = AsthgText.create(3, bottom.y + 2, "");
+			vers = ASTHEText.create(3, bottom.y + 2, "");
 			add(vers);
 
-			authors = AsthgText.create(40, bottom.y + 2, "");
+			authors = ASTHEText.create(40, bottom.y + 2, "");
 			add(authors);
 
-			desc = AsthgText.create(bottom.x + 4, bottom.y + 21, "");
+			desc = ASTHEText.create(bottom.x + 4, bottom.y + 21, "");
 			desc.fieldWidth = 420;
 			desc.fieldHeight = 61;
 			add(desc);
 		}
 		else {
-			var warn:AsthgBitmapText = AsthgBitmapText.createAngelCode(0, 90, Locale.getString("no_mods_warn", "mods_menu"), "Roco");
+			var warn:ASTHEBitmapText = ASTHEBitmapText.createAngelCode(0, 90, Locale.getString("no_mods_warn", "mods_menu"), "Roco");
 			warn.screenCenter(X);
 			add(warn);
 		}
 
 		super.create();
-		changeSelection(0);
-		AsthgSound.playMusic("MainMenu", { persist: true });
+		changeItem(0);
+		ASTHESound.playMusic("MainMenu", { persist: true });
 	}
 
 	override function update(e:Float) {
 		if (controls.BACK) {
-			AsthgSound.playSound(ConstantSound.MENU_BACK);
-			StateManager.switchState(new asthg.states.MainMenu());
+			ASTHESound.playSound(ConstantSound.MENU_BACK);
+			FlxG.switchState(() -> new asthe.states.MainMenu());
 		}
 
-		if (hasMods)
-			if (controls.UP || controls.DOWN) {
-				AsthgSound.playSound(ConstantSound.MENU_SCROLL);
-				changeSelection(controls.UP ? -1 : 1);
+		if (hasMods) {
+			var mult:Int = (FlxG.keys.pressed.SHIFT) ? 4 : 1;
+			var scroll = FlxG.mouse.wheel;
+			if (controls.UP || controls.DOWN || scroll != 0) {
+				changeItem(((controls.UP ? -1 : controls.DOWN ? 1 : 0) - scroll) * mult);
 			}
+		}
 
 		super.update(e);
 	}
@@ -141,8 +143,11 @@ class ModsMenu extends StateManager {
 		}
 	}
 
-	function changeSelection(idx:Int):Void {
+	function changeItem(idx:Int):Void {
 		if (grpMods?.length <= 0 || !hasMods) return;
+
+		if (idx != 0)
+			ASTHESound.playSound(ConstantSound.MENU_SCROLL);
 
 		curSelected = FlxMath.wrap(curSelected + idx, 0, grpMods.length - 1);
 		for (i in 0...grpMods.length) {
@@ -161,8 +166,8 @@ private class ModEntry extends FlxSpriteGroup {
 	public var enabled:Bool;
 	public var selected:Bool = false;
 
-	public var icon:AsthgSprite = new AsthgSprite().createGraphic(18, 18, FlxColor.BLACK);
-	public var text:AsthgBitmapText = AsthgBitmapText.createAngelCode(0, 0, "", "HUD");
+	public var icon:ASTHESprite = new ASTHESprite().createGraphic(18, 18, FlxColor.BLACK);
+	public var text:ASTHEBitmapText = ASTHEBitmapText.createAngelCode(0, 0, "", "HUD");
 
 	// Mod Meta Info
 	public var compatible:Null<Bool> = true;
@@ -189,7 +194,7 @@ private class ModEntry extends FlxSpriteGroup {
 			}
 		}
 
-		bg = AsthgSprite.createSliced(x, y, 416, 18, "UI/button", [3, 3, 1, 1], [0, 0, 7, 7]);
+		bg = ASTHESprite.createSliced(x, y, 416, 18, "UI/button", [3, 3, 1, 1], [0, 0, 7, 7]);
 		add(bg);
 
 		icon.setPosition(x + 5, y - 1);
@@ -197,7 +202,7 @@ private class ModEntry extends FlxSpriteGroup {
 		icon.updateHitbox();
 		add(icon);
 
-		var border:AsthgSprite = AsthgSprite.create(icon.x - 1, icon.y - 1, "menus/mods/iconBorder");
+		var border:ASTHESprite = ASTHESprite.create(icon.x - 1, icon.y - 1, "menus/mods/iconBorder");
 		add(border);
 
 		text.x = x + 34;

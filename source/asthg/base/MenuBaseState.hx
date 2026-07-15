@@ -1,6 +1,6 @@
-package asthg.base;
+package asthe.base;
 
-import asthg.backend.StateManager;
+import asthe.backend.StateManager;
 
 class MenuBaseState extends StateManager {
 	public var selected:Int = 0;
@@ -64,7 +64,7 @@ class MenuBaseState extends StateManager {
 			var opt = grpOptions.members[selected],
 			optLast = grpOptions.members[grpOptions.length - 1];
 
-			camFollow.y = FlxMath.bound(opt.y + (opt.height / 2) - (FlxG.height / 2), 0, (optLast.y + optLast.height - FlxG.height));
+			camFollow.y = MathUtil.clamp(opt.y + (opt.height / 2) - (FlxG.height / 2), 0, (optLast.y + optLast.height - FlxG.height));
 		}
 	}
 }

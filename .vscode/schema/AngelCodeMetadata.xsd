@@ -85,37 +85,37 @@
                         for <code>SPACE</code> (<code>U+0020</code>) </xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
-                  <xs:attribute name="x" type="xs:float">
+                  <xs:attribute name="x" type="xs:integer">
                     <xs:annotation>
                       <xs:documentation>Left position of the glyph on the image</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
-                  <xs:attribute name="y" type="xs:float">
+                  <xs:attribute name="y" type="xs:integer">
                     <xs:annotation>
                       <xs:documentation>Top position of the glyph on the image</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
-                  <xs:attribute name="width" type="xs:float">
+                  <xs:attribute name="width" type="xs:integer">
                     <xs:annotation>
                       <xs:documentation>Width of the glyph image</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
-                  <xs:attribute name="height" type="xs:float">
+                  <xs:attribute name="height" type="xs:integer">
                     <xs:annotation>
                       <xs:documentation>Height of the glyph image </xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
-                  <xs:attribute name="xoffset" default="0">
+                  <xs:attribute name="xoffset" type="xs:integer" default="0">
                     <xs:annotation>
                       <xs:documentation>How much should your glyph be offset horizontally</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
-                  <xs:attribute name="yoffset" default="0">
+                  <xs:attribute name="yoffset" type="xs:integer" default="0">
                     <xs:annotation>
                       <xs:documentation>How much should your glyph be offset vertically</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
-                  <xs:attribute name="xadvance" default="0">
+                  <xs:attribute name="xadvance" type="xs:integer" default="0">
                     <xs:annotation>
                       <xs:documentation>Spacement width of the glyph<br />Set to <code>0</code> will make the next glyph override this one</xs:documentation>
                     </xs:annotation>
@@ -125,7 +125,7 @@
                       <xs:documentation></xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
-                  <xs:attribute name="chnl">
+                  <xs:attribute name="chnl" type="xs:integer">
                     <xs:annotation>
                       <xs:documentation>Defines the number of image channels that this glyph uses</xs:documentation>
                     </xs:annotation>

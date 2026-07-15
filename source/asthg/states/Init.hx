@@ -1,4 +1,4 @@
-package asthg.states;
+package asthe.states;
 
 import flixel.input.keyboard.FlxKey;
 
@@ -31,24 +31,24 @@ class Init extends StateManager {
 		#if debug
 			#if PLAYSTATE
 			trace("Starting on PlayState...");
-			StateManager.switchState(new asthg.states.PlayState());
+			FlxG.switchState(() -> new asthe.states.PlayState());
 			#elseif MODS
 			trace("Starting on Mods Menu...");
-			StateManager.switchState(new asthg.states.ModsMenu());
+			FlxG.switchState(() -> new asthe.states.ModsMenu());
 			#elseif OPTIONS
 			trace("Starting on Options Menu...");
-			StateManager.switchState(new asthg.options.OptionsState());
+			FlxG.switchState(() -> new asthe.options.OptionsState());
 			#elseif (SAVESELECT || DATASELECT)
 			trace("Starting on Save Select...");
-			StateManager.switchState(new asthg.states.SaveSelect());
+			FlxG.switchState(() -> new asthe.states.SaveSelect());
 			#else
 			trace("Starting on Main Menu...");
-			StateManager.switchState(new asthg.states.MainMenu());
+			FlxG.switchState(() -> new asthe.states.MainMenu());
 			#end
 		#else
 		// Fallbacks to Title Screen
 		trace("Starting on Title Screen...");
-		StateManager.switchState(new asthg.states.TitleState());
+		FlxG.switchState(() -> new asthe.states.TitleState());
 		#end
 	}
 }

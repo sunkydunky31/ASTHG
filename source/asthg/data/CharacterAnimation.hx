@@ -1,4 +1,4 @@
-package asthg.data;
+package asthe.data;
 
 typedef CharacterAnimation = {
 	/**

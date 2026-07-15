@@ -4,9 +4,9 @@
 	But give credit where credit is due!
 */
 
-package asthg.states;
+package asthe.states;
 
-import asthg.objects.Character;
+import asthe.objects.Character;
 import flixel.tween.*;
 
 class SaveSelect extends StateManager {
@@ -18,17 +18,31 @@ class SaveSelect extends StateManager {
 	var curChar:Int = 0;
 	var curZone:Int = 0;
 
-	var selectSave:AsthgSprite;
-	var arrow1:AsthgSprite;
-	var arrow2:AsthgSprite;
-	var arrow3:AsthgSprite;
-	var arrow4:AsthgSprite;
+	var selectSave:ASTHESprite;
+	var arrow1:ASTHESprite;
+	var arrow2:ASTHESprite;
+	var arrow3:ASTHESprite;
+	var arrow4:ASTHESprite;
 
-	public var character:Character;
+	public static var charList:Array<String>;
 
 	override function create() {
+		charList = [];
 		Paths.clearUnusedMemory();
 		Paths.clearStoredMemory();
+
+		for (char in openfl.utils.Assets.list(TEXT)) {
+			if (char.contains("data/characters/") && char.endsWith(".json")) {
+				var ind = char.lastIndexOf("/");
+				var name = char.substring(ind + 1, char.length - 5);
+
+				if (charList.contains(name))
+					return; // We don't need to add that name again
+
+				charList.push(name);
+				trace("Added char: " + name);
+			}
+		}
 
 		saveGroup = new FlxTypedGroup<SaveEntry>();
 
@@ -42,14 +56,14 @@ class SaveSelect extends StateManager {
 		FlxG.cameras.add(camFront, false);
 		camFront.follow(camFollow, LOCKON, 0.12);
 
-		var bg:AsthgSprite = AsthgSprite.create(0, 0, "menus/saveSelect/bg");
+		var bg:ASTHESprite = ASTHESprite.create(0, 0, "menus/saveSelect/bg");
 		add(bg);
 
-		var bgLayer:AsthgSprite = new AsthgSprite().createGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bgLayer:ASTHESprite = new ASTHESprite().createGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bgLayer.alpha = ClientPrefs.data.options.backLayers;
 		add(bgLayer);
 
-		var title:FlxBitmapText = new FlxBitmapText(FlxG.width/2, FlxG.height - 26, Locale.getString("title", "save_select"), Paths.getAngelCodeFont("GameOver"));
+		var title:ASTHEBitmapText = ASTHEBitmapText.createAngelCode(FlxG.width/2, FlxG.height - 26, Locale.getString("title", "save_select"), "GameOver");
 		title.x -= title.width / 2;
 		add(title);
 
@@ -62,28 +76,28 @@ class SaveSelect extends StateManager {
 		add(saveGroup);
 
 		//Do not touch the position of this sprite
-		selectSave = AsthgSprite.create(saveGroup.members[curSlot].x, saveGroup.members[curSlot].y, "menus/saveSelect/selected");
+		selectSave = ASTHESprite.create(saveGroup.members[curSlot].x, saveGroup.members[curSlot].y, "menus/saveSelect/selected");
 		FlxTween.color(selectSave, 0.2, Constants.SAVE_SELECTED_FRAME_COLOR[0], Constants.SAVE_SELECTED_FRAME_COLOR[1], {type: FlxTweenType.PINGPONG, ease: FlxEase.linear});
 		selectSave.cameras = [camFront];
 		add(selectSave);
 
 		// Positions of all the sprites above are updated on `changeSlot()`
-		arrow1 = AsthgSprite.create(0, 0, "menus/saveSelect/selectArrow");
+		arrow1 = ASTHESprite.create(0, 0, "menus/saveSelect/selectArrow");
 		arrow1.color = Constants.SAVE_SELECTED_ARROW_COLOR[0];
 		arrow1.cameras = [camFront];
 		add(arrow1);
 
-		arrow2 = AsthgSprite.create(0, 0, "menus/saveSelect/selectArrow");
+		arrow2 = ASTHESprite.create(0, 0, "menus/saveSelect/selectArrow");
 		arrow2.color = Constants.SAVE_SELECTED_ARROW_COLOR[1];
 		arrow2.cameras = [camFront];
 		add(arrow2);
 
-		arrow3 = AsthgSprite.create(0, 0, "menus/saveSelect/selectArrowFlip");
+		arrow3 = ASTHESprite.create(0, 0, "menus/saveSelect/selectArrowFlip");
 		arrow3.color = arrow1.color;
 		arrow3.cameras = [camFront];
 		add(arrow3);
 
-		arrow4 = AsthgSprite.create(0, 0, "menus/saveSelect/selectArrowFlip");
+		arrow4 = ASTHESprite.create(0, 0, "menus/saveSelect/selectArrowFlip");
 		arrow4.color = arrow2.color;
 		arrow4.cameras = [camFront];
 		add(arrow4);
@@ -91,7 +105,7 @@ class SaveSelect extends StateManager {
 		changeSlot();
 
 		super.create();
-		AsthgSound.playMusic("SaveSelect");
+		ASTHESound.playMusic("SaveSelect");
 	}
 
 	override function update(e:Float) {
@@ -100,17 +114,16 @@ class SaveSelect extends StateManager {
 		if (controls.ACCEPT) {
 			if (getSaveState(curSlot) == InProgress) {
 				ClientPrefs.loadSlot(curSlot);
-				LoadingState.switchStates(new asthg.states.PlayState(), true);
+				LoadingState.switchStates(new asthe.states.PlayState(), true);
 			}
 			else {
 				ClientPrefs.createSlot(curSlot, Constants.DEFAULT_CHARACTER);
-				LoadingState.switchStates(new asthg.states.PlayState(), true);
+				LoadingState.switchStates(new asthe.states.PlayState(), true);
 			}
-
 		}
 
 		if (controls.BACK)
-			StateManager.switchState(new asthg.states.MainMenu());
+			FlxG.switchState(() -> new asthe.states.MainMenu());
 
 		if (controls.UP || controls.DOWN) {
 			switch (getSaveState(curSlot)) {
@@ -123,13 +136,15 @@ class SaveSelect extends StateManager {
 
 		if (controls.LEFT || controls.RIGHT) {
 			changeSlot(controls.LEFT ? -1 : 1);
-			AsthgSound.playSound(ConstantSound.MENU_SCROLL);
 		}
 	}
 
 	function changeSlot(count:Int = 0) {
 		if (ArrayUtil.isBlank(saveGroup.members))
 			return;
+
+		if (count != 0)
+			ASTHESound.playSound(ConstantSound.MENU_SCROLL);
 
 		curSlot = FlxMath.wrap(curSlot + count, 0, saveGroup.length - 1);
 
@@ -140,19 +155,24 @@ class SaveSelect extends StateManager {
 		}
 
 		selectSave.setPosition  (member.x, member.y);
-		arrow1.setPosition      (member.x + (member.width / 2), member.y + 14);
-		arrow2.setPosition      (member.x + (member.width / 2), member.y + 65);
-		arrow3.setPosition      (member.x + (member.width / 2), arrow1.y + 18);
-		arrow4.setPosition      (member.x + (member.width / 2), arrow2.y + 30);
+		arrow1.setPosition      (selectSave.x + (member.width / 2), member.y + 14);
+		arrow2.setPosition      (selectSave.x + (member.width / 2), member.y + 65);
+		arrow3.setPosition      (selectSave.x + (member.width / 2), arrow1.y + 18);
+		arrow4.setPosition      (selectSave.x + (member.width / 2), arrow2.y + 30);
 
 		camFollow.setPosition(selectSave.x + (selectSave.width / 2), selectSave.y + (selectSave.height / 2));
 	}
 
 	function changeCharacter(count:Int = 0) {
-		if (ArrayUtil.isBlank(saveGroup.members))
+		if (SaveEntry.instance == null || ArrayUtil.isBlank(charList))
 			return;
 
-		curChar = FlxMath.wrap(curChar + count, 0, saveGroup.length - 1);
+		if (count != 0)
+			ASTHESound.playSound(ConstantSound.MENU_SCROLL);
+
+		curChar = FlxMath.wrap(curChar + count, 0, charList.length - 1);
+
+		saveGroup.members[curSlot].character.loadGraphic("menus/saveSelect/characters/" + charList[curChar]);
 	}
 
 	static function getSaveState(slot:Int):SaveState {
@@ -170,32 +190,33 @@ class SaveSelect extends StateManager {
 
 @:nullSafety
 class SaveEntry extends FlxSpriteGroup {
+	public static var instance:Null<SaveEntry> = null;
+	public var character:Null<ASTHESprite> = null;
+
 	public function new(id:Int) {
 		super();
+		instance = this;
 
 		var data = ClientPrefs.loadSlotData(id);
 
-		var portrait:AsthgSprite;
+		var portrait:ASTHESprite;
 		if (!ClientPrefs.slotExists(id)) {
-			portrait = AsthgSprite.create(2, 2, "menus/saveSelect/savePortrait_new");
+			portrait = ASTHESprite.create(2, 2, "menus/saveSelect/savePortrait_new");
 			add(portrait);
 		}
 
-		var save:AsthgSprite = AsthgSprite.create(0, 0, "menus/saveSelect/save");
+		var save:ASTHESprite = ASTHESprite.create(0, 0, "menus/saveSelect/save");
 		add(save);
 
-		//var label:AsthgBitmapText =
+		//var label:ASTHEBitmapText =
 
 		for (i in 0...7) {
 			var colors:Array<String> = [
 				"cyan", "red", "green", "yellow", "gray", "purple", "blue"
 			];
 
-			var _emerl = Paths.image("menus/saveSelect/emeralds");
-			var emerlSize = Math.round(_emerl.width / _emerl.height); // Sprite frames
-
-			var emerald:AsthgSprite = AsthgSprite.createSpriteSheet(2, save.height - 12, Math.round(_emerl.width / emerlSize), _emerl.height, "menus/saveSelect/emeralds");
-			emerald.x += ((emerald.width / emerlSize) * i) + i;
+			var emerald:ASTHESprite = ASTHESprite.createAdaptiveSpriteSheet(2, save.height - 12, "menus/saveSelect/emeralds");
+			emerald.x += ((emerald.width / emerald.frameCount) * i) + i;
 
 			emerald.animation.add(colors[i], [i], false, false);
 
@@ -204,6 +225,10 @@ class SaveEntry extends FlxSpriteGroup {
 			emerald.visible = (ClientPrefs.slotExists(id)) ? (data?.emeralds[i] ?? false) : false;
 			add(emerald);
 		}
+
+		character = ASTHESprite.create(save.x + (save.width / 2), save.y + (save.height / 2), "menus/saveSelect/characters/" + SaveSelect.charList[0]);
+		character.x -= (character.width / 2);
+		add(character);
 	}
 }
 

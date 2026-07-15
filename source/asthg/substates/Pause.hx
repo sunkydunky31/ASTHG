@@ -1,8 +1,8 @@
-package asthg.substates;
+package asthe.substates;
 
 class Pause extends SubStateManager {
 	public var curSelected:Int = 0;
-	public var grpOptions:FlxTypedGroup<AsthgText>;
+	public var grpOptions:FlxTypedGroup<ASTHEText>;
 	public var options:Array<String> = [];
 	var options2:Array<String> = [
 		'Resume',
@@ -11,16 +11,16 @@ class Pause extends SubStateManager {
 	];
 
 	var backd:FlxBackdrop;
-	var backdFill:AsthgSprite;
+	var backdFill:ASTHESprite;
 
 	override function create() {
 		options = options2;
-		var bg:AsthgSprite = new AsthgSprite().createGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg:ASTHESprite = new ASTHESprite().createGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.scrollFactor.set();
 		bg.alpha = 0.20;
 		add(bg);
 
-		var bottomFill:AsthgSprite = new AsthgSprite(0,FlxG.height-16).createGraphic(FlxG.width, 20, FlxColor.BLACK);
+		var bottomFill:ASTHESprite = new ASTHESprite(0,FlxG.height-16).createGraphic(FlxG.width, 20, FlxColor.BLACK);
 		add(bottomFill);
 
 		backd = new FlxBackdrop(Paths.image("UI/backdropY"), Y);
@@ -31,13 +31,13 @@ class Pause extends SubStateManager {
 		add(backd);
 
 		var fillWidth = FlxG.width - (backd.x + backd.width);
-		backdFill = new AsthgSprite(backd.x + backd.width, 0).createGraphic(Std.int(fillWidth), FlxG.height, backd.color);
+		backdFill = new ASTHESprite(backd.x + backd.width, 0).createGraphic(Std.int(fillWidth), FlxG.height, backd.color);
 		add(backdFill);
 
-		grpOptions = new FlxTypedGroup<AsthgText>();
+		grpOptions = new FlxTypedGroup<ASTHEText>();
 		add(grpOptions);
 
-		var titleTxt:AsthgBitmapText = AsthgBitmapText.createAngelCode(20, bottomFill.y - 6, Locale.getString("title", "pause"), "Roco");
+		var titleTxt:ASTHEBitmapText = ASTHEBitmapText.createAngelCode(20, bottomFill.y - 6, Locale.getString("title", "pause"), "Roco");
 		add(titleTxt);
 
 		regenerateMenu();
@@ -57,21 +57,25 @@ class Pause extends SubStateManager {
 		}
 
 		if (controls.UP || controls.DOWN) {
-			changeSelection(controls.UP ? -1 : 1);
-			AsthgSound.playSound(ConstantSound.MENU_SCROLL);
+			var mult:Int = (FlxG.keys.pressed.SHIFT) ? 4 : 1;
+			var scroll = FlxG.mouse.wheel;
+			if (controls.UP || controls.DOWN || scroll != 0) {
+				changeItem(((controls.UP ? -1 : controls.DOWN ? 1 : 0) - scroll) * mult);
+			}
 		}
+
 		var selected:String = options[curSelected];
 		if ((controls.ACCEPT || controls.PAUSE) && (cantUnpause <= 0)) {
-			AsthgSound.playSound(ConstantSound.MENU_ACCEPT);
+			ASTHESound.playSound(ConstantSound.MENU_ACCEPT);
 			switch (selected.toLowerCase()) {
 				case 'resume':
 					close();
 					FlxG.sound.music?.resume();
 				case 'restart':
-					StateManager.resetState();
+					FlxG.resetState();
 				case 'exit to menu':
 					#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
-					StateManager.switchState(new asthg.states.MainMenu());
+					FlxG.switchState(() -> new asthe.states.MainMenu());
 			}
 		}
 
@@ -79,26 +83,32 @@ class Pause extends SubStateManager {
 
 	function regenerateMenu() {
 		for (i in 0...grpOptions.members.length) {
-			var obj:AsthgText = grpOptions.members[0];
+			var obj:ASTHEText = grpOptions.members[0];
 			obj.kill();
 			grpOptions.remove(obj, true);
 			obj.destroy();
 		}
 
 		for (num => str in options) {
-			var item:AsthgText = AsthgText.create(backd.x + 3, 60, Locale.getString(str, "pause"));
+			var item:ASTHEText = ASTHEText.create(backd.x + 3, 60, Locale.getString(str, "pause"));
 			item.y += (30 * (num - (options.length / 2))) + item.height;
 			item.fieldWidth = backdFill.width;
-			item.alignment = AsthgText.TextAlign.CENTER;
+			item.alignment = ASTHEText.TextAlign.CENTER;
 			item.ID = num;
 			grpOptions.add(item);
 		}
 		curSelected = 0;
-		changeSelection();
+		changeItem();
 	}
 
 
-	function changeSelection(change:Int = 0) {
+	function changeItem(change:Int = 0) {
+		if (ArrayUtil.isBlank(grpOptions.members))
+			return;
+
+		if (change != 0)
+			ASTHESound.playSound(ConstantSound.MENU_SCROLL);
+
 		curSelected = FlxMath.wrap(curSelected + change, 0, grpOptions.length - 1);
 		for (num => item in grpOptions.members) {
 			item.ID = num - curSelected;

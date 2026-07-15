@@ -4,7 +4,7 @@
 	But give credit where credit is due!
 */
 
-package asthg.game;
+package asthe.game;
 
 class StageBase {
 	@:allow(states.PlayState)

@@ -1,3 +1,0 @@
-flag	content
-format_date	%d{1}%m{2}%Y
-format_hour	%H{1}%M{2}%S

@@ -1,4 +1,4 @@
-package asthg.input;
+package asthe.input;
 
 enum abstract InputList(String) from String to String {
 	// Movement - Menu navigation

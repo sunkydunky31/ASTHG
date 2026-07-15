@@ -1,4 +1,4 @@
-package asthg.backend;
+package asthe.backend;
 import polymod.Polymod;
 import polymod.Polymod.PolymodErrorCode;
 import polymod.PolymodConfig;
@@ -10,7 +10,7 @@ class Mods {
 		Defines the path to `mods` folder.
 	**/
 	inline public static final MOD_ROOT:String = #if mac '../../../' + #end
-	#if debug "../../../../" + #end // Use the mods folder on project path, not the executable one
+	#if REDIRECT_MOD_ROOT "../../../../" + #end // Use the mods folder on project path, not the executable one
 	"mods";
 
 	inline public static final API_VERSION_RULE = ">=1.2.3 <1.5.0";
@@ -22,6 +22,12 @@ class Mods {
 		@param dirs Directories to load mods
 	**/
 	public static function loadMods(dirs:Array<String>):Void {
+		#if sys
+		if (!FileSystem.exists("mods")) {
+			FileSystem.createDirectory("mods");
+		}
+		#end
+
 		Polymod.onError = getError;
 
 		var loadedMods:Array<ModMetadata> = Polymod.init({
@@ -38,18 +44,21 @@ class Mods {
 
 
 		if (ArrayUtil.isBlank(loadedMods))
-			trace("Loading complete! No mods was loaded.".infoCustom("MODS", AnsiList.BG_GREEN));
+			log("Loading complete! No mods was loaded.");
 		else {
-			trace("Loading complete! {0} mods was loaded.".infoCustom("MODS", AnsiList.BG_GREEN), loadedMods.length);
+			log('Loading complete! ${loadedMods.length} mods was loaded.');
 
 			for (num => i in loadedMods) {
-				trace("{0}. {1} v{2} - {3}".infoCustom("MODS", AnsiList.BG_GREEN), num + 1, i.title, i.modVersion, i.id);
+				log("{0}. {1} v{2} - {3}".format([num + 1, i.title, i.modVersion, i.id]));
 			}
 		}
 	}
 
 	public static function getAll():Array<ModMetadata> {
-		trace("Scanning mod folder...".infoCustom("MODS", AnsiList.BG_GREEN));
+		log("Scanning mod folder...");
+		#if debug
+		log("MOD_ROOT: " + MOD_ROOT);
+		#end
 
 		cachedMods = [];
 
@@ -63,22 +72,22 @@ class Mods {
 			cachedMods.push(i);
 		};
 
-		trace("Scan finished, got {0} mods.".infoCustom("MODS", AnsiList.BG_GREEN), mods.length);
+		log('Scan finished, got ${mods.length} mods.');
 
 		return mods;
 	}
 
 	static function getFrameworkParams():polymod.Polymod.FrameworkParams {
 		return {
-			assetLibraryPaths: ['default' => 'default'] //lol
+			assetLibraryPaths: ["default" => "default"] //lol
 		}
 	}
 
 	public static function getError(e:PolymodError):Void {
 		function error(m:Dynamic)    { trace('$m'.error().infoCustom("POLYMOD", AnsiList.BG_MAGENTA)); }
-		function warn(m:Dynamic)     { trace('$m'.warn().infoCustom("POLYMOD", AnsiList.BG_MAGENTA)); }
-		function log(m:Dynamic)      { trace('$m'.info().infoCustom("POLYMOD", AnsiList.BG_MAGENTA)); }
-		function logDebug(m:Dynamic) { trace('$m'.infoCustom("DEBUG", [199, 68, 181]).infoCustom("POLYMOD", AnsiList.BG_MAGENTA)); }
+		function warn(m:Dynamic)     { trace('$m'.warn ().infoCustom("POLYMOD", AnsiList.BG_MAGENTA)); }
+		function log(m:Dynamic)      { trace('$m'.info ().infoCustom("POLYMOD", AnsiList.BG_MAGENTA)); }
+		function logDebug(m:Dynamic) { trace('$m'.debug().infoCustom("POLYMOD", AnsiList.BG_MAGENTA)); }
 
 		switch (e.code) {
 
@@ -124,11 +133,15 @@ class Mods {
 			// Other errors
 			default:
 				switch (e.severity) {
-					case PolymodErrorType.ERROR:   error(e.message);
-					case PolymodErrorType.WARNING: warn(e.message);
-					case PolymodErrorType.INFO:    log(e.message);
+					case PolymodErrorType.ERROR:      error(e.message);
+					case PolymodErrorType.WARNING:     warn(e.message);
+					case PolymodErrorType.INFO:         log(e.message);
 					case PolymodErrorType.DEBUG:   logDebug(e.message);
 				}
 		}
+	}
+
+	static function log(msg:String) {
+		trace(msg.infoCustom("MODS", AnsiList.BG_GREEN));
 	}
 }

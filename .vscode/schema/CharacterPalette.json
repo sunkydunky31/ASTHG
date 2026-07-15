@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 
-	"title": "ASTHG Character Palettes",
+	"title": "ASTHE Character Palettes",
 	"description": "Color system for the characters, must include at least the 'normal' color state",
 	"type": "object",
 	"properties": {

@@ -16,7 +16,9 @@ class Language {
 			curLang = "en_US";
 		}
 
-		var file = File.getContent("_project/translations/" + curLang + ".txt");
+		var file = File.getContent("_project/translations/" +
+		#if (target.unicode) curLang #else "en_US" #end
+		+ ".txt");
 
 		var reg = ~/^(\w+)=(.*)$/ig;
 		for (line => text in file.split("\n")) {

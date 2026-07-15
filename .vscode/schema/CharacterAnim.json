@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 
-  "title": "ASTHG Character's Animation Data",
+  "title": "ASTHE Character's Animation Data",
   "type": "object",
   "properties": {
     "name": {

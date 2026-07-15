@@ -1,15 +1,15 @@
-package asthg.states;
+package asthe.states;
 
-import asthg.objects.Character;
-import asthg.objects.LifeIcon;
-import asthg.game.HudGame;
+import asthe.objects.Character;
+import asthe.objects.LifeIcon;
+import asthe.game.HudGame;
 
 class PlayState extends StateManager {
 	public static var instance:Null<PlayState> = null;
 
 	public var player:Character = null;
 	public var hud:HudGame = null;
-	var ground:AsthgSprite;
+	var ground:ASTHESprite;
 
 	public var camGame:FlxCamera;
 	public var camFront:FlxCamera;
@@ -64,17 +64,17 @@ class PlayState extends StateManager {
 			hud.lives = player.lives;
 		}
 
-		ground = new AsthgSprite(0,FlxG.height - 40).createGraphic(FlxG.width, 40);
+		ground = new ASTHESprite(0,FlxG.height - 40).createGraphic(FlxG.width, 40);
 		ground.immovable = true;
 		add(ground);
 
-		AsthgSound.playMusic("GreenHill1");
+		ASTHESound.playMusic("GreenHill1");
 	}
 
 	override public function update(elapsed:Float) {
 		if (FlxG.keys.justPressed.SIX) {
 			player.rings += 10;
-			AsthgSound.playSound(ConstantSound.RING);
+			ASTHESound.playSound(ConstantSound.RING);
 		}
 
 		if (controls.AUX && player.state == JUMPING) {
@@ -93,6 +93,6 @@ class PlayState extends StateManager {
 	function openPauseMenu() {
 		FlxG.sound.music?.pause();
 
-		openSubState(new asthg.substates.Pause());
+		openSubState(new asthe.substates.Pause());
 	}
 }

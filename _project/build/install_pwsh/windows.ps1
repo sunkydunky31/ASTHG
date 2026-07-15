@@ -1,4 +1,5 @@
-#requires -PSEdition Desktop
+# Force the user to run on Windows PowerShell, not PowerShell Core
+#requires -PSEdition Desktop -Version 4.0
 
 # Search for PSCore, if the user already has it installed
 if (Get-Command "pwsh" -ErrorAction SilentlyContinue) {
@@ -24,11 +25,11 @@ if (Get-Command "dotnet" -ErrorAction SilentlyContinue) {
 }
 
 # False again, install through MSI method
-[version]$PSVER = "7.6.2"
+[version]$PSVER = Get-Content ".\version.txt" -Raw
 [string]$ARCH = "x64"
-[string]$FILEOUT = "PowerShell-$PSVER-win-$ARCH.msi"
+[string]$FILE = "PowerShell-$PSVER-win-$ARCH.msi"
 try {
-	Invoke-WebRequest -Uri "https://github.com/PowerShell/PowerShell/releases/download/v$PSVER/PowerShell-$PSVER-win-$ARCH.msi" -OutFile $FILEOUT
+	Invoke-WebRequest -Uri "https://github.com/PowerShell/PowerShell/releases/download/v$PSVER/$FILE.msi" -OutFile $FILE
 	Start-Sleep 1
 }
 catch {
@@ -36,7 +37,7 @@ catch {
 	exit 1
 }
 
-if (Test-Path "$(Get-Location)/$FILEOUT" -PathType Leaf) {
-	Start-Process "msiexec.exe" -ArgumentList "/package", $FILEOUT -Wait
+if (Test-Path (Join-Path (Get-Location) $FILE) -PathType Leaf) {
+	Start-Process "msiexec.exe" -ArgumentList "/package", $FILE -Wait
 	exit 0
 }

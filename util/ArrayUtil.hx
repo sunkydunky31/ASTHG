@@ -6,7 +6,7 @@ class ArrayUtil {
 
 		@param arr The array to check
 		@return Bool
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	inline public static function isBlank<T>(arr:Null<Array<Dynamic>>):Bool {
 		return @:nullSafety(Off) (arr == null || arr.length == 0);
@@ -24,7 +24,7 @@ class ArrayUtil {
 		```
 		@param arr Your rect values [X, Y, Width, Height]
 		@return FlxRect
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	public static function toRect(arr:Array<Float>):flixel.math.FlxRect {
 		if (arr.length < 4)
@@ -39,15 +39,21 @@ class ArrayUtil {
 
 		@param arr Your point values [X:Float, Y:Float]
 		@return FlxPoint
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	public static function toPoint(arr:Array<Float>):flixel.math.FlxPoint {
-		if (arr.length < 2)
-			throw "WARNING: Array must have at least 2 values to convert to FlxPoint";
+		if (arr.length == 1) {
+			trace("WARNING: Array must have at least 2 values to convert to FlxPoint");
+			return new flixel.math.FlxPoint(arr[0], 0);
+		}
 		else if (arr.length > 2)
 			trace("WARNING: Array has more than 2 values, the other ones will be ignored!");
+
 		return new flixel.math.FlxPoint(arr[0], arr[1]);
 	}
+	#else
+	public static function toRect(arr:Array<Float>):Void {}
+	public static function toPoint(arr:Array<Float>):Void {}
 	#end
 
 	/**

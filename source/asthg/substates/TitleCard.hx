@@ -1,4 +1,4 @@
-package asthg.substates;
+package asthe.substates;
 
 class TitleCard extends SubStateManager{
 
@@ -7,10 +7,10 @@ class TitleCard extends SubStateManager{
 		@param colors Order: Background, Bottom Backdrop, Left backdrop
 	**/
 	public function new(?colors:Array<String> = ["#2040c0", "#e0e000", "#e00000"]) {
-		var bg:AsthgSprite = new AsthgSprite().createGraphic(FlxG.width, FlxG.height, 0xff000000);
+		var bg:ASTHESprite = new ASTHESprite().createGraphic(FlxG.width, FlxG.height, 0xff000000);
 		add(bg);
 
-		var bg2:AsthgSprite = new AsthgSprite().createGraphic(FlxG.width, FlxG.height, FlxColor.fromString(colors[0]));
+		var bg2:ASTHESprite = new ASTHESprite().createGraphic(FlxG.width, FlxG.height, FlxColor.fromString(colors[0]));
 		add(bg2);
 
 		var backdrop:FlxBackdrop = new FlxBackdrop(Paths.image("UI/backdropX"), X);
@@ -23,11 +23,11 @@ class TitleCard extends SubStateManager{
 		backdrop2.y = FlxG.height * 0.7;
 		add(backdrop2);
 
-		var actName:AsthgBitmapText = AsthgBitmapText.createAngelCode(FlxG.width - 90, 87, "STAGE NAME", "Roco");
+		var actName:ASTHEBitmapText = ASTHEBitmapText.createAngelCode(FlxG.width - 90, 87, "STAGE NAME", "Roco");
 		actName.x -= actName.width;
 		add(actName);
 
-		var zoneName:AsthgBitmapText = AsthgBitmapText.createAngelCode(FlxG.width - 90, 105, "ZONE", "Roco");
+		var zoneName:ASTHEBitmapText = ASTHEBitmapText.createAngelCode(FlxG.width - 90, 105, "ZONE", "Roco");
 		zoneName.x -= (zoneName.width);
 		add(zoneName);
 

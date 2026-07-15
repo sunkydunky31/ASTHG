@@ -1,4 +1,4 @@
-# ASTHG (An Sonic the Hedgehog Game)
+# ASTHE (An Sonic the Hedgehog Game)
 This is an Sonic engine, made just for fun!
 
 It haves code parts from [Psych Engine][psych_engine]... I'm planning on replacement for all this stuff.
@@ -28,6 +28,7 @@ Check [Modding Docs][docs_modding_readme]
 * Executable 8x8 icon: SEGA from Sonic Pocket Adventure
 * "Mania.ttf" Font: SEGA from Sonic Mania (ttf file made by me)
 * Game Over font: [LoganMax0328](https://www.spriters-resource.com/profile/loganmax0328/) from [The Spriters Resource](https://www.spriters-resource.com/custom_edited/sonicthehedgehogcustoms/asset/222029/)
+* Russian Version of "Roco" font: [vania5617](https://www.spriters-resource.com/profile/vania5617/) from [The Spriters Resource](https://www.spriters-resource.com/custom_edited/sonicthehedgehogcustoms/asset/238924/)
 * Game music and sounds: SEGA from Sonic Mania
 </details>
 

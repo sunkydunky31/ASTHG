@@ -1,4 +1,4 @@
-package asthg.input;
+package asthe.input;
 
 import openfl.display3D.textures.RectangleTexture;
 import flixel.input.keyboard.FlxKey;

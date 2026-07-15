@@ -10,7 +10,7 @@ class Main extends Sprite {
 	public var GAME:Dynamic = {
 		width: 426,
 		height: 240,
-		initState: asthg.states.Init,
+		initState: asthe.states.Init,
 		fps: 60
 	}
 
@@ -65,7 +65,7 @@ class Main extends Sprite {
 
 		#if web
 		// Tells the HTML to use pixelated images
-		Application.current.window.element.style.setProperty("image-rendering", "pixelated");
+		lime.app.Application.current.window.element.style.setProperty("image-rendering", "pixelated");
 		#end
 
 		Locale.tongue = new FireTongue(OPENFL, Case.Unchanged);
@@ -82,13 +82,13 @@ class Main extends Sprite {
 
 		var msg:String = "Error!\n";
 
-		msg += e.error + "\n\nReport this in Github: https://github.com/unrealsunnydev/ASTHG/issues";
+		msg += e.error + "\n\nReport this in Github: https://github.com/unrealsunnydev/ASTHE/issues";
 
 		#if sys
 		if (!sys.FileSystem.exists(folderPath))
 			sys.FileSystem.createDirectory(folderPath);
 
-		sys.io.File.saveContent(folderPath + 'ASTHG_${date}.log', msg);
+		sys.io.File.saveContent(folderPath + 'ASTHE_${date}.log', msg);
 
 		Sys.println(msg);
 		#end

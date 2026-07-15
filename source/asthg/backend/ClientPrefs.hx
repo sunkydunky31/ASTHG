@@ -1,9 +1,9 @@
 //@see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/backend/ClientPrefs.hx
 
-package asthg.backend;
+package asthe.backend;
 
-import asthg.input.InputList;
-import asthg.states.Init;
+import asthe.input.InputList;
+import asthe.states.Init;
 
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
@@ -132,7 +132,6 @@ class ClientPrefs {
 
 	public static function loadPrefs() {
 		try {
-			// Carrega dados gerais
 			for (key in Reflect.fields(data)) {
 				if (Reflect.hasField(FlxG.save.data, key)) {
 					Reflect.setField(data, key, Reflect.field(FlxG.save.data, key));
@@ -140,13 +139,11 @@ class ClientPrefs {
 			}
 
 			#if (!html5 && !switch)
-			// Aplica auto-pause
 			FlxG.autoPause = ClientPrefs.data.options.autoPause;
 
-			// Define framerate baseado no refresh rate do monitor, se não estiver definido
 			if(FlxG.save.data.framerate == null) {
 				final refreshRate:Int = FlxG.stage.application.window.displayMode.refreshRate;
-				data.options.framerate = Std.int(FlxMath.bound(refreshRate, 60, 240));
+				data.options.framerate = Std.int(MathUtil.clamp(refreshRate, 60, 240));
 			}
 			#end
 
@@ -250,8 +247,7 @@ class ClientPrefs {
 
 	public static function saveSlot():Void {
 		if (gameSave == null){
-			trace("Cannot save game data! Slot is null".error());
-			return;
+			throw("Cannot save game data! Slot is null".error());
 		}
 
 		gameSave.bind("slot" + currentSlot, getSavePath());

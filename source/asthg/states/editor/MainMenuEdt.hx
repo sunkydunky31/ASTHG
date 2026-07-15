@@ -1,23 +1,23 @@
-package asthg.states.editor;
+package asthe.states.editor;
 
 // This menu is unused by now, but soon we'll get
 // some cool game tools for editing anything on the game.
 
 class MainMenuEdt extends StateManager {
 	var selected:Int = 0;
-	var group:FlxTypedGroup<AsthgText>;
+	var group:FlxTypedGroup<ASTHEText>;
 	var options:Array<String> = [];
 
 	override public function create() {
-		var bg:flixel.FlxSprite = AsthgSprite.createGradient(FlxG.width, FlxG.height, [0xFF353535, 0xFF979797], 4, 32, false);
+		var bg:flixel.FlxSprite = ASTHESprite.createGradient(FlxG.width, FlxG.height, [0xFF353535, 0xFF979797], 4, 32, false);
 		add(bg);
 
-		group = new FlxTypedGroup<AsthgText>();
+		group = new FlxTypedGroup<ASTHEText>();
 		add(group);
 
 		if (!ArrayUtil.isBlank(options)) {
 			for (num => str in options) {
-				var menu:AsthgText = AsthgText.create(10, 30, Locale.getString("title_" + str, "editor_menu"));
+				var menu:ASTHEText = ASTHEText.create(10, 30, Locale.getString("title_" + str, "editor_menu"));
 				menu.format(16, "center", FlxColor.WHITE);
 				menu.y += (18 * num);
 				menu.ID = num;
@@ -25,7 +25,7 @@ class MainMenuEdt extends StateManager {
 			}
 		}
 		else {
-			var warn:AsthgText = AsthgText.create(0, 0, Locale.getString("no_options", "editor_menu"));
+			var warn:ASTHEText = ASTHEText.create(0, 0, Locale.getString("no_options", "editor_menu"));
 			warn.screenCenter();
 			add(warn);
 		}
@@ -42,14 +42,14 @@ class MainMenuEdt extends StateManager {
 			var scroll = FlxG.mouse.wheel;
 			if (controls.UP || controls.DOWN || scroll != 0) {
 				changeItem(((controls.UP ? -1 : 1) * mult) - scroll);
-				AsthgSound.playSound(ConstantSound.MENU_SCROLL);
+				ASTHESound.playSound(ConstantSound.MENU_SCROLL);
 			}
 
 			if (controls.ACCEPT) {
 				if (ArrayUtil.isBlank(options))
 					return;
 
-				AsthgSound.playSound(ConstantSound.MENU_ACCEPT);
+				ASTHESound.playSound(ConstantSound.MENU_ACCEPT);
 				selectedSomethin = true;
 
 				switch(options[selected].toLowerCase()) {}
@@ -57,8 +57,8 @@ class MainMenuEdt extends StateManager {
 			}
 
 	  		if (controls.BACK) {
-				AsthgSound.playSound(ConstantSound.MENU_BACK);
-				StateManager.switchState(new asthg.states.MainMenu());
+				ASTHESound.playSound(ConstantSound.MENU_BACK);
+				FlxG.switchState(() -> new asthe.states.MainMenu());
 			}
 		}
 		super.update(elapsed);
@@ -70,7 +70,7 @@ class MainMenuEdt extends StateManager {
 
 		selected = FlxMath.wrap(selected + change, 0, group.length - 1);
 
-		group.forEach(function(txt:AsthgText) {
+		group.forEach(function(txt:ASTHEText) {
 			txt.color = (txt.ID == selected) ? 0xFF002896 : 0xFFFFFFFF;
 		});
 	}

@@ -4,7 +4,7 @@
 	But give credit where credit is due!
 */
 
-package asthg.options.substates;
+package asthe.options.substates;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -15,8 +15,8 @@ import flixel.input.keyboard.FlxKey;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.input.gamepad.FlxGamepadInputID;
 
-import asthg.input.InputFormatter;
-import asthg.input.InputList;
+import asthe.input.InputFormatter;
+import asthe.input.InputList;
 
 enum abstract DeviceType(Int) {
 	var KEYBOARD = 0;
@@ -37,7 +37,7 @@ class Controls extends SubStateManager {
 	];
 
 
-	var labels:Array<AsthgText> = [];
+	var labels:Array<ASTHEText> = [];
 	var binds:Array<Array<BindItem>> = [];
 
 	var row:Int = 0;
@@ -46,23 +46,23 @@ class Controls extends SubStateManager {
 	var capturing:Bool = false;
 	var captureBind:BindItem;
 
-	var prompt:AsthgText;
+	var prompt:ASTHEText;
 	var dim:FlxSprite;
 
 	public function new() {
 		super();
 
-		var bg:AsthgSprite = new AsthgSprite().createGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg:ASTHESprite = new ASTHESprite().createGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0.5;
 		add(bg);
 
-		var title:AsthgBitmapText = AsthgBitmapText.createAngelCode(FlxG.width/2, 8, Locale.getString("title_controls", "options"), "Roco");
+		var title:ASTHEBitmapText = ASTHEBitmapText.createAngelCode(FlxG.width/2, 8, Locale.getString("title_controls", "options"), "Roco");
 		title.x -= title.width/2;
 		add(title);
 
 		var y:Float = 30;
 		for (ctrl in controlList) {
-			var lbl = AsthgText.create(30, y, Locale.getString('key_$ctrl', 'options'));
+			var lbl = ASTHEText.create(30, y, Locale.getString('key_$ctrl', 'options'));
 			labels.push(lbl);
 			add(lbl);
 
@@ -77,12 +77,12 @@ class Controls extends SubStateManager {
 			y += 16;
 		}
 
-		dim = new AsthgSprite().createGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		dim = new ASTHESprite().createGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		dim.alpha = 0.8;
 		dim.visible = false;
 		add(dim);
 
-		prompt = AsthgText.create(0, FlxG.height / 2 - 38, "");
+		prompt = ASTHEText.create(0, FlxG.height / 2 - 38, "");
 		prompt.fieldWidth = FlxG.width;
 		prompt.alignment = CENTER;
 		prompt.visible = false;
@@ -111,34 +111,34 @@ class Controls extends SubStateManager {
 			if (controls.UP) {
 				row = (row - 1 + binds.length) % binds.length;
 				updateSelection();
-				AsthgSound.playSound(ConstantSound.MENU_SCROLL);
+				ASTHESound.playSound(ConstantSound.MENU_SCROLL);
 			}
 			if (controls.DOWN) {
 				row = (row + 1) % binds.length;
 				updateSelection();
-				AsthgSound.playSound(ConstantSound.MENU_SCROLL);
+				ASTHESound.playSound(ConstantSound.MENU_SCROLL);
 			}
 			if (controls.LEFT) {
 				col = (col - 1 + 2) % 2;
 				updateSelection();
-				AsthgSound.playSound(ConstantSound.MENU_SCROLL);
+				ASTHESound.playSound(ConstantSound.MENU_SCROLL);
 			}
 			if (controls.RIGHT) {
 				col = (col + 1) % 2;
 				updateSelection();
-				AsthgSound.playSound(ConstantSound.MENU_SCROLL);
+				ASTHESound.playSound(ConstantSound.MENU_SCROLL);
 			}
 
 			if (controls.ACCEPT) {
 				startCapture(binds[row][col]);
-				AsthgSound.playSound(ConstantSound.MENU_ACCEPT);
+				ASTHESound.playSound(ConstantSound.MENU_ACCEPT);
 			}
 
 			if (FlxG.keys.justPressed.TAB || (FlxG.gamepads.anyJustPressed(FlxGamepadInputID.LEFT_SHOULDER) || FlxG.gamepads.anyJustPressed(FlxGamepadInputID.RIGHT_SHOULDER))) {
 				currentDevice = (currentDevice == DeviceType.KEYBOARD ? DeviceType.GAMEPAD : DeviceType.KEYBOARD);
 				refreshLabels();
 				updateSelection();
-				AsthgSound.playSound(ConstantSound.MENU_ACCEPT);
+				ASTHESound.playSound(ConstantSound.MENU_ACCEPT);
 			}
 
 			if (controls.BACK) close();
@@ -173,11 +173,11 @@ class Controls extends SubStateManager {
 	function captureKeyboard() {
 		if (FlxG.keys.justPressed.ESCAPE) {
 			endCapture();
-			AsthgSound.playSound(ConstantSound.MENU_BACK);
+			ASTHESound.playSound(ConstantSound.MENU_BACK);
 			return;
 		}
 		if (FlxG.keys.justPressed.DELETE) {
-			AsthgSound.playSound(ConstantSound.MENU_BACK);
+			ASTHESound.playSound(ConstantSound.MENU_BACK);
 			writeKeyboard(FlxKey.NONE);
 			endCapture();
 			return;
@@ -188,7 +188,7 @@ class Controls extends SubStateManager {
 				writeKeyboard(k);
 				endCapture();
 			}
-			AsthgSound.playSound(ConstantSound.MENU_SCROLL);
+			ASTHESound.playSound(ConstantSound.MENU_SCROLL);
 		}
 	}
 

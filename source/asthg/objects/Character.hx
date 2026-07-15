@@ -4,9 +4,9 @@
 	But give credit where credit is due!
 */
 
-package asthg.objects;
+package asthe.objects;
 
-import asthg.states.PlayState;
+import asthe.states.PlayState;
 
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -17,13 +17,13 @@ import flixel.math.FlxRect;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxDirectionFlags;
 
-class Character extends AsthgSprite {
+class Character extends ASTHESprite {
 	var controls:Null<Controls> = Controls.instance; // Lol
 
 	// Current Player
 	public static var current:String = Constants.DEFAULT_CHARACTER;
 
-	public var json:asthg.data.CharacterData;
+	public var json:asthe.data.CharacterData;
 	private static var exAnim:Dynamic = {}; // Data store for new animations
 
 	// Game
@@ -94,7 +94,7 @@ class Character extends AsthgSprite {
 	}
 
 	function loadAnimations():Void {
-		frames = Paths.getSparrowAtlas('characters/${json.name}/animData');
+		frames = Paths.getSparrowAtlas('characters/$current/animData');
 
 		var anims = json.animations;
 		if (!ArrayUtil.isBlank(anims)) {
@@ -116,7 +116,7 @@ class Character extends AsthgSprite {
 		}
 	}
 
-	public function playAnim(name:asthg.data.CharacterAnimation.AnimList, force:Bool = false, reversed:Bool = false, frame:Int = 0) {
+	public function playAnim(name:asthe.data.CharacterAnimation.AnimList, force:Bool = false, reversed:Bool = false, frame:Int = 0) {
 		animation.play(name, force, reversed, frame);
 	}
 
@@ -146,7 +146,7 @@ class Character extends AsthgSprite {
 		velocity.y = -0x68000;
 		playAnim("ANI_DYING");
 
-		//AsthgSound.playSound("Hurt");
+		//ASTHESound.playSound("Hurt");
 	}
 
 	public function updateMoves() {
@@ -195,13 +195,13 @@ class Character extends AsthgSprite {
 	public function jump():Void {
 		if (isTouching(FlxDirectionFlags.FLOOR)) {
 			state = JUMPING;
-			AsthgSound.playSound(ConstantSound.PLAYER_JUMP);
+			ASTHESound.playSound(ConstantSound.PLAYER_JUMP);
 			velocity.y = this.JUMP_SPEED;
 		}
 	}
 
 	public function roll():Void {
-		AsthgSound.playSound(ConstantSound.PLAYER_ROLL);
+		ASTHESound.playSound(ConstantSound.PLAYER_ROLL);
 		state = ROLLING;
 	}
 
@@ -242,7 +242,7 @@ class Character extends AsthgSprite {
 
 		isSuper = true;
 		state = TRANSFORM;
-		AsthgSound.playSound(ConstantSound.PLAYER_TRANSFORM);
+		ASTHESound.playSound(ConstantSound.PLAYER_TRANSFORM);
 
 		if (rings > 0 && (Math.floor(e * 3000) % 2 == 0)) {
 			rings--;
@@ -294,8 +294,8 @@ class Character extends AsthgSprite {
 		}
 	}
 
-	function log(msg:String):Void {
-		trace(msg.infoCustom("CHARACTER", AnsiList.BG_BRIGHT_GREEN));
+	static function log(msg:String, ?args:haxe.PosInfos) {
+		trace(msg.infoCustom("CHARACTER", AnsiList.BG_BRIGHT_GREEN), args);
 	}
 }
 

@@ -3,10 +3,10 @@
 	You are allowed to use, modify and redistribute this code
 	But give credit where credit is due!
 */
-package asthg.options;
+package asthe.options;
 
-import asthg.input.InputFormatter;
-import asthg.options.Option;
+import asthe.input.InputFormatter;
+import asthe.options.Option;
 
 using util.StringUtil;
 
@@ -19,18 +19,18 @@ class OptionsSubState extends SubStateManager {
 	public var camFront:FlxCamera;
 	public var camFollow:FlxObject = new FlxObject(FlxG.width / 2, 0, 2, 2);
 
-	var grpOptions:FlxTypedGroup<AsthgText>;
-	var grpValues:FlxTypedGroup<AsthgText>;
+	var grpOptions:FlxTypedGroup<ASTHEText>;
+	var grpValues:FlxTypedGroup<ASTHEText>;
 
-	var txtDesc:AsthgText;
-	var sprDesc:AsthgSprite;
+	var txtDesc:ASTHEText;
+	var sprDesc:ASTHESprite;
 
 	public var title:String;
 
 	public function new() {
 		super();
 
-		var bg = new AsthgSprite().createGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg = new ASTHESprite().createGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0.5;
 		add(bg);
 
@@ -43,32 +43,32 @@ class OptionsSubState extends SubStateManager {
 		camFront.deadzone.set(0, margin, camFront.width, camFront.height - margin * 2);
 		camFront.minScrollY = 0;
 
-		grpOptions = new FlxTypedGroup<AsthgText>();
+		grpOptions = new FlxTypedGroup<ASTHEText>();
 		add(grpOptions);
 
-		grpValues = new FlxTypedGroup<AsthgText>();
+		grpValues = new FlxTypedGroup<ASTHEText>();
 		add(grpValues);
 
 		add(camFollow);
 
-		var title:AsthgBitmapText = AsthgBitmapText.createAngelCode(0, 8, !StringUtil.isBlank(title) ? Locale.getString("title", "options") : "Options");
+		var title:ASTHEBitmapText = ASTHEBitmapText.createAngelCode(0, 8, !StringUtil.isBlank(title) ? Locale.getString("title", "options") : "Options");
 		title.screenCenter(X);
 		add(title);
 
 		if (!ArrayUtil.isBlank(options)) {
 			var xFactor:Float = 0.9;
 			for (i in 0...options.length) {
-				var optName:AsthgText = AsthgText.create(FlxG.width - (FlxG.width * xFactor), 30, options[i].name);
+				var optName:ASTHEText = ASTHEText.create(FlxG.width - (FlxG.width * xFactor), 30, options[i].name);
 				optName.fieldWidth = 170;
-				optName.alignment = AsthgText.TextAlign.LEFT;
+				optName.alignment = ASTHEText.TextAlign.LEFT;
 				optName.ID = i;
 				optName.y += (23 * i);
 				optName.cameras = [camFront];
 				grpOptions.add(optName);
 
-				var optValues:AsthgText = AsthgText.create(FlxG.width * xFactor, optName.y, Std.string(options[i].options.display).format([normalizeOptionValue(options[i])]));
+				var optValues:ASTHEText = ASTHEText.create(FlxG.width * xFactor, optName.y, Std.string(options[i].options.display).format([normalizeOptionValue(options[i])]));
 				optValues.fieldWidth = optName.fieldWidth;
-				optValues.alignment = AsthgText.TextAlign.RIGHT;
+				optValues.alignment = ASTHEText.TextAlign.RIGHT;
 				optValues.x -= optValues.width; // Apply adjustment to fit screen factor
 				optValues.color = optName.color;
 				optValues.cameras = optName.cameras;
@@ -76,20 +76,20 @@ class OptionsSubState extends SubStateManager {
 			}
 		}
 		else {
-			var warn:AsthgText = AsthgText.create(0, 0, Locale.getString("no_options", "options"));
+			var warn:ASTHEText = ASTHEText.create(0, 0, Locale.getString("no_options", "options"));
 			warn.screenCenter();
 			add(warn);
 		}
 
-		sprDesc = new AsthgSprite(0, FlxG.height * 0.7);
+		sprDesc = new ASTHESprite(0, FlxG.height * 0.7);
 		var fillWidth = FlxG.height - sprDesc.y;
 		sprDesc.createGraphic(FlxG.width, Std.int(fillWidth), FlxColor.BLACK);
 		sprDesc.visible = (!ArrayUtil.isBlank(options));
 		add(sprDesc);
 
-		txtDesc = AsthgText.create(0, sprDesc.y + 4, "");
+		txtDesc = ASTHEText.create(0, sprDesc.y + 4, "");
 		txtDesc.fieldWidth = FlxG.width;
-		txtDesc.alignment = AsthgText.TextAlign.CENTER;
+		txtDesc.alignment = ASTHEText.TextAlign.CENTER;
 		add(txtDesc);
 
 		changeSelection();
@@ -101,12 +101,12 @@ class OptionsSubState extends SubStateManager {
 		var scroll = FlxG.mouse.wheel;
 		if (controls.UP || controls.DOWN || scroll != 0) {
 			changeSelection(((controls.UP ? -1 : 1) * mult) - scroll);
-			AsthgSound.playSound(ConstantSound.MENU_SCROLL);
+			ASTHESound.playSound(ConstantSound.MENU_SCROLL);
 		}
 
 		if(controls.BACK) {
 			close();
-			AsthgSound.playSound(ConstantSound.MENU_BACK);
+			ASTHESound.playSound(ConstantSound.MENU_BACK);
 		}
 
 		if (controls.LEFT || controls.RIGHT) {
@@ -122,7 +122,7 @@ class OptionsSubState extends SubStateManager {
 
 				case OptionType.NUMBER:
 					change *= opt.options.amount;
-					opt.value = FlxMath.bound((opt.value ?? 0) + change, opt.options.min, opt.options.max);
+					opt.value = MathUtil.clamp((opt.value ?? 0) + change, opt.options.min, opt.options.max);
 
 				case OptionType.STRING:
 					var list = opt.options.list;
@@ -131,7 +131,7 @@ class OptionsSubState extends SubStateManager {
 					if (index == -1)
 						index = 0;
 
-					index = Std.int(FlxMath.bound(index + Std.int(change), 0, list.length - 1));
+					index = MathUtil.clampInt(index + Std.int(change), 0, list.length - 1);
 					opt.value = list[index];
 			}
 
@@ -140,7 +140,7 @@ class OptionsSubState extends SubStateManager {
 				display += "%";
 
 			grpValues.members[selected].text = display.format([normalizeOptionValue(opt)]);
-			AsthgSound.playSound(ConstantSound.MENU_SCROLL);
+			ASTHESound.playSound(ConstantSound.MENU_SCROLL);
 		}
 	}
 
@@ -168,9 +168,12 @@ class OptionsSubState extends SubStateManager {
 		if (ArrayUtil.isBlank(options) || ArrayUtil.isBlank(grpOptions.members))
 			return;
 
+		if (change != 0)
+			ASTHESound.playSound(ConstantSound.MENU_SCROLL);
+
 		selected = FlxMath.wrap(selected + change, 0, options.length - 1);
 
-		grpOptions.forEach(function(txt:AsthgText) {
+		grpOptions.forEach(function(txt:ASTHEText) {
 			txt.alpha = (txt.ID == selected) ? 1 : 0.5;
 
 			if (txt.ID == selected)

@@ -4,7 +4,7 @@
 	But give credit where credit is due!
 */
 
-package asthg.options.substates;
+package asthe.options.substates;
 
 class Gameplay extends OptionsSubState {
 	public function new() {

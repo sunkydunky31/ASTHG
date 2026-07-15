@@ -2,6 +2,7 @@
 	"recommendations": [
 		"openfl.lime-vscode-extension",
 		"wiggin77.codedox",
-		"nadako.vshaxe"
+		"nadako.vshaxe",
+		"mechatroner.rainbow-csv"
 	]
 }

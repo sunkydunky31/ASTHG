@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 
-  "title": "ASTHG Characters",
+  "title": "ASTHE Characters",
   "type": "object",
   "properties": {
     "name": {

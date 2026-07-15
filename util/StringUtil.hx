@@ -9,7 +9,7 @@ using StringTools;
 
 /**
 	Contains tools for string manipulation and formatting
-	@author Sunnydev31 (@unreal.sunnydev)
+	@author Sunnydev31 (unreal.sunnydev)
 **/
 @:nullSafety
 class StringUtil {
@@ -74,7 +74,24 @@ class StringUtil {
 		Placeholder format: `{index}` OR `{index:modifier[X]}`
 		e.g.: `{0:X}` -> Placeholder `Index 0`, Modifier `Int/Float to Hex`
 
-		@param str	The string to format
+		Usage example:
+		```haxe
+		trace(StringUtil.format("I have {0} years old.", 5752));
+		// Return: I have 5752 years old.
+
+		// With "using" instead of "import"
+
+		using StringUtil;
+
+		class Main {
+			public static function main()
+				trace("Gotten color: #{0:x}", 0xFFFF00);
+				//Returns: "Gotten color: #ffff00"
+				// It's the same as `trace("Gotten color: #" + StringTools.hex(0xFFFF00)`, but with support to Float type.
+		}
+		```
+
+		@param str   The string to format
 		@param values If a placeholder is found, replace it with the value in this parameter
 		@return Bool
 	**/
@@ -98,8 +115,8 @@ class StringUtil {
 
 		Format seconds as minutes with a colon, an optionally with milliseconds too.
 
-		@param	Seconds		The number of seconds (for example, time remaining, time spent, etc).
-		@param	ShowMS		Whether to show milliseconds after a `"` as well.  @default -> false.
+		@param	Seconds     The number of seconds (for example, time remaining, time spent, etc).
+		@param	ShowMS      Whether to show milliseconds after a `"` as well.  @default -> false.
 		@return	A nicely formatted String, like `1:03` or `5'19"43`.
 	**/
 	public static function formatTime(Seconds:Float, ShowMS:Bool = false):String {
@@ -159,7 +176,7 @@ class StringUtil {
 
 /**
 	Dedicated class for parsing Placeholders in .NET style
-	format: `{index[:modifier]}`
+	format: `{index[:modifier[amount]]}`
 **/
 class StringFormat {
 	// Redundant? Yes, but its here to you personalize it
@@ -184,17 +201,19 @@ class StringFormat {
 
 			var index:Int;
 			var modV:String = "";
+			var modN:Null<Float> = null;
 
 			if (!content.contains(PLACEHOLDER_MODIFIER)) {
 				index = Std.parseInt(content);
 			}
 			else {
 				index = Std.parseInt(content.substring(0, modifier));
-				modV = content.substr(modifier + 1);
+				modV = content.substr(modifier + 1, 1).trim();
+				modN = Std.parseFloat(content.substr(modifier + 2));
 			}
 
 			f.addSub(str, 0, i);
-			f.add(modApply(args[index], modV));
+			f.add(modApply(args[index], modV, modN));
 			str = str.substring(end + 1);
 			i = 0;
 		}
@@ -208,24 +227,23 @@ class StringFormat {
 		@param m The modifier to apply
 		@return String
 	**/
-	static function modApply(v:Dynamic, m:String):String {
+	static function modApply(v:Dynamic, m:String, n:Float):String {
 		if (StringUtil.isBlank(m))
 			return Std.string(v);
 
-		m = m.trim().toUpperCase();
-
 		// List of modifiers, add new ones here
-		switch (m) {
+		switch (m.toUpperCase()) {
 			case s if (s.startsWith("X")): // Hex Number (add a number to set the length)
 				if (!Std.isOfType(v, Int) && !Std.isOfType(v, Float)) {
-					trace("Why are you applying HEX format into a non Int/Float value?");
-					trace("Detected value: " + v);
+					trace("Invalid value type for 'HEX' format, expected Int/Float.");
 					return Std.string(v);
 				}
 
-				var digits = (m.length > 1) ? Std.parseInt(m.substring(1)) : 1;
+				var digits = (n > 1) ? n : 1;
 				trace('Digits: $digits');
-				return Std.isOfType(v, Int) ? StringTools.hex(v, digits) : StringUtil.hexFloat(v, digits);
+				var ret:String = Std.isOfType(v, Int) ? StringTools.hex(v, Std.int(digits)) : StringUtil.hexFloat(v, Std.int(digits));
+
+				return (m == "X") ? ret.toLowerCase() : ret;
 			case "U": // Uppercase
 				return Std.string(v).toUpperCase();
 			case "L": // Lowercase

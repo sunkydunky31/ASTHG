@@ -1,6 +1,6 @@
-package asthg.states;
+package asthe.states;
 
-import asthg.objects.Character;
+import asthe.objects.Character;
 
 import flixel.FlxState;
 import flixel.ui.FlxBar;
@@ -28,14 +28,14 @@ class LoadingState extends StateManager {
 		super();
 	}
 
-	var loadingTxt:AsthgText;
+	var loadingTxt:ASTHEText;
 	var loadBar:FlxBar;
 
 	override function create() {
-		var bg:AsthgSprite = new AsthgSprite(0, 0).createGraphic(FlxG.width, FlxG.height, 0xfff0f0f0);
+		var bg:ASTHESprite = new ASTHESprite(0, 0).createGraphic(FlxG.width, FlxG.height, 0xfff0f0f0);
 		add(bg);
 
-		loadingTxt = AsthgText.create(0, 70, Locale.getString("loading", "data", ["..."]));
+		loadingTxt = ASTHEText.create(0, 70, Locale.getString("loading", "data", ["..."]));
 		loadingTxt.format(16, "center", FlxColor.WHITE);
 		add(loadingTxt);
 
@@ -69,11 +69,11 @@ class LoadingState extends StateManager {
 	function onLoad() {
 		if (stopMusic) FlxG.sound.music?.stop();
 
-		StateManager.switchState(target);
+		FlxG.switchState(() -> target);
 	}
 
 	inline static public function switchStates(target:FlxState, stopMusic = false)
-		StateManager.switchState(getNextState(target, stopMusic));
+		FlxG.switchState(() -> getNextState(target, stopMusic));
 
 	static function getNextState(target:FlxState, stopMusic = false):FlxState {
 		var directory:String = 'default';

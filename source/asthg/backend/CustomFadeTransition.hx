@@ -1,6 +1,6 @@
 //@see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/backend/CustomFadeTransition.hx
 
-package asthg.backend;
+package asthe.backend;
 
 class CustomFadeTransition extends SubStateManager {
 	public static var finishCallback:Void->Void;

@@ -4,7 +4,7 @@
 	But give credit where credit is due!
 */
 
-package asthg.options.substates;
+package asthe.options.substates;
 
 import firetongue.FireTongue;
 import openfl.utils.Assets;
@@ -16,7 +16,7 @@ class Language extends SubStateManager {
 		We need to be sure that Unicode are supported,
 		or translations will be weird as hell
 	*/
-	var grpLanguages:FlxTypedGroup<AsthgText>;
+	var grpLanguages:FlxTypedGroup<ASTHEText>;
 
 	/**
 		Current game's supported languages list
@@ -26,20 +26,20 @@ class Language extends SubStateManager {
 	public function new() {
 		super();
 
-		var bg = new AsthgSprite().createGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg = new ASTHESprite().createGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0.5;
 		add(bg);
 
-		grpLanguages = new FlxTypedGroup<AsthgText>();
+		grpLanguages = new FlxTypedGroup<ASTHEText>();
 		add(grpLanguages);
 
 		languages = Locale.tongue.locales;
 		try {
 			if (!ArrayUtil.isBlank(languages)) {
 				for (num => str in languages) {
-					var text:AsthgText = AsthgText.create(0, 30, Locale.tongue.getIndexString(LanguageRegionNative, languages[num]));
+					var text:ASTHEText = ASTHEText.create(0, 30, Locale.tongue.getIndexString(LanguageRegionNative, languages[num]));
 					text.fieldWidth = FlxG.width;
-					text.format(16, AsthgText.TextAlign.CENTER, FlxColor.WHITE);
+					text.format(16, ASTHEText.TextAlign.CENTER, FlxColor.WHITE);
 					text.ID = num;
 					text.y += (20 * (num - (languages?.length / 2))) + text?.size;
 					grpLanguages.add(text);
@@ -61,16 +61,16 @@ class Language extends SubStateManager {
 		var scroll = FlxG.mouse.wheel;
 		if (controls.UP || controls.DOWN || scroll != 0) {
 			changeSelection(((controls.UP ? -1 : 1) * mult) - scroll);
-			AsthgSound.playSound(ConstantSound.MENU_SCROLL);
+			ASTHESound.playSound(ConstantSound.MENU_SCROLL);
 		}
 
 		if (controls.BACK) {
 			close();
-			AsthgSound.playSound(ConstantSound.MENU_BACK);
+			ASTHESound.playSound(ConstantSound.MENU_BACK);
 		}
 
 		if(controls.ACCEPT) {
-			AsthgSound.playSound(ConstantSound.MENU_ACCEPT);
+			ASTHESound.playSound(ConstantSound.MENU_ACCEPT);
 			ClientPrefs.data.options.language = (languages[curSelected] ?? Constants.LANGUAGE_DEFAULT);
 			ClientPrefs.saveSettings();
 			Locale.init();

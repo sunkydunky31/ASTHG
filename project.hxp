@@ -39,12 +39,12 @@ class Project extends HXProject {
 			Package name for the project
 			Ussually in format: com.company.game
 		**/
-		"packageName" => "game.unrealsunnydev.asthg",
+		"packageName" => "game.unrealsunnydev.asthe",
 
 		/**
 			Name of the executable file (without extension)
 		**/
-		"file" => "ASTHG",
+		"file" => "ASTHE",
 
 		/**
 			List of supported languages that the game uses
@@ -79,10 +79,13 @@ class Project extends HXProject {
 
 	public function new() {
 		super();
+
+		#if (!target.unicode)
 		if (isPlatform("windows") && isTarget("cpp")) {
 			Sys.command("chcp", ["65001"]);
 			Sys.command("cls");
 		}
+		#end
 		LNG.load();
 
 		setenv("PROJECT_BUILD", (isDebug() ? "debug" : isFinal() ? "final" : "release"));
@@ -114,27 +117,29 @@ class Project extends HXProject {
 		this.window.allowHighDPI = true;
 
 		if (isPlatform("web")) EXCLUDE_ASSETS.push("*.ogg");
-		else		 EXCLUDE_ASSETS.push("*.mp3");
+		else                   EXCLUDE_ASSETS.push("*.mp3");
 
 
 		echo("");
 		echo('${GAME.get("title")} v${GAME.get("version")}');
 		echo("-----------------------------------------");
-		dotPad(LNG.translate("project_Company"), this.meta.company, null, false);
+		dotPad(LNG.translate("project_Company"), this.meta.company,     null, false);
 		dotPad(LNG.translate("project_Package"), this.meta.packageName, null, false);
-		dotPad(LNG.translate("project_AppFile"), this.app.file, null, false);
+		dotPad(LNG.translate("project_AppFile"),  this.app.file,         null, false);
 		echo("-----------------------------------------");
-		MODS_ALLOWED.set(this, true);
+
+		MODS_ALLOWED.set(this, !isPlatform("hl")); // Seems like Polymod doesn't like HashLink :C
 		DISCORD_ALLOWED.set(this, false);
 		TRANSLATIONS_ALLOWED.set(this, true);
 		if (isDebug()) echo("-----------------------------------------");
 
-		includeAssets("assets/default", null, null, EXCLUDE_ASSETS);
+		includeAssets("assets/default", "assets", null, EXCLUDE_ASSETS);
 		includeAssets("assets/fonts",   null);
+
 		if (TRANSLATIONS_ALLOWED.has(this))
 			includeAssets("assets/locales",        null);
 		else {
-			includeAssets("assets/locales/en-US", null);
+			includeAssets("assets/locales/en-US",  null);
 			includeAssets("assets/locales/_icons", null); // For FireTongue stop welling about icons
 			assets.push(new Asset("assets/locales/index.xml", null, AssetType.TEXT));
 		}
@@ -146,17 +151,13 @@ class Project extends HXProject {
 
 		sources.push("source");
 
-
-		if (MODS_ALLOWED.has(this))
-			includeAssets("mods", null);
-
 		// Adding Haxelibs
 		addHaxelib("flixel");
 		addHaxelib("flixel-addons");
 
 		addHaxelib("hxdiscord_rpc", (isTarget("cpp") && DISCORD_ALLOWED.get(this)));
-		addHaxelib("polymod", MODS_ALLOWED.get(this));
-		addHaxelib("firetongue", true); // Do NOT disable this, or all texts will not load
+		addHaxelib("polymod",       MODS_ALLOWED.get(this));
+		addHaxelib("firetongue",    true); // Do NOT disable this, or all texts will not load
 
 		/*
 			--------------------
@@ -188,9 +189,6 @@ class Project extends HXProject {
 
 		// Configure PolyMod
 		if (MODS_ALLOWED.has(this)) {
-			if (isDebug())
-				this.haxedefs.set("POLYMOD_DEBUG", true);
-
 			this.haxedefs.set("POLYMOD_API_VERSION_MATCH",  "NONE");
 			this.haxedefs.set("POLYMOD_MOD_METADATA_FILE",  "mod.json");
 			this.haxedefs.set("POLYMOD_MOD_PACK_FILE",      "modpack.txt");
@@ -198,6 +196,9 @@ class Project extends HXProject {
 			this.haxedefs.set("POLYMOD_ROOT_PATH",          "scripts/");
 			this.haxedefs.set("POLYMOD_SCRIPT_EXT",         ".hxs");
 			this.haxedefs.set("POLYMOD_SCRIPT_LIBRARY",     "scripts");
+
+			if (isDebug())
+				this.haxedefs.set("POLYMOD_DEBUG", true);
 		}
 
 

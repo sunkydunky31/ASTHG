@@ -1,6 +1,6 @@
 //@see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/backend/MusicBeatState.hx
 
-package asthg.backend;
+package asthe.backend;
 
 import flixel.FlxState;
 
@@ -43,54 +43,8 @@ public var controls(get, never):Controls;
 			Paths.clearUnusedMemory();
 			Locale.init();
 			SystemUtil.ACCENT_COLOR = SystemUtil.loadAccentColor();
-			resetState();
-			return;
-	}
-
-	public static function switchState(nextState:FlxState = null) {
-		nextState ??= FlxG.state;
-
-		if(nextState == FlxG.state) {
-			resetState();
-			return;
-		}
-
-		if(FlxTransitionableState.skipNextTransIn) {
-			#if (flixel < "5.6.0") // Reading "nextState", in the docs, says that this is deprecated but without any warning...
-			FlxG.switchState(nextState);
-			#else
-			FlxG.switchState(() -> nextState);
-			#end
-		}
-		else {
-			startTransition(nextState);
-		}
-		FlxTransitionableState.skipNextTransIn = false;
-	}
-
-	public static function resetState() {
-		if(FlxTransitionableState.skipNextTransIn)
 			FlxG.resetState();
-		else
-			startTransition();
-		FlxTransitionableState.skipNextTransIn = false;
-	}
-
-	// Custom made Trans in
-	public static function startTransition(nextState:FlxState = null) {
-		nextState ??= FlxG.state;
-
-		FlxG.state.openSubState(new CustomFadeTransition(0.5, false));
-		if(nextState == FlxG.state)
-			CustomFadeTransition.finishCallback = function() FlxG.resetState();
-		else
-			CustomFadeTransition.finishCallback = function() {
-				#if (flixel < "5.6.1") // Already deprecated in this version, but without any warning...
-				FlxG.switchState(nextState);
-				#else
-				FlxG.switchState(() -> nextState);
-				#end
-			}
+			return;
 	}
 
 	public static function getState():StateManager {

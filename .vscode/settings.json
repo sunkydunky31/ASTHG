@@ -79,5 +79,6 @@
       "pattern": "**/fonts/*.fnt",
       "systemId": ".vscode/schema/AngelCodeMetadata.xsd"
     }
-  ]
+  ],
+  "svg.preview.background": "dark-transparent"
 }

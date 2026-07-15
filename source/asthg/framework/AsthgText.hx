@@ -4,12 +4,12 @@
 	But give credit where credit is due!
 */
 
-package asthg.framework;
+package asthe.framework;
 
 import flixel.text.FlxText;
 import flixel.text.FlxText.FlxTextBorderStyle;
 
-class AsthgText extends FlxText {
+class ASTHEText extends FlxText {
 	public function new(x:Float = 0.0, y:Float = 0.0, width:Float = 0.0, ?text:String, size:Int = 16, embedded:Bool = true) {
 		super(x, y, width, text, size, embedded);
 	}
@@ -22,10 +22,10 @@ class AsthgText extends FlxText {
 		@param text Your text
 		@param font Your font file name
 		@param embedded If the font is a internal game font or a global one (from your platform)
-		@return AsthgText
+		@return ASTHEText
 	**/
-	public static function create(x:Float, y:Float, text:String, ?font:String = "Mania.ttf", ?embedded:Bool = true):AsthgText {
-		var txt:AsthgText = new AsthgText(x, y, 0, text, 16, embedded);
+	public static function create(x:Float, y:Float, text:String, ?font:String = "Mania.ttf", ?embedded:Bool = true):ASTHEText {
+		var txt:ASTHEText = new ASTHEText(x, y, 0, text, 16, embedded);
 		txt.font = (embedded) ? Paths.font(font) : font;
 
 		return txt;
@@ -36,9 +36,9 @@ class AsthgText extends FlxText {
 		@param size Size of the font to render
 		@param align Aligment to the font
 		@param color
-		@return AsthgText
+		@return ASTHEText
 	**/
-	public function format(size:Int = 16, ?align:TextAlign = TextAlign.LEFT, ?color:FlxColor = FlxColor.WHITE):AsthgText {
+	public function format(size:Int = 16, ?align:TextAlign = TextAlign.LEFT, ?color:FlxColor = FlxColor.WHITE):ASTHEText {
 		this.size = size;
 		this.alignment = align;
 		this.color = color;
@@ -46,7 +46,7 @@ class AsthgText extends FlxText {
 		return this;
 	}
 
-	public function formatBorder(style:TextBorder = OUTLINE, borderColor:FlxColor = FlxColor.BLACK, ?borderSize:Int = 1):AsthgText {
+	public function formatBorder(style:TextBorder = OUTLINE, borderColor:FlxColor = FlxColor.BLACK, ?borderSize:Int = 1):ASTHEText {
 		switch (style) {
 			case NONE: // Nothing
 			case SHADOW: this.borderStyle = FlxTextBorderStyle.SHADOW;

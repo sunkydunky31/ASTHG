@@ -1,4 +1,4 @@
-package asthg.input;
+package asthe.input;
 
 import flixel.input.gamepad.FlxGamepadButton;
 import flixel.input.gamepad.FlxGamepadInputID;
@@ -40,7 +40,7 @@ class Controls {
 		@param high (Weak) High frequence motor (0 to 1).
 		@param period Determiner the period to vibrate on Mobile
 		@param duration Duration of the vibration
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	public function vibrate(params:InputVibrateOptions) {
 		#if (lime >= "8.3.0")

@@ -1,4 +1,4 @@
-package asthg.backend;
+package asthe.backend;
 
 import flixel.math.FlxPoint;
 import flash.media.Sound;
@@ -121,20 +121,18 @@ class Paths {
 		currentLevel = (name.isBlank()) ? null : name.toLowerCase();
 	}
 
-	public static function getPath(file:String, ?type:AssetType = TEXT, ?parentfolder:Null<String> = null):String {
-		var result:String = "";
-		if (!parentfolder.isBlank() && parentfolder != DEFAULT_LIBRARY) {
-			result = getFolderPath(file, parentfolder);
+	public static function getPath(file:String, ?type:AssetType = TEXT, ?library:Null<String> = null):String {
+		if (!library.isBlank()) {
+			return getLibraryPath(file, library);
 		}
 
-		if (!currentLevel.isBlank() && currentLevel != DEFAULT_LIBRARY) {
-			var levelPath = getFolderPath(file, currentLevel);
+		if (!currentLevel.isBlank()) {
+			var levelPath:String = getLibraryPath(file, currentLevel);
 			if (OpenFlAssets.exists(levelPath, type))
-				result = levelPath;
+				return levelPath;
 		}
 
-		result = getFolderPath(file);
-		return result;
+		return getLibraryPath(file);
 	}
 
 	/**
@@ -143,8 +141,12 @@ class Paths {
 		@param folder The folder to use (@default `"default"`)
 		@return String
 	**/
-	inline static public function getFolderPath(file:String = '', folder = "default"):String {
-		return 'assets/$folder/$file';
+	inline static public function getLibraryPath(file:String = '', library = DEFAULT_LIBRARY, ?forceLib:Bool = false):String {
+		if (library == DEFAULT_LIBRARY && !forceLib) {
+			return "assets/" + file;
+		}
+
+		return '$library:assets/$library/$file';
 	}
 
 	inline static public function video(key:String) {
@@ -171,8 +173,10 @@ class Paths {
 		@param allowGPU Cache on GPU? (Default: True)
 		@return FlxGraphic
 	**/
-	static public function image(key:String, ?parentFolder:String = null, ?allowGPU:Bool = true):FlxGraphic {
+	public static function image(key:String, ?parentFolder:String = null, ?allowGPU:Bool = true):FlxGraphic {
+		#if TRANSLATIONS_ALLOWED
 		key = Locale.getFile('images/$key', 'png');
+		#end
 		var bitmap:BitmapData = null;
 		if (currentTrackedAssets.exists(key)) {
 			localTrackedAssets.push(key);
@@ -189,7 +193,7 @@ class Paths {
 				bitmap = OpenFlAssets.getBitmapData(file);
 
 			if (bitmap == null) {
-				trace('Bitmap not found: $file | key: $key');
+				trace('Bitmap not found: {0} | key: {1}', file, key);
 				return null;
 			}
 		}
@@ -218,21 +222,11 @@ class Paths {
 
 
 	inline static public function font(key:String) {
-		var font = key;
 		#if TRANSLATIONS_ALLOWED
-		font = Locale.tongue.getFontData(key).name;
+		key = Locale.tongue.getFontData(key).name;
 		#end
 
-		return getFolderPath(font, "fonts");
-	}
-
-	/**
-		Gets a AngelCode bitmap font
-		@param key Name of the font file
-	**/
-	inline static public function getAngelCodeFont(key:String) {
-		var file:String = getFolderPath(key, 'fonts');
-		return FlxBitmapFont.fromAngelCode(file + ".png", file + ".fnt");
+		return getPath("fonts/" + key);
 	}
 
 	inline static public function getSparrowAtlas(key:String, ?parentFolder:String = null, ?allowGPU:Bool = true):FlxAtlasFrames {
@@ -242,7 +236,13 @@ class Paths {
 
 	public static var currentTrackedSounds:Map<String, Sound> = [];
 	public static function returnSound(key:String, ?path:String, ?beepOnNull:Bool = true) {
-		var file:String = getPath(Locale.getFile(key, Constants.SOUND_EXT), SOUND, path);
+		var file:String = getPath(
+			#if TRANSLATIONS_ALLOWED
+			Locale.getFile(key, Constants.SOUND_EXT),
+			#else
+			key + "." + Constants.SOUND_EXT,
+			#end
+		SOUND, path);
 
 		//trace('precaching sound: $file');
 		if(!currentTrackedSounds.exists(file)) {

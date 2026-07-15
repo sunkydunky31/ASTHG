@@ -1,17 +1,17 @@
 /*
-	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-06-04
+	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-06-14
 	You are allowed to use, modify and redistribute this code
 	But give credit where credit is due!
 */
 
-package asthg.framework;
+package asthe.framework;
 
 import flixel.text.FlxBitmapText;
 import flixel.text.FlxBitmapFont;
 import flixel.text.FlxText.FlxTextBorderStyle;
-import asthg.framework.AsthgText;
+import asthe.framework.ASTHEText;
 
-class AsthgBitmapText extends FlxBitmapText {
+class ASTHEBitmapText extends FlxBitmapText {
 	var fontName:String = "";
 
 	public function new(?x:Float = 0.0, ?y:Float = 0.0, ?text:String) {
@@ -19,29 +19,59 @@ class AsthgBitmapText extends FlxBitmapText {
 	}
 
 	/**
-		Creates a text box
+		Creates a text box with a Angel Code font
 		@param font Font file name
 		@param x Horizontal position of the box
 		@param y Vertical position of the box
 		@param text Your text
 		@param font Your font file name
-		@param embedded If the font is a internal game font or a global one (from your platform)
-		@return AsthgBitmapText
+		@return ASTHEBitmapText
 	**/
-	public static function createAngelCode(x:Float, y:Float, text:String, ?font:String = "Roco"):AsthgBitmapText {
-		// List of fonts that doesn't need lowercase letters / support them
-		var noUpper = ["Roco", "TitleFont", "GameOver", "HUD"];
-
-		for (i in noUpper)
-			if (font == i)
-				text = text.toUpperCase();
-
-		var txt:AsthgBitmapText = new AsthgBitmapText(x, y, text);
-		txt.font = Paths.getAngelCodeFont(font);
+	public static function createAngelCode(x:Float, y:Float, text:String, ?font:String):ASTHEBitmapText {
+		var txt:ASTHEBitmapText = new ASTHEBitmapText(x, y, text);
+		txt.loadAngelCode(font);
 		return txt;
 	}
 
-	public function formatBorder(style:AsthgText.TextBorder = OUTLINE, borderColor:FlxColor = FlxColor.BLACK, ?borderSize:Int = 1):AsthgBitmapText {
+	/**
+		Creates a text box with a Angel Code font
+		@param font Font file name
+		@param x Horizontal position of the box
+		@param y Vertical position of the box
+		@param text Your text
+		@param font Your font file name
+		@return ASTHEBitmapText
+	**/
+	public static function createMonospace(x:Float, y:Float, text:String, ?font:String, ?glyphs:String, ?size:Array<Float>):ASTHEBitmapText {
+		var txt:ASTHEBitmapText = new ASTHEBitmapText(x, y, text);
+		txt.loadMonospace(font, glyphs, size);
+		return txt;
+	}
+
+	/**
+		Gets a AngelCode bitmap font
+		@param key Name of the font file
+	**/
+	public function loadAngelCode(key:String = "Roco"):ASTHEBitmapText {
+
+		// Fonts that doesn't need lowercase letters / support them
+		for (i in ["Roco", "TitleFont", "GameOver", "HUD"]) {
+			if (key == i)
+				this.text = text.toUpperCase();
+		}
+
+		var file:String = Paths.getPath("fonts/" + key);
+		this.font = FlxBitmapFont.fromAngelCode(file + ".png", file + ".fnt");
+		return this;
+	}
+
+	public function loadMonospace(key:String, glyphs:String, size:Array<Float>):ASTHEBitmapText {
+		var file:String = Paths.getPath("fonts/" + key);
+		this.font = FlxBitmapFont.fromMonospace(file + ".png", glyphs, ArrayUtil.toPoint(size));
+		return this;
+	}
+
+	public function formatBorder(style:ASTHEText.TextBorder = OUTLINE, borderColor:FlxColor = FlxColor.BLACK, ?borderSize:Int = 1):ASTHEBitmapText {
 		switch (style) {
 			case NONE: // Nothing
 			case SHADOW: this.borderStyle = FlxTextBorderStyle.SHADOW;

@@ -4,10 +4,10 @@
 	But give credit where credit is due!
 */
 
-package asthg.game;
+package asthe.game;
 
-import asthg.states.PlayState;
-import asthg.objects.LifeIcon;
+import asthe.states.PlayState;
+import asthe.objects.LifeIcon;
 
 import flixel.FlxSprite;
 import flixel.util.FlxStringUtil;
@@ -17,7 +17,7 @@ import flixel.util.FlxStringUtil;
 
 	Also, this allows us to easily add more HUD elements and using functions
 	for scripts, without leaving it all in PlayState, yay!
-	@author Sunnydev31 (@unreal.sunnydev)
+	@author Sunnydev31 (unreal.sunnydev)
 **/
 class HudGame extends FlxSpriteGroup {
 
@@ -64,43 +64,43 @@ class HudGame extends FlxSpriteGroup {
 	// --- DRAWABLE HUD ELEMENTS --- //
 
 	/** "SCORE" text element. **/
-	public var scoreTxt:AsthgBitmapText;
+	public var scoreTxt:ASTHEBitmapText;
 
 	/** "TIME" text element. **/
-	public var timeTxt:AsthgBitmapText;
+	public var timeTxt:ASTHEBitmapText;
 
 	/** "RINGS" text element. **/
-	public var ringsTxt:AsthgBitmapText;
+	public var ringsTxt:ASTHEBitmapText;
 
 	/**
 		Readable lives counter.
 		This follows the style based on 8-bit games.
 	**/
-	public var livesTxt:AsthgBitmapText;
+	public var livesTxt:ASTHEBitmapText;
 
 	// --- READABLE HUD VALUES --- //
 
 	/*	These are only used to show the values on the screen
 		They don't need a description, do they?...			*/
 
-	public var scoreValTxt:AsthgBitmapText;
-	public var timeValTxt:AsthgBitmapText;
-	public var ringsValTxt:AsthgBitmapText;
+	public var scoreValTxt:ASTHEBitmapText;
+	public var timeValTxt:ASTHEBitmapText;
+	public var ringsValTxt:ASTHEBitmapText;
 
 	// --- DEBUG ONLY --- //
 
 	/**
 		Debug sprite to show the player X position.
 	**/
-	public var posX:AsthgSprite;
+	public var posX:ASTHESprite;
 
 	/**
 		Debug sprite to show the player Y position.
 	**/
-	public var posY:AsthgSprite;
+	public var posY:ASTHESprite;
 
-	public var posXTxt:Null<AsthgBitmapText>;
-	public var posYTxt:Null<AsthgBitmapText>;
+	public var posXTxt:Null<ASTHEBitmapText>;
+	public var posYTxt:Null<ASTHEBitmapText>;
 
 	/**
 		Instance used to show the player life icon.
@@ -112,41 +112,42 @@ class HudGame extends FlxSpriteGroup {
 		Cronstructor for the HUD, remember to use a instance variable!
 		@param x HUD Horizontal position, DEBUG sprites doesn't follow this.
 		@param y HUD Vertical position, Life sprites doesn't follow this.
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	public function new(x:Float = 0, y:Float = 0) {
 		super(x, y);
 		instance = this;
 
 		// Init variables
-		scoreTxt = AsthgBitmapText.createAngelCode(0, 0, Locale.getString("hud_text_score"), "HUD");
-		scoreValTxt = AsthgBitmapText.createAngelCode(0, 0, Std.string(score), "HUD");
-		timeTxt = AsthgBitmapText.createAngelCode(0, 0, Locale.getString("hud_text_time"), "HUD");
-		timeValTxt = AsthgBitmapText.createAngelCode(0, 0, StringUtil.formatTime(time, ClientPrefs.data.options.showMiliseconds), "HUD");
-		ringsTxt = AsthgBitmapText.createAngelCode(0, 0, Locale.getString("hud_text_rings"), "HUD");
-		ringsValTxt = AsthgBitmapText.createAngelCode(0, 0, Std.string(rings), "HUD");
+		scoreTxt = ASTHEBitmapText.createAngelCode(0, 0, Locale.getString("hud_text_score"), "HUD");
+		scoreValTxt = ASTHEBitmapText.createAngelCode(0, 0, Std.string(score), "HUD");
+		timeTxt = ASTHEBitmapText.createAngelCode(0, 0, Locale.getString("hud_text_time"), "HUD");
+		timeValTxt = ASTHEBitmapText.createAngelCode(0, 0, StringUtil.formatTime(time, ClientPrefs.data.options.showMiliseconds), "HUD");
+		ringsTxt = ASTHEBitmapText.createAngelCode(0, 0, Locale.getString("hud_text_rings"), "HUD");
+		ringsValTxt = ASTHEBitmapText.createAngelCode(0, 0, Std.string(rings), "HUD");
 		if (PlayState.instance != null) {
 			livesIcon = new LifeIcon(PlayState.instance?.player.lifeIcon);
-			livesTxt = AsthgBitmapText.createAngelCode(0, 0, Std.string(lives), "HUD");
+			livesTxt = ASTHEBitmapText.createAngelCode(0, 0, Std.string(lives), "HUD");
 		}
 
 		createScoreHud(x, y);
 		createTimeHud (x, y + 16);
 		createRingsHud(x, y + 32);
 		if (PlayState.instance != null) {
-			createLivesHud(
-				#if mobile FlxG.width - 64 #else 16 #end,
-				#if mobile 8 #else Math.round(FlxG.height * 0.9) #end
-			);
+			#if mobile
+			createLivesHud(FlxG.width - 64, y);
+			#else
+			createLivesHud(x, Math.round(FlxG.height * 0.9));
+			#end
 		}
-		createDebugHud(FlxG.width - 60, y);
+		createDebugHud(FlxG.width - 60, y #if mobile + 18 #end);
 	}
 
 	/**
 		Creates the score HUD element (Score counter and text)
 		@param x Horizontal position on screen, default is 0
 		@param y Vertical position on screen, default is 0
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	public dynamic function createScoreHud(?x:Float = 0, ?y:Float = 0):Void {
 		scoreTxt.setPosition(x, y);
@@ -156,7 +157,7 @@ class HudGame extends FlxSpriteGroup {
 		scoreValTxt.setPosition(x + scoreTxt.width + 37, y);
 		scoreValTxt.scrollFactor.set();
 		scoreValTxt.fieldWidth = 100;
-		scoreValTxt.alignment = AsthgText.TextAlign.RIGHT;
+		scoreValTxt.alignment = ASTHEText.TextAlign.RIGHT;
 		scoreValTxt.multiLine = false;
 		add(scoreValTxt);
 	}
@@ -165,7 +166,7 @@ class HudGame extends FlxSpriteGroup {
 		Creates the time HUD element (Time counter and text)
 		@param x Horizontal position on screen, default is 0
 		@param y Vertical position on screen, default is 0
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	public dynamic function createTimeHud(?x:Float = 0, ?y:Float = 0) {
 		timeTxt.setPosition(x, y);
@@ -175,7 +176,7 @@ class HudGame extends FlxSpriteGroup {
 		timeValTxt.setPosition(x + timeTxt.width + 37, y);
 		timeValTxt.scrollFactor.set();
 		timeValTxt.fieldWidth = 100;
-		timeValTxt.alignment = AsthgText.TextAlign.RIGHT;
+		timeValTxt.alignment = ASTHEText.TextAlign.RIGHT;
 		timeValTxt.multiLine = false;
 		add(timeValTxt);
 	}
@@ -184,7 +185,7 @@ class HudGame extends FlxSpriteGroup {
 		Creates the rings HUD element (Ring counter and text)
 		@param x Horizontal position on screen, default is 0
 		@param y Vertical position on screen, default is 0
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	public dynamic function createRingsHud(?x:Float = 0, ?y:Float = 0) {
 		ringsTxt.setPosition(x, y);
@@ -193,7 +194,7 @@ class HudGame extends FlxSpriteGroup {
 
 		ringsValTxt.setPosition(x + ringsTxt.width + 37, y);
 		ringsValTxt.fieldWidth = 80;
-		ringsValTxt.alignment = AsthgText.TextAlign.RIGHT;
+		ringsValTxt.alignment = ASTHEText.TextAlign.RIGHT;
 		ringsValTxt.multiLine = false;
 		ringsValTxt.scrollFactor.set();
 		add(ringsValTxt);
@@ -204,7 +205,7 @@ class HudGame extends FlxSpriteGroup {
 
 		@param x Horizontal position on screen, default is 0
 		@param y Vertical position on screen, default is 0
-		@author Sunnydev31 (@unreal.sunnydev)
+		@author Sunnydev31 (unreal.sunnydev)
 	**/
 	public dynamic function createLivesHud(?x:Float = 0, ?y:Float = 0) {
 		livesIcon.setPosition(x, y);
@@ -217,18 +218,18 @@ class HudGame extends FlxSpriteGroup {
 
 	public dynamic function createDebugHud(?x:Float = 0, ?y:Float = 0) {
 		#if debug
-		posX = AsthgSprite.create(x, y, "HUD/posX");
+		posX = ASTHESprite.create(x, y, "HUD/posX");
 		posX.color = FlxColor.YELLOW;
 		add(posX);
 
-		posXTxt = AsthgBitmapText.createAngelCode(x + posX.width + 1, y, '?', "HUD");
+		posXTxt = ASTHEBitmapText.createAngelCode(x + posX.width + 1, y, '?', "HUD");
 		add(posXTxt);
 
-		posY = AsthgSprite.create(x, y + 13, "HUD/posY");
+		posY = ASTHESprite.create(x, y + 13, "HUD/posY");
 		posY.color = FlxColor.YELLOW;
 		add(posY);
 
-		posYTxt = AsthgBitmapText.createAngelCode(x + posY.width + 1, y, '?', "HUD");
+		posYTxt = ASTHEBitmapText.createAngelCode(x + posY.width + 1, y + 13, '?', "HUD");
 		add(posYTxt);
 		#end
 	}
@@ -264,7 +265,7 @@ class HudGame extends FlxSpriteGroup {
 	}
 
 	private function set_rings(v:Int):Int {
-		v = Std.int(FlxMath.bound(v, 0, Constants.HUD_RINGS_MAX));
+		v = MathUtil.clampInt(v, 0, Constants.HUD_RINGS_MAX);
 		ringsValTxt.text = Std.string(v);
 		rings = v;
 
@@ -272,7 +273,7 @@ class HudGame extends FlxSpriteGroup {
 	}
 
 	private function set_lives(v:Int):Int {
-		v = Std.int(FlxMath.bound(v, 0, Constants.HUD_LIVES_MAX));
+		v = MathUtil.clampInt(v, 0, Constants.HUD_LIVES_MAX);
 		livesTxt.text = Std.string(v);
 		lives = v;
 

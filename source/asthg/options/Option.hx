@@ -1,6 +1,6 @@
 //@see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/options/Option.hx
 
-package asthg.options;
+package asthe.options;
 
 enum OptionType { BOOL; STRING; NUMBER; }
 
@@ -15,7 +15,7 @@ class Option {
 	public var value(get, set):Dynamic;
 	public var defaultV:Null<Dynamic>;
 
-	public var child:AsthgText;
+	public var child:ASTHEText;
 	public var text(get, set):Null<String>;
 	// } end region
 

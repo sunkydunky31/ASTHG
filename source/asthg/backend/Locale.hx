@@ -1,4 +1,4 @@
-package asthg.backend;
+package asthe.backend;
 
 import firetongue.FireTongue;
 
@@ -7,7 +7,7 @@ using util.StringUtil;
 /**
 	Handler for translating text and assets in the game
 
-	@author Sunnydev31 (@unreal.sunnydev)
+	@author Sunnydev31 (unreal.sunnydev)
 **/
 class Locale {
 	public static var tongue:Null<FireTongue> = null;

@@ -1,26 +1,20 @@
 #if !macro
-
-import asthg.framework.*;
-
-import asthg.backend.ClientPrefs;
-import asthg.backend.Constants;
-import asthg.backend.CoolUtil;
-#if DISCORD_ALLOWED
-import asthg.backend.Discord;
-#end
-import asthg.backend.Locale;
-#if MODS_ALLOWED
-import asthg.backend.Mods;
-#end
-import asthg.backend.Paths;
-import asthg.backend.StateManager;
-import asthg.backend.SubStateManager;
-import asthg.input.Controls;
-import asthg.states.LoadingState;
-import asthg.util.*;
+import asthe.backend.ClientPrefs;
+import asthe.backend.Constants;
+import asthe.backend.CoolUtil;
+#if DISCORD_ALLOWED import asthe.backend.Discord; #end
+import asthe.backend.Locale;
+#if MODS_ALLOWED import asthe.backend.Mods; #end
+import asthe.backend.Paths;
+import asthe.backend.StateManager;
+import asthe.backend.SubStateManager;
+import asthe.input.Controls;
+import asthe.states.LoadingState;
+import asthe.framework.*;
+import asthe.util.*;
 import util.*;
 using util.StringUtil;
-using asthg.util.Ansi;
+using asthe.util.Ansi;
 
 //---------------------------------//
 

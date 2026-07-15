@@ -1,6 +1,6 @@
-package asthg.data;
+package asthe.data;
 
-import asthg.data.CharacterAnimation;
+import asthe.data.CharacterAnimation;
 
 typedef CharacterData = {
 	/**

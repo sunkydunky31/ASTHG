@@ -1,4 +1,4 @@
-package asthg.backend;
+package asthe.backend;
 
 import flixel.FlxSubState;
 

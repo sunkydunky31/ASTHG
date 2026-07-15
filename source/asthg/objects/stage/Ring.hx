@@ -1,6 +1,6 @@
-package asthg.objects.stage;
+package asthe.objects.stage;
 
-class Ring extends AsthgSprite {
+class Ring extends ASTHESprite {
 	public static final ANIMATION_NUM_FRAMES:Int = 15; // Sonic Mania sprite num frames -- REALLY SMOOTH, wow
 	public static final ANIMATION_SPEED:Int      = 40; // Estimated animation speed, not sure because Retro Engine uses velocity, not FPS.
 
@@ -15,7 +15,7 @@ class Ring extends AsthgSprite {
 	override function kill() {
 		super.kill();
 
-		AsthgSound.playSound(ConstantSounds.RING);
+		ASTHESound.playSound(ConstantSounds.RING);
 		game.HudGame.instance?.rings++;
 	}
 }

@@ -1,26 +1,25 @@
 /*
-	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-06-07
+	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-06-14
 	You are allowed to use, modify and redistribute this code
 	But give credit where credit is due!
 */
 
-package asthg.backend;
+package asthe.backend;
 
 class Constants {
 	// Fonts
-	public static final ABSOLUTE_FONT_GLYPHDATA:String = [ // Switched to array for more organization
-		" ☺☻♥♦♣♠●◘◉◙♂♀♪♬☼",
-		"►◄↕‼¶§▄↨↑↓→←∟↔▲▼",
-		" !\"#$%&'()*+,-./",
-		"0123456789:;<=>?",
-		"@ABCDEFGHIJKLMNO",
-		"PQRSTUVWXYZ[\\]^_",
-		"`abcdefghijklmno",
-		"pqrstuvwxyz{|}~⌂",
-		"ÇüéâäaçêëèïîìÄÂ",
-		"ÉæÆôöòûùÿÖÜc¢£¥₧ƒ",
-		"áíóúñÑªº¿⌐¬½¼¡«»"
-	].join("");
+	inline public static final ABSOLUTE_FONT_GLYPHDATA:String =
+		" ☺☻♥♦♣♠●◘◉◙♂♀♪♬☼" +
+		"►◄↕‼¶§▄↨↑↓→←∟↔▲▼" +
+		" !\"#$%&'()*+,-./" +
+		"0123456789:;<=>?" +
+		"@ABCDEFGHIJKLMNO" +
+		"PQRSTUVWXYZ[\\]^_" +
+		"`abcdefghijklmno" +
+		"pqrstuvwxyz{|}~⌂" +
+		"ÇüéâäaçêëèïîìÄÂ" +
+		"ÉæÆôöòûùÿÖÜc¢£¥₧ƒ" +
+		"áíóúñÑªº¿⌐¬½¼¡«»";
 
 	// Characters
 	public static final DEFAULT_CHARACTER:String = "sonic";
@@ -37,7 +36,7 @@ class Constants {
 	public static final SAVE_SELECTED_FRAME_COLOR:Array<FlxColor> = [0xffffffff, 0xffff0000];
 	public static final SAVE_SELECTED_ARROW_COLOR:Array<FlxColor> = [0xffff0059, 0xffff0059];
 
-
+	// Polymod
 	public static final POLYMOD_SETTINGS:Dynamic = {
 		useScriptedClasses: false
 	};

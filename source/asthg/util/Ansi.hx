@@ -1,4 +1,4 @@
-package asthg.util;
+package asthe.util;
 
 using util.StringUtil;
 
@@ -75,6 +75,9 @@ class Ansi {
 	public static function warn(str:String):String
 		return ansiApply(" WARNING ", AnsiList.BG_YELLOW) + str;
 
+	public static function debug(str:String):String
+		return ansiApply(" DEBUG ", AnsiList.BG_TRUE_COLOR, [199, 68, 181]) + str;
+
 	/**
 		Allows you to create a custom log label with custom colors.
 		@param str The message wou want to log
@@ -89,7 +92,7 @@ class Ansi {
 		}
 
 	public static function ansiApply(text:String, ansi:AnsiList, ?args:Null<Array<Dynamic>>):String {
-		var temp = ((enabled) ? ansi : "") + text;
+		var temp = ((enabled) ? ansi : "[") + text;
 
 		if (args != null)
 			temp.format(args);
@@ -98,6 +101,6 @@ class Ansi {
 		if (StringTools.contains(temp, AnsiList.RESET) && enabled)
 			temp = StringTools.replace(temp, AnsiList.RESET, "");
 
-		return temp + (enabled ? AnsiList.RESET : "") + ' ';
+		return temp + (enabled ? AnsiList.RESET : "]") + ' ';
 	}
 }

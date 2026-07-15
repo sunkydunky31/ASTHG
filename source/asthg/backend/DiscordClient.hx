@@ -1,4 +1,4 @@
-package asthg.backend;
+package asthe.backend;
 
 #if (DISCORD_ALLOWED && cpp)
 import lime.app.Application;
@@ -114,8 +114,8 @@ class DiscordClient {
 		return newID;
 	}
 
-	static function log(msg:String) {
-		trace(msg.infoCustom("DISCORD", AnsiList.BG_BLUE));
+	static function log(msg:String, ?args:haxe.PosInfos) {
+		trace(msg.infoCustom("DISCORD", AnsiList.BG_BLUE), args);
 	}
 }
 

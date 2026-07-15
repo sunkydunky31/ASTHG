@@ -55,6 +55,9 @@ import sys.io.File;
 import firetongue.format.CSV;
 import firetongue.format.TSV;
 
+using util.StringUtil;
+using StringTools;
+
 typedef FiretongueParams =
 {
 	/**
@@ -1457,7 +1460,7 @@ class FireTongue
 		// Replace numbered placeholders
 		text = numPlace.map(text, function(re)
 		{
-			if (numPlace.match(text)) {
+			if (place.match(text)) {
 				trace("WARNING: Found normal placeholders on the text!");
 			}
 
