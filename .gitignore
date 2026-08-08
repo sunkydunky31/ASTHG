@@ -1,4 +1,10 @@
+# Libs and build files
 export/
 .haxelib/
+
+# Project sensitive files
 _project/build/setup.log
 _project/build/setup_config.json
+
+# Project File lol
+_project/Project.sublime-project

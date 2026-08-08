@@ -28,7 +28,14 @@ echo "---------------------------------------------------------------"
 
 case "$DIST" in
   alpine)
+    
+  if ["$DIST_VER" -ge "3.16"]; then
+    echo "Version is >= 3.16"
+    doas apk add --no-cache ca-certificates less ncurses-terminfo-base krb5-libs libgcc libintl libssl3 libstdc++ tzdata userspace-rcu zlib icu-libs curl
+  else
+    echo "Version is <= 3.16"
     sudo apk add --no-cache ca-certificates less ncurses-terminfo-base krb5-libs libgcc libintl libssl3 libstdc++ tzdata userspace-rcu zlib icu-libs curl
+  fi
 
     apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache lttng-ust openssh-client \
     curl -L https://github.com/PowerShell/PowerShell/releases/download/v$PSVERSION/powershell-$PSVERSION-linux-musl-x64.tar.gz -o /tmp/powershell.tar.gz

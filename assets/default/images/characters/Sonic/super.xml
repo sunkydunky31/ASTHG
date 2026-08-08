@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="super.png">
+	<SubTexture	name="SuperTransform0000" x="80" y="1" width="25" height="32" centerX="-14" centerY="-16"/>
+	<SubTexture	name="SuperTransform0001" x="80" y="1" width="25" height="32" centerX="-14" centerY="-16"/>
+	<SubTexture	name="SuperTransform0002" x="105" y="1" width="30" height="44" centerX="-16" centerY="-23"/>
+	<SubTexture	name="SuperTransform0003" x="105" y="1" width="30" height="44" centerX="-16" centerY="-23"/>
+	<SubTexture	name="SuperTransform0004" x="135" y="1" width="28" height="47" centerX="-14" centerY="-24"/>
+	<SubTexture	name="SuperTransform0005" x="164" y="1" width="28" height="48" centerX="-14" centerY="-25"/>
+	<SubTexture	name="SuperTransform0006" x="193" y="1" width="28" height="47" centerX="-14" centerY="-24"/>
+</TextureAtlas>

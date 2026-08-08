@@ -3,9 +3,11 @@ package util;
 #if flixel
 import flixel.util.FlxStringUtil;
 #end
-
 import StringBuf;
+
 using StringTools;
+
+import haxe.Rest;
 
 /**
 	Contains tools for string manipulation and formatting
@@ -13,20 +15,20 @@ using StringTools;
 **/
 @:nullSafety
 class StringUtil {
-
 	/**
 		Capitalizes the first letter of the string and makes the rest of the string lowercase
 		@param text
 		@return String
 		@see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/backend/CoolUtil.hx#L41
-		@author ??? (Maybe ShadowMario?- Idk who made it.)
+		@author ???
 	**/
 	inline public static function capitalize(text:String):String {
 		return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
 	}
 
 	/**
-		The capitalize function, but inversed! Makes the first Letter lowercase and the rest of the string uppercase
+		The capitalize function, but inversed! Makes the first Letter
+		lowercase and the rest of the string uppercase
 		@param text Text to inverse capitalize
 		@return String
 	**/
@@ -36,9 +38,9 @@ class StringUtil {
 
 	/**
 		Converts a string to snake_case, replacing spaces with underscores,
-		returns `Empty` if the `s` is null/empty
+		returns `Empty` (`""`) if the `s` is null/empty
 		NOTE: The string is not formatted to lower case
-		@param text Your string
+		@param s Your string
 		@return String
 	**/
 	inline public static function toSnakeCase(s:String):String {
@@ -48,8 +50,9 @@ class StringUtil {
 
 	/**
 		Converts a string to kebab-case
+		returns `Empty` (`""`) if the `s` is null/empty
 		NOTE: The string is not formatted to lower case
-		@param text Your string
+		@param s Your string
 		@return String
 	**/
 	inline public static function toKebabCase(s:String):String {
@@ -76,22 +79,22 @@ class StringUtil {
 
 		Usage example:
 		```haxe
-		trace(StringUtil.format("I have {0} years old.", 5752));
+		trace(StringUtil.format("I have {0} years old.", [5752]));
 		// Return: I have 5752 years old.
 
-		// With "using" instead of "import"
 
+		// With "using" instead of "import"
 		using StringUtil;
 
 		class Main {
 			public static function main()
-				trace("Gotten color: #{0:x}", 0xFFFF00);
+				trace("Gotten color: #{0:x}".format([0xFFFF00]));
 				//Returns: "Gotten color: #ffff00"
 				// It's the same as `trace("Gotten color: #" + StringTools.hex(0xFFFF00)`, but with support to Float type.
 		}
 		```
 
-		@param str   The string to format
+		@param str    The string to format
 		@param values If a placeholder is found, replace it with the value in this parameter
 		@return Bool
 	**/
@@ -116,7 +119,7 @@ class StringUtil {
 		Format seconds as minutes with a colon, an optionally with milliseconds too.
 
 		@param	Seconds     The number of seconds (for example, time remaining, time spent, etc).
-		@param	ShowMS      Whether to show milliseconds after a `"` as well.  @default -> false.
+		@param	ShowMS      Whether to show milliseconds after a `"` as well.  @default `false`.
 		@return	A nicely formatted String, like `1:03` or `5'19"43`.
 	**/
 	public static function formatTime(Seconds:Float, ShowMS:Bool = false):String {
@@ -124,14 +127,13 @@ class StringUtil {
 		var minSplit = ShowMS ? "'" : ":";
 		var secSplit = '"';
 
-		var min  = Std.int(Seconds / 60);
-		var sec  = Std.int(Seconds) % 60;
+		var min = Std.int(Seconds / 60);
+		var sec = Std.int(Seconds) % 60;
 		var msec = Std.int((Seconds - Std.int(Seconds)) * 100);
 
 		str = StringTools.lpad(Std.string(min), "0", 1) + minSplit + StringTools.lpad(Std.string(sec), "0", 2);
 
-		if (ShowMS)
-		{
+		if (ShowMS) {
 			str += secSplit + StringTools.lpad(Std.string(msec), "0", 2);
 		}
 
@@ -153,7 +155,7 @@ class StringUtil {
 		do {
 			var digit = Std.int(v % 16);
 			s = hexChars.charAt(digit) + s;
-			v = Math.floor(v/16);
+			v = Math.floor(v / 16);
 		} while (v > 0);
 
 		if (digits != null)
@@ -162,12 +164,36 @@ class StringUtil {
 		return s;
 	}
 
-	public static function replaceMulti(s:String, sub:Array<String>, by:Array<String>) {
+	/**
+		Function to replace multiple String values to another multiple ones
+		@param s Base string to replace
+		@param sub Value to be replaced
+		@param by Value to replace by
+		@return String
+	**/
+	public static function replaceMulti(s:String, sub:Array<String>, by:Array<String>):String {
 		if (by.length != sub.length)
 			throw "`by` argument is not the same length as `sub`.";
 
 		for (i in 0...sub.length) {
 			s = s.replace(sub[i], by[i]);
+		}
+
+		return s;
+	}
+
+	/**
+		Function to get the longest String from a list of Strings
+		@param a The list of Strings to use
+		@return String
+	**/
+	public static function getLongest(a:Array<String>):String {
+		var s:String = "";
+
+		for (t in a) {
+			if (t.length > s.length) {
+				s = t;
+			}
 		}
 
 		return s;
@@ -178,35 +204,24 @@ class StringUtil {
 	Dedicated class for parsing Placeholders in .NET style
 	format: `{index[:modifier[amount]]}`
 **/
-class StringFormat {
-	// Redundant? Yes, but its here to you personalize it
-	static final PLACEHOLDER_START:String    = "{";
-	static final PLACEHOLDER_MODIFIER:String = ":";
-	static final PLACEHOLDER_END:String      = "}";
-
-	static var _str:String = "";
-	static var _args:Array<Dynamic> = [];
-
+@:allow(util.StringUtil)
+private class StringFormat {
 	public static function format(str:String, args:Array<Dynamic>):String {
 		var f = new StringBuf();
 		var i = 0;
 
-		_str = str ?? "No string";
-		_args = args;
-
-		while ((i = str.indexOf(PLACEHOLDER_START, i)) != -1) {
-			var end = str.indexOf(PLACEHOLDER_END, i);
+		while ((i = str.indexOf("{", i)) != -1) {
+			var end = str.indexOf("}", i);
 			var content = str.substring(i + 1, end);
-			var modifier = content.indexOf(PLACEHOLDER_MODIFIER);
+			var modifier = content.indexOf(":");
 
 			var index:Int;
 			var modV:String = "";
 			var modN:Null<Float> = null;
 
-			if (!content.contains(PLACEHOLDER_MODIFIER)) {
+			if (modifier == -1) {
 				index = Std.parseInt(content);
-			}
-			else {
+			} else {
 				index = Std.parseInt(content.substring(0, modifier));
 				modV = content.substr(modifier + 1, 1).trim();
 				modN = Std.parseFloat(content.substr(modifier + 2));
@@ -243,18 +258,18 @@ class StringFormat {
 				trace('Digits: $digits');
 				var ret:String = Std.isOfType(v, Int) ? StringTools.hex(v, Std.int(digits)) : StringUtil.hexFloat(v, Std.int(digits));
 
-				return (m == "X") ? ret.toLowerCase() : ret;
+				return (m == "X") ? ret : ret.toLowerCase();
 			case "U": // Uppercase
 				return Std.string(v).toUpperCase();
 			case "L": // Lowercase
 				return Std.string(v).toLowerCase();
 			case "C": // Currency - only if on Flixel
-			#if flixel
+				#if flixel
 				return FlxStringUtil.formatMoney(Std.parseInt(v));
-			#else
+				#else
 				trace("Formatting strings into Currency is not supported.");
 				return Std.string(v);
-			#end
+				#end
 			default:
 				return Std.string(v);
 		}

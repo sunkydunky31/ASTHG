@@ -26,7 +26,9 @@
 #>
 function Write-Path {
 	param(
-		[Parameter(Mandatory = $true, Position = 0)][object[]]$Path,
+		[Parameter(Mandatory=$true, Position=0)]
+		[object[]]$Path,
+
 		[switch]$Resolve
 	)
 

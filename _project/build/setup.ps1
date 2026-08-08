@@ -22,9 +22,14 @@
 #>
 
 param(
+	[Parameter()]
 	[string]$StayOnMenu = '',
+
+	[Parameter()]
 	[int]$MenuOption = -1,
-	[bool]$Transcript = $true
+
+	[Parameter()]
+	[switch]$Transcript
 )
 
 Import-LocalizedData -BindingVariable 'Msg' -ErrorAction SilentlyContinue
@@ -44,8 +49,11 @@ Set-Location $ProjectPath
 
 function Write-Message {
 	param(
-		[Parameter(Mandatory = $true, Position = 0)] [string]$Message,
-		[Parameter(Position = 1)]                    [ConsoleColor]$Color = [ConsoleColor]::White
+		[Parameter(Mandatory=$true, Position=0)]
+		[string]$Message,
+		
+		[Parameter(Position=1)]
+		[ConsoleColor]$Color = [ConsoleColor]::White
 	)
 
 	if (-not $Transcript) {
@@ -106,8 +114,11 @@ function Get-SetupConfig {
 #>
 function Set-SetupConfig {
 	param(
-		[Parameter(Mandatory = $true, Position = 0)] [object]$Name,
-		[Parameter(Mandatory = $true, Position = 1)] [object]$Value
+		[Parameter(Mandatory = $true, Position = 0)]
+		[object]$Name,
+		
+		[Parameter(Mandatory = $true, Position = 1)]
+		[object]$Value
 	)
 
 	$obj += @{ $Name = $Value }
@@ -183,7 +194,7 @@ function Set-SetupAndroid {
 	Set-SetupConfig -Name SetupAndroid -Value $true
 }
 
-$CompiledHXCPP = (Get-SetupConfig -Name CompiledHXCPP)
+$CompiledHXCPP = Get-SetupConfig -Name CompiledHXCPP
 if ($null -eq $CompiledHXCPP) {
 	$CompiledHXCPP = $false
 }
@@ -225,14 +236,12 @@ function New-GameSetup {
 			Set-Location $ProjectPath
 			Set-SetupConfig -Name CompiledHXCPP -Value $true
 		}
- 	}
+	}
 	catch { $Msg['HXCPP'].FailedBuild }
 
 	Write-Message ($Msg['Finished'])
 
-	if ($StayOnMenu) {
-		Set-Location $PSScriptRoot
-	}
+	if ($StayOnMenu) { Set-Location $PSScriptRoot }
 }
 
 <#
@@ -382,7 +391,7 @@ do {
 			if ($HasHaxelib) { Remove-RedundantHaxelibs }
 		}
 		'7' {
-			Stop-Transcript
+			if ($Transcript) { Stop-Transcript }
 			exit
 		}
 		default {

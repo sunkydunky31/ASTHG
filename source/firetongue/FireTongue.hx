@@ -25,7 +25,7 @@ package firetongue;
 
 /*
 	-- MODIFICATIONS --
-	* Most string checkers now use the project function `StringUtil:isBlank` to catch
+	* Most string checkers now use the project function `StringUtil.isBlank` to catch
 	strings that are just whitespaces or null;
 
 	* `@:nullSafety` parcial implementation;
@@ -113,7 +113,7 @@ typedef FontData =
  * @author Lars Doucet
  */
 //This class has a lot of `null` problems, disabling until all are fixed
-//#if (haxe >= "4.1.0") @:nullSafety #end
+//#if (haxe >= "4.1.0") @:nullSafety(Loose) #end
 class FireTongue
 {
 	/**
@@ -278,7 +278,7 @@ class FireTongue
 			return flag;
 		}
 
-		var str:String = "";
+		var str:Null<String> = "";
 		try
 		{
 			str = index.get(flag);
@@ -352,7 +352,7 @@ class FireTongue
 
 		try
 		{
-			var xml:Fast = indexFont.get(str);
+			var xml:Null<Fast> = indexFont.get(str);
 			if (xml != null && xml.hasNode.font)
 			{
 				replace.name = xml.node.font.att.replace;
@@ -436,7 +436,7 @@ class FireTongue
 	 */
 	public function getIndexNode(targetLocale:String = ""):Null<Xml>
 	{
-		var node:Fast = indexLocales.get(targetLocale);
+		var node:Null<Fast> = indexLocales.get(targetLocale);
 
 		if (node == null)
 			return null;
@@ -875,7 +875,7 @@ class FireTongue
 	{
 		var fileName:String = fileData.node.file.att.value;
 		// A file extension can have more than 3 characters (ex: `.aseprite` for Aseprite files)
-		var fileType:String = fileName.substr(fileName.lastIndexOf(".") + 1);
+		var fileType:String = haxe.io.Path.extension(fileName);
 		var fileID:String = fileData.node.file.att.id;
 
 
@@ -998,7 +998,7 @@ class FireTongue
 	private function loadIndex():Void
 	{
 		var index:String = loadText("index.xml");
-		var xml:Null<Fast> = null;
+		var xml:Fast = null;
 
 		listFiles = new Array<Fast>();
 
@@ -1112,7 +1112,12 @@ class FireTongue
 
 	private function loadRootDirectory():Void
 	{
-		var firstFile:Null<Fast> = listFiles[0];
+		if (listFiles == null)
+		{
+			return;
+		}
+
+		var firstFile:Fast = listFiles[0];
 		var value:String = "";
 
 		if (firstFile == null)
@@ -1659,7 +1664,7 @@ class FireTongue
 		return totalDiff;
 	}
 
-	private function tryRedirect(index:Map<String, String>, str:String, failsafe:Int = 100):String
+	private function tryRedirect(index:Map<String, String>, str:Null<String>, failsafe:Int = 100):String
 	{
 		var orig:String = str;
 		var last:Null<String> = null;

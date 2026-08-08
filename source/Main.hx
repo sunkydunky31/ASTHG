@@ -17,7 +17,7 @@ class Main extends Sprite {
 	public function new() {
 		super();
 
-		function logFormat(v:Dynamic, infos:haxe.PosInfos):String {
+		function logFormat(v:Dynamic, infos:Null<haxe.PosInfos>):String {
 			var str = Std.string(v);
 
 			if (infos == null)
@@ -30,11 +30,9 @@ class Main extends Sprite {
 			return pstr + " " + str;
 		}
 
-		var traces:Array<String> = []; // Collector of traces for log files;
 		haxe.Log.trace = function(v:Dynamic, ?infos:haxe.PosInfos) {
 			var msg = logFormat(v, infos);
 
-			traces.push(msg);
 			#if js
 			if (js.Syntax.typeof(untyped console) != "undefined" && (untyped console).log != null)
 				(untyped console).log(msg);
@@ -43,7 +41,7 @@ class Main extends Sprite {
 			#elseif sys
 			Sys.println(msg);
 			#else
-			throw new haxe.exceptions.NotImplementedException()
+			throw new haxe.exceptions.NotImplementedException();
 			#end
 		}
 

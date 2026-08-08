@@ -17,6 +17,7 @@
 		"OBS: Se você está usando o Haxe no modo portátil em um Pen-Drive, por favor, remova-o e reinsira o pen-drive, então rode esse script novamente"
 	)
 
+	ConfigTitle = "Configuração atual - Revise antes de proceguir!"
 	Config = @{
 		"Platform"   = "Plataforma: ........ {0}"
 		"BuildFlags" = "Definições de Build: {0}"

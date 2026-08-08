@@ -1,7 +1,7 @@
 @{
-	Title         = 'ASTHE Build'
-	PausePrompt   = 'Press any key to continue. . .' # Command prompt style message
-	BuildTexts    = @{
+	Title = 'ASTHE Build'
+	PausePrompt = 'Press any key to continue. . .' # Command prompt style message
+	BuildTexts = @{
 		'build' = 'Building...'
 		'test'  = 'Testing...'
 		'run'   = 'Running... (from who?)'
@@ -17,7 +17,8 @@
 		'NOTE: If you''re using Haxe in Portable Mode on a USB Drive, please, remove and re-insert your drive, then run this script again'
 	)
 
-	Config        = @{
+	ConfigTitle = "Current configuration - Revise before procceding!"
+	Config = @{
 		'Platform'   = 'Platform: .. {0}'
 		'BuildFlags' = 'Build Flags: {0}'
 		'Is32Bits'   = '32 Bits: ... {0}'
@@ -25,6 +26,6 @@
 		'BuildType'  = 'Build Type:  {0}'
 	}
 
-	Cleaning      = 'Cleaning old build files...'
+	Cleaning = 'Cleaning old build files...'
 	CleaningError = 'Failed when cleaning: {0}'
 }

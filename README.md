@@ -1,8 +1,8 @@
-# ASTHE (An Sonic the Hedgehog Game)
-This is an Sonic engine, made just for fun!
-
+# ASTHE (An Sonic the Hedgehog Engine)
+This is an Sonic engine, made just for fun!  
 It haves code parts from [Psych Engine][psych_engine]... I'm planning on replacement for all this stuff.
 
+Help would be appreciated!  
 Call me on Discord if you want to [talk with me][sunnydev_discord].
 
 <details>
