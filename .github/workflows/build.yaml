@@ -87,10 +87,8 @@ jobs:
 
         # We can't use: run, -watch, test; because it's a online VM, not a local one
 
-      - run: echo "Uploading files..."
-
       - name: "Upload Build Artifacts"
         uses: actions/upload-artifact@v4
         with:
           name: build-cpp-${{ github.event.inputs.build-type }}
-          path: export/${{ github.event.inputs.build-type }}/${{ runner.os }}/bin
+          path: export/${{ github.event.inputs.build-type }}/${{ runner.os == 'Windows' && 'windows' || (runner.os == 'Linux' && 'linux' || 'macos') }}/bin
