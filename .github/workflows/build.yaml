@@ -41,6 +41,8 @@ jobs:
     name: "Build the game for (${{matrix.runs-on}} env.)"
     permissions: write-all
     strategy:
+      fail-fast: false
+      max-parallel: 1
       matrix:
         include:
           - target: "windows"
