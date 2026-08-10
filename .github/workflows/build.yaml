@@ -8,17 +8,6 @@ on:
       # - You called the script on terminal and not double-clicked it
       # - You change the behavior of the script (lol)
 
-      platform:
-        description: "Select the platform to set up the environment for."
-        type: choice
-        required: true
-        default: "cpp"
-        options:
-          - cpp # Windows / Linux / MachintoshOS
-          - hl # HashLink
-          - neko # NekoVM
-          # Android is not available until the game is playable on Mobile and its build works (stupid Lime 8.2 ...)
-          ## CURRENT PROBLEM: Lime inserts an "if" on AndroidManifest causing it to abort the build if not removed manually.
       build-type:
         description: "Select the build type of the game."
         type: choice
@@ -61,14 +50,13 @@ jobs:
       - name: "Install Dependencies"
         shell: "pwsh"
         run: |
-          & "haxelib" @("--global", "install", "hmm", "-q")
+          & "haxelib" "--global" "install" "hmm" "--quiet"
           Start-Sleep 2
 
-          & "haxelib" @("--global", "run", "hmm", "setup")
+          & "haxelib" "--global" "run" "hmm" "setup"
           Start-Sleep 2
 
-          & "haxelib" @("--global", "run", "hmm", "install")
-
+          & "haxelib" "--global" "run" "hmm" "install"
       - name: "Cache Haxe & Libraries"
         uses: actions/cache@v3
         with:
@@ -90,7 +78,13 @@ jobs:
           key: cache-libraries
 
       - name: "Build the Game"
-        run: pwsh -File "./_project/build/build.ps1" -Platform ${{ github.event.inputs.platform }} -BuildType ${{ github.event.inputs.build-type }} -Action build -Is32Bits ${{ github.event.inputs.arch-32 }}
+        if: ${{ github.event.inputs.arch-32 == false }}
+        run: pwsh -File "./_project/build/build.ps1" -Platform cpp -BuildType ${{ github.event.inputs.build-type }} -Action build
+
+      - name: "Build the Game (32-Bit)"
+        if: ${{ github.event.inputs.arch-32 == true }}
+        run: pwsh -File "./_project/build/build.ps1" -Platform cpp -BuildType ${{ github.event.inputs.build-type }} -Action build -Is32Bits
+
         # We can't use: run, -watch, test; because it's a online VM, not a local one
 
       - run: echo "Uploading files..."
@@ -98,5 +92,5 @@ jobs:
       - name: "Upload Build Artifacts"
         uses: actions/upload-artifact@v4
         with:
-          name: build-${{ github.event.inputs.platform }}-${{ github.event.inputs.build-type }}
-          path: export/${{ github.event.inputs.build-type }}/${{ github.event.inputs.platform }}/bin
+          name: build-cpp-${{ github.event.inputs.build-type }}
+          path: export/${{ github.event.inputs.build-type }}/${{ runner.os }}/bin
