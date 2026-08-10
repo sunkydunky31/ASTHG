@@ -38,7 +38,7 @@ on:
 
 jobs:
   build:
-    name: "Build the game for (${{matrix.runs-on}} env.)"
+    name: "Build the game (${{matrix.runs-on}} env.)"
     permissions: write-all
     strategy:
       fail-fast: false
@@ -59,6 +59,16 @@ jobs:
         uses: krdlab/setup-haxe@v2
         with:
           haxe-version: "4.3.7"
+      - name: "Define HAXEPATH env var" # why
+        shell: pwsh
+        run: |
+          $p = [System.IO.Path]::GetDirectoryName("$env:HAXE_STD_PATH")
+          echo "HAXEPATH=$p" >> $env:GITHUB_ENV
+      - name: "Cache Haxe & Libraries"
+        uses: actions/cache@v3
+        with:
+          path: ${{ runner.os == 'Windows' && '%USERPROFILE%\\.haxelib' || '~/.haxelib' }}
+          key: cache-haxe
       - name: "Install Dependencies"
         shell: "pwsh"
         run: |
@@ -72,18 +82,23 @@ jobs:
           haxe compile.hxml
 
           cd ../../../../..
-      - name: "Cache Haxe & Libraries"
+      - name: "Cache Game Libraries"
         uses: actions/cache@v3
         with:
-          path: ${{ runner.os == 'Windows' && '%USERPROFILE%\\.haxelib' || '~/.haxelib' }}
-          key: cache-libraries
+          path: '.haxelib'
+          key: cache-gamelibs
       - name: "Checkout Repository"
         uses: actions/checkout@v4
       - name: "Restore Haxe Cache"
         uses: actions/cache@v3
         with:
           path: ${{ runner.os == 'Windows' && '%USERPROFILE%\\.haxelib' || '~/.haxelib' }}
-          key: cache-libraries
+          key: cache-haxe
+      - name: "Restore Game Libraries Cache"
+        uses: actions/cache@v3
+        with:
+          path: '.haxelib'
+          key: cache-gamelibs
       - name: "Build the Game (${{github.event.inputs.build-type || 'Release'}})"
         run: haxelib run lime build cpp ${{ github.event.inputs.build-type == 'debug' && '-debug' || github.event.inputs.build-type == 'final' && '-final' }} # We can't use: run, -watch, test; because it's a online VM, not a local one
       - name: "Upload Build Artifacts"
