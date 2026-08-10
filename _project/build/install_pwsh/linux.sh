@@ -28,8 +28,8 @@ echo "---------------------------------------------------------------"
 
 case "$DIST" in
   alpine)
-    
-  if ["$DIST_VER" -ge "3.16"]; then
+
+  if [${DIST_VER%.*} -ge 3.16]; then
     echo "Version is >= 3.16"
     doas apk add --no-cache ca-certificates less ncurses-terminfo-base krb5-libs libgcc libintl libssl3 libstdc++ tzdata userspace-rcu zlib icu-libs curl
   else

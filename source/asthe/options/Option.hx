@@ -1,9 +1,9 @@
-//@see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/options/Option.hx
 
 package asthe.options;
 
 enum OptionType { BOOL; STRING; NUMBER; }
 
+/** @see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/options/Option.hx **/
 class Option {
 	// { region Variables
 	public var name:String = "Unknown Option";
@@ -116,9 +116,7 @@ typedef OptionSettings = {
 	**/
 	?percentageMode:Bool,
 
-	/**
-		How much increase/decrease values when changing `NUMBER` options
-	**/
+	/** How much increase/decrease values when changing `NUMBER` options **/
 	?amount:Float,
 
 	/**

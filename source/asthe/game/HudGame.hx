@@ -45,19 +45,13 @@ class HudGame extends FlxSpriteGroup {
 	**/
 	public var score(default, set):Int = 0;
 
-	/**
-		Stores the current stage time, actually this is unused.
-	**/
+	/** Stores the current stage time, actually this is unused. **/
 	public var time(default, set):Float = 0.0;
 
-	/**
-		Stores the P1 rings, actually this is unused... Or not?...
-	**/
+	/** Stores the P1 rings, actually this is unused... Or not?... **/
 	public var rings(default, set):Int = 0;
 
-	/**
-		Stores the player lives, and you know the rest of this description.
-	**/
+	/** Stores the player lives, and you know the rest of this description. **/
 	public var lives(default, set):Int = 3;
 
 
@@ -89,22 +83,16 @@ class HudGame extends FlxSpriteGroup {
 
 	// --- DEBUG ONLY --- //
 
-	/**
-		Debug sprite to show the player X position.
-	**/
+	/** Debug sprite to show the player X position. **/
 	public var posX:AstheSprite;
 
-	/**
-		Debug sprite to show the player Y position.
-	**/
+	/** Debug sprite to show the player Y position. **/
 	public var posY:AstheSprite;
 
 	public var posXTxt:Null<AstheBitmapText>;
 	public var posYTxt:Null<AstheBitmapText>;
 
-	/**
-		Instance used to show the player life icon.
-	**/
+	/** Instance used to show the player life icon. **/
 	public var livesIcon:Null<LifeIcon>;
 	// } end region
 

@@ -9,14 +9,10 @@ typedef CharacterData = {
 	**/
 	name:String,
 
-	/**
-		Sets the size scaling for this character.
-	**/
+	/** Sets the size scaling for this character. **/
 	scale:Float,
 
-	/**
-		A Custom character icon for the HUD
-	**/
+	/** A Custom character icon for the HUD **/
 	liveIcon:Null<LiveIconData>,
 
 	/**
@@ -31,14 +27,10 @@ typedef CharacterData = {
 	**/
 	hasSuper:Bool,
 
-	/**
-		Stores default animation list like `STOPPED`, `WALKING`, etc.
-	**/
+	/** Stores default animation list like `STOPPED`, `WALKING`, etc. **/
 	animations:Array<CharacterAnimation>,
 
-	/**
-		Stores custom animations like `DropDash`, `Super Peel Out` and etc.
-	**/
+	/** Stores custom animations like `DropDash`, `Super Peel Out` and etc. **/
 	extraAnimations:Array<CharacterAnimation>
 }
 
@@ -53,9 +45,7 @@ typedef LiveIconData = {
 	Used for color transform.
 **/
 typedef PaletteData = {
-	/**
-		Stores the normal/default character palette
-	**/
+	/** Stores the normal/default character palette **/
 	normal:Array<String>,
 
 	/**

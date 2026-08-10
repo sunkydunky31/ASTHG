@@ -71,16 +71,11 @@ class ClientPrefs {
 	public static var gameplay:Null<GameData>;
 	public static var currentSlot:Int = -1;
 
-	/**
-		@see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/backend/CoolUtil.hx#L161
-	**/
+	/** @see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/backend/CoolUtil.hx#L161 **/
 	@:access(flixel.util.FlxSave.validate)
 	inline public static function getSavePath():String {
-		#if (flixel < "5.0.0")
-		return CoolUtil.getProjectInfo('company');
-		#else
-		return CoolUtil.getProjectInfo('company') + "/" + FlxSave.validate(CoolUtil.getProjectInfo('file'));
-		#end
+		return CoolUtil.getProjectInfo('company') #if (flixel < "5.0.0") + "/" + FlxSave.validate(CoolUtil.getProjectInfo('file')) #end;
+
 	}
 
 	public static function resetKeys(controller:Null<Bool> = null) {
@@ -108,9 +103,7 @@ class ClientPrefs {
 		defaultButtons = gamepadBinds.copy();
 	}
 
-	/**
-		Function used to save all preferences.
-	**/
+	/** Function used to save all preferences. **/
 	public static function saveSettings() {
 		try {
 			for (key in Reflect.fields(data))
@@ -148,14 +141,8 @@ class ClientPrefs {
 			#end
 
 			var targetFramerate = data.options.framerate;
-			if(targetFramerate > FlxG.drawFramerate) {
-				FlxG.updateFramerate = targetFramerate;
-				FlxG.drawFramerate = targetFramerate;
-			}
-			else {
-				FlxG.drawFramerate = targetFramerate;
-				FlxG.updateFramerate = targetFramerate;
-			}
+			FlxG.drawFramerate = targetFramerate;
+			FlxG.updateFramerate = targetFramerate;
 
 			if(FlxG.save.data.volume != null)
 				FlxG.sound.volume = FlxG.save.data.volume;
@@ -203,14 +190,14 @@ class ClientPrefs {
 	public static function reloadVolumeKeys() {
 		Init.muteKeys       = keyBinds.get(VOLUME_MUTE) ?? [];
 		Init.volumeDownKeys = keyBinds.get(VOLUME_DOWN) ?? [];
-		Init.volumeUpKeys   = keyBinds.get(VOLUME_UP) ?? [];
+		Init.volumeUpKeys   = keyBinds.get(VOLUME_UP)   ?? [];
 		toggleVolumeKeys(true);
 	}
 
 	public static function toggleVolumeKeys(?turnOn:Bool = true) {
-		FlxG.sound.muteKeys       = turnOn ? Init.muteKeys		 : [];
+		FlxG.sound.muteKeys       = turnOn ? Init.muteKeys       : [];
 		FlxG.sound.volumeDownKeys = turnOn ? Init.volumeDownKeys : [];
-		FlxG.sound.volumeUpKeys   = turnOn ? Init.volumeUpKeys	 : [];
+		FlxG.sound.volumeUpKeys   = turnOn ? Init.volumeUpKeys   : [];
 	}
 
 	public static function resetAllSettings() {

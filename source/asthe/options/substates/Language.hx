@@ -18,9 +18,7 @@ class Language extends SubStateManager {
 	*/
 	var grpLanguages:FlxTypedGroup<AstheText>;
 
-	/**
-		Current game's supported languages list
-	**/
+	/** Current game's supported languages list **/
 	var languages:Array<String> = new Array<String>();
 	var curSelected:Int = 0;
 	public function new() {

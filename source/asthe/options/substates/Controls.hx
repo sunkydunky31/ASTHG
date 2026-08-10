@@ -26,9 +26,7 @@ enum abstract DeviceType(Int) {
 class Controls extends SubStateManager {
 	var currentDevice:DeviceType = DeviceType.KEYBOARD;
 
-	/**
-		List of keybinds
-	**/
+	/** List of keybinds **/
 	var controlList:Array<InputList> = [
 		UP, DOWN, LEFT, RIGHT,
 		AUXILIAR, JUMP, ACCEPT, BACK,

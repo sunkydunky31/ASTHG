@@ -28,7 +28,7 @@ class ArrayUtil {
 	**/
 	public static function toRect(arr:Array<Float>):flixel.math.FlxRect {
 		if (arr.length < 4)
-			throw "WARNING: Array must have at least 4 values to convert to FlxRect";
+			throw "Array must have at least 4 values to convert to FlxRect";
 		else if (arr.length > 4)
 			trace("WARNING: Array has more than 4 values, the other ones will be ignored!");
 		return new flixel.math.FlxRect(arr[0], arr[1], arr[2], arr[3]);

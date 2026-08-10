@@ -6,9 +6,7 @@ typedef PlatformSettings = {
 }
 
 typedef AndroidSettings = {
-	/**
-		Icon settings for Android
-	**/
+	/** Icon settings for Android **/
 	icons:AndroidSettings_Icons,
 
 	/**
@@ -25,9 +23,7 @@ typedef AndroidSettings_Icons = {
 	**/
 	adaptive:Bool,
 
-	/**
-		The icon path that all your adaptive icons are stored
-	**/
+	/** The icon path that all your adaptive icons are stored **/
 	path:String,
 
 	/**

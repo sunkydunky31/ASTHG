@@ -9,108 +9,55 @@
 
 	<SubTexture	name="Stopped0000" x="0"   y="1"   width="28" height="40"/>
 
-	<SubTexture	name="Waiting0000" x="138" y="2"   width="29" height="39" frameWidth="29" frameHeight="39" frameX="-15" frameY="-19"/>
-	<SubTexture	name="Waiting0001" x="138" y="2"   width="29" height="39" frameWidth="29" frameHeight="39" frameX="-15" frameY="-19"/>
-	<SubTexture	name="Waiting0002" x="167" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0003" x="167" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0004" x="167" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0005" x="167" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0006" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0007" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0008" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0009" x="341" y="306" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0010" x="341" y="306" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0011" x="341" y="306" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0012" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0013" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0014" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0015" x="341" y="306" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0016" x="341" y="306" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0017" x="341" y="306" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0018" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0019" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0020" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0021" x="341" y="306" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0022" x="341" y="306" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0023" x="341" y="306" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0024" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0025" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0026" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0027" x="341" y="306" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0028" x="341" y="306" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0029" x="341" y="306" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0030" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0031" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0032" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0033" x="226" y="42"  width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0034" x="226" y="42"  width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0035" x="226" y="42"  width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0036" x="226" y="42"  width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0037" x="226" y="42"  width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0038" x="226" y="42"  width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0039" x="226" y="42"  width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0040" x="226" y="42"  width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0041" x="226" y="42"  width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0042" x="226" y="42"  width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0043" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0044" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Waiting0045" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="-14" frameY="-20"/>
+	<SubTexture	name="Waiting0000" x="138" y="2"   width="29" height="39" frameWidth="29" frameHeight="39" frameX="-1" frameY="0"/>
+	<SubTexture	name="Waiting0001" x="167" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="0" frameY="0"/>
+	<SubTexture	name="Waiting0002" x="197" y="1"   width="30" height="40" frameWidth="30" frameHeight="40" frameX="0" frameY="0"/>
+	<SubTexture	name="Waiting0003" x="341" y="1"   width="29" height="40" frameWidth="29" frameHeight="40" frameX="0" frameY="0"/>
+	<SubTexture	name="Waiting0004" x="226" y="42"  width="30" height="40" frameWidth="30" frameHeight="40" frameX="0" frameY="0"/>
 
-	<SubTexture	name="Bored0000" x="193" y="42"  width="32" height="32" frameWidth="32" frameHeight="32" frameX="-11" frameY="-12"/>
-	<SubTexture	name="Bored0001" x="193" y="42"  width="32" height="32" frameWidth="32" frameHeight="32" frameX="-11" frameY="-12"/>
-	<SubTexture	name="Bored0002" x="215" y="82"  width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
-	<SubTexture	name="Bored0003" x="215" y="82"  width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
-	<SubTexture	name="Bored0004" x="215" y="82"  width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
-	<SubTexture	name="Bored0005" x="215" y="107" width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
-	<SubTexture	name="Bored0006" x="215" y="107" width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
-	<SubTexture	name="Bored0007" x="215" y="107" width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
+	<SubTexture	name="Bored0000" x="193" y="42"  width="32" height="32" frameWidth="32" frameHeight="32" frameX="0" frameY="0"/>
+	<SubTexture	name="Bored0001" x="215" y="82"  width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-0"/>
+	<SubTexture	name="Bored0002" x="215" y="107" width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-0"/>
 
-	<SubTexture	name="LookUp0000" x="0" y="1" width="28" height="40" frameWidth="28" frameHeight="40" frameX="-16" frameY="-20"/>
-	<SubTexture	name="LookUp0001" x="28" y="1" width="28" height="40" frameWidth="28" frameHeight="40" frameX="-16" frameY="-20"/>
-	<SubTexture	name="LookUp0002" x="56" y="1" width="28" height="40" frameWidth="28" frameHeight="40" frameX="-16" frameY="-20"/>
+	<SubTexture	name="LookUp0000" x="0"  y="1" width="28" height="40"/>
+	<SubTexture	name="LookUp0001" x="28" y="1" width="28" height="40"/>
+	<SubTexture	name="LookUp0002" x="56" y="1" width="28" height="40"/>
 
-	<SubTexture	name="LookDown0000" x="0" y="1" width="28" height="40" frameWidth="28" frameHeight="40" frameX="-16" frameY="-20"/>
-	<SubTexture	name="LookDown0001" x="84" y="1" width="25" height="40" frameWidth="25" frameHeight="40" frameX="-11" frameY="-20"/>
-	<SubTexture	name="LookDown0002" x="109" y="1" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-12" frameY="-20"/>
+	<SubTexture	name="LookDown0000" x="0"   y="1" width="28" height="40" frameWidth="28" frameHeight="40" frameX="0" frameY="0"/>
+	<SubTexture	name="LookDown0001" x="84"  y="1" width="25" height="40" frameWidth="25" frameHeight="40" frameX="5" frameY="0"/>
+	<SubTexture	name="LookDown0002" x="109" y="1" width="29" height="40" frameWidth="29" frameHeight="40" frameX="4" frameY="0"/>
 
-	<SubTexture	name="Walking0000" x="1" y="42" width="26" height="40" frameWidth="26" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Walking0001" x="28" y="42" width="29" height="40" frameWidth="29" frameHeight="40" frameX="-16" frameY="-20"/>
-	<SubTexture	name="Walking0002" x="58" y="42" width="39" height="40" frameWidth="39" frameHeight="40" frameX="-20" frameY="-21"/>
-	<SubTexture	name="Walking0003" x="98" y="42" width="39" height="40" frameWidth="39" frameHeight="40" frameX="-20" frameY="-20"/>
-	<SubTexture	name="Walking0004" x="138" y="42" width="26" height="40" frameWidth="26" frameHeight="40" frameX="-14" frameY="-20"/>
-	<SubTexture	name="Walking0005" x="165" y="42" width="28" height="40" frameWidth="28" frameHeight="40" frameX="-15" frameY="-20"/>
-	<SubTexture	name="Walking0006" x="1" y="83" width="40" height="39" frameWidth="40" frameHeight="39" frameX="-21" frameY="-21"/>
-	<SubTexture	name="Walking0007" x="42" y="83" width="39" height="39" frameWidth="39" frameHeight="39" frameX="-20" frameY="-20"/>
+	<SubTexture	name="Walking0000" x="1"   y="42" width="26" height="40" frameWidth="26" frameHeight="40" frameX="2" frameY="0"/>
+	<SubTexture	name="Walking0001" x="28"  y="42" width="29" height="40" frameWidth="29" frameHeight="40" frameX="0" frameY="0"/>
+	<SubTexture	name="Walking0002" x="58"  y="42" width="39" height="40" frameWidth="39" frameHeight="40" frameX="4" frameY="-1"/>
+	<SubTexture	name="Walking0003" x="98"  y="42" width="39" height="40" frameWidth="39" frameHeight="40" frameX="4" frameY="0"/>
+	<SubTexture	name="Walking0004" x="138" y="42" width="26" height="40" frameWidth="26" frameHeight="40" frameX="2" frameY="0"/>
+	<SubTexture	name="Walking0005" x="165" y="42" width="28" height="40" frameWidth="28" frameHeight="40" frameX="1" frameY="0"/>
+	<SubTexture	name="Walking0006" x="1"   y="83" width="40" height="39" frameWidth="40" frameHeight="39" frameX="5" frameY="-1"/>
+	<SubTexture	name="Walking0007" x="42"  y="83" width="39" height="39" frameWidth="39" frameHeight="39" frameX="4" frameY="0"/>
 
-	<SubTexture	name="Running0000" x="82" y="83" width="32" height="36" frameWidth="32" frameHeight="36" frameX="-16" frameY="-16"/>
-	<SubTexture	name="Running0001" x="115" y="83" width="32" height="36" frameWidth="32" frameHeight="36" frameX="-16" frameY="-16"/>
-	<SubTexture	name="Running0002" x="148" y="83" width="31" height="36" frameWidth="31" frameHeight="36" frameX="-15" frameY="-16"/>
-	<SubTexture	name="Running0003" x="180" y="83" width="32" height="36" frameWidth="32" frameHeight="36" frameX="-16" frameY="-16"/>
+	<SubTexture	name="Running0000" x="82"  y="83" width="32" height="36" frameWidth="32" frameHeight="36" frameX="0" frameY="0"/>
+	<SubTexture	name="Running0001" x="115" y="83" width="32" height="36" frameWidth="32" frameHeight="36" frameX="0" frameY="0"/>
+	<SubTexture	name="Running0002" x="148" y="83" width="31" height="36" frameWidth="31" frameHeight="36" frameX="0" frameY="0"/>
+	<SubTexture	name="Running0003" x="180" y="83" width="32" height="36" frameWidth="32" frameHeight="36" frameX="0" frameY="0"/>
 
 	<SubTexture	name="Skidding0000" x="257" y="1" width="38" height="39" frameWidth="38" frameHeight="39" frameX="-18" frameY="-19"/>
 	<SubTexture	name="Skidding0001" x="296" y="1" width="38" height="39" frameWidth="38" frameHeight="39" frameX="-18" frameY="-19"/>
 	<SubTexture	name="Skidding0002" x="335" y="1" width="37" height="39" frameWidth="37" frameHeight="39" frameX="-17" frameY="-19"/>
 	<SubTexture	name="Skidding0003" x="486" y="167" width="26" height="39" frameWidth="26" frameHeight="39" frameX="-11" frameY="-19"/>
 
-	<SubTexture	name="Spindash0000" x="1" y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
-	<SubTexture	name="Spindash0001" x="32" y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
-	<SubTexture	name="Spindash0002" x="1" y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
-	<SubTexture	name="Spindash0003" x="63" y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
-	<SubTexture	name="Spindash0004" x="1" y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
-	<SubTexture	name="Spindash0005" x="94" y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
-	<SubTexture	name="Spindash0006" x="1" y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
-	<SubTexture	name="Spindash0007" x="125" y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
-	<SubTexture	name="Spindash0008" x="1" y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
-	<SubTexture	name="Spindash0009" x="0" y="184" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
+	<SubTexture	name="Spindash0000" x="1"   y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
+	<SubTexture	name="Spindash0001" x="32"  y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
+	<SubTexture	name="Spindash0002" x="63"  y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
+	<SubTexture	name="Spindash0003" x="94"  y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
+	<SubTexture	name="Spindash0004" x="125" y="156" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
+	<SubTexture	name="Spindash0005" x="0"   y="184" width="30" height="27" frameWidth="30" frameHeight="27" frameX="-10" frameY="-7"/>
 
-	<SubTexture	name="Jumping0000" x="34" y="123" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="Jumping0001" x="1" y="123" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="Jumping0002" x="67" y="123" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="Jumping0003" x="1" y="123" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="Jumping0004" x="100" y="123" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="Jumping0005" x="1" y="123" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="Jumping0006" x="133" y="123" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="Jumping0007" x="1" y="123" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
+	<SubTexture	name="Jumping0000" x="34"  y="123" width="32" height="32"/>
+	<SubTexture	name="Jumping0001" x="67"  y="123" width="32" height="32"/>
+	<SubTexture	name="Jumping0002" x="100" y="123" width="32" height="32"/>
+	<SubTexture	name="Jumping0003" x="133" y="123" width="32" height="32"/>
+	<SubTexture	name="Jumping0004" x="1"   y="123" width="32" height="32"/>
 
 	<SubTexture	name="Bouncing0000" x="154" y="202" width="24" height="45" frameWidth="24" frameHeight="45" frameX="-12" frameY="-23"/>
 
@@ -188,15 +135,11 @@
 	<SubTexture	name="WaterSlide0001" x="216" y="203" width="39" height="27" frameWidth="39" frameHeight="27" frameX="-20" frameY="-15"/>
 
 	<SubTexture	name="Continue0000" x="215" y="82" width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
-	<SubTexture	name="Continue0001" x="215" y="82" width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
-	<SubTexture	name="Continue0002" x="215" y="82" width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
-	<SubTexture	name="Continue0003" x="215" y="107" width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
-	<SubTexture	name="Continue0004" x="215" y="107" width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
-	<SubTexture	name="Continue0005" x="215" y="107" width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
+	<SubTexture	name="Continue0001" x="215" y="107" width="40" height="25" frameWidth="40" frameHeight="25" frameX="-18" frameY="-5"/>
 
 	<SubTexture	name="ContinueUp0000" x="224" y="133" width="31" height="40" frameWidth="31" frameHeight="40" frameX="-19" frameY="-20"/>
-	<SubTexture	name="ContinueUp0001" x="0" y="1" width="28" height="40" frameWidth="28" frameHeight="40" frameX="-16" frameY="-20"/>
-	<SubTexture	name="ContinueUp0002" x="0" y="1" width="28" height="40" frameWidth="28" frameHeight="40" frameX="-16" frameY="-20"/>
+	<SubTexture	name="ContinueUp0001" x="0" y="1" width="28" height="40"/>
+	<SubTexture	name="ContinueUp0002" x="0" y="1" width="28" height="40"/>
 
 	<SubTexture	name="CdTwirl0000" x="1" y="1" width="20" height="44" frameWidth="20" frameHeight="44" frameX="-11" frameY="-22"/>
 	<SubTexture	name="CdTwirl0001" x="22" y="47" width="29" height="44" frameWidth="29" frameHeight="44" frameX="-14" frameY="-22"/>
@@ -225,12 +168,10 @@
 	<SubTexture	name="BetaDash 20002" x="75" y="93" width="35" height="34" frameWidth="35" frameHeight="34" frameX="-15" frameY="-14"/>
 	<SubTexture	name="BetaDash 20003" x="111" y="92" width="36" height="35" frameWidth="36" frameHeight="35" frameX="-16" frameY="-15"/>
 
-	<SubTexture	name="DropDash0001" x="331" y="240" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="DropDash0002" x="397" y="244" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="DropDash0003" x="364" y="240" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="DropDash0004" x="430" y="244" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="DropDash0005" x="331" y="240" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="DropDash0006" x="463" y="244" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="DropDash0007" x="364" y="240" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
-	<SubTexture	name="DropDash0008" x="342" y="272" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
+	<SubTexture	name="DropDash0001" x="125" y="248" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
+	<SubTexture	name="DropDash0002" x="158" y="248" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
+	<SubTexture	name="DropDash0003" x="191" y="248" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
+	<SubTexture	name="DropDash0004" x="224" y="248" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
+	<SubTexture	name="DropDash0005" x="257" y="248" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
+	<SubTexture	name="DropDash0006" x="290" y="248" width="32" height="32" frameWidth="32" frameHeight="32" frameX="-16" frameY="-16"/>
 </TextureAtlas>

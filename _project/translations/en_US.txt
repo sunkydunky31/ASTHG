@@ -1,4 +1,4 @@
-project_Company=Company
-project_Package=Package
-project_AppFile=App file
+proj.Company=Company
+proj.Package=Package
+proj.AppFile=App file
 feature_Removed={0} was removed from the list

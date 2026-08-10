@@ -6,9 +6,7 @@ import polymod.Polymod.Framework;
 import polymod.backends.PolymodAssets.PolymodAssetType;
 
 class Mods {
-	/**
-		Defines the path to `mods` folder.
-	**/
+	/** Defines the path to `mods` folder. **/
 	inline public static final MOD_ROOT:String = #if mac '../../../' + #end
 	#if REDIRECT_MOD_ROOT "../../../../" + #end // Use the mods folder on project path, not the executable one
 	"mods";

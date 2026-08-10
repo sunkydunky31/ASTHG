@@ -199,24 +199,16 @@ typedef SoundParameters = {
 	**/
 	var ?loop:Bool;
 
-	/**
-		Volume for this sound.
-	**/
+	/** Volume for this sound. **/
 	var ?volume:Float;
 
-	/**
-		Should this sound persists per state?
-	**/
+	/** Should this sound persists per state? **/
 	var ?persist:Bool;
 
-	/**
-		Sets a sound group for this sound.
-	**/
+	/** Sets a sound group for this sound. **/
 	var ?group:FlxSoundGroup;
 
-	/**
-		Function event that executes when the sound finishes.
-	**/
+	/** Function event that executes when the sound finishes. **/
 	var ?onComplete:Void->Void;
 }
 
@@ -225,9 +217,7 @@ typedef SoundParameters = {
 	this is only used since we can't load tag data from OGG Vorbis files... or we can?
 **/
 enum abstract TagElements(String) to String from String {
-	/**
-		Determines the title of the track
-	**/
+	/** Determines the title of the track **/
 	var TITLE = "TITLE";
 
 	/**
@@ -237,34 +227,22 @@ enum abstract TagElements(String) to String from String {
 	**/
 	var ARTIST = "ARTIST";
 
-	/**
-		Determines the album of this track
-	**/
+	/** Determines the album of this track **/
 	var ALBUM = "ALBUM";
 
-	/**
-		Determines the album artist of this track
-	**/
+	/** Determines the album artist of this track **/
 	var ALBUMARTIST = "ALBUMARTIST";
 
-	/**
-		Determines the genre of this track
-	**/
+	/** Determines the genre of this track **/
 	var GENRE = "GENRE";
 
-	/**
-		Determines the year date of this track
-	**/
+	/** Determines the year date of this track **/
 	var YEAR = "YEAR";
 
-	/**
-		Determines the track number of this track
-	**/
+	/** Determines the track number of this track **/
 	var TRACK = "TRACK";
 
-	/**
-		Custom element that determines if the track should loop or not
-	**/
+	/** Custom element that determines if the track should loop or not **/
 	var LOOP = "LOOP";
 
 	/**

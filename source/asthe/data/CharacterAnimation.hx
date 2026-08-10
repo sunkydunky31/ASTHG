@@ -1,34 +1,22 @@
 package asthe.data;
 
 typedef CharacterAnimation = {
-	/**
-		Name of the animation
-	**/
+	/** Name of the animation **/
 	name:String,
 
-	/**
-		How should your animation be displayed?
-	**/
+	/** How should your animation be displayed? **/
 	?displayName:String,
 
-	/**
-		Which sprite sheet your animation use?
-	**/
+	/** Which sprite sheet your animation use? **/
 	?sheet:String,
 
-	/**
-		Name in SparrowAtlas file
-	**/
+	/** Name in SparrowAtlas file **/
 	?prefix:String,
 
-	/**
-		Frames per second of this animation
-	**/
+	/** Frames per second of this animation **/
 	?fps:Float,
 
-	/**
-		Does this animation loops?
-	**/
+	/** Does this animation loops? **/
 	?loop:Bool,
 
 	/**

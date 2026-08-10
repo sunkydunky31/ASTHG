@@ -24,22 +24,20 @@ class Constants {
 	// Characters
 	public static final DEFAULT_CHARACTER:String = "sonic";
 
+	public static final LIFE_ICON:String = "liveIcon";
+
 	/**
 		Colors used to be replaced by other colors
 		This will not work with cached graphics!
 	**/
 	public static final PALETTE_OVERRIDE:Array<FlxColor> = [0xFF2020A0, 0xFF2040C0, 0xff4040E0, 0xff6060E0];
 
-	/**
-		(NOT IMPLEMENTED) Stores the velocity of super palettes when glowing into white in seconds
-	**/
+	/** (NOT IMPLEMENTED) Stores the velocity of super palettes when glowing into white in seconds **/
 	public static final PALETTE_SUPER_VELOCITY = 1;
 
 	// Save Select
 
-	/**
-		Number of Save Slots
-	**/
+	/** Number of Save Slots **/
 	public static final SAVE_ENTRY_LIMIT:Int = 7;
 
 	/**

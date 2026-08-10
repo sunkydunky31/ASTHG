@@ -17,43 +17,34 @@ using util.StringUtil;
 using StringTools;
 
 class Project extends HXProject {
-	//Change game settings here!
-	static var GAME:Map<String, Dynamic> = [
-		/**
-			Name of the project
-			Can be translated on android build (check below)
-		**/
-		"title" => "Another Sonic the Hedgehog Engine",
+	// ----- GAME SETTINGS ----- //
 
-		/**
-			Rule: MAJOR.MINOR.BUGFIX-PATCH
-		**/
-		"version" => "1.3.5",
+	/**
+		Name of the project
+		Can be translated on android build (check below)
+	**/
+	inline public static final TITLE = "Another Sonic the Hedgehog Engine";
 
-		/**
-			Name of the company, or developer
-		**/
-		"company" => "Sunnydev31",
+	/** Rule: MAJOR.MINOR.BUGFIX-PATCH **/
+	inline public static final VERSION = "1.3.5";
 
-		/**
-			Package name for the project
-			Ussually in format: com.company.game
-		**/
-		"packageName" => "game.unrealsunnydev.asthe",
+	/** Name of the company, or developer **/
+	inline public static final COMPANY = "Sunnydev31";
 
-		/**
-			Name of the executable file (without extension)
-		**/
-		"file" => "ASTHE",
+	/**
+		Package name for the project
+		Ussually in format: com.company.game
+	**/
+	inline public static final PACKAGE_NAME = "game.unrealsunnydev.asthe";
 
-		/**
-			List of supported languages that the game uses
-		**/
-		"languages" => ["en", "pt-BR"],
+	/** Name of the executable file (without extension) **/
+	inline public static final FILE = "ASTHE";
 
-		"windowWidth"  => 1280,
-		"windowHeight" => 720
-	];
+	/** List of supported languages that the game uses **/
+	       public static final LANGUAGES = ["en", "pt-BR"];
+
+	inline public static final WINDOW_WIDTH  = 1280;
+	inline public static final WINDOW_HEIGHT = 720;
 
 	/**
 		List of items to remove on the build
@@ -82,20 +73,19 @@ class Project extends HXProject {
 
 		#if !target.unicode
 		if (isPlatform("windows") && isTarget("C++")) {
-			Sys.command("chcp", ["65001"]);
-			Sys.command("cls");
+			Sys.command("chcp 65001 > nul");
 		}
 		#end
 		LNG.load();
 
 		setenv("PROJECT_BUILD", (isDebug() ? "debug" : isFinal() ? "final" : "release"));
 
-		this.meta.title = GAME.get("title");
-		this.meta.version = GAME.get("version");
-		this.meta.company = GAME.get("company");
-		this.meta.packageName = GAME.get("packageName").toLowerCase();
+		this.meta.title = TITLE;
+		this.meta.version = VERSION;
+		this.meta.company = COMPANY;
+		this.meta.packageName = PACKAGE_NAME.toLowerCase();
 
-		this.app.file = GAME.get("file");
+		this.app.file = FILE;
 		this.app.main = "Main";
 		this.app.preloader = "flixel.system.FlxPreloader";
 		this.app.path = "export/" + Sys.getEnv("PROJECT_BUILD");
@@ -106,8 +96,8 @@ class Project extends HXProject {
 			this.window.fullscreen = true;
 		}
 		else {
-			this.window.width = GAME.get("windowWidth");
-			this.window.height = GAME.get("windowHeight");
+			this.window.width = WINDOW_WIDTH;
+			this.window.height = WINDOW_HEIGHT;
 		}
 
 		this.window.orientation  = Orientation.LANDSCAPE;
@@ -123,7 +113,7 @@ class Project extends HXProject {
 
 
 		echo("");
-		echo('${GAME.get("title")} v${GAME.get("version")}');
+		echo('$TITLE v$VERSION');
 		echo("-----------------------------------------");
 		dotPad(LNG.translate("proj.Company"), this.meta.company,     null, false);
 		dotPad(LNG.translate("proj.Package"), this.meta.packageName, null, false);
@@ -284,7 +274,6 @@ class Project extends HXProject {
 
 		return switch (n) {
 			case "c++": "cpp";
-			case "hashlink": "hl";
 			case "macos" | "darwin": "mac";
 			case "nekovm": "neko";
 			case "windows_nt": "windows";
@@ -302,11 +291,9 @@ class Project extends HXProject {
 	function addHaxelib(name:String, ?condition:Null<Bool>, ?version:Null<String>) {
 		if (condition == null || condition == true) {
 			this.haxelibs.push(new Haxelib(name, (version.isBlank() ? null : version)));
-			dotPad(name, true);
 		}
-		else {
-			dotPad(name, false);
-		}
+
+		dotPad(name, condition ?? true);
 	}
 
 	/**
@@ -318,8 +305,10 @@ class Project extends HXProject {
 	**/
 	function addIcon(name:String, ?format:Null<String> = "png", ?size:Null<Array<Int>> = null, ?appendSizeToName:Null<Bool> = false) {
 		var path:String = '_project/icons/$name';
+
 		if (!ArrayUtil.isBlank(size) && appendSizeToName)
 			path += Std.string(size.join("x"));
+
 		path += '.$format';
 
 		if (!ArrayUtil.isBlank(size) && size.length >= 1)
@@ -334,7 +323,7 @@ class Project extends HXProject {
 		@param value The text to print
 		@param debug If true, only prints if the build flag "debug" is enabled
 	**/
-	public function echo(value:Dynamic, ?infos:haxe.PosInfos) {
+	public function echo(value:Dynamic, ?infos:haxe.PosInfos):Void {
 		var str = Std.string(value);
 
 		if (infos == null) {
@@ -361,10 +350,8 @@ class Project extends HXProject {
 
 		var padding = StringTools.lpad("", ".", dots);
 
-		if (debug) {
-			if (isDebug())
-				echo(name + padding + value);
-		}
+		if (debug && isDebug()) // Only print if is a debug build
+			echo(name + padding + value);
 		else
 			echo(name + padding + value);
 	}

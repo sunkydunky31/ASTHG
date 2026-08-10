@@ -74,9 +74,7 @@ class Locale {
 		});
 	}
 
-	/**
-		Callback when FireTongue loads the locale.
-	**/
+	/** Callback when FireTongue loads the locale. **/
 	public static function onLoad():Void {
 		trace("Loaded! Locale is {0}".info(), tongue.locale);
 	}
