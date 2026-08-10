@@ -78,12 +78,9 @@ jobs:
           key: cache-libraries
 
       - name: "Build the Game"
-        if: ${{ github.event.inputs.arch-32 == false }}
-        run: pwsh -File "./_project/build/build.ps1" -Platform cpp -BuildType ${{ github.event.inputs.build-type }} -Action build
-
-      - name: "Build the Game (32-Bit)"
-        if: ${{ github.event.inputs.arch-32 == true }}
-        run: pwsh -File "./_project/build/build.ps1" -Platform cpp -BuildType ${{ github.event.inputs.build-type }} -Action build -Is32Bits
+        run: |
+          $use32 = if (${{ github.event.inputs.arch-32 }} -eq "true") {'-Is32Bits'} else {''}
+          pwsh -File "./_project/build/build.ps1" -Platform cpp -BuildType ${{ github.event.inputs.build-type }} -Action build $use32
 
         # We can't use: run, -watch, test; because it's a online VM, not a local one
 
@@ -91,4 +88,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-cpp-${{ github.event.inputs.build-type }}
-          path: export/${{ github.event.inputs.build-type }}/${{ runner.os == 'Windows' && 'windows' || (runner.os == 'Linux' && 'linux' || 'macos') }}/bin
+          path: ${{ format('export/{0}/{1}/bin', github.event.inputs.build-type, (runner.os == 'Windows' && 'windows' || (runner.os == 'Linux' && 'linux' || 'macos'))) }}
