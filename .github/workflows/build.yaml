@@ -63,7 +63,7 @@ jobs:
           cd .haxelib/hxcpp/git/tools/hxcpp
           haxe compile.hxml
 
-          cd ../../../../
+          cd ../../../../..
 
       - name: "Cache Haxe & Libraries"
         uses: actions/cache@v3
