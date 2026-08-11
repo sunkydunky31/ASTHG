@@ -3,7 +3,7 @@ import polymod.Polymod;
 import polymod.Polymod.PolymodErrorCode;
 import polymod.PolymodConfig;
 import polymod.Polymod.Framework;
-import polymod.backends.PolymodAssets.PolymodAssetType;
+import polymod.PolymodAssets.PolymodAssetType;
 
 class Mods {
 	/** Defines the path to `mods` folder. **/
@@ -31,7 +31,7 @@ class Mods {
 		var loadedMods:Array<ModMetadata> = Polymod.init({
 			modRoot: MOD_ROOT,
 			dirs: dirs,
-			framework: #if (nodejs && polymod >= "2.0.0") Framework.OPENFL_WITH_NODE #else Framework.OPENFL #end,
+			framework: #if (nodefs && polymod >= "2.0.0") Framework.OPENFL_WITH_NODE #else Framework.OPENFL #end,
 			frameworkParams: getFrameworkParams(),
 			apiVersionRule: API_VERSION_RULE,
 			useScriptedClasses: true,
@@ -41,15 +41,10 @@ class Mods {
 		});
 
 
-		if (ArrayUtil.isBlank(loadedMods))
-			log("Loading complete! No mods was loaded.");
-		else {
-			log('Loading complete! ${loadedMods.length} mods was loaded.');
+		log("Loading complete! No mods was loaded.");
 
-			for (num => i in loadedMods) {
-				log("{0}. {1} v{2} - {3}".format([num + 1, i.title, i.modVersion, i.id]));
-			}
-		}
+		for (num => i in loadedMods)
+			log("{0}. {1} v{2} - {3}".format([num + 1, i.title, i.modVersion, i.id]));
 	}
 
 	public static function getAll():Array<ModMetadata> {
@@ -139,7 +134,6 @@ class Mods {
 		}
 	}
 
-	static function log(msg:String) {
+	static function log(msg:String)
 		trace(msg.infoCustom("MODS", AnsiList.BG_GREEN));
-	}
 }

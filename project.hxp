@@ -26,7 +26,7 @@ class Project extends HXProject {
 	inline public static final TITLE = "Another Sonic the Hedgehog Engine";
 
 	/** Rule: MAJOR.MINOR.BUGFIX-PATCH **/
-	inline public static final VERSION = "1.3.5";
+	inline public static final VERSION = "1.4.5";
 
 	/** Name of the company, or developer **/
 	inline public static final COMPANY = "Sunnydev31";

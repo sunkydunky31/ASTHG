@@ -21,7 +21,7 @@ on:
         type: boolean
         default: false
   push:
-    branches: ["test-workflow"]
+    branches: ["main"]
 jobs:
   build:
     name: "Build the game (${{matrix.target}} env.)"
