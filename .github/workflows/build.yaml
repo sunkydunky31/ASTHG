@@ -17,28 +17,15 @@ on:
           - debug
           - release
           - final
-
-      # NOTE: I didn't test it, tell me if it works!
-      arch-32:
+      arch-32: # NOTE: I didn't test it, tell me if it works!
         description: "Should your build be for 32bits?"
         type: boolean
         default: false
-
-      runner-os:
-        description: "Select which OS runner to use for the build."
-        type: choice
-        required: true
-        default: "windows-latest"
-        options:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
   push:
-    branches: [ "test-workflow" ]
-
+    branches: ["test-workflow"]
 jobs:
   build:
-    name: "Build the game (${{matrix.runs-on}} env.)"
+    name: "Build the game (${{matrix.target}} env.)"
     permissions: write-all
     strategy:
       fail-fast: false
@@ -51,10 +38,10 @@ jobs:
             runs-on: ubuntu-latest
           - target: "macos"
             runs-on: macos-latest
-
     runs-on: ${{matrix.runs-on}}
     steps:
-      - uses: actions/checkout@v4
+      - name: "Checkout Repo"
+        uses: actions/checkout@v4
       - name: "Setup Haxe 4.3.7"
         uses: krdlab/setup-haxe@v2
         with:
@@ -68,7 +55,15 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ runner.os == 'Windows' && '%USERPROFILE%\\.haxelib' || '~/.haxelib' }}
-          key: cache-haxe
+          key: cache-haxe-${{matrix.target}}-${{hashFiles('**/hmm.json')}}
+          restore-keys: |
+            cache-haxe-${{matrix.target}}
+      - name: "Cache Local Libraries"
+        uses: actions/cache@v3
+        with:
+          path: ".haxelib"
+          key: cache-gamelibs-${{ matrix.target }}-${{ hashFiles('**/hmm.json') }}
+          restore-keys: cache-gamelibs-${{ matrix.target }}-
       - name: "Install Dependencies"
         shell: "pwsh"
         run: |
@@ -80,27 +75,9 @@ jobs:
         run: |
           cd .haxelib/hxcpp/git/tools/hxcpp
           haxe compile.hxml
-
-          cd ../../../../..
-      - name: "Cache Game Libraries"
-        uses: actions/cache@v3
-        with:
-          path: '.haxelib'
-          key: cache-gamelibs
-      - name: "Checkout Repository"
-        uses: actions/checkout@v4
-      - name: "Restore Haxe Cache"
-        uses: actions/cache@v3
-        with:
-          path: ${{ runner.os == 'Windows' && '%USERPROFILE%\\.haxelib' || '~/.haxelib' }}
-          key: cache-haxe
-      - name: "Restore Game Libraries Cache"
-        uses: actions/cache@v3
-        with:
-          path: '.haxelib'
-          key: cache-gamelibs
-      - name: "Build the Game (${{github.event.inputs.build-type || 'Release'}})"
-        run: haxelib run lime build cpp ${{ github.event.inputs.build-type == 'debug' && '-debug' || github.event.inputs.build-type == 'final' && '-final' }} # We can't use: run, -watch, test; because it's a online VM, not a local one
+          cd ../="../../../../.."
+      - name: "Build the Game (${{github.event.inputs.build-type || 'release'}})"
+        run: haxelib run lime build cpp ${{ github.event.inputs.build-type == 'debug' && '-debug' || (github.event.inputs.build-type == 'final' && '-final' || '') }} # We can't use: run, -watch, test; because it's a online VM, not a local one
       - name: "Upload Build Artifacts"
         uses: actions/upload-artifact@v4
         with:
