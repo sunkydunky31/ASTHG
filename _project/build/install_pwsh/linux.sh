@@ -18,6 +18,15 @@ if [ -f /etc/os-release ]; then
   DIST_VER=$VERSION_ID
 fi
 
+
+if command -v doas > /dev/null 2>&1; then
+  SUDOCMD="doas"
+elif command -v sudo > /dev/null 2>&1; then
+  SUDOCMD="sudo"
+else
+  SUDOCMD=""
+fi
+
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 PSVERSION=$(cat "$SCRIPT_DIR/version.txt")
 echo "Script DIR: $SCRIPT_DIR"
@@ -29,21 +38,14 @@ echo "---------------------------------------------------------------"
 case "$DIST" in
   alpine)
 
-  if [${DIST_VER%.*} -ge 3.16]; then
-    echo "Version is >= 3.16"
-    doas apk add --no-cache ca-certificates less ncurses-terminfo-base krb5-libs libgcc libintl libssl3 libstdc++ tzdata userspace-rcu zlib icu-libs curl
-  else
-    echo "Version is <= 3.16"
-    sudo apk add --no-cache ca-certificates less ncurses-terminfo-base krb5-libs libgcc libintl libssl3 libstdc++ tzdata userspace-rcu zlib icu-libs curl
-  fi
+    $SUDOCMD apk add --no-cache ca-certificates less ncurses-terminfo-base krb5-libs libgcc libintl libssl3 libstdc++ tzdata userspace-rcu zlib icu-libs curl
 
-    apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache lttng-ust openssh-client \
-    curl -L https://github.com/PowerShell/PowerShell/releases/download/v$PSVERSION/powershell-$PSVERSION-linux-musl-x64.tar.gz -o /tmp/powershell.tar.gz
+    apk add -X https://dl-cdn.alpinelinux.org/alpine/edge/main --no-cache lttng-ust openssh-client && curl -L https://github.com/PowerShell/PowerShell/releases/download/v$PSVERSION/powershell-$PSVERSION-linux-musl-x64.tar.gz -o /tmp/powershell.tar.gz
 
-    sudo mkdir -p /opt/microsoft/powershell/7
-    sudo tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
-    sudo chmod +x /opt/microsoft/powershell/7/pwsh
-    sudo ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
+    $SUDOCMD mkdir -p /opt/microsoft/powershell/7
+    $SUDOCMD tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
+    $SUDOCMD chmod +x /opt/microsoft/powershell/7/pwsh
+    $SUDOCMD ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
     ;;
   rhel)
     if [ ${DIST_VER%.*} -ge 8 ]
@@ -54,31 +56,30 @@ case "$DIST" in
 
     curl -sSL -O https://packages.microsoft.com/config/rhel/$majorver/packages-microsoft-prod.rpm
 
-    sudo rpm -i packages-microsoft-prod.rpm
+    $SUDOCMD rpm -i packages-microsoft-prod.rpm
 
     rm packages-microsoft-prod.rpm
 
-    sudo dnf update
+    $SUDOCMD dnf update
 
-    sudo dnf install powershell -y
+    $SUDOCMD dnf install powershell -y
     ;;
   debian|ubuntu)
-    sudo apt-get update
+    $SUDOCMD apt-get update
 
-    if ["$DIST" -eq "ubuntu"]; then
-      sudo apt-get install -y wget apt-transport-https software-properties-common
+    if [ "$DIST" = "ubuntu" ]; then
+      $SUDOCMD apt-get install -y wget apt-transport-https software-properties-common
     else
-      sudo apt-get install -y wget
+      $SUDOCMD apt-get install -y wget
     fi
 
     wget -q https://packages.microsoft.com/config/$DIST/$DIST_VER/packages-microsoft-prod.deb
 
-    sudo dpkg -i packages-microsoft-prod.deb
+    $SUDOCMD dpkg -i packages-microsoft-prod.deb
     rm packages-microsoft-prod.deb
 
-    sudo apt-get update
-
-    sudo apt-get install -y powershell
+    $SUDOCMD apt-get update
+    $SUDOCMD apt-get install -y powershell
     ;;
   *)
     echo "Sorry, the distribution '$DIST' is not supported in this script."
