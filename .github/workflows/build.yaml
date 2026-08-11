@@ -75,7 +75,7 @@ jobs:
         run: |
           cd .haxelib/hxcpp/git/tools/hxcpp
           haxe compile.hxml
-          cd ../="../../../../.."
+          cd ../../../../..
       - name: "Build the Game (${{github.event.inputs.build-type || 'release'}})"
         run: haxelib run lime build cpp ${{ github.event.inputs.build-type == 'debug' && '-debug' || (github.event.inputs.build-type == 'final' && '-final' || '') }} # We can't use: run, -watch, test; because it's a online VM, not a local one
       - name: "Upload Build Artifacts"
