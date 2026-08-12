@@ -12,7 +12,6 @@ class ArrayUtil {
 		return @:nullSafety(Off) (arr == null || arr.length == 0);
 	}
 
-	#if flixel
 	/**
 		--- DESCRIPTION ---
 		Makes a array that parses into a FlxRect
@@ -26,35 +25,53 @@ class ArrayUtil {
 		@return FlxRect
 		@author Sunnydev31 (unreal.sunnydev)
 	**/
-	public static function toRect(arr:Array<Float>):flixel.math.FlxRect {
+	#if flixel
+	public static function toRect(arr:Array<Float>):flixel.math.FlxRect
+	#else
+	public static function toRect(arr:Array<Float>):{x:Float,y:Float,width:Float,height:Float}
+	#end
+	{
 		if (arr.length < 4)
 			throw "Array must have at least 4 values to convert to FlxRect";
 		else if (arr.length > 4)
 			trace("WARNING: Array has more than 4 values, the other ones will be ignored!");
+		#if flixel
 		return new flixel.math.FlxRect(arr[0], arr[1], arr[2], arr[3]);
+		#else
+		return {x: arr[0], y: arr[1], width: arr[2], height: arr[3]};
+		#end
 	}
 
 	/**
-		Makes a array that parses into a FlxPoint
+		Makes a array that parses into a Point/Vector2 object
 
 		@param arr Your point values [X:Float, Y:Float]
-		@return FlxPoint
+		@return FlxPoint / Dynamic {x, y}
 		@author Sunnydev31 (unreal.sunnydev)
 	**/
-	public static function toPoint(arr:Array<Float>):flixel.math.FlxPoint {
+	#if flixel
+	public static function toPoint(arr:Array<Float>):flixel.math.FlxPoint
+	#else
+	public static function toPoint(arr:Array<Float>):{x:Float, y:Float}
+	#end
+	{
 		if (arr.length == 1) {
-			trace("WARNING: Array must have at least 2 values to convert to FlxPoint");
+			trace("WARNING: Array must have at least 2 values to convert to FlxPoint, leaving the second entry as 0");
+			#if flixel
 			return new flixel.math.FlxPoint(arr[0], 0);
+			#else
+			return {x: arr[0], y: 0};
+			#end
 		}
 		else if (arr.length > 2)
 			trace("WARNING: Array has more than 2 values, the other ones will be ignored!");
 
+		#if flixel
 		return new flixel.math.FlxPoint(arr[0], arr[1]);
+		#else
+		return {x: arr[0], y: arr[1]};
+		#end
 	}
-	#else
-	public static function toRect(arr:Array<Float>):Void {}
-	public static function toPoint(arr:Array<Float>):Void {}
-	#end
 
 	/**
 		Returns the last element of `arr`

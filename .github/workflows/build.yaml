@@ -24,7 +24,7 @@ on:
     branches: ["main"]
 jobs:
   build:
-    name: "Build the game (${{matrix.target}} env.)"
+    name: "Build the game (${{matrix.target}})"
     permissions: write-all
     strategy:
       fail-fast: false
@@ -33,9 +33,9 @@ jobs:
         include:
           - target: "windows"
             runs-on: windows-latest
-          #- target: "linux"
-          #  runs-on: ubuntu-latest
-          #- target: "macos"
+          - target: "linux"
+            runs-on: ubuntu-latest
+          #- target: "macos" # NEEDS TESTING!
           #  runs-on: macos-latest
     runs-on: ${{matrix.runs-on}}
     steps:
@@ -80,5 +80,5 @@ jobs:
       - name: "Upload Build Artifacts"
         uses: actions/upload-artifact@v4
         with:
-          name: build-${{matrix.target}}-${{ github.event.inputs.build-type || 'release' }}
+          name: ${{ format('ASTHE ({0}) - {1}', (github.event.inputs.build-type || 'release'), runner.os) }}
           path: ${{ format('export/{0}/{1}/bin', github.event.inputs.build-type || 'release', matrix.target) }}

@@ -59,10 +59,7 @@ class Controls {
 		}
 		#elseif mobile
 			trace('Vibrating as Haptics!');
-			return lime.ui.Haptic.vibrate(
-				cast(params.period, Null<Int>) ?? 0.0,
-				cast(params.duration, Null<Int>) ?? 0);
-		}
+			return lime.ui.Haptic.vibrate(cast(params.period, Null<Int>) ?? 0.0, cast(params.duration, Null<Int>) ?? 0);
 		#else
 		return; // nothing lol
 		#end

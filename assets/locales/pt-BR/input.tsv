@@ -14,8 +14,8 @@ flxgamepad_back	Select
 flxgamepad_start	Start
 flxgamepad_lshoulder	L. Bumper
 flxgamepad_rshoulder	R. Bumper
-flxgamepad_ltrigger	L. Trigger
-flxgamepad_rtrigger	R. Trigger
+flxgamepad_ltrigger	Gatilho L
+flxgamepad_rtrigger	Gatilho R
 flxgamepad_dpad_left	Esquerda
 flxgamepad_dpad_right	Direito
 flxgamepad_dpad_up	Para Cima

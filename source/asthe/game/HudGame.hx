@@ -74,8 +74,8 @@ class HudGame extends FlxSpriteGroup {
 
 	// --- READABLE HUD VALUES --- //
 
-	/*	These are only used to show the values on the screen
-		They don't need a description, do they?...			*/
+	/*  These are only used to show the values on the screen
+		They don't need a description, do they?...          */
 
 	public var scoreValTxt:AstheBitmapText;
 	public var timeValTxt:AstheBitmapText;

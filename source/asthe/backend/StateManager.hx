@@ -37,12 +37,15 @@ public var controls(get, never):Controls;
 
 	}
 
-	public static function hotReload() {
+	public static function hotReload():Void {
 			trace("HOT RELOAD");
 			Paths.clearStoredMemory();
 			Paths.clearUnusedMemory();
 			Locale.init();
-			SystemUtil.ACCENT_COLOR = SystemUtil.loadAccentColor();
+
+			if (ClientPrefs.data.options.accentColors)
+				SystemUtil.ACCENT_COLOR = SystemUtil.loadAccentColor();
+
 			FlxG.resetState();
 			return;
 	}

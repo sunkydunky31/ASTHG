@@ -56,15 +56,11 @@ class Project extends HXProject {
 		android: {
 			icons: {
 				adaptive: true,
-				path:     "_project/icons/android",
 				hasRound: false
 			},
 			localizedStrings: true
 		},
-
-		windows: {
-			visualElements: true
-		}
+		windows: { visualElements: true }
 	};
 
 

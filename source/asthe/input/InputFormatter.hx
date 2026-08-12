@@ -200,7 +200,6 @@ class InputFormatter {
 				case SWITCH_PRO: "Switch Pro";
 				case SWITCH_JOYCON_LEFT: "Switch Joycon Left";
 				case SWITCH_JOYCON_RIGHT: "Switch Joycon Right";
-				case UNKNOWN: "Unknown";
 				default: "Unknown";
 			}
 		else
@@ -211,7 +210,6 @@ class InputFormatter {
 		Function to get a keybind/gamepad button name
 		@param k The control to get(e.g. `controls.UP`)
 		@return String
-		@author unreal.sunnydev
 	**/
 	public static function getControlNames(k:InputList):String {
 		var arr:Dynamic;

@@ -76,6 +76,7 @@ class ModsMenu extends StateManager {
 		}
 		else {
 			var warn:AstheBitmapText = AstheBitmapText.createAngelCode(0, 90, Locale.getString("no_mods_warn", "mods_menu"), "Roco");
+			warn.alignment = AstheText.TextAlign.CENTER;
 			warn.screenCenter(X);
 			add(warn);
 		}
@@ -126,7 +127,7 @@ class ModsMenu extends StateManager {
 			var m = cachedMods[curSelected];
 
 			vers.text = "v" + m.modVersion;
-			if (m.contributors.length > 0) // Help-  @unreal.sunnydev
+			if (!ArrayUtil.isBlank(m.contributors)) // Help-  @unreal.sunnydev
 				for (k in 0...m.contributors.length) {
 					var names:Array<String> = [];
 					names.push(m.contributors[k].name);
@@ -138,7 +139,7 @@ class ModsMenu extends StateManager {
 					}
 				}
 			else
-				authors.text = "No Contributors";
+				authors.text = Locale.getString("mod_info_no_contributors", "mods_menu");
 			desc.text = m.description;
 		}
 		else {

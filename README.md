@@ -1,8 +1,8 @@
 # ASTHE (An Sonic the Hedgehog Engine)
-This is an Sonic engine, made just for fun!  
+This is an Sonic engine, made just for fun!
 It haves code parts from [Psych Engine][psych_engine]... I'm planning on replacement for all this stuff.
 
-Help would be appreciated!  
+Help would be appreciated!
 Call me on Discord if you want to [talk with me][sunnydev_discord].
 
 <details>
@@ -36,14 +36,14 @@ Check [Modding Docs][docs_modding_readme]
 <summary><h2>About the Code used in this project</h2></summary>
 
 **The code from Psych Engine is getting referenced times by times**, but theres parts that I coded myself.
-If you see something wrong in this project, **PLEASE, CONTACT ME!**
+If you see something wrong in this project, **PLEASE, [CONTACT ME][sunnydev_discord]!**
 </details>
 
 <!-- My Discord link -->
 [sunnydev_discord]: <https://discordapp.com/users/525334699069931521> "Sunnydev's Discord profile"
 
 <!-- Project Paths -->
-[docs_building]: docs/building/
+[docs_building]: https://github.com/unrealsunnydev/ASTHE/wiki/
 [docs_modding_readme]: docs/modding/README.md
 
 <!-- Links -->

@@ -73,10 +73,7 @@ class Option {
 	}
 
 	var _text:String = null;
-
-	private function get_text()
-		return _text;
-
+	private function get_text() return _text;
 	private function set_text(newValue:String = '') {
 		if (child != null) {
 			_text = newValue;

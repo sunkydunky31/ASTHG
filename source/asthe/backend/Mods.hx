@@ -93,8 +93,6 @@ class Mods {
 				error('Tried to load a mod that doesn\'t exists! ${e.message}');
 			case MOD_MISSING_METADATA:
 				error('Failed to load mod metadata for "${e.message}"!');
-			case MOD_MISSING_ICON:
-				error('Failed to load mod icon for "${e.message}"!');
 
 			// Versions
 			case MOD_API_VERSION_MISMATCH:
