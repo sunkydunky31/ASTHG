@@ -2,7 +2,7 @@ package asthe.options.types;
 
 import asthe.options.Option;
 
-@:nullSafety
+//@:nullSafety
 class BoolOption extends Option<Bool> {
 	/**
 		Creates a Bool option entry

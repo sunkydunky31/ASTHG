@@ -19,22 +19,20 @@ class Locale {
 		@param values Any phrase that has "`{1}`, `{2}`..." will be replaced with any value inserted following a sequence
 		@return String
 	**/
-	inline public static function getString(key:String, context:String = "data", ?values:Array<Dynamic>):String {
-
-		if (key.isBlank()) return "[!]";
-
+	inline public static function getString(key:Null<String> = "", context:String = "data", ?values:Array<Dynamic> = null):String {
 		var str:String = "";
 
 		if (tongue != null)
 			str = tongue.get(formatKey(key), context, true);
+		else
+			str = (key.isBlank()) ? "[!]" : key;
 
-
-		if (!ArrayUtil.isBlank(values) && tongue != null){
+		if (!ArrayUtil.isBlank(values) && tongue != null) {
 			str = str.format(values);
-		}
 
-		if (str == formatKey(key)) {
-			trace("Context '{0}' has a file with missing flags! ({1})".warn(), context, key);
+			if (str == formatKey(key)) {
+				trace("Context '{0}' has a file with missing flags! ({1})".warn(), context, key);
+			}
 		}
 
 		return str;
