@@ -128,7 +128,7 @@ class AstheSound extends FlxSound {
 					setTag(name, value);
 				}
 				else {
-					trace('Name/Value doesn\'t exists for [$i] or there\'s an error in the tag!');
+					trace("Name/Value doesn't exists for [{0}] or there's an error in the tag!", i);
 					return;
 				}
 			}
@@ -164,13 +164,13 @@ class AstheSound extends FlxSound {
 	}
 
 	public static function getTag(n:Null<String>):Null<Dynamic> {
-		if (n == null || n.trim().length <= 0) {
+		if (n.isBlank()) {
 			trace('Tag name is null/empty! ($n)'.warn());
 			return null;
 		}
 
 		if (!tags.exists(n)) {
-			trace('Tag "$n" doesn\'t exists!'.warn());
+			trace("Tag '{0}' doesn't exists!".warn(), n);
 			return null;
 		}
 

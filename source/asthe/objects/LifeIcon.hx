@@ -31,14 +31,8 @@ class LifeIcon extends AstheSprite {
 	public function init(char:String):Void {
 		if (character == char) return;
 
-		trace("Char is " + char);
-
-	//	var img:String = findIconPath(char);
 		character = char;
 
-	//	var graphic = Paths.image(img);
-	//	var fcount = Math.round(graphic.width / graphic.height); // Gets the number of frames
-	//	loadGraphic(graphic, true, Math.floor(graphic.width / fcount), Math.floor(graphic.height));
 		loadAdaptiveSpriteSheet('liveIcons/$char');
 		loadAnimations();
 	}

@@ -35,7 +35,7 @@ class AstheBitmapText extends FlxBitmapText {
 	}
 
 	/**
-		Creates a text box with a Angel Code font
+		Creates a text box with a Monospaced font
 		@param font Font file name
 		@param x Horizontal position of the box
 		@param y Vertical position of the box

@@ -118,7 +118,7 @@ class Mods {
 				warn('You can\'t use field "${e.message}": It was blacklisted.');
 
 			// Non-important Infos
-			case MOD_LOAD_START | MOD_LOAD_DONE | SCRIPT_PARSE_START | SCRIPT_PARSE_DONE | FRAMEWORK_INIT:
+			case MOD_LOAD_START | MOD_MISSING_ICON | MOD_LOAD_DONE | SCRIPT_PARSE_START | SCRIPT_PARSE_DONE | FRAMEWORK_INIT:
 				return;
 
 			// Other errors

@@ -323,14 +323,19 @@ class Project extends HXProject {
 		var str = Std.string(value);
 
 		if (infos == null) {
-			Sys.println(str);
+		}
+
+		if (infos?.customParams != null)
+			str = str.format(infos.customParams);
+		else {
+			if (this.command != "display")
+				Sys.println(str);
+
 			return;
 		}
 
-		if (infos.customParams != null)
-			str = str.format(infos.customParams);
-
-		Sys.println(str);
+		if (this.command != "display")
+			Sys.println(str);
 	}
 
 	/**

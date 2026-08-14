@@ -50,7 +50,7 @@ class StageBase {
 
 typedef StageFile = {
 	folder:String,
-	?acts:Int = 1,
+	?acts:Int,
 
 }
 

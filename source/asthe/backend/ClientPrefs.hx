@@ -24,7 +24,7 @@ import flixel.util.FlxSave;
 class ClientPrefs {
 	/**
 		Player's actual preference data.
-		Always sincronized of what is saved (após `saveSettings`).
+		Always sincronized of what is saved (post `saveSettings`).
 	**/
 	public static var data:SaveVariables = {};
 

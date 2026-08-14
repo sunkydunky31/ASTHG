@@ -76,13 +76,13 @@ class SystemUtil {
 		// Conversion from ABRG to ARGB
 		var accent:String = "0x";
 
-		var r = result.split("    ")[3]; // bro
+		var r = result.split("    ")[3].trim(); // bro
 		accent += (r.substr(2,2)); // Alpha
 		accent += (r.substr(8,2)); // Red
 		accent += (r.substr(6,2)); // Green
 		accent += (r.substr(4,2)); // Blue
 
-		trace('Loaded!\nParsed: . $accent\nOriginal: $r'.info());
+		trace('Loaded!'#if debug + '\nParsed: . $accent\nOriginal: $r'#end.info());
 		return Std.parseInt(accent);
 		#else // I don't know how accent colors works on other systems...
 		var errorMsg:String = "You're using a platform that doesn't support accent colors!";

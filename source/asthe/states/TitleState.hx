@@ -13,8 +13,6 @@ class TitleState extends StateManager {
 
 		var text = Locale.getString("press_start", "title_screen", [asthe.input.InputFormatter.getControlNames(asthe.input.InputList.ACCEPT)]);
 
-		trace("TitleState.text: {0}", text);
-
 		pressStart = AstheBitmapText.createAngelCode(0, FlxG.height - 20, text, "TitleFont");
 		pressStart.screenCenter(X);
 		add(pressStart);

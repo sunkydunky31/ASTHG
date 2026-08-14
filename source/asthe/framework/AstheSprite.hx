@@ -216,8 +216,8 @@ class AstheSprite extends FlxSprite {
 
 	private var paletteApplied:Bool = false;
 	/**
-		Switches global colors into custom colors using GLSL shader
-		Note that the sprite must be added or loaded to work
+		Switches global colors into custom colors using GLSL shader  
+		Note that the sprite must be added or loaded to work  
 		The global color is stored at `backend.Constants.PALETTE_OVERRIDE`
 
 		@param pal The colors to replace in order, Must match the length of Constants.PALETTE_OVERRIDE
