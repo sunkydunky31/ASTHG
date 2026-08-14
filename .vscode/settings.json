@@ -1,5 +1,4 @@
 {
-  "explorer.excludeGitIgnore": true,
   "files.associations": {
     "*.hxp": "haxe", //Lime Project
     "*.hxc": "haxe", // Polymod Haxe Class
@@ -69,6 +68,8 @@
   ],
   "search.exclude": {
     "./export/**": true,
+    "**/bower_components": false,
+    "**/node_modules": false
   },
   "xml.fileAssociations": [
     {
