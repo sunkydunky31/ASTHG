@@ -10,19 +10,10 @@ class Gameplay extends OptionsSubState {
 	public function new() {
 		title = Locale.getString("title_gameplay", "options");
 
-		var option:Option;
-
-		option = new Option("auto_pause", "autoPause");
-		addOption(option);
-
-		option = new Option("flashing_lights", "flashing");
-		addOption(option);
-
-		option = new Option("hide_hud", "hideHud");
-		addOption(option);
-
-		option = new Option("show_miliseconds", "showMiliseconds");
-		addOption(option);
+		addOption(new BoolOption("auto_pause", "autoPause"));
+		addOption(new BoolOption("flashing_lights", "flashing"));
+		addOption(new BoolOption("hide_hud", "hideHud"));
+		addOption(new BoolOption("show_miliseconds", "showMiliseconds"));
 		super();
 	}
 }

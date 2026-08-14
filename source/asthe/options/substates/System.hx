@@ -8,40 +8,20 @@ package asthe.options.substates;
 
 class System extends OptionsSubState {
 	public function new() {
-		var opt:Option;
 		title = Locale.getString("title_system", "options");
 
-		opt = new Option("cache_on_gpu", "cacheOnGPU");
-		addOption(opt);
-
+		addOption(new BoolOption("cache_on_gpu", "cacheOnGPU"));
 		#if DISCORD_ALLOWED
-		opt = new Option("discord_rich_presence", "discordRPC");
-		addOption(opt);
+		addOption(new BoolOption("discord_rich_presence", "discordRPC"));
 		#end
-
-		opt = new Option("haptics", "haptics");
-		addOption(opt);
-
-		opt = new Option("accent_colors", "accentColors");
-		addOption(opt);
-
+		addOption(new BoolOption("haptics", "haptics"));
+		addOption(new BoolOption("accent_colors", "accentColors"));
 		#if shaders_supported
-		opt = new Option("shaders", "shaders");
-		addOption(opt);
+		addOption(new BoolOption("shaders", "shaders"));
 		#end
-
-		opt = new Option("low_quality", "lowQuality");
-		addOption(opt);
-
-		opt = new Option("music_volume", "musicVolume", NUMBER, {
-			min: 0.0, max: 1.0, amount: 0.1, percentageMode: true, display: "{0}%"
-		});
-		addOption(opt);
-
-		opt = new Option("sfx_volume", "sfxVolume", NUMBER, {
-			min: 0.0, max: 1.0, amount: 0.1, percentageMode: true, display: "{0}%"
-		});
-		addOption(opt);
+		addOption(new BoolOption("low_quality", "lowQuality"));
+		addOption(new NumberOption("music_volume", "musicVolume", 40, 0, 1, 0.1, true));
+		addOption(new NumberOption("sfx_volume", "sfxVolume", 40, 0, 1, 0.1, true));
 
 		super();
 	}

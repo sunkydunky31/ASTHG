@@ -1,19 +1,29 @@
 
 package asthe.options;
 
-enum OptionType { BOOL; STRING; NUMBER; }
-
 /** @see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/options/Option.hx **/
-class Option {
+class Option<T> {
 	// { region Variables
+	/** Returns the name of this option. **/
 	public var name:String = "Unknown Option";
+	/** Description of this option. **/
 	public var desc:String = "This option does not have a description.";
-	public var type:OptionType = OptionType.BOOL;
-	public var options:OptionSettings;
+	/** Translatable key of this option. **/
 	public var flag:String = "";
+	/** Save Variable key of this option. **/
 	public var saveVar(default, null):Null<String>;
-	public var value(get, set):Dynamic;
-	public var defaultV:Null<Dynamic>;
+	/** Current value of this option. **/
+	public var value(get, set):T;
+	/**
+		Set's a display format, how the option will look
+		Placeholder values:
+
+		`{0}`: Value of the option
+		`{1}`: Default value
+	**/
+	public var display:String = "{0}";
+	/** Default value of this option. **/
+	public var defaultV:T;
 
 	public var child:AstheText;
 	public var text(get, set):Null<String>;
@@ -23,51 +33,37 @@ class Option {
 		Creates a new option
 		@param flag Translatable key (Not the text!)
 		@param saveVar Variable name to identify your option
-		@param type Type: `BOOL, STRING, INT, FLOAT`
+		@param type Option type (`BOOL, STRING, NUMBER`)
 		@param options Options per type, `BOOL` doesn't need that.
 	**/
-	inline public function new(flag:String = "", saveVar:String = "", ?type:OptionType = OptionType.BOOL, ?options:Null<OptionSettings> = null) {
-
+	inline public function new(flag:String = "", saveVar:String = "", defaultValue:T) {
 		this.name = Locale.getString(flag, "options");
 		this.desc = Locale.getString(flag + "_desc", "options");
-		this.type = type;
 		this.saveVar = saveVar;
-		this.options = options;
-		this.flag = (flag ?? "");
-		this.value = Reflect.getProperty(ClientPrefs.data.options, saveVar);
-
-		switch (type) {
-			case OptionType.BOOL:
-				this.options ??= { display: "{0}" };
-				defaultV ??= false;
-			case OptionType.NUMBER:
-				this.options ??= {
-					min: 0.0,
-					max: 10.0,
-					amount: 0.5,
-					display: "{0}",
-					percentageMode: false
-				};
-				defaultV ??= 0.0;
-			case OptionType.STRING:
-				this.options ??= {
-					list: ["No Options"],
-					display: "{0}"
-				};
-				defaultV ??= options?.list[0] ?? "No Option";
-		}
-
-		this.value ??= defaultV;
+		this.flag = flag;
+		this.value = fetchValue() ?? defaultV;
 	}
 
 	public function toString():String {
-		return "Option(name: {0}, desc: {1}, type: {2}, options: {3}, flag: {4})".format([name, desc, type, options, flag]);
+		return "Option(name='{0}', desc='{1}', flag='{3}')".format([name, desc, flag]);
 	}
 
-	private function get_value():Dynamic
+	/**
+		Event that is triggered when the option changes
+		@param step Change amount
+	**/
+	public function onChange(step:Float):Void {}
+	public function formatValue():String {
+		return Std.string(value);
+	}
+
+	private function fetchValue():Null<T>
 		return Reflect.getProperty(ClientPrefs.data.options, saveVar);
 
-	private function set_value(value:Dynamic):Dynamic {
+	private function get_value():T
+		return Reflect.getProperty(ClientPrefs.data.options, saveVar);
+
+	private function set_value(value:T):T {
 		Reflect.setProperty(ClientPrefs.data.options, saveVar, value);
 		return value;
 	}
@@ -83,42 +79,4 @@ class Option {
 
 		return null;
 	}
-}
-
-typedef OptionSettings = {
-	/**
-		Set's a display format, how the option will look
-		Placeholder values:
-
-		`{0}`: Value of the option
-		`{1}`: Default value
-	**/
-	?display:String,
-
-	/**
-		Minimal value for this `NUMBER` option
-		Default: `0.0`
-	**/
-	?min:Float,
-
-	/**
-		Maximum value for this `NUMBER` option
-		Default: `10.0`
-	**/
-	?max:Float,
-
-	/**
-		If true, the value will be displayed as a percentage
-		Only availabe for `NUMBER` options.
-	**/
-	?percentageMode:Bool,
-
-	/** How much increase/decrease values when changing `NUMBER` options **/
-	?amount:Float,
-
-	/**
-		Only available for `STRING` options.
-		Set's a list of values for this option.
-	**/
-	?list:Array<String>
 }

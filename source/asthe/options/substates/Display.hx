@@ -8,21 +8,14 @@ package asthe.options.substates;
 
 class Display extends OptionsSubState {
 	public function new() {
-		var option:Option;
 		title = Locale.getString("title_display", "options");
 
-		option = new Option("background_layers", "backLayers", NUMBER, {
-			min: 0.0, max: 1.0, amount: 0.1, percentageMode: true
-		});
-		addOption(option);
+		addOption(new NumberOption("background_layers", "backLayers", 0.0, 0.0, 1.0, 0.1, true));
 
 		/*#if cpp
-		option = new Option("show_fps", "showFPS");
-		addOption(option);
+		addOption(new BoolOption("show_fps", "showFPS"));
 
-		option = new Option("framerate", "framerate", NUMBER, {
-			min: 30.0, max: 240.0, amount: 1.0, display: "{0} FPS"
-		});
+		option = new NumberOption("framerate", "framerate", 60, 30.0, 240.0, 1.0);
 		addOption(option);
 		#end */
 		super();

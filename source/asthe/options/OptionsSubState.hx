@@ -14,7 +14,7 @@ import flixel.math.FlxMath;
 
 class OptionsSubState extends SubStateManager {
 	var selected:Int = 0;
-	var options:Array<Option>;
+	var options:Array<Option<Dynamic>>;
 
 	public var camFront:FlxCamera;
 	public var camFollow:FlxObject = new FlxObject(FlxG.width / 2, 0, 2, 2);
@@ -56,6 +56,7 @@ class OptionsSubState extends SubStateManager {
 		add(title);
 
 		if (!ArrayUtil.isBlank(options)) {
+			/** Determines the spacement of the edges on the scrren **/
 			var xFactor:Float = 0.9;
 			for (i in 0...options.length) {
 				var optName:AstheText = AstheText.create(FlxG.width - (FlxG.width * xFactor), 30, options[i].name);
@@ -66,7 +67,7 @@ class OptionsSubState extends SubStateManager {
 				optName.cameras = [camFront];
 				grpOptions.add(optName);
 
-				var optValues:AstheText = AstheText.create(FlxG.width * xFactor, optName.y, Std.string(options[i].options.display).format([normalizeOptionValue(options[i])]));
+				var optValues:AstheText = AstheText.create(FlxG.width * xFactor, optName.y, options[i].formatValue());
 				optValues.fieldWidth = optName.fieldWidth;
 				optValues.alignment = AstheText.TextAlign.RIGHT;
 				optValues.x -= optValues.width; // Apply adjustment to fit screen factor
@@ -116,30 +117,9 @@ class OptionsSubState extends SubStateManager {
 			var change:Float = (controls.RIGHT ? 1 : -1) * mult;
 
 			var opt = options[selected];
-			switch (opt.type) {
-				case OptionType.BOOL:
-					opt.value = !opt.value;
+			opt.onChange(change);
+			grpValues.members[selected].text = opt.formatValue();
 
-				case OptionType.NUMBER:
-					change *= opt.options.amount;
-					opt.value = MathUtil.clamp((opt.value ?? 0) + change, opt.options.min, opt.options.max);
-
-				case OptionType.STRING:
-					var list = opt.options.list;
-					var index:Int = list.indexOf(opt.value);
-
-					if (index == -1)
-						index = 0;
-
-					index = MathUtil.clampInt(index + Std.int(change), 0, list.length - 1);
-					opt.value = list[index];
-			}
-
-			var display:String = opt.options?.display ?? "{0}";
-			if ((opt.type == OptionType.NUMBER && opt.options?.percentageMode == true) && !display.contains("%"))
-				display += "%";
-
-			grpValues.members[selected].text = display.format([normalizeOptionValue(opt)]);
 			AstheSound.playSound(ConstantSound.MENU_SCROLL);
 		}
 	}
@@ -156,7 +136,7 @@ class OptionsSubState extends SubStateManager {
 		super.close();
 	}
 
-	public function addOption(option:Option) {
+	public function addOption(option:Option<Dynamic>) {
 		if(ArrayUtil.isBlank(options))
 			options = [];
 
@@ -181,18 +161,5 @@ class OptionsSubState extends SubStateManager {
 		});
 
 		txtDesc.text = options[selected].desc;
-	}
-
-	function normalizeOptionValue(opt:Option):String {
-		switch (opt.type) {
-			case OptionType.BOOL:
-				return (opt.value == true) ? Locale.getString("enabled") : Locale.getString("disabled");
-			case OptionType.NUMBER:
-				var v = opt.value;
-				if (v == null) return "";
-				if (opt.options?.percentageMode) v *= 100;
-				return Std.string(v);
-			default: return Std.string(opt.value);
-		}
 	}
 }
