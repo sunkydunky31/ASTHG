@@ -84,6 +84,10 @@ enum abstract ConstantSound(String) to String {
 	var PLAYER_JUMP = "Jump";
 	var PLAYER_ROLL = "Rolling";
 	var PLAYER_TRANSFORM = "Transform";
+	var PLAYER_HURT = "Hurt";
+	var PLAYER_SPINDASH_C = "Charge";
 
 	var RING = "Ring";
+
+	var FAIL = "Fail";
 }

@@ -12,7 +12,6 @@ class MainMenu extends StateManager {
 	public static var curSelected:Int = 0;
 
 	var group:FlxTypedGroup<AstheBitmapText>;
-
 	var options:Array<String> = [
 		"Save Select",
 		"Options",
@@ -78,7 +77,6 @@ class MainMenu extends StateManager {
 		AstheSound.playMusic("MainMenu", { persist: true });
 	}
 
-
 	var selectedSomethin:Bool = false;
 	override function update(elapsed:Float) {
 		if (!selectedSomethin) {
@@ -91,33 +89,7 @@ class MainMenu extends StateManager {
 
 			if (controls.ACCEPT) {
 				selectedSomethin = true;
-				group.forEach(function(txt:FlxBitmapText) {
-					if (curSelected == txt.ID) {
-						FlxFlicker.flicker(txt, 1, (!ClientPrefs.data.options.flashing) ? 0.3 : 0.06, false, false, function(flick:FlxFlicker) {
-							var daChoice:String = options[curSelected];
-
-							switch (daChoice.toLowerCase()) {
-								case 'save select':
-									AstheSound.playSound(ConstantSound.MENU_ACCEPT);
-									LoadingState.switchStates(new SaveSelect(), true);
-								case 'options':
-									AstheSound.playSound(ConstantSound.MENU_ACCEPT);
-									LoadingState.switchStates(new asthe.options.OptionsState());
-									OptionsState.onPlayState = false;
-								case 'mods':
-									AstheSound.playSound(ConstantSound.MENU_ACCEPT);
-									LoadingState.switchStates(new ModsMenu());
-								case 'exit':
-									#if sys
-									AstheSound.playSound(ConstantSound.MENU_ACCEPT);
-									Sys.exit(0);
-									#else
-									AstheSound.playSound("Fail");
-									#end
-							}
-						});
-					}
-				});
+				selectItem(options[curSelected]);
 			}
 
 			if (controls.BACK) {
@@ -134,6 +106,11 @@ class MainMenu extends StateManager {
 	}
 
 	function changeItem(change:Int = 0) {
+		if (ArrayUtil.isBlank(options) || group.length == 0) {
+			AstheSound.playSound(ConstantSound.FAIL);
+			return;
+		}
+
 		if (change != 0)
 			AstheSound.playSound(ConstantSound.MENU_SCROLL);
 
@@ -141,6 +118,41 @@ class MainMenu extends StateManager {
 
 		group.forEach(function(txt:FlxBitmapText) {
 			txt.color = (txt.ID == curSelected) ? 0xFFFF0000 : 0xFFFFFFFF;
+		});
+	}
+
+	function selectItem(choice:String = "") {
+		choice = choice.toLowerCase();
+
+		if (choice == 'exit') {
+			#if sys
+			AstheSound.playSound(ConstantSound.MENU_ACCEPT);
+			#else
+			AstheSound.playSound(ConstantSound.FAIL);
+			#end
+		}
+		else
+			AstheSound.playSound(ConstantSound.MENU_ACCEPT);
+
+		group.forEach(function(txt:FlxBitmapText) {
+			if (curSelected == txt.ID) {
+				FlxFlicker.flicker(txt, 1, (!ClientPrefs.data.options.flashing) ? 0.3 : 0.06, false, false, function(flick:FlxFlicker) {
+
+					switch (choice) {
+						case 'save select':
+							LoadingState.switchStates(new SaveSelect(), true);
+						case 'options':
+							LoadingState.switchStates(new asthe.options.OptionsState());
+							OptionsState.onPlayState = false;
+						case 'mods':
+							LoadingState.switchStates(new ModsMenu());
+						case 'exit':
+							#if sys
+							Sys.exit(0);
+							#end
+					}
+				});
+			}
 		});
 	}
 }

@@ -139,8 +139,10 @@ class SaveSelect extends StateManager {
 	}
 
 	function changeSlot(count:Int = 0) {
-		if (ArrayUtil.isBlank(saveGroup.members))
+		if (ArrayUtil.isBlank(saveGroup.members)) {
+			AstheSound.playSound(ConstantSound.FAIL);
 			return;
+		}
 
 		if (count != 0)
 			AstheSound.playSound(ConstantSound.MENU_SCROLL);
@@ -163,8 +165,10 @@ class SaveSelect extends StateManager {
 	}
 
 	function changeCharacter(count:Int = 0) {
-		if (SaveEntry.instance == null || ArrayUtil.isBlank(charList))
+		if (SaveEntry.instance == null || ArrayUtil.isBlank(charList)) {
+			AstheSound.playSound(ConstantSound.FAIL);
 			return;
+		}
 
 		if (count != 0)
 			AstheSound.playSound(ConstantSound.MENU_SCROLL);

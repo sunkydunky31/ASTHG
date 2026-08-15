@@ -85,7 +85,10 @@ class OptionsState extends StateManager {
 			case "gameplay": openSubState(new asthe.options.substates.Gameplay());
 			case "controls": openSubState(new asthe.options.substates.Controls());
 			case "language": openSubState(new asthe.options.substates.Language());
-			default: trace("Unknown option: '{0}'".error(), lbl); return;
+			default:
+				trace("Unknown option: '{0}'".error(), lbl);
+				AstheSound.playSound(ConstantSound.FAIL);
+				return;
 		}
 	}
 }

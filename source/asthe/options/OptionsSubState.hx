@@ -145,8 +145,10 @@ class OptionsSubState extends SubStateManager {
 	}
 
 	function changeSelection(change:Int = 0) {
-		if (ArrayUtil.isBlank(options) || ArrayUtil.isBlank(grpOptions.members))
+		if (ArrayUtil.isBlank(options) || ArrayUtil.isBlank(grpOptions.members)) {
+			AstheSound.playSound(ConstantSound.FAIL);
 			return;
+		}
 
 		if (change != 0)
 			AstheSound.playSound(ConstantSound.MENU_SCROLL);

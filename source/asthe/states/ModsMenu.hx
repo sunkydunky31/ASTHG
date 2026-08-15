@@ -149,7 +149,10 @@ class ModsMenu extends StateManager {
 	}
 
 	function changeItem(idx:Int):Void {
-		if (grpMods?.length <= 0 || !hasMods) return;
+		if (grpMods?.length <= 0 || !hasMods) {
+			AstheSound.playSound(ConstantSound.FAIL);
+			return;
+		}
 
 		if (idx != 0)
 			AstheSound.playSound(ConstantSound.MENU_SCROLL);
