@@ -10,7 +10,6 @@ class StringOption extends Option<String> {
 	public var list:Array<String>;
 
 	/**
-	/**
 	Creates a `String` option entry
 		@param flag Translatable flag, used to display the name and description
 		@param saveVar The save variatble to use

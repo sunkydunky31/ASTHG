@@ -34,9 +34,9 @@ class NumberOption extends Option<Float> {
 		@param min Minimun value that this option accepts
 		@param max Minimun value that this option accepts
 		@param amount How much this number increases per change?
-		@param percentageMode 
+		@param percentageMode Does this option should have a percentage behavior
 	**/
-	public function new(flag:String, saveVar:String, defaultValue:Float = 0.0, min:Float = 0.0, max:Float = 10.0, amount:Float = 0.5, ?percentageMode:Bool = false) {
+	public function new(flag:String, saveVar:String, defaultValue:Float = 0.0, min:Float = 0.0, max:Float = 10.0, ?amount:Float = 0.5, ?percentageMode:Bool = false) {
 		this.min = min;
 		this.max = max;
 		this.amount = amount;
