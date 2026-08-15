@@ -36,10 +36,10 @@ class Language extends SubStateManager {
 			if (!ArrayUtil.isBlank(languages)) {
 				for (num => str in languages) {
 					var text:AstheText = AstheText.create(0, 30, Locale.tongue.getIndexString(LanguageRegionNative, languages[num]));
-					text.fieldWidth = FlxG.width;
 					text.format(16, AstheText.TextAlign.CENTER, FlxColor.WHITE);
 					text.ID = num;
 					text.y += (20 * (num - (languages?.length / 2))) + text?.size;
+					text.screenCenter(X);
 					grpLanguages.add(text);
 				}
 			}
@@ -76,8 +76,10 @@ class Language extends SubStateManager {
 	}
 
 	function changeSelection(change:Int = 0) {
-		if (ArrayUtil.isBlank(languages) || ArrayUtil.isBlank(grpLanguages.members))
+		if (ArrayUtil.isBlank(languages) || ArrayUtil.isBlank(grpLanguages.members)) {
+			AstheSound.playSound(ConstantSound.FAIL);
 			return;
+		}
 
 		curSelected = FlxMath.wrap(curSelected + change, 0, languages.length-1);
 

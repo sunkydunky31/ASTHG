@@ -9,6 +9,7 @@ using util.StringUtil;
 
 	@author Sunnydev31 (unreal.sunnydev)
 **/
+//@:nullSafety
 class Locale {
 	public static var tongue:Null<FireTongue> = null;
 
@@ -19,19 +20,18 @@ class Locale {
 		@param values Any phrase that has "`{1}`, `{2}`..." will be replaced with any value inserted following a sequence
 		@return String
 	**/
-	inline public static function getString(key:Null<String> = "", context:String = "data", ?values:Array<Dynamic> = null):String {
-		var str:String = "";
+	inline public static function getString(key:String = "", context:String = "data", ?values:Array<Dynamic> = null):String {
+		var str:String = (key.isBlank()) ? "[!]" : key;
 
-		if (tongue != null)
+		if (tongue != null) {
 			str = tongue.get(formatKey(key), context, true);
-		else
-			str = (key.isBlank()) ? "[!]" : key;
 
-		if (!ArrayUtil.isBlank(values) && tongue != null) {
-			str = str.format(values);
+			if (!ArrayUtil.isBlank(values)) {
+				str = str.format(values);
 
-			if (str == formatKey(key)) {
-				trace("Context '{0}' has a file with missing flags! ({1})".warn(), context, key);
+				if (str == formatKey(key)) {
+					trace("Context '{0}' has a file with missing flags! ({1})".warn(), context, key);
+				}
 			}
 		}
 
@@ -44,11 +44,10 @@ class Locale {
 		@param extension File extension to add ("txt", "png"...), "." will be added automatically
 		@return String
 	**/
-	inline public static function getFile(key:String, ?extension:String = "") {
-		var str:String = tongue.get(key.trim(), "files");
+	inline public static function getFile(key:String, ?extension:String = ""):String {
+		if (key.isBlank()) throw "Unable to find a file because the key is null/empty!";
 
-		if (StringUtil.isBlank(str))
-			str = key;
+		var str:String = tongue?.get(key.trim(), "files") ?? key;
 
 		if (!StringUtil.isBlank(extension))
 			str += "." + extension;
@@ -56,8 +55,9 @@ class Locale {
 		return str;
 	}
 
-	inline static private function formatKey(key:String) {
+	inline static private function formatKey(key:Null<String>) {
 		final hideChars = ~/[~&\\\/;:<>#.,'"%?!]/g;
+		key ??= "";
 		return hideChars.replace(key.replace(' ', '_'), '').trim().toLowerCase();
 	}
 
@@ -74,6 +74,6 @@ class Locale {
 
 	/** Callback when FireTongue loads the locale. **/
 	public static function onLoad():Void {
-		trace("Loaded! Locale is {0}".info(), tongue.locale);
+		trace("Loaded! Locale: '{0}'".info(), (tongue?.locale ?? "not loaded!"));
 	}
 }

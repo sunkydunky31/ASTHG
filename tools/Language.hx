@@ -8,22 +8,26 @@ using StringTools;
 
 class Language {
 	static var trans:Map<String, String> = new Map<String, String>(); // Store translations here
-	static var curLang:String = lime.system.Locale.currentLocale;
+	static var curLang:String = #if (target.unicode) lime.system.Locale.currentLocale ?? "en_US" #else "en_US" #end;
 
 	public static function load() {
-
 		if (!FileSystem.exists('_project/translations/$curLang.txt') || curLang == null) {
-			curLang = "en_US";
+			trace("Unnable to load translation data for language '" + curLang + "'!");
+			return;
 		}
 
-		var file = File.getContent("_project/translations/" +
-		#if (target.unicode) curLang #else "en_US" #end
-		+ ".txt");
+		var file = File.getContent('_project/translations/${curLang}.txt');
 
-		var reg = ~/^(\w+)=(.*)$/ig;
 		for (line => text in file.split("\n")) {
-			if (reg.match(text)) {
-				trans.set(StringTools.trim(reg.matched(1)), StringTools.trim(reg.matched(2)));
+			text = text.trim();
+
+			var sep = text.indexOf("=");
+
+			if (sep != -1) {
+				var key = text.substr(0, sep);
+				var value = text.substr(sep + 1);
+
+				trans.set(key, value);
 			}
 		}
 	}
