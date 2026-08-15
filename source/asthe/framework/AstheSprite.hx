@@ -106,7 +106,7 @@ class AstheSprite extends FlxSprite {
 		@return AstheSprite
 	**/
 	public function createGraphic(width:Float = 1, height:Float = 1, color:FlxColor = FlxColor.WHITE):AstheSprite {
-		var graph:FlxGraphic = FlxG.bitmap.create(2, 2, color, false, 'graphic($width,$height,#${color.toWebString()})');
+		var graph:FlxGraphic = FlxG.bitmap.create(2, 2, color, false, 'graphic($width,$height,${color.toWebString()})');
 		frames = graph.imageFrame;
 		scale.set(width / 2, height / 2);
 		updateHitbox(); // We can't use our tool because it's not a FlxSprite-type
@@ -180,7 +180,7 @@ class AstheSprite extends FlxSprite {
 			trace("'Image' argument is null/empty!".error());
 		}
 
-		trace('Image: $image');
+		//trace('Image: $image');
 
 		var graphic:FlxGraphic = Paths.image(image);
 

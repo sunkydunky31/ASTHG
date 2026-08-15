@@ -15,7 +15,7 @@ class LifeIcon extends AstheSprite {
 
 	public function new(char:String) {
 		super();
-		trace("char is {0}", char);
+		//trace("char is {0}", char);
 
 		init(char);
 		updatePalette([]);

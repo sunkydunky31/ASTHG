@@ -1,9 +1,8 @@
-//@see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/backend/MusicBeatState.hx
-
 package asthe.backend;
 
 import flixel.FlxState;
 
+/** @see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/backend/MusicBeatState.hx **/
 class StateManager extends FlxState {
 public var controls(get, never):Controls;
 	private function get_controls() {
