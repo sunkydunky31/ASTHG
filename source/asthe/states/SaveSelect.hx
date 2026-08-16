@@ -27,22 +27,10 @@ class SaveSelect extends StateManager {
 	public static var charList:Array<String>;
 
 	override function create() {
-		charList = [];
 		Paths.clearUnusedMemory();
 		Paths.clearStoredMemory();
 
-		for (char in openfl.utils.Assets.list(TEXT)) {
-			if (char.contains("data/characters/") && char.endsWith(".json")) {
-				var ind = char.lastIndexOf("/");
-				var name = char.substring(ind + 1, char.length - 5);
-
-				if (charList.contains(name))
-					return; // We don't need to add that name again
-
-				charList.push(name);
-				trace("Added char: " + name);
-			}
-		}
+		reloadCharacters();
 
 		saveGroup = new FlxTypedGroup<SaveEntry>();
 
@@ -135,6 +123,25 @@ class SaveSelect extends StateManager {
 
 		if (controls.LEFT || controls.RIGHT) {
 			changeSlot(controls.LEFT ? -1 : 1);
+		}
+	}
+
+	function reloadCharacters():Void {
+		charList = [];
+
+		for (char in openfl.utils.Assets.list(TEXT)) {
+			if (char.contains("data/characters/") && char.endsWith(".json")) {
+				var ind = char.lastIndexOf("/");
+				var name = char.substring(ind + 1, char.length - 5);
+
+				// We don't need to add that name again
+				if (charList.contains(name))
+					continue;
+				else {
+					trace("Added char: " + name);
+					charList.push(name);
+				}
+			}
 		}
 	}
 
