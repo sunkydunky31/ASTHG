@@ -9,7 +9,7 @@ import sys.io.FileOutput;
 /**
 	Utilities used for File and FileSystem management
 **/
-@:nullSafety
+//@:nullSafety
 class FileUtil {
 
 	/**
@@ -20,10 +20,12 @@ class FileUtil {
 		@returns Void
 	**/
 	public static function deleteDirectory(path:String, ?recursive:Bool = false):Void {
+		recursive ??= false;
+
 		if (!FileSystem.exists(path)) return;
 
 		if (FileSystem.isDirectory(path)) {
-			if (recursive) {
+			if (!recursive) {
 				for (i in FileSystem.readDirectory(path)) {
 					var p = Path.join([path, i]);
 					if (FileSystem.isDirectory(p))
