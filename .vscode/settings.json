@@ -6,7 +6,9 @@
     "*.fnt": "xml" // Angel Code font data
   },
   "files.exclude": {
-    "**/.discord": true
+    "**/.discord": true,
+    "**/.haxelib": true,
+    "**/export": true
   },
   "files.watcherExclude": {
     "**/.git/**": true,
@@ -15,6 +17,7 @@
   },
   "haxe.exclude": [
     "_project/**",
+    ".discord/**",
     "export/**"
   ],
   "haxecheckstyle.sourceFolders": [
@@ -34,38 +37,6 @@
       "url": ".vscode/schema/Haxe Module Manager.json"
     }
   ],
-  "lime.targets": [
-    {
-      "label": "HashLink",
-      "name": "hl",
-      "enabled": true
-    },
-    {
-      "label": "HTML5",
-      "name": "html5",
-      "enabled": true
-    },
-    {
-      "label": "Linux",
-      "name": "linux",
-      "enabled": true
-    },
-    {
-      "label": "NekoVM",
-      "name": "neko",
-      "enabled": true
-    },
-    {
-      "label": "MacOS",
-      "name": "mac",
-      "enabled": true
-    },
-    {
-      "label": "Windows",
-      "name": "windows",
-      "enabled": true
-    }
-  ],
   "search.exclude": {
     "./export/**": true,
     "**/bower_components": false,
@@ -80,6 +51,5 @@
       "pattern": "**/fonts/*.fnt",
       "systemId": ".vscode/schema/AngelCodeMetadata.xsd"
     }
-  ],
-  "svg.preview.background": "dark-transparent"
+  ]
 }

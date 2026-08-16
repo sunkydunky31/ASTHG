@@ -8,7 +8,7 @@ import DateTools;
 // Reason: Lime only push itself and hxp lib as libraries,
 // any other lib won't work (except our own outside "src" folder)
 
-import tools.Language as LNG;
+import tools.Language as L10n;
 import tools.PlatformSettings;
 
 import util.*;
@@ -41,7 +41,7 @@ class Project extends HXProject {
 	inline public static final FILE = "ASTHE";
 
 	/** List of supported languages that the game uses **/
-	       public static final LANGUAGES = ["en", "pt-BR"];
+	public static final LANGUAGES = ["en", "pt-BR"];
 
 	inline public static final WINDOW_WIDTH  = 1280;
 	inline public static final WINDOW_HEIGHT = 720;
@@ -63,6 +63,9 @@ class Project extends HXProject {
 		windows: { visualElements: true }
 	};
 
+	public var defs:Array<{name:String, enabled:Bool}> = [];
+	var hxlibs:Array<{name:String, enabled:Bool}> = [];
+
 
 	public function new() {
 		super();
@@ -72,9 +75,7 @@ class Project extends HXProject {
 			Sys.command("chcp 65001 > nul");
 		}
 		#end
-		LNG.load();
-
-		setenv("PROJECT_BUILD", (isDebug() ? "debug" : isFinal() ? "final" : "release"));
+		L10n.load();
 
 		this.meta.title = TITLE;
 		this.meta.version = VERSION;
@@ -84,7 +85,7 @@ class Project extends HXProject {
 		this.app.file = FILE;
 		this.app.main = "Main";
 		this.app.preloader = "flixel.system.FlxPreloader";
-		this.app.path = "export/" + Sys.getEnv("PROJECT_BUILD");
+		this.app.path = "export/" + (isDebug() ? "debug" : isFinal() ? "final" : "release");
 
 		if (isTarget("mobile")) {
 			this.window.width = 0;
@@ -107,21 +108,14 @@ class Project extends HXProject {
 		else
 			EXCLUDE_ASSETS.push("*.mp3");
 
-
-		echo("");
-		echo('$TITLE v$VERSION');
-		echo("-----------------------------------------");
-		dotPad(LNG.translate("proj.Company"), this.meta.company,     null, false);
-		dotPad(LNG.translate("proj.Package"), this.meta.packageName, null, false);
-		dotPad(LNG.translate("proj.AppFile"), this.app.file,         null, false);
-		echo("-----------------------------------------");
+		
 
 		// Polymod has problems with HashLink, also Web/JS too
 		MODS_ALLOWED.set(this, (isTarget("cpp") || !isTarget("neko")));
 		DISCORD_ALLOWED.set(this, false);
 		TRANSLATIONS_ALLOWED.set(this, true);
-		if (isDebug()) echo("-----------------------------------------");
 
+		clearAssets();
 		includeAssets("assets/default", "assets", null, EXCLUDE_ASSETS);
 		includeAssets("assets/fonts",   null);
 
@@ -165,7 +159,6 @@ class Project extends HXProject {
 			config.set("android.application", {"android:label": "@string/app_name"});
 			config.set("android.activity",    {"android:label": "@string/app_name"});
 		}
-		if (isDebug()) echo("-----------------------------------------");
 
 		if (!isDebug()) {
 			haxedefs.set("FLX_NO_DEBUG", null);
@@ -215,17 +208,69 @@ class Project extends HXProject {
 			addIcon("icon_ouya", "png", [732, 412]);
 		}
 
-		// About the sizes, Windows seems to ignore 24x24 and use most the time the 32 one:
-		// Task Bar: 16 (small), 32 (default)
-		// Start Menu: 32
-		// Explorer: 16, 32 (depends on view)
-		// this is on Windows 11/10, idk about older versions, and 10 and 8 prefers VisualElements if available.
-
 		addIcon("icon", "png", [8], true);
 		addIcon("icon", "png", [16], true);
 		addIcon("icon", "png", [32], true);
 		addIcon("icon", "png", [64], true);
 		addIcon("icon", "svg", null);
+		
+		displayProject();
+	}
+
+	function displayProject():Void {
+		echo("");
+		echo('$TITLE v$VERSION');
+		echo("------------------------ PROJECT -----------------------");
+		dotPad(L10n.t("proj.Company"), COMPANY);
+		dotPad(L10n.t("proj.Package"), PACKAGE_NAME);
+		dotPad(L10n.t("proj.AppFile"), FILE);
+		dotPad("Command", this.command);
+
+		if (isDebug()) {
+			echo("------------------------ DEFINES -----------------------");
+			for (num => i in this.defs) {
+				dotPad(i.name, L10n.t("global." + (i.enabled ? 'Enabled' : 'Disabled')), null, true);
+			}
+
+			echo("----------------------- LIBRARIES ----------------------");
+			for (num => i in this.hxlibs) {
+				dotPad(i.name, L10n.t("global." + (i.enabled ? 'Enabled' : 'Disabled')), null, true);
+			}
+		}
+
+		echo("--------------------------------------------------------");
+		echo("");
+	}
+
+	function clearAssets() {
+		if (this.command != 'build' && this.command != 'test') return;
+
+		var files = ['assets/', 'manifest/', 'lime.ndll'];
+		if (isPlatform("windows")) {
+			files.push('VisualElements/');
+			files.push('icon.ico');
+			files.push('$FILE.VisualElementsManifest.xml');
+			files.push('$FILE.exe');
+		}
+
+		final BASE = haxe.io.Path.join([this.app.path, getTarget(), "bin"]);
+
+		if (sys.FileSystem.exists(BASE)) {
+			echo("Cleaning the assets folder...");
+			for (i in files) {
+				var path = haxe.io.Path.join([BASE, i]);
+
+				if (sys.FileSystem.exists(path) && !sys.FileSystem.isDirectory(path))
+					sys.FileSystem.deleteFile(path);
+
+				FileUtil.deleteDirectory(path, true);
+			}
+		}
+		else {
+			echo('The path doesn\'t exists! ($BASE)');
+		}
+
+		echo("Done");
 	}
 
 	// { region Platform functions
@@ -264,6 +309,9 @@ class Project extends HXProject {
 			default: false;
 		}
 	}
+	function getTarget():String {
+		return Std.string(this.target);
+	}
 
 	function normalizePlatNames(name:String):String {
 		var n = name.trim().toLowerCase().replace(" ", "_");
@@ -281,15 +329,17 @@ class Project extends HXProject {
 	function isDebug():Bool
 		return this.debug;
 
-	function isFinal():Bool
+	function isFinal():Bool {
 		return this.targetFlags.exists("final");
-
+	}
 	function addHaxelib(name:String, ?condition:Null<Bool>, ?version:Null<String>) {
-		if (condition == null || condition == true) {
+		var enabled = condition ?? true;
+
+		if (enabled) {
 			this.haxelibs.push(new Haxelib(name, (version.isBlank() ? null : version)));
 		}
 
-		dotPad(name, condition ?? true);
+		this.hxlibs.push({name: name, enabled: enabled});
 	}
 
 	/**
@@ -314,6 +364,7 @@ class Project extends HXProject {
 		}
 	}
 
+	// { region Log Print functions
 	/**
 		Prints a text to the console
 		@param value The text to print
@@ -322,20 +373,13 @@ class Project extends HXProject {
 	public function echo(value:Dynamic, ?infos:haxe.PosInfos):Void {
 		var str = Std.string(value);
 
-		if (infos == null) {
-		}
-
 		if (infos?.customParams != null)
 			str = str.format(infos.customParams);
-		else {
-			if (this.command != "display")
-				Sys.println(str);
-
-			return;
-		}
 
 		if (this.command != "display")
 			Sys.println(str);
+
+		return;
 	}
 
 	/**
@@ -345,7 +389,7 @@ class Project extends HXProject {
 		@param width Spacement width
 		@param debug Prints only if is a debug target
 	**/
-	public function dotPad(name:String, value:Dynamic, ?width:Null<Int> = 30, ?debug:Bool = true) {
+	public function dotPad(name:String, value:Dynamic, ?width:Null<Int> = 30, ?debug:Bool = false) {
 		var dots = width - name.length;
 		if (dots < 1) dots = 1;
 
@@ -356,6 +400,7 @@ class Project extends HXProject {
 		else
 			echo(name + padding + value);
 	}
+	// } endregion
 }
 
 /**
@@ -369,28 +414,28 @@ enum abstract FeatureFlags(String) from String to String {
 	//var VIDEOS_ALLOWED	 = "VIDEOS_ALLOWED";
 
 	public function set(project:Project, ?enable:Bool = true) {
-		if (enable == true || enable == null) {
+		var enabled:Bool = (enable == true || enable == null);
+
+		if (enabled) {
 			project.haxedefs.set(this, "");
 		}
 		else {
 			if (has(project)) {
-				project.echo(LNG.translate("feature_Disabled", [this]));
+				project.echo(L10n.t("feat.Disabled", [this]));
 				project.haxedefs.remove(this);
 			}
-			// Nothing
 		}
-		project.dotPad(this, enable != null ? '$enable' : 'false (fallback!)');
+
+		var exists = project.defs.filter(i -> i.name == this)[0];
+		if (exists != null) { exists.enabled = enabled; }
+		else { project.defs.push({ name: this, enabled: enable ?? false }); }
 	}
 
 	public function get(project:Project):Bool {
-		if (has(project)) {
-			return (project.haxedefs.get(this) == "");
-		}
-
-		return false;
+		return (has(project) && project.haxedefs.get(this) == "");
 	}
 
-	public function has(project:Project) {
+	public function has(project:Project):Bool {
 		return project.haxedefs.exists(this);
 	}
 }

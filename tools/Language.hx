@@ -32,7 +32,7 @@ class Language {
 		}
 	}
 
-	inline public static function translate(key:String, ?replaces:Array<Dynamic>):String {
+	inline public static function t(key:String, ?replaces:Array<Dynamic>):String {
 		var str = trans.get(key);
 		str ??= key;
 

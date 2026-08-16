@@ -82,7 +82,12 @@ class AstheSound extends FlxSound {
 			FlxG.sound.music.loopTime = loopTimeVal;
 		FlxG.sound.music.volume = ClientPrefs.data.options.musicVolume * (params?.volume ?? 1.0);
 		FlxG.sound.music.persist = (params?.persist ?? true);
+		#if (flixel < "5.9.0")
 		FlxG.sound.music.group = (params?.group ?? FlxG.sound.defaultMusicGroup);
+		#else
+		var g:FlxSoundGroup = params?.group ?? FlxG.sound.defaultMusicGroup;
+		g.add(FlxG.sound.music);
+		#end
 
 		if (params?.onComplete != null) {
 			FlxG.sound.music.onComplete = params.onComplete;

@@ -10,9 +10,7 @@ param(
 	[string]$Action = 'build',
 
 	[Parameter()] # Only ones that the game supports
-	[ValidateSet('android', 'cpp', 'html5',
-		'hl', 'hashlink',
-		'linux', 'mac', 'ios', 'windows')]
+	[ValidateSet('android', 'cpp', 'html5', 'hl', 'hashlink', 'linux', 'mac', 'neko', 'ios', 'windows')]
 	[string]$Platform = "$(if ($IsWindows -or $IsLinux -or $IsMacOS) { 'cpp' } else { 'hl' })",
 
 	[Parameter()]
@@ -47,41 +45,6 @@ $PlatformOG = if ($Platform -eq 'cpp') {
 }
 else { $Platform }
 
-function New-CleanOldFiles {
-	param(
-		[Parameter(Mandatory = $true, Position = 0)]
-		[string]$CleanPath
-	)
-
-	try {
-		$files = @('assets', 'manifest', 'lime.ndll')
-
-		if ($IsWindows) {
-			$files += 'VisualElements', 'icon.ico'
-
-			$project = Get-Content (Write-Path -Path $PSScriptRoot, '..', '..', 'project.hxp' -Resolve) -Raw
-
-			if ($project -match '"file" => "(.*)",') {
-				# This is crazy bro
-				$files += "$($Matches[1]).VisualElementsManifest.xml", "$($Matches[1]).exe"
-			}
-		}
-
-		if (Test-Path $CleanPath) {
-			Write-Host $Msg.Cleaning
-			foreach ($i in $files) {
-				if (Test-Path (Join-Path $CleanPath $i)) {
-					Remove-Item -Path (Join-Path $CleanPath $i) -Recurse -Force
-				}
-			}
-		}
-	}
-	catch {
-		Write-Host ($Msg.CleaningError -f $_) -ForegroundColor Red
-	}
-}
-
-
 # Set the cwd to "ASTHE"
 Set-Location (Write-Path -Path $PSScriptRoot, '..', '..' -Resolve)
 
@@ -101,13 +64,6 @@ Set-Pause
 # User confirmed, ready to go!
 Clear-Host
 Write-Host ($Msg.BuildTexts[$Action])
-
-# We can't run the app if it doesn't exists lol
-if ($Action -in @('build', 'test')) {
-	New-CleanOldFiles (Write-Path -Path (Get-Location), 'export', $BuildType, $PlatformOG, 'bin')
-	Start-Sleep 3
-}
-
 
 & $haxelib @hxArgs
 

@@ -1,4 +1,8 @@
 proj.Company=Empresa
 proj.Package=Pacote
 proj.AppFile=Arquivo de Aplicativo
-feature_Removed={0} foi removido da lista
+
+feat.Removed={0} foi removido da lista
+
+global.Enabled=Ativado
+global.Disabled=Desativado

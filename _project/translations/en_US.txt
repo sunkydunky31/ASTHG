@@ -1,4 +1,8 @@
 proj.Company=Company
 proj.Package=Package
 proj.AppFile=App file
-feature_Removed={0} was removed from the list
+
+feat.Removed={0} was removed from the list
+
+global.Enabled=Enabled
+global.Disabled=Disabled
