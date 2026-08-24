@@ -20,7 +20,7 @@ class Postbuild {
 			handleDesktopFile();
 		}
 
-		//sys.FileSystem.deleteFile("BUILD.txt");
+		sys.FileSystem.deleteFile("BUILD.txt");
 	}
 
 	static function parseBuildSpecs():Void {
