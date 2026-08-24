@@ -85,13 +85,13 @@ class Ansi {
 		@param color The Ansi code for the label.
 		@return String
 	**/
-	public static function infoCustom(str:String, title:String, ?color:flixel.util.typeLimit.OneOfTwo<AnsiList, Null<Array<Dynamic>>>):String
+	public static function infoCustom(str:String, title:String, ?color:flixel.util.typeLimit.OneOfTwo<AnsiList, Null<Array<Int>>>):String
 		return switch (color) {
 			case v if (Std.isOfType(v, Array)): ansiApply(' $title ', AnsiList.BG_TRUE_COLOR, v) + str;
 			default: ansiApply(' $title ', color, null) + str;
 		}
 
-	public static function ansiApply(text:String, ansi:AnsiList, ?args:Null<Array<Dynamic>>):String {
+	public static function ansiApply(text:String, ansi:AnsiList, ?args:Null<Array<Dynamic>> = null):String {
 		var temp = ((enabled) ? ansi : "[") + text;
 
 		if (args != null)

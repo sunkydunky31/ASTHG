@@ -26,7 +26,7 @@ class Project extends HXProject {
 	inline public static final TITLE = "Another Sonic the Hedgehog Engine";
 
 	/** Rule: MAJOR.MINOR.BUGFIX-PATCH **/
-	inline public static final VERSION = "1.4.5";
+	inline public static final VERSION = "1.5.5";
 
 	/** Name of the company, or developer **/
 	inline public static final COMPANY = "Sunnydev31";
@@ -71,7 +71,7 @@ class Project extends HXProject {
 		super();
 
 		#if !target.unicode
-		if (isPlatform("windows") && isTarget("C++")) {
+		if (isWindows() && isTarget("cpp")) {
 			Sys.command("chcp 65001 > nul");
 		}
 		#end
@@ -86,6 +86,7 @@ class Project extends HXProject {
 		this.app.main = "Main";
 		this.app.preloader = "flixel.system.FlxPreloader";
 		this.app.path = "export/" + (isDebug() ? "debug" : isFinal() ? "final" : "release");
+		this.postBuildCallbacks.push(CommandHelper.interpretHaxe("tools/Postbuild.hx"));
 
 		if (isTarget("mobile")) {
 			this.window.width = 0;
@@ -100,15 +101,13 @@ class Project extends HXProject {
 		this.window.orientation  = Orientation.LANDSCAPE;
 		this.window.fps          = 60;
 		this.window.background   = (isDebug() ? 0xFF00FF : 0x000000);
-		this.window.resizable    = (isPlatform("web") || isTarget("desktop")) ? true : false;
+		this.window.resizable    = (isWeb() || isTarget("desktop")) ? true : false;
 		this.window.allowHighDPI = true;
 
-		if (isPlatform("web") || isTarget("flash") || isTarget("air"))
+		if (isWeb() || isTarget("flash") || isTarget("air"))
 			EXCLUDE_ASSETS.push("*.ogg");
 		else
 			EXCLUDE_ASSETS.push("*.mp3");
-
-		
 
 		// Polymod has problems with HashLink, also Web/JS too
 		MODS_ALLOWED.set(this, (isTarget("cpp") || !isTarget("neko")));
@@ -129,8 +128,9 @@ class Project extends HXProject {
 
 		templatePaths.push("_project/templates");
 
-		if (isPlatform("windows") && PLATFORM_SETTINGS.windows.visualElements)
+		if (isWindows() && PLATFORM_SETTINGS.windows.visualElements) {
 			includeAssets("_project/resources/windows", "");
+		}
 
 		sources.push("source");
 
@@ -152,7 +152,7 @@ class Project extends HXProject {
 		*/
 
 		// Android configs
-		if (isPlatform("android")) {
+		if (isAndroid()) {
 			addHaxelib("extension-androidtools");
 
 			// Update Manifest to use Android resources
@@ -184,7 +184,7 @@ class Project extends HXProject {
 		}
 
 
-		if (isPlatform("android")) {
+		if (isAndroid()) {
 			/*
 				------------
 					NOTE
@@ -207,14 +207,31 @@ class Project extends HXProject {
 			// OUYA Icon
 			addIcon("icon_ouya", "png", [732, 412]);
 		}
+		else if (isLinux() && isBuilding()) {
+			var p = Sys.getEnv("HOME") + "/.local/share/icons/hicolor";
 
-		addIcon("icon", "png", [8], true);
-		addIcon("icon", "png", [16], true);
-		addIcon("icon", "png", [32], true);
-		addIcon("icon", "png", [64], true);
-		addIcon("icon", "svg", null);
-		
+			if (!sys.FileSystem.exists(p + "/scalable/apps"))
+				sys.FileSystem.createDirectory(sys.FileSystem.fullPath(p + "/scalable/apps"));
+			
+			if (!sys.FileSystem.exists(p + "/symbolic/apps"))
+				sys.FileSystem.createDirectory(sys.FileSystem.fullPath(p + "/symbolic/apps"));
+
+			Sys.command("cp", ["./_project/icons/icon.svg", p + '/scalable/apps/$PACKAGE_NAME.svg']);
+			Sys.command("cp", ["./_project/icons/icon_monochrome.svg", p + '/symbolic/apps/$PACKAGE_NAME.svg']);
+
+			Sys.command("gtk-update-icon-cache", ["-f", "-t", p]);
+		}
+		else {
+			addIcon("icon", "png", [8], true);
+			addIcon("icon", "png", [16], true);
+			addIcon("icon", "png", [32], true);
+			addIcon("icon", "png", [64], true);
+			addIcon("icon", "svg", null);
+		}
+
 		displayProject();
+
+		exportBuildSpecs();
 	}
 
 	function displayProject():Void {
@@ -224,7 +241,6 @@ class Project extends HXProject {
 		dotPad(L10n.t("proj.Company"), COMPANY);
 		dotPad(L10n.t("proj.Package"), PACKAGE_NAME);
 		dotPad(L10n.t("proj.AppFile"), FILE);
-		dotPad("Command", this.command);
 
 		if (isDebug()) {
 			echo("------------------------ DEFINES -----------------------");
@@ -242,15 +258,33 @@ class Project extends HXProject {
 		echo("");
 	}
 
+	function exportBuildSpecs():Void {
+		var file = "BUILD.txt";
+		var content = [
+		'FILE=$FILE',
+		'PACKAGE_NAME=$PACKAGE_NAME',
+		'APP_PATH=${this.app.path}',
+		'IS_WINDOWS=${isWindows()}',
+		'IS_LINUX=${isLinux()}',
+		'IS_MACOS=${isMacOS()}'].join("\n");
+		
+		sys.io.File.saveContent(file, content);
+	}
+
 	function clearAssets() {
 		if (this.command != 'build' && this.command != 'test') return;
 
 		var files = ['assets/', 'manifest/', 'lime.ndll'];
-		if (isPlatform("windows")) {
+		if (isWindows()) {
 			files.push('VisualElements/');
 			files.push('icon.ico');
 			files.push('$FILE.VisualElementsManifest.xml');
 			files.push('$FILE.exe');
+		}
+		else if (isLinux()) {
+			files.push('$FILE');
+			files.push('$FILE.desktop');
+			files.push('icon.svg');
 		}
 
 		final BASE = haxe.io.Path.join([this.app.path, getTarget(), "bin"]);
@@ -313,14 +347,21 @@ class Project extends HXProject {
 		return Std.string(this.target);
 	}
 
+	function isWindows():Bool return isPlatform("windows");
+	function isLinux():Bool return isPlatform("linux");
+	function isMacOS():Bool return isPlatform("mac");
+	function isAndroid():Bool return isPlatform("android");
+	function isIOS():Bool return isPlatform("ios");
+	function isWeb():Bool return isPlatform("web");
+
+	function isBuilding():Bool return (this.command == "build" || this.command == "test");
+
 	function normalizePlatNames(name:String):String {
 		var n = name.trim().toLowerCase().replace(" ", "_");
 
 		return switch (n) {
-			case "c++": "cpp";
 			case "macos" | "darwin": "mac";
 			case "nekovm": "neko";
-			case "windows_nt": "windows";
 			default: n;
 		}
 	}

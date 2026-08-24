@@ -30,7 +30,8 @@ class Main extends Sprite {
 			return pstr + " " + str;
 		}
 
-		haxe.Log.trace = function(v:Dynamic, ?infos:haxe.PosInfos) {
+		final date = DateTools.format(Date.now(), "%F_%H-%M-%S");
+		haxe.Log.trace = function(v:Dynamic, ?infos:haxe.PosInfos):Void {
 			var msg = logFormat(v, infos);
 
 			#if js
@@ -40,6 +41,11 @@ class Main extends Sprite {
 			untyped __define_feature__("use._hx_print", _hx_print(msg));
 			#elseif sys
 			Sys.println(msg);
+
+			// Save into a log file
+			Ansi.enabled = false;
+
+			FileUtil.appendToFile("./logs/log_" + date + ".txt", msg);
 			#else
 			throw new haxe.exceptions.NotImplementedException();
 			#end
@@ -83,10 +89,7 @@ class Main extends Sprite {
 		msg += e.error + "\n\nReport this in Github: https://github.com/unrealsunnydev/ASTHE/issues";
 
 		#if sys
-		if (!sys.FileSystem.exists(folderPath))
-			sys.FileSystem.createDirectory(folderPath);
-
-		sys.io.File.saveContent(folderPath + 'ASTHE_${date}.log', msg);
+		FileUtil.saveContent(folderPath + 'ASTHE_${date}.log', msg);
 
 		Sys.println(msg);
 		#end

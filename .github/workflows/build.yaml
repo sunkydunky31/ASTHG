@@ -11,7 +11,7 @@ on:
         description: "Select the build type of the game."
         type: choice
         required: true
-        default: "release"
+        default: "debug"
         options:
           - debug
           - release

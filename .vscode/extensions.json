@@ -3,6 +3,7 @@
 		"openfl.lime-vscode-extension",
 		"wiggin77.codedox",
 		"nadako.vshaxe",
-		"mechatroner.rainbow-csv"
+		"mechatroner.rainbow-csv",
+		"esbenp.prettier-vscode"
 	]
 }

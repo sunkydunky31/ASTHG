@@ -5,6 +5,8 @@ export/
 # Project sensitive files
 _project/build/setup.log
 _project/build/setup_config.json
+# used on Postbuild
+BUILD.txt
 
 # Project File lol
 _project/Project.sublime-project

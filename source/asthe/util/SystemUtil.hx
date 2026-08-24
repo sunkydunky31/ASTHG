@@ -20,7 +20,7 @@ class SystemUtil {
 		`/` on Windows, `\` on other systems.
 	**/
 	inline public static final DIRECTORY_SEPARATOR_REPL:String = #if windows "/"; #else "\\"; #end
-	public static final INVALID_PATH_CHARS:EReg                =
+	public static final INVALID_PATH_CHARS:EReg =
 	#if windows
 	new EReg("[\\/:*?\"<>|]", "g");
 	#else
@@ -34,6 +34,7 @@ class SystemUtil {
 		folder = haxe.io.Path.removeTrailingSlashes(folder.replace(DIRECTORY_SEPARATOR_REPL, DIRECTORY_SEPARATOR));
 
 
+		#if (windows || linux || mac)
 		var command:String = "";
 		#if mac
 		command = "/usr/bin/open";
@@ -43,9 +44,8 @@ class SystemUtil {
 		command = 'explorer.exe';
 		#end
 
-		#if (windows || linux || mac)
 		Sys.command(command, [folder]);
-		trace('Command $command', 'Folder $folder');
+		trace('Command $command, Folder $folder');
 		#end
 
 		#else
