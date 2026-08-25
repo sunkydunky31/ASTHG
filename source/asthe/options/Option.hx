@@ -45,7 +45,7 @@ class Option<T> {
 	}
 
 	public function toString():String {
-		return "Option(name='{0}', desc='{1}', flag='{3}')".format([name, desc, flag]);
+		return "Option(name='{0}', desc='{1}', flag='{2}')".format([name, desc, flag]);
 	}
 
 	/**

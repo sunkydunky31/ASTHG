@@ -44,8 +44,8 @@ class Main extends Sprite {
 
 			// Save into a log file
 			Ansi.enabled = false;
-
 			FileUtil.appendToFile("./logs/log_" + date + ".txt", msg);
+			Ansi.enabled = Ansi.isSupported();
 			#else
 			throw new haxe.exceptions.NotImplementedException();
 			#end

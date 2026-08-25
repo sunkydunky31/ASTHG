@@ -17,7 +17,7 @@ class TitleState extends StateManager {
 		pressStart.screenCenter(X);
 		add(pressStart);
 
-		if (!ClientPrefs.data.options.flashing)
+		if (ClientPrefs.data.options.flashing)
 			FlxFlicker.flicker(pressStart, 17, 0.12, true);
 
 		AstheSound.playMusic('TitleScreen');

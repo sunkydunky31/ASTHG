@@ -147,7 +147,7 @@ class SaveSelect extends StateManager {
 
 	function changeSlot(count:Int = 0) {
 		if (ArrayUtil.isBlank(saveGroup.members)) {
-			AstheSound.playSound(ConstantSound.FAIL);
+			if (count != 0) AstheSound.playSound(ConstantSound.FAIL);
 			return;
 		}
 
@@ -173,7 +173,7 @@ class SaveSelect extends StateManager {
 
 	function changeCharacter(count:Int = 0) {
 		if (SaveEntry.instance == null || ArrayUtil.isBlank(charList)) {
-			AstheSound.playSound(ConstantSound.FAIL);
+			if (count != 0) AstheSound.playSound(ConstantSound.FAIL);
 			return;
 		}
 
@@ -186,14 +186,8 @@ class SaveSelect extends StateManager {
 	}
 
 	static function getSaveState(slot:Int):SaveState {
-		if (!ClientPrefs.slotExists(slot)) {
-			return New;
-		}
-
-		if (ClientPrefs.loadSlotData(slot).clear) {
-			return Clear;
-		}
-
+		if (!ClientPrefs.slotExists(slot)) return New;
+		else if (ClientPrefs.loadSlotData(slot).clear) return Clear;
 		return InProgress;
 	}
 }

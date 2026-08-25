@@ -97,12 +97,10 @@ class OptionsSubState extends SubStateManager {
 	}
 
 	override public function update(e:Float) {
-
 		var mult:Int = (FlxG.keys.pressed.SHIFT) ? 4 : 1;
 		var scroll = FlxG.mouse.wheel;
 		if (controls.UP || controls.DOWN || scroll != 0) {
-			changeSelection(((controls.UP ? -1 : 1) * mult) - scroll);
-			AstheSound.playSound(ConstantSound.MENU_SCROLL);
+			changeSelection(((controls.UP ? -1 : controls.DOWN ? 1 : 0) - scroll) * mult);
 		}
 
 		if(controls.BACK) {
@@ -146,7 +144,7 @@ class OptionsSubState extends SubStateManager {
 
 	function changeSelection(change:Int = 0) {
 		if (ArrayUtil.isBlank(options) || ArrayUtil.isBlank(grpOptions.members)) {
-			AstheSound.playSound(ConstantSound.FAIL);
+			if (change != 0) AstheSound.playSound(ConstantSound.FAIL);
 			return;
 		}
 

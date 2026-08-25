@@ -80,7 +80,6 @@ class MainMenu extends StateManager {
 	var selectedSomethin:Bool = false;
 	override function update(elapsed:Float) {
 		if (!selectedSomethin) {
-
 			var mult:Int = (FlxG.keys.pressed.SHIFT) ? 4 : 1;
 			var scroll = FlxG.mouse.wheel;
 			if (controls.UP || controls.DOWN || scroll != 0) {
@@ -107,7 +106,7 @@ class MainMenu extends StateManager {
 
 	function changeItem(change:Int = 0) {
 		if (ArrayUtil.isBlank(options) || group.length == 0) {
-			AstheSound.playSound(ConstantSound.FAIL);
+			if (change != 0) AstheSound.playSound(ConstantSound.FAIL);
 			return;
 		}
 

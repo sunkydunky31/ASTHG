@@ -63,7 +63,8 @@ enum abstract AnsiList(String) to String {
 }
 
 class Ansi {
-	public static var enabled:Bool = #if message.nocolor false #else true #end; // Apply Haxe define for ANSI tracing
+	public static var enabled:Bool = isSupported(); // Apply Haxe define for ANSI tracing
+	public static function isSupported():Bool return #if message.nocolor false #else true #end;
 
 
 	public static function info(str:String):String

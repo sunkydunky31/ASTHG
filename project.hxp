@@ -207,7 +207,7 @@ class Project extends HXProject {
 			// OUYA Icon
 			addIcon("icon_ouya", "png", [732, 412]);
 		}
-		else if (isLinux() && isBuilding()) {
+		else if (isLinux() && isBuilding() && !isGitActions()) {
 			var p = Sys.getEnv("HOME") + "/.local/share/icons/hicolor";
 
 			if (!sys.FileSystem.exists(p + "/scalable/apps"))
@@ -260,13 +260,13 @@ class Project extends HXProject {
 
 	function exportBuildSpecs():Void {
 		var file = "BUILD.txt";
-		var content = [
-		'FILE=$FILE',
-		'PACKAGE_NAME=$PACKAGE_NAME',
-		'APP_PATH=${this.app.path}',
-		'IS_WINDOWS=${isWindows()}',
-		'IS_LINUX=${isLinux()}',
-		'IS_MACOS=${isMacOS()}'].join("\n");
+		var content =
+		'FILE=$FILE\n'+
+		'PACKAGE_NAME=$PACKAGE_NAME\n'+
+		'APP_PATH=${this.app.path}\n'+
+		'IS_WINDOWS=${isWindows()}\n'+
+		'IS_LINUX=${isLinux()}\n'+
+		'IS_MACOS=${isMacOS()}';
 		
 		sys.io.File.saveContent(file, content);
 	}
@@ -356,6 +356,11 @@ class Project extends HXProject {
 
 	function isBuilding():Bool return (this.command == "build" || this.command == "test");
 
+	function isGitActions():Bool {
+		var env = Sys.getEnv("GITHUB_ACTIONS");
+		return !StringUtil.isBlank(env);
+	}
+
 	function normalizePlatNames(name:String):String {
 		var n = name.trim().toLowerCase().replace(" ", "_");
 
@@ -367,12 +372,9 @@ class Project extends HXProject {
 	}
 	// } end region
 
-	function isDebug():Bool
-		return this.debug;
+	function isDebug():Bool return this.debug;
+	function isFinal():Bool return this.targetFlags.exists("final");
 
-	function isFinal():Bool {
-		return this.targetFlags.exists("final");
-	}
 	function addHaxelib(name:String, ?condition:Null<Bool>, ?version:Null<String>) {
 		var enabled = condition ?? true;
 

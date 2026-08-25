@@ -49,9 +49,9 @@ class OptionsState extends StateManager {
 		var mult:Int = (FlxG.keys.pressed.SHIFT) ? 4 : 1;
 		var scroll = FlxG.mouse.wheel;
 		if (controls.UP || controls.DOWN || scroll != 0) {
-			changeSelection(((controls.UP ? -1 : 1) * mult) - -scroll);
+			changeSelection(((controls.UP ? -1 : controls.DOWN ? 1 : 0) - scroll) * mult);
 		}
-
+		
 		if (controls.ACCEPT) {
 			openSelectedSubstate(options[curSelected]);
 		}
@@ -64,10 +64,16 @@ class OptionsState extends StateManager {
 	}
 
 	function changeSelection(change:Int = 0) {
-		curSelected = FlxMath.wrap(curSelected + change, 0, options.length - 1);
+		if (ArrayUtil.isBlank(options) || ArrayUtil.isBlank(grpTabs.members)) {
+			if (change != 0) AstheSound.playSound(ConstantSound.FAIL);
+			return;
+		}
 
 		if (change != 0)
 			AstheSound.playSound(ConstantSound.MENU_SCROLL);
+
+		curSelected = FlxMath.wrap(curSelected + change, 0, options.length - 1);
+
 
 		if (grpTabs != null) {
 			grpTabs.forEach(function(txt:AstheBitmapText) {
