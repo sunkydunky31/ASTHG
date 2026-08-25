@@ -11,7 +11,7 @@ on:
         description: "Select the build type of the game."
         type: choice
         required: true
-        default: "debug"
+        default: 'debug'
         options:
           - debug
           - release
@@ -35,8 +35,8 @@ jobs:
             runs-on: windows-latest
           - target: "linux"
             runs-on: ubuntu-latest
-          #- target: "macos" # NEEDS TESTING!
-          #  runs-on: macos-latest
+          - target: "macos" # NEEDS TESTING!
+            runs-on: macos-latest
     runs-on: ${{matrix.runs-on}}
     steps:
       - name: "Checkout Repo"
@@ -64,21 +64,19 @@ jobs:
           key: cache-gamelibs-${{ matrix.target }}-${{ hashFiles('**/hmm.json') }}
           restore-keys: cache-gamelibs-${{ matrix.target }}-
       - name: "Install Dependencies"
-        shell: "pwsh"
         run: |
-          & "haxelib" "--global" "install" "hmm" "--quiet"; Start-Sleep 2
-          & "haxelib" "--global" "run" "hmm" "setup"; Start-Sleep 2
-          & "haxelib" "--global" "run" "hmm" "install"
+          haxelib --global install hmm --quiet
+          haxelib --global run hmm setup
+          haxelib --global run hmm install
       - name: "Compile HXCPP" # Required since we're using FunkinCrew version...
-        shell: bash
         run: |
           cd .haxelib/hxcpp/git/tools/hxcpp
           haxe compile.hxml
           cd ../../../../..
-      - name: "Build the Game (${{github.event.inputs.build-type || 'release'}})"
+      - name: "Build the Game (${{github.event.inputs.build-type}})"
         run: haxelib run lime build cpp ${{ github.event.inputs.build-type == 'debug' && '-debug' || (github.event.inputs.build-type == 'final' && '-final' || '') }} # We can't use: run, -watch, test; because it's a online VM, not a local one
       - name: "Upload Build Artifacts"
         uses: actions/upload-artifact@v6
         with:
-          name: ${{ format('ASTHE ({0}) - {1}', (github.event.inputs.build-type || 'release'), runner.os) }}
-          path: ${{ format('export/{0}/{1}/bin', github.event.inputs.build-type || 'release', matrix.target) }}
+          name: ${{ format('ASTHE ({0}) - {1}', (github.event.inputs.build-type), runner.os) }}
+          path: ${{ format('export/{0}/{1}/bin', github.event.inputs.build-type, matrix.target) }}
