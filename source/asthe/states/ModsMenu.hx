@@ -1,3 +1,9 @@
+/*
+	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-08-27
+	You are allowed to use, modify and redistribute this code
+	Credit is not needed, but are appreciated.
+*/
+
 package asthe.states;
 
 #if MODS_ALLOWED
@@ -184,12 +190,17 @@ private class ModEntry extends FlxSpriteGroup {
 	var unselectedRect:flixel.math.FlxRect = flixel.math.FlxRect.get(0, 0, 7, 7);
 	var selectedRect:flixel.math.FlxRect = flixel.math.FlxRect.get(7, 0, 7, 7);
 
+	/**
+		The icon size to show on the menu
+	**/
+	var iconSize:Float = 18;
+
 	public function new(x:Float = 0, y:Float = 0, ?meta:Null<ModMetadata> = null) {
 		super();
 
 		if (meta != null) {
 			this.meta = meta;
-			this.compatible = (meta.apiVersion == CoolUtil.getProjectInfo("version"));
+			this.compatible = (meta.apiVersion == Constants.ENGINE_VERSION);
 
 			trace("Loading mod icon... (" + meta.id + ")");
 			if (meta.icon != null) {
@@ -206,7 +217,7 @@ private class ModEntry extends FlxSpriteGroup {
 		add(bg);
 
 		icon.setPosition(x + 5, y - 1);
-		icon.scale.set(18 / icon.width, 18 / icon.height);
+		icon.scale.set(iconSize / icon.width, iconSize / icon.height);
 		icon.updateHitbox();
 		add(icon);
 
@@ -223,7 +234,7 @@ private class ModEntry extends FlxSpriteGroup {
 		super.update(e);
 
 		bg.sourceRect = (selected) ? selectedRect : unselectedRect;
-		icon.color    = (selected) ? FlxColor.WHITE : FlxColor.GRAY;
+		icon.color    = (selected) ? FlxColor.WHITE : FlxColor.RED;
 		text.alpha    = (selected) ? 1 : 0.5;
 	}
 	#end

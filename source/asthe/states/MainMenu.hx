@@ -1,3 +1,9 @@
+/*
+	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-08-27
+	You are allowed to use, modify and redistribute this code
+	Credit is not needed, but are appreciated.
+*/
+
 package asthe.states;
 
 import asthe.backend.StateManager;
@@ -49,12 +55,30 @@ class MainMenu extends StateManager {
 		var titleSpr = FlxScrollingText.add(titleTxt, new openfl.geom.Rectangle(0, 2, FlxG.width, titleTxt.height));
 		add(titleSpr);
 		FlxScrollingText.startScrolling(titleSpr);
-
-		var buildTxt = CoolUtil.getProjectInfo("buildNumber");
-		var version:AstheBitmapText = AstheBitmapText.createMonospace(0, 0, "v" + CoolUtil.getProjectInfo('version'), "AbsoluteSystem", Constants.ABSOLUTE_FONT_GLYPHDATA, [8, 8]);
-		if (!StringUtil.isBlank(buildTxt)) { version.text += " " + buildTxt; }
-		version.setPosition(FlxG.width - version.width - 7, FlxG.height - version.height - 2);
+		
+		var version:AstheBitmapText = AstheBitmapText.createMonospace(FlxG.width, FlxG.height, "v" + Constants.ENGINE_VERSION, "AbsoluteSystem", Constants.ABSOLUTE_FONT_GLYPHDATA, [8, 8]);
+		if (!StringUtil.isBlank(Constants.ENGINE_BUILD_NUMBER)) {
+			version.text += " " + Constants.ENGINE_BUILD_NUMBER;
+		}
+		version.x -= (version.width - 7);
+		version.y -= (version.height - 2);
 		add(version);
+
+		/*
+		var commit:AstheBitmapText = AstheBitmapText.createMonospace(FlxG.width, version.y, Constants.GIT_COMMIT_HASH ?? "unknown", "AbsoluteSystem", Constants.ABSOLUTE_FONT_GLYPHDATA, [8, 8]);
+		commit.x -= commit.width;
+		commit.y -= commit.height;
+		add(commit);
+		*/
+
+		trace("ENGINE_TITLE " + Constants.ENGINE_TITLE);
+		trace("ENGINE_DESCRIPTION " + Constants.ENGINE_DESCRIPTION);
+		trace("ENGINE_VERSION " + Constants.ENGINE_VERSION);
+		trace("ENGINE_FILENAME " + Constants.ENGINE_FILENAME);
+		trace("ENGINE_COMPANY " + Constants.ENGINE_COMPANY);
+		trace("ENGINE_COMPANY_URL " + Constants.ENGINE_COMPANY_URL);
+		trace("ENGINE_PACKAGE_NAME " + Constants.ENGINE_PACKAGE_NAME);
+		trace("ENGINE_BUILD_NUMBER " + Constants.ENGINE_BUILD_NUMBER);
 
 		group = new FlxTypedGroup<AstheBitmapText>();
 		add(group);

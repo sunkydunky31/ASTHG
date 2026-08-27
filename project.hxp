@@ -20,13 +20,16 @@ class Project extends HXProject {
 	// ----- GAME SETTINGS ----- //
 
 	/**
-		Name of the project
+		Name of the project  
 		Can be translated on android build (check below)
 	**/
 	inline public static final TITLE = "Another Sonic the Hedgehog Engine";
 
+	/** The description of the project **/
+	inline public static final DESCRIPTION = "Small Sonic the Hedgehog engine made in HaxeFlixel";
+
 	/** Rule: MAJOR.MINOR.BUGFIX-PATCH **/
-	inline public static final VERSION = "1.5.5";
+	inline public static final VERSION = "1.5.6";
 
 	/** Name of the company, or developer **/
 	inline public static final COMPANY = "Sunnydev31";
@@ -262,6 +265,7 @@ class Project extends HXProject {
 		var file = "BUILD.txt";
 		var content =
 		'FILE=$FILE\n'+
+		'DESCRIPTION=$DESCRIPTION\n'+
 		'PACKAGE_NAME=$PACKAGE_NAME\n'+
 		'APP_PATH=${this.app.path}\n'+
 		'IS_WINDOWS=${isWindows()}\n'+
@@ -272,7 +276,7 @@ class Project extends HXProject {
 	}
 
 	function clearAssets() {
-		if (this.command != 'build' && this.command != 'test') return;
+		if (!isBuilding()) return;
 
 		var files = ['assets/', 'manifest/', 'lime.ndll'];
 		if (isWindows()) {
@@ -283,14 +287,13 @@ class Project extends HXProject {
 		}
 		else if (isLinux()) {
 			files.push('$FILE');
-			files.push('$FILE.desktop');
-			files.push('icon.svg');
+			files.push('$PACKAGE_NAME.desktop');
 		}
 
 		final BASE = haxe.io.Path.join([this.app.path, getTarget(), "bin"]);
 
 		if (sys.FileSystem.exists(BASE)) {
-			echo("Cleaning the assets folder...");
+			if (isDebug()) echo("Cleaning the assets folder...");
 			for (i in files) {
 				var path = haxe.io.Path.join([BASE, i]);
 
@@ -301,10 +304,10 @@ class Project extends HXProject {
 			}
 		}
 		else {
-			echo('The path doesn\'t exists! ($BASE)');
+			if(isDebug()) echo("The path doesn't exists! ("+ BASE +")");
 		}
 
-		echo("Done");
+		if(isDebug()) echo("Done");
 	}
 
 	// { region Platform functions

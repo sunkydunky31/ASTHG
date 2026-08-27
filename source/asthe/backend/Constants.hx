@@ -1,12 +1,37 @@
 /*
-	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-08-08
+	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-08-27
 	You are allowed to use, modify and redistribute this code
-	But give credit where credit is due!
+	Credit is not needed, but are appreciated.
 */
 
 package asthe.backend;
 
+import asthe.backend.macro.GitTools;
+
 class Constants {
+
+	// Engine info
+	/**
+		The engine title, used on window titles and as app's name
+	**/
+	public static final ENGINE_TITLE:String = FlxG.stage.application.meta.get("title");
+
+	/**
+		The engine description, used on Linux `.desktop` file
+	**/
+	public static final ENGINE_DESCRIPTION:String = FlxG.stage.application.meta.get("description");
+	public static final ENGINE_VERSION:String = FlxG.stage.application.meta.get("version");
+	public static final ENGINE_FILENAME:String = FlxG.stage.application.meta.get("file");
+	public static final ENGINE_COMPANY:String = FlxG.stage.application.meta.get("company");
+	public static final ENGINE_COMPANY_URL:String = FlxG.stage.application.meta.get("companyUrl");
+	public static final ENGINE_PACKAGE_NAME:String = FlxG.stage.application.meta.get("packageName");
+	public static final ENGINE_BUILD_NUMBER:String = FlxG.stage.application.meta.get("buildNumber");
+
+	// Git
+	@:keep
+	public static final GIT_COMMIT_HASH:String = GitTools.getCommitHash();
+	public static final GIT_REPO_URL:String = "https://github.com/unrealsunnydev/ASTHE";
+
 	// Fonts
 	inline public static final ABSOLUTE_FONT_GLYPHDATA:String =
 		" ☺☻♥♦♣♠●◘◉◙♂♀♪♬☼" +
@@ -23,7 +48,6 @@ class Constants {
 
 	// Characters
 	public static final DEFAULT_CHARACTER:String = "sonic";
-
 	public static final LIFE_ICON:String = "liveIcon";
 
 	/**

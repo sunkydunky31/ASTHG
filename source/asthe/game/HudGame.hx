@@ -1,7 +1,7 @@
 /*
 	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-04-14
 	You are allowed to use, modify and redistribute this code
-	But give credit where credit is due!
+	Credit is not needed, but are appreciated.
 */
 
 package asthe.game;

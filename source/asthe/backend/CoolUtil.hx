@@ -1,12 +1,6 @@
 package asthe.backend;
 
-
 class CoolUtil {
-
-	public static function getProjectInfo(metaIndex:String) {
-		return FlxG.stage.application.meta.get(metaIndex);
-	}
-
 	/**
 		Parses an String and convert it into a Bool
 		@param k

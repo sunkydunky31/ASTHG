@@ -1,7 +1,7 @@
 /*
 	Sunnydev31 - 2026-06-04
 	You are allowed to use, modify and redistribute this code
-	But give credit where credit is due!
+	Credit is not needed, but are appreciated.
 */
 
 package asthe.game;

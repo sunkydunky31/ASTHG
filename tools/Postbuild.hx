@@ -8,6 +8,7 @@ using StringTools;
 class Postbuild {
 	// These options will be updated later.
 	public static var FILE:String = "";
+	public static var DESCRIPTION:String = "";
 	public static var PACKAGE_NAME:String = "";
 	public static var APP_PATH:String = "";
 	public static var IS_WINDOWS:Bool = false;
@@ -49,7 +50,7 @@ class Postbuild {
 		var file = '[Desktop Entry]\n'+
 		'Name=$FILE\n'+
 		'GenericName=$FILE\n'+
-		'Comment=Small Sonic the Hedgehog engine made in HaxeFlixel.\n'+
+		'Comment=$DESCRIPTION.\n'+
 		'Type=Application\n'+
 		'Icon=$PACKAGE_NAME\n'+
 		'Exec=ASTHE/$path/$FILE %f\n'+

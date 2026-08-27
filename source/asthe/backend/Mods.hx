@@ -11,7 +11,7 @@ class Mods {
 	#if REDIRECT_MOD_ROOT "../../../../" + #end // Use the mods folder on project path, not the executable one
 	"mods";
 
-	inline public static final API_VERSION_RULE = ">=1.2.3 <1.5.0";
+	public static final API_VERSION_RULE = ">=" + Constants.ENGINE_VERSION + " <1.7.0";
 
 	public static var cachedMods:Array<ModMetadata> = [];
 

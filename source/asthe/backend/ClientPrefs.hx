@@ -74,7 +74,7 @@ class ClientPrefs {
 	/** @see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/backend/CoolUtil.hx#L161 **/
 	@:access(flixel.util.FlxSave.validate)
 	inline public static function getSavePath():String {
-		return CoolUtil.getProjectInfo('company') #if (flixel < "5.0.0") + "/" + FlxSave.validate(CoolUtil.getProjectInfo('file')) #end;
+		return Constants.ENGINE_COMPANY #if (flixel < "5.0.0") + "/" + FlxSave.validate(Constants.ENGINE_FILENAME) #end;
 
 	}
 

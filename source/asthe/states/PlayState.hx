@@ -1,3 +1,9 @@
+/*
+	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-08-27
+	You are allowed to use, modify and redistribute this code
+	Credit is not needed, but are appreciated.
+*/
+
 package asthe.states;
 
 import asthe.objects.Character;
