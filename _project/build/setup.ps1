@@ -23,7 +23,7 @@
 
 param(
 	[Parameter()]
-	[string]$StayOnMenu = '',
+	[switch]$StayOnMenu,
 
 	[Parameter()]
 	[int]$MenuOption = -1,
@@ -32,7 +32,8 @@ param(
 	[switch]$Transcript
 )
 
-Import-LocalizedData -BindingVariable 'Msg' -ErrorAction SilentlyContinue
+Import-LocalizedData -BindingVariable 'Msg' `
+	-BaseDirectory (Join-Path -Path ".." -ChildPath "locales") -ErrorAction SilentlyContinue
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'util.ps1')
 
 # Change the title of the windows
@@ -43,9 +44,23 @@ if ($Transcript) {
 }
 
 $ProjectPath = (Write-Path -Path $PSScriptRoot, '..', '..' -Resolve)
-
-
 Set-Location $ProjectPath
+
+<#
+	.SYNOPSYS
+	Exits the current PowerShell session.
+	.DESCRIPTION
+	This function exit the current PowerShell section 
+	and stops the transcription if available.
+#>
+function Stop-Session {
+	param([Parameter(Position=0)][int]$ExitCode = 0)
+	if ($Transcript) {
+		Stop-Transcript
+	}
+
+	exit $ExitCode
+}
 
 function Write-Message {
 	param(
@@ -65,13 +80,14 @@ function Write-Message {
 }
 
 # MAIN FUNCTION to call haxelib
-$Haxelib = (Get-Command 'haxelib' -ErrorAction SilentlyContinue)
+$HAXELIB = (Get-Command 'haxelib' -ErrorAction SilentlyContinue)
 [bool]$HasHaxelib = $false
-if ($null -ne $haxelib) {
+if ($null -ne $HAXELIB) {
 	$HasHaxelib = $true
 }
 else {
-	Write-Message ($Msg['Haxe'].NotFound) -Color Red
+	Write-Message ($Msg['HaxelibNotFound']) -Color Red
+	Stop-Session 1
 }
 
 # Path to persist setup options
@@ -177,6 +193,21 @@ function Set-SetupWindows {
 	.OUTPUTS
 	Custom Exception
 #>
+function Set-SetupLinux {
+	& $HAXELIB @('--never', 'run', 'lime', 'setup', 'linux')
+	Set-SetupConfig -Name 'SetupLinux' -Value $true
+}
+
+<#
+	.DESCRIPTION
+	Function to start a Machintosh OS setup
+
+	.NOTES
+	This function are disabled by now
+
+	.OUTPUTS
+	Custom Exception
+#>
 function Set-SetupMacOS {
 	Write-Message ($Msg['NotAvailable'])
 }
@@ -190,7 +221,7 @@ function Set-SetupMacOS {
 	And saves a config entry for this.
 #>
 function Set-SetupAndroid {
-	& $Haxelib @('--never', 'run', 'lime', 'setup', 'android')
+	& $HAXELIB @('--never', 'run', 'lime', 'setup', 'android')
 	Set-SetupConfig -Name SetupAndroid -Value $true
 }
 
@@ -209,18 +240,18 @@ function New-GameSetup {
 	Write-Message ($Msg['Dependencies'].InstallingDependencies.SubText)
 	Set-Pause
 
-	& $Haxelib @('--global', 'install', 'hmm')
+	& $HAXELIB @('--global', 'install', 'hmm')
 	Start-Sleep 2
 
 	Set-Location $ProjectPath
-	& $Haxelib @('--global', 'run', 'hmm', 'setup')
+	& $HAXELIB @('--global', 'run', 'hmm', 'setup')
 	Start-Sleep 2
 
 	& 'hmm' 'install'
 	Set-SetupConfig -Name SetupDone -Value $true
 
 	Start-Sleep 2
-	& $Haxelib @('run', 'lime', 'setup')
+	& $HAXELIB @('run', 'lime', 'setup')
 	Set-Pause
 
 	Remove-RedundantHaxelibs
@@ -335,12 +366,12 @@ function Remove-FullSetup {
 	# This function also remove game builds!
 	if (Get-SetupConfig -Name SetupWindows) {
 		Write-Message ($Msg['RemoveFullSetup'].PlatformWarn.Windows)
-		& $haxelib @('run', 'lime', 'clean', 'windows')
+		& $HAXELIB @('run', 'lime', 'clean', 'windows')
 	}
 
 	if (Get-SetupConfig -Name SetupAndroid) {
 		Write-Message ($Msg['RemoveFullSetup'].PlatformWarn.Android)
-		& $haxelib @('run', 'lime', 'clean', 'android')
+		& $HAXELIB @('run', 'lime', 'clean', 'android')
 	}
 }
 
@@ -349,12 +380,15 @@ do {
 
 	Write-Message ('===== {0} =====' -f $Msg['Menu'].Title)
 	for ($i = 0; $i -lt ($NUM_OPTIONS + 1); $i++) {
-		$text = $Msg['Menu'].Options[$i]
+		$text = ""
 		if (($i -in ('0', '4', '5', '6')) -and (-not $HasHaxelib)) {
 			$text = $Msg['Menu'].NotAvailable
 		}
+		else {
+			$text = $Msg['Menu'].Options[$i]
+		}
 
-		Write-Message ('{0}. {1}' -f ($i), $text)
+		Write-Message ('[{0}] {1}' -f ($i), $text)
 		continue
 	}
 	Write-Message "`n"
@@ -391,8 +425,7 @@ do {
 			if ($HasHaxelib) { Remove-RedundantHaxelibs }
 		}
 		'7' {
-			if ($Transcript) { Stop-Transcript }
-			exit
+			Stop-Session
 		}
 		default {
 			Write-Message ($Msg['Menu'].Error) Red

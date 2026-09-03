@@ -1,6 +1,6 @@
 # Force the user to run on Windows PowerShell, not PowerShell Core
 #requires -PSEdition Desktop -Version 4.0
-Import-LocalizedData -BaseDirectory ".." -FileName "install_pwsh" -BindingVariable "Msg"
+Import-LocalizedData -BaseDirectory "../locales" -FileName "install_pwsh" -BindingVariable "Msg"
 
 # Search for PSCore, if the user already has it installed
 if (Get-Command "pwsh" -ErrorAction SilentlyContinue) {

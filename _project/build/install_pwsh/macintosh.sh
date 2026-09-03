@@ -1,1 +1,16 @@
-#!/usr/bin/env shset -eif command -v pwsh > /dev/null 2>&1; then	echo "PowerShell Core is already installed on your system."	exit 0;fi# Install PowerShell Core on macOS using Homebrewif command -v brew > /dev/null 2>&1; then	brew install --cask powershellelse	echo "Homebrew is not installed. Please install Homebrew first."	exit 1;fi
+#!/usr/bin/env sh
+
+set -e
+
+if command -v pwsh > /dev/null 2>&1; then
+	echo "PowerShell Core is already installed on your system."
+	exit 0;
+fi
+
+# Install PowerShell Core on macOS using Homebrew
+if command -v brew > /dev/null 2>&1; then
+	brew install --cask powershell
+else
+	echo "Homebrew is not installed. Please install Homebrew first."
+	exit 1;
+fi

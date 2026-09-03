@@ -19,7 +19,6 @@ param(
 
 	[Parameter()]
 	[string[]]$BuildFlags
-
 )
 
 # Import translations folders if available
@@ -31,10 +30,10 @@ $Host.UI.RawUI.WindowTitle = $Msg.Title
 Clear-Host
 
 # Checker for Haxelib + Stops running if not found
-$haxelib = (Get-Command 'haxelib' -ErrorAction SilentlyContinue)
+$HAXELIB = (Get-Command 'haxelib' -ErrorAction SilentlyContinue)
 
-if ($null -eq $haxelib) {
-	$haxelib = Join-Path (Read-Host ($Msg['InsertHaxelib'] -Join "`n")) 'haxelib'
+if ($null -eq $HAXELIB) {
+	$HAXELIB = Join-Path (Read-Host ($Msg['InsertHaxelib'] -Join "`n")) 'haxelib'
 }
 
 $hxArgs = @('run', 'lime', $Action, $Platform, "-$BuildType")
@@ -65,6 +64,6 @@ Set-Pause
 Clear-Host
 Write-Host ($Msg.BuildTexts[$Action])
 
-& $haxelib @hxArgs
+& $HAXELIB @hxArgs
 
 Set-Pause

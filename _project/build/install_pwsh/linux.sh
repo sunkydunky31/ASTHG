@@ -13,6 +13,7 @@ if command -v pwsh > /dev/null 2>&1; then
 fi
 
 if [ -f /etc/os-release ]; then
+  # shellcheck disable=SC1091
   . /etc/os-release
   DIST=$ID
   DIST_VER=$VERSION_ID
@@ -40,7 +41,7 @@ case "$DIST" in
 
     $SUDOCMD apk add --no-cache ca-certificates less ncurses-terminfo-base krb5-libs libgcc libintl libssl3 libstdc++ tzdata userspace-rcu zlib icu-libs curl
 
-    apk add -X https://dl-cdn.alpinelinux.org/alpine/edge/main --no-cache lttng-ust openssh-client && curl -L https://github.com/PowerShell/PowerShell/releases/download/v$PSVERSION/powershell-$PSVERSION-linux-musl-x64.tar.gz -o /tmp/powershell.tar.gz
+    apk add -X https://dl-cdn.alpinelinux.org/alpine/edge/main --no-cache lttng-ust openssh-client && curl -L https://github.com/PowerShell/PowerShell/releases/download/v"$PSVERSION"/powershell-"$PSVERSION"-linux-musl-x64.tar.gz -o /tmp/powershell.tar.gz
 
     $SUDOCMD mkdir -p /opt/microsoft/powershell/7
     $SUDOCMD tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
@@ -48,13 +49,13 @@ case "$DIST" in
     $SUDOCMD ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
     ;;
   rhel)
-    if [ ${DIST_VER%.*} -ge 8 ]
+    if [ "${DIST_VER%.*}" -ge 8 ]
       then majorver=8
-    elif [ ${DIST_VER%.*} -ge 9 ]
+    elif [ "${DIST_VER%.*}" -ge 9 ]
       then majorver=9
     fi
 
-    curl -sSL -O https://packages.microsoft.com/config/rhel/$majorver/packages-microsoft-prod.rpm
+    curl -sSL -O https://packages.microsoft.com/config/rhel/"$majorver"/packages-microsoft-prod.rpm
 
     $SUDOCMD rpm -i packages-microsoft-prod.rpm
 
@@ -73,7 +74,7 @@ case "$DIST" in
       $SUDOCMD apt-get install -y wget
     fi
 
-    wget -q https://packages.microsoft.com/config/$DIST/$DIST_VER/packages-microsoft-prod.deb
+    wget -q https://packages.microsoft.com/config/"$DIST"/"$DIST_VER"/packages-microsoft-prod.deb
 
     $SUDOCMD dpkg -i packages-microsoft-prod.deb
     rm packages-microsoft-prod.deb

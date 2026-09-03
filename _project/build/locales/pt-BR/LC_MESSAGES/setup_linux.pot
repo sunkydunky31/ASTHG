@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-03 14:05-0300\n"
+"PO-Revision-Date: 2026-09-03 14:05-0300\n"
+"Last-Translator: UnrealSunnydev\n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "'haxelib' command doesn't exists! Do you have Haxe installed?"
+msgstr "O comando 'haxelib' não existe! Você tem o Haxe instalado?"
+
+msgid "Installing dependencies."
+msgstr "Instalando dependências."
+
+msgid "This might take a few moments depending on your internet speed."
+msgstr "Isso pode levar um tempo dependendo da sua velocidade de internet."
+
+msgid "Removing redundant dependencies."
+msgstr "Removendo dependências redundantes."
+
+msgid "Removing '%s' from '%s'"
+msgstr "Removendo '%s' de '%s'"
+
+msgid "Install dependencies"
+msgstr "Instalar dependências."
+
+msgid "Setup for Linux"
+msgstr "Configurar para Linux"
+
+msgid "Remove redundant libraries"
+msgstr "Remover dependências redundantes"
+
+msgid "ASTHE Setup"
+msgstr "Configuração do ASTHE"
+
+msgid "Choose an option (0/%d): "
+msgstr "Escolha uma Opção (0/%d): "
+
+msgid "Unsupported option, try again!"
+msgstr "Opção não suportada, tente novamente!"

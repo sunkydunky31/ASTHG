@@ -44,10 +44,7 @@
 		}
 	}
 
-	Haxe            = @{
-		NotFound = "Haxelib não foi encontrado! '%HAXEPATH%' e '%NEKO_INSTPATH%' estão registrados no PATH?"
-		GetPath  = 'Por favor, insira a localização da sua pasta HaxeToolkit. (Ex: )'
-	}
+	HaxelibNotFound = 'Comando ''haxelib'' não encontrado! Você tem o Haxe instalado?'
 
 	HXCPP           = @{
 		Building    = 'Compilando HXCPP Dev'
