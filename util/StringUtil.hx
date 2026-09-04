@@ -1,5 +1,12 @@
+/*
+	Sunnydev31 (@unreal.sunnydev) - Last Edition: 2026-08-30
+	You are allowed to use, modify and redistribute this code
+	Credit is not needed, but are appreciated.
+*/
+
 package util;
 
+import util.formatter.HexFormat.HexFormatter;
 #if flixel
 import flixel.util.FlxStringUtil;
 #end
@@ -109,7 +116,40 @@ class StringUtil {
 		#if cs
 		return untyped String.Format(str, values);
 		#else
-		return StringFormat.format(str, values);
+		var f = new StringBuf();
+		var i = 0;
+
+		while ((i = str.indexOf("{", i)) != -1) {
+			var end = str.indexOf("}", i);
+			var content = str.substring(i + 1, end);
+			var modifier = content.indexOf(":");
+
+			var index:Int; // Placeholder index (`{` + index + `}`)
+			var modKey:String = ""; // Placeholder modifier key (`{index:` + modKey + `}`)
+			var modArg:String = ""; // Placeholder modifier argument (`{index:modKey` + modArg + `}`)
+
+			if (modifier == -1) {
+				index = Std.parseInt(content) ?? 0;
+			}
+			else {
+				index = Std.parseInt(content.substring(0, modifier)) ?? 0;
+				modKey = content.substr(modifier + 1, 1).trim();
+				modArg = content.substr(modifier + 2).trim();
+			}
+
+			var formatter:Null<StringFormatter> = switch(modKey.toUpperCase()) {
+				case "X": new util.formatter.HexFormatter();
+				//case "C": new util.formatter.Formatter();
+				default: new StringFormatter();
+			}
+
+			f.addSub(str, 0, i);
+			f.add(formatter.apply(values[index], modArg));
+			str = str.substring(end + 1);
+			i = 0;
+		}
+
+		return f + str;
 		#end
 	}
 
@@ -197,81 +237,5 @@ class StringUtil {
 		}
 
 		return s;
-	}
-}
-
-/**
-	Dedicated class for parsing Placeholders in .NET style
-	format: `{index[:modifier[amount]]}`
-**/
-@:allow(util.StringUtil)
-private class StringFormat {
-	public static function format(str:String, args:Array<Dynamic>):String {
-		var f = new StringBuf();
-		var i = 0;
-
-		while ((i = str.indexOf("{", i)) != -1) {
-			var end = str.indexOf("}", i);
-			var content = str.substring(i + 1, end);
-			var modifier = content.indexOf(":");
-
-			var index:Int;
-			var modV:String = "";
-			var modN:Null<Float> = null;
-
-			if (modifier == -1) {
-				index = Std.parseInt(content);
-			} else {
-				index = Std.parseInt(content.substring(0, modifier));
-				modV = content.substr(modifier + 1, 1).trim();
-				modN = Std.parseFloat(content.substr(modifier + 2));
-			}
-
-			f.addSub(str, 0, i);
-			f.add(modApply(args[index], modV, modN));
-			str = str.substring(end + 1);
-			i = 0;
-		}
-
-		return f + str;
-	}
-
-	/**
-		Applys text formating into placeholders
-		@param v Value to format
-		@param m The modifier to apply
-		@return String
-	**/
-	static function modApply(v:Dynamic, m:String, n:Float):String {
-		if (StringUtil.isBlank(m))
-			return Std.string(v);
-
-		// List of modifiers, add new ones here
-		switch (m.toUpperCase()) {
-			case s if (s.startsWith("X")): // Hex Number (add a number to set the length)
-				if (!Std.isOfType(v, Int) && !Std.isOfType(v, Float)) {
-					trace("Invalid value type for 'HEX' format, expected Int/Float.");
-					return Std.string(v);
-				}
-
-				var digits = (n > 1) ? n : 1;
-				trace('Digits: $digits');
-				var ret:String = Std.isOfType(v, Int) ? StringTools.hex(v, Std.int(digits)) : StringUtil.hexFloat(v, Std.int(digits));
-
-				return (m == "X") ? ret : ret.toLowerCase();
-			case "U": // Uppercase
-				return Std.string(v).toUpperCase();
-			case "L": // Lowercase
-				return Std.string(v).toLowerCase();
-			case "C": // Currency - only if on Flixel
-				#if flixel
-				return FlxStringUtil.formatMoney(Std.parseInt(v));
-				#else
-				trace("Formatting strings into Currency is not supported.");
-				return Std.string(v);
-				#end
-			default:
-				return Std.string(v);
-		}
 	}
 }
