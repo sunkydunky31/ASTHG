@@ -114,7 +114,7 @@ class Project extends HXProject {
 
 		// Polymod has problems with HashLink, also Web/JS too
 		MODS_ALLOWED.set(this, (isTarget("cpp") || !isTarget("neko")));
-		DISCORD_ALLOWED.set(this, false);
+		DISCORD_ALLOWED.set(this, isTarget("cpp"));
 		TRANSLATIONS_ALLOWED.set(this, true);
 
 		clearAssets();
@@ -141,7 +141,7 @@ class Project extends HXProject {
 		addHaxelib("flixel");
 		addHaxelib("flixel-addons");
 
-		addHaxelib("hxdiscord_rpc", (isTarget("cpp") && DISCORD_ALLOWED.get(this)));
+		addHaxelib("hxdiscord_rpc", DISCORD_ALLOWED.get(this));
 		addHaxelib("polymod",       MODS_ALLOWED.get(this));
 		addHaxelib("firetongue",    true); // Do NOT disable this, or all texts will not load
 
@@ -490,7 +490,7 @@ class Project extends HXProject {
 
 		if (p.exitCode() != 0)
 			echo("Building HXCPP Tools has failed! '" + p.stderr.readAll() + "'");
-		
+
 		p.close();
 		Sys.setCwd(back);
 	}

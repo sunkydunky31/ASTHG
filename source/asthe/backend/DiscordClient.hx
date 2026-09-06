@@ -56,7 +56,7 @@ class DiscordClient {
 		discordHandlers.ready        = cpp.Function.fromStaticFunction(onReady);
 		discordHandlers.disconnected = cpp.Function.fromStaticFunction(onDisconnected);
 		discordHandlers.errored      = cpp.Function.fromStaticFunction(onError);
-		Discord.Initialize(clientID, cpp.RawPointer.addressOf(discordHandlers), 1, null);
+		Discord.Initialize(clientID, cpp.RawPointer.addressOf(discordHandlers), 1, "");
 
 		if(!isInitialized) log("Initialized!");
 
@@ -77,18 +77,20 @@ class DiscordClient {
 
 	public static function changePresence(?params:DiscordParameters) {
 		var startTimestamp:Float = 0, endTimestamp:Float = 0;
-		if (params.hasStartTimestamp != null && params.hasStartTimestamp)
-			startTimestamp = Date.now().getTime();
-		if (params.endTimestamp != null && params.endTimestamp > 0)
-			endTimestamp = startTimestamp + params.endTimestamp;
+		if (params != null) {
+			if (params?.hasStartTimestamp == true)
+				startTimestamp = Date.now().getTime();
+			if (params.endTimestamp != null && params.endTimestamp > 0)
+				endTimestamp = startTimestamp + params.endTimestamp;
+		}
 
-		presence.details        = cast(params.details,        Null<String>) ?? "In the Menus";
-		presence.largeImageKey  = cast(params.imageLargeKey,  Null<String>) ?? "icon";
-		presence.largeImageText = cast(params.imageLargeText, Null<String>) ?? "In menus";
-		presence.smallImageKey  = cast(params.imageSmallKey,  Null<String>) ?? "";
-		presence.smallImageText = cast(params.imageSmallText, Null<String>) ?? "";
-		presence.state          = cast(params.state,          Null<String>) ?? "";
-		presence.partyId        = cast(params.partyId,        Null<String>) ?? "";
+		presence.details        = params?.details        ?? "In the Menus";
+		presence.largeImageKey  = params?.imageLargeKey  ?? "icon";
+		presence.largeImageText = params?.imageLargeText ?? "In menus";
+		presence.smallImageKey  = params?.imageSmallKey  ?? "";
+		presence.smallImageText = params?.imageSmallText ?? "";
+		presence.state          = params?.state          ?? "";
+		presence.partyId        = params?.partyId        ?? "";
 
 		// Obtained times are in milliseconds so they are divided so Discord can use it
 		presence.startTimestamp = Std.int(startTimestamp / 1000);
@@ -132,6 +134,6 @@ typedef DiscordParameters = {
 	var ?partyId:String;
 
 	var ?hasStartTimestamp:Bool;
-	var ?endTimestamp:Float
+	var ?endTimestamp:Float;
 }
 #end

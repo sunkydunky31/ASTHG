@@ -2,7 +2,7 @@
 import asthe.backend.ClientPrefs;
 import asthe.backend.Constants;
 import asthe.backend.CoolUtil;
-#if DISCORD_ALLOWED import asthe.backend.Discord; #end
+#if DISCORD_ALLOWED import asthe.backend.DiscordClient; #end
 import asthe.backend.Locale;
 #if MODS_ALLOWED import asthe.backend.Mods; #end
 import asthe.backend.Paths;

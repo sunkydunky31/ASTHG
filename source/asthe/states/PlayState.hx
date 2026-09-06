@@ -33,7 +33,7 @@ class PlayState extends StateManager {
 		DiscordClient.changePresence({
 			details: Locale.getString('playing', "discord"),
 			state: Locale.getString("playing-player", "discord", [player.json.name]),
-			imageSmall.text: player.json.name
+			imageSmallText: player.json.name
 		});
 		#end
 		Paths.clearStoredMemory();
