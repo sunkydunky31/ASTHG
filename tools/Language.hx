@@ -33,8 +33,7 @@ class Language {
 	}
 
 	inline public static function t(key:String, ?replaces:Array<Dynamic>):String {
-		var str = trans.get(key);
-		str ??= key;
+		var str = trans.get(key) ?? key;
 
 		if (replaces != null) {
 			str = str.format(replaces);

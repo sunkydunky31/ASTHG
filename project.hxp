@@ -211,18 +211,29 @@ class Project extends HXProject {
 			addIcon("icon_ouya", "png", [732, 412]);
 		}
 		else if (isLinux() && isBuilding() && !isGitActions()) {
-			var p = Sys.getEnv("HOME") + "/.local/share/icons/hicolor";
+			var p = new sys.io.Process("cat", ["/etc/os-release"]);
+			var dist = p.stdout.readAll().toString();
+			p.close();
 
-			if (!sys.FileSystem.exists(p + "/scalable/apps"))
-				sys.FileSystem.createDirectory(sys.FileSystem.fullPath(p + "/scalable/apps"));
-			
-			if (!sys.FileSystem.exists(p + "/symbolic/apps"))
-				sys.FileSystem.createDirectory(sys.FileSystem.fullPath(p + "/symbolic/apps"));
+			dist = dist.split("\n")[6].substr(3);
 
-			Sys.command("cp", ["./_project/icons/icon.svg", p + '/scalable/apps/$PACKAGE_NAME.svg']);
-			Sys.command("cp", ["./_project/icons/icon_monochrome.svg", p + '/symbolic/apps/$PACKAGE_NAME.svg']);
+			if (isDebug()) echo("Distribution is: '" + dist + "'");
+			switch (dist.toLowerCase()) {
+				case "ubuntu" | "mint" | "zorin":
+					var p = haxe.io.Path.join([Sys.getEnv("HOME"), ".local","share","icons","hicolor"]);
 
-			Sys.command("gtk-update-icon-cache", ["-f", "-t", p]);
+					if (!sys.FileSystem.exists(p + "/scalable/apps"))
+						sys.FileSystem.createDirectory(sys.FileSystem.fullPath(p + "/scalable/apps"));
+
+					if (!sys.FileSystem.exists(p + "/symbolic/apps"))
+						sys.FileSystem.createDirectory(sys.FileSystem.fullPath(p + "/symbolic/apps"));
+
+					Sys.command("cp", ["./_project/icons/icon.svg", p + '/scalable/apps/$PACKAGE_NAME.svg']);
+					Sys.command("cp", ["./_project/icons/icon_monochrome.svg", p + '/symbolic/apps/$PACKAGE_NAME.svg']);
+
+					Sys.command("gtk-update-icon-cache", ["-f", "-t", p]);
+				case _: // Only tested on Linux Mint & Zorin OS.
+			}
 		}
 		else {
 			addIcon("icon", "png", [8], true);
@@ -235,6 +246,7 @@ class Project extends HXProject {
 		displayProject();
 
 		exportBuildSpecs();
+		buildHXCPP();
 	}
 
 	function displayProject():Void {
@@ -378,6 +390,7 @@ class Project extends HXProject {
 	function isDebug():Bool return this.debug;
 	function isFinal():Bool return this.targetFlags.exists("final");
 
+	// { region Library helpers
 	function addHaxelib(name:String, ?condition:Null<Bool>, ?version:Null<String>) {
 		var enabled = condition ?? true;
 
@@ -387,6 +400,22 @@ class Project extends HXProject {
 
 		this.hxlibs.push({name: name, enabled: enabled});
 	}
+
+	function getHaxelibPath(lib:String):String {
+		var p = new sys.io.Process("haxelib", ["path", lib]);
+		var a:String = "";
+
+		if (p.exitCode() == 0)
+			a = p.stdout.readLine().toString();
+		else
+			echo("Error when getting lib path from '"+ lib +"'! (" + p.stderr.readAll() + ")");
+
+		p.close();
+
+		return a;
+	}
+	// } endregion
+
 
 	/**
 		Adds an icon for the application.
@@ -416,11 +445,11 @@ class Project extends HXProject {
 		@param value The text to print
 		@param debug If true, only prints if the build flag "debug" is enabled
 	**/
-	public function echo(value:Dynamic, ?infos:haxe.PosInfos):Void {
+	public function echo(value:Dynamic, infos:haxe.Rest<Dynamic>):Void {
 		var str = Std.string(value);
 
-		if (infos?.customParams != null)
-			str = str.format(infos.customParams);
+		if (!ArrayUtil.isBlank(infos.toArray()))
+			str = str.format(infos.toArray());
 
 		if (this.command != "display")
 			Sys.println(str);
@@ -447,6 +476,24 @@ class Project extends HXProject {
 			echo(name + padding + value);
 	}
 	// } endregion
+	
+	function buildHXCPP():Void {
+		final back = Sys.getCwd();
+		final libpath = getHaxelibPath("hxcpp");
+		final path = haxe.io.Path.join([libpath, "tools", "hxcpp"]);
+
+		if (sys.FileSystem.exists(haxe.io.Path.join([libpath, "hxcpp.n"])))
+			return; // We don't need to compile it again.
+
+		Sys.setCwd(path);
+		var p = new sys.io.Process("haxe", ["compile.hxml"]);
+
+		if (p.exitCode() != 0)
+			echo("Building HXCPP Tools has failed! '" + p.stderr.readAll() + "'");
+		
+		p.close();
+		Sys.setCwd(back);
+	}
 }
 
 /**
