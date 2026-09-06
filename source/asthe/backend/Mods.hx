@@ -1,9 +1,6 @@
 package asthe.backend;
 import polymod.Polymod;
-import polymod.Polymod.PolymodErrorCode;
-import polymod.PolymodConfig;
 import polymod.Polymod.Framework;
-import polymod.PolymodAssets.PolymodAssetType;
 
 class Mods {
 	/** Defines the path to `mods` folder. **/
@@ -11,7 +8,14 @@ class Mods {
 	#if REDIRECT_MOD_ROOT "../../../../" + #end // Use the mods folder on project path, not the executable one
 	"mods";
 
-	public static final API_VERSION_RULE = ">=" + Constants.ENGINE_VERSION + " <1.7.0";
+	/**
+		Defines the ruleset of witch minimun & maximum versions of the engine are supported for mods.
+
+		Remember to update when changing the engine version!
+
+		Current values: `1.5.6 - 1.7.0`
+	**/
+	public static final API_VERSION_RULE = ">=1.5.6 <1.7.0";
 
 	public static var cachedMods:Array<ModMetadata> = [];
 
@@ -44,7 +48,7 @@ class Mods {
 		log("Loading complete! No mods was loaded.");
 
 		for (num => i in loadedMods)
-			log("{0}. {1} v{2} - {3}".format([num + 1, i.title, i.modVersion, i.id]));
+			log("{0}. {1} v{2} - {3}".format(num + 1, i.title, i.modVersion, i.id));
 	}
 
 	public static function getAll():Array<ModMetadata> {
@@ -105,8 +109,6 @@ class Mods {
 				error('Failed to merge file! ${e.message}');
 			case ASSET_APPEND_FAILED:
 				var text:String = e.message;
-				var fileId:String = text.substring(text.indexOf("(") + 1, text.indexOf(")"));
-				var fileExt:String = text.substring(text.lastIndexOf("(") + 1, text.lastIndexOf(")"));
 				error('Failed to append file! ${e.message}');
 
 			// Script parsing

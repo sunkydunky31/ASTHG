@@ -74,8 +74,12 @@ class ClientPrefs {
 	/** @see https://github.com/ShadowMario/FNF-PsychEngine/blob/main/source/backend/CoolUtil.hx#L161 **/
 	@:access(flixel.util.FlxSave.validate)
 	inline public static function getSavePath():String {
-		return Constants.ENGINE_COMPANY #if (flixel < "5.0.0") + "/" + FlxSave.validate(Constants.ENGINE_FILENAME) #end;
+		var path = flixel.FlxG.stage.application.meta.get("company");
+		#if (flixel < "5.0.0")
+		path += "/" + FlxSave.validate(flixel.FlxG.stage.application.meta.get("file"));
+		#end
 
+		return path;
 	}
 
 	public static function resetKeys(controller:Null<Bool> = null) {

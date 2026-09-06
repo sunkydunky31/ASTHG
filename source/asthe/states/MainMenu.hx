@@ -55,30 +55,22 @@ class MainMenu extends StateManager {
 		var titleSpr = FlxScrollingText.add(titleTxt, new openfl.geom.Rectangle(0, 2, FlxG.width, titleTxt.height));
 		add(titleSpr);
 		FlxScrollingText.startScrolling(titleSpr);
-		
-		var version:AstheBitmapText = AstheBitmapText.createMonospace(FlxG.width, FlxG.height, "v" + Constants.ENGINE_VERSION, "AbsoluteSystem", Constants.ABSOLUTE_FONT_GLYPHDATA, [8, 8]);
-		if (!StringUtil.isBlank(Constants.ENGINE_BUILD_NUMBER)) {
-			version.text += " " + Constants.ENGINE_BUILD_NUMBER;
+
+		var version:AstheBitmapText = AstheBitmapText.createMonospace(FlxG.width, FlxG.height, "v" + FlxG.stage.application.meta.get("version"),
+			"AbsoluteSystem", Constants.ABSOLUTE_FONT_GLYPHDATA, [8, 8]);
+
+		final buildNumber = flixel.FlxG.stage.application.meta.get("buildNumber");
+		if (!StringUtil.isBlank(buildNumber)) {
+			version.text += " " + buildNumber;
 		}
-		version.x -= (version.width - 7);
-		version.y -= (version.height - 2);
+		version.x -= (version.width + 7);
+		version.y -= (version.height + 2);
 		add(version);
 
-		/*
-		var commit:AstheBitmapText = AstheBitmapText.createMonospace(FlxG.width, version.y, Constants.GIT_COMMIT_HASH ?? "unknown", "AbsoluteSystem", Constants.ABSOLUTE_FONT_GLYPHDATA, [8, 8]);
-		commit.x -= commit.width;
+		var commit:AstheBitmapText = AstheBitmapText.createMonospace(FlxG.width, version.y, Constants.GIT_COMMIT_HASH, "AbsoluteSystem", Constants.ABSOLUTE_FONT_GLYPHDATA, [8, 8]);
+		commit.x -= (commit.width + 7);
 		commit.y -= commit.height;
 		add(commit);
-		*/
-
-		trace("ENGINE_TITLE " + Constants.ENGINE_TITLE);
-		trace("ENGINE_DESCRIPTION " + Constants.ENGINE_DESCRIPTION);
-		trace("ENGINE_VERSION " + Constants.ENGINE_VERSION);
-		trace("ENGINE_FILENAME " + Constants.ENGINE_FILENAME);
-		trace("ENGINE_COMPANY " + Constants.ENGINE_COMPANY);
-		trace("ENGINE_COMPANY_URL " + Constants.ENGINE_COMPANY_URL);
-		trace("ENGINE_PACKAGE_NAME " + Constants.ENGINE_PACKAGE_NAME);
-		trace("ENGINE_BUILD_NUMBER " + Constants.ENGINE_BUILD_NUMBER);
 
 		group = new FlxTypedGroup<AstheBitmapText>();
 		add(group);

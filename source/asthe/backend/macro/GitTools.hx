@@ -6,19 +6,17 @@
 
 package asthe.backend.macro;
 
-import haxe.macro.Expr;
 import haxe.macro.Context;
 
 class GitTools {
-	static function main() {
-		trace("Haxe is great!");
-	}
+	public static var commitHash(get,never):String;
+	static function get_commitHash() return getCommitHash();
 
 	/**
 		Gets the current commit hash from Git
 		@return String
 	**/
-	public static macro function getCommitHash():Expr.ExprOf<String> {
+	public static macro function getCommitHash():haxe.macro.Expr.ExprOf<String> {
 		#if display
 		return macro $v{"unknown"};
 		#else

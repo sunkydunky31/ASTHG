@@ -200,7 +200,7 @@ private class ModEntry extends FlxSpriteGroup {
 
 		if (meta != null) {
 			this.meta = meta;
-			this.compatible = (meta.apiVersion == Constants.ENGINE_VERSION);
+			this.compatible = (meta.apiVersion == flixel.FlxG.stage.application.meta.get("version"));
 
 			trace("Loading mod icon... (" + meta.id + ")");
 			if (meta.icon != null) {
