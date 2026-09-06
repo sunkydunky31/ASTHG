@@ -10,7 +10,8 @@ package util;
 	Utiliy class dedicated to formatting strings
 **/
 class StringFormatter {
-	public function new() {}
+	public var key:String = "";
+	public function new(key:String) { this.key = key; }
 
 	/**
 		Apply the string formatting
@@ -18,7 +19,7 @@ class StringFormatter {
 		@param arg Optional arguments to use
 		@return Null<String>
 	**/
-	public function apply(value:String, ?arg:String):Null<String> {
-		return value;
+	public function apply(value:Null<Dynamic>, ?arg:String):String {
+		return Std.string(value);
 	}
 }

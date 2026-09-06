@@ -54,7 +54,7 @@ class NumberOption extends Option<Float> {
 		if (percentageMode) v *= 100;
 
 		// Format our value
-		var fm = display.format([Std.string(v)]);
+		var fm = display.format(Std.string(v));
 		if (percentageMode && !fm.contains("%")) fm += "%";
 
 		return fm;

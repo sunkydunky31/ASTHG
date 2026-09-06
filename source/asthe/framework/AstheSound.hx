@@ -55,7 +55,7 @@ class AstheSound extends FlxSound {
 			}
 		}
 		else
-			throw "The tag file doesn't exists! (music/{0}.xml)".format([sound]);
+			throw "The tag file doesn't exists! (music/{0}.xml)".format(sound);
 
 		var looped:Bool = (getTag(TagElements.LOOP) ?? false) #if (mobile && android) ||
 		(getTag(TagElements.ANDROID_LOOP) ?? false) #end;

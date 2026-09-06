@@ -6,7 +6,7 @@
 
 package util;
 
-import util.formatter.HexFormat.HexFormatter;
+import util.formatter.HexFormatter;
 #if flixel
 import flixel.util.FlxStringUtil;
 #end
@@ -73,8 +73,8 @@ class StringUtil {
 		@param s The string to check
 		@return Bool
 	**/
-	inline public static function isBlank<T>(s:String):Bool {
-		return @:nullSafety(Off) (s == null || s.trim().length <= 0); // Depending on target, we can get -1
+	inline public static function isBlank<T:Null<String>>(s:T):Bool {
+		return @:nullSafety(Off) (s == null || s.trim().length <= 0 || Std.string(s) == "null"); // Depending on target, we can get -1
 	}
 
 	/**
@@ -95,7 +95,7 @@ class StringUtil {
 
 		class Main {
 			public static function main()
-				trace("Gotten color: #{0:x}".format([0xFFFF00]));
+				trace("Gotten color: #{0:x}".format(0xFFFF00));
 				//Returns: "Gotten color: #ffff00"
 				// It's the same as `trace("Gotten color: #" + StringTools.hex(0xFFFF00)`, but with support to Float type.
 		}
@@ -105,17 +105,17 @@ class StringUtil {
 		@param values If a placeholder is found, replace it with the value in this parameter
 		@return Bool
 	**/
-	public static function format(str:String, values:Array<Dynamic>):String {
+	public static function format(str:String, values:haxe.Rest<Dynamic>):String {
 		// HOLY SHIT, I LOVED MAKING THIS FUNCTIONAL!!! YAAYY!
 
 		if (isBlank(str))
-			throw "The String is null/empty to format it!";
-		else if (ArrayUtil.isBlank(values))
-			throw "`values` parameter is null/empty! Did you forget to insert a value in here?";
+			throw "The String is blank to format it!";
+		else if (ArrayUtil.isBlank(values.toArray()))
+			throw "'values' parameter is blank! Did you forget to insert a value in here?";
 
 		#if cs
 		return untyped String.Format(str, values);
-		#else
+		#else // Parse placeholders here
 		var f = new StringBuf();
 		var i = 0;
 
@@ -124,9 +124,9 @@ class StringUtil {
 			var content = str.substring(i + 1, end);
 			var modifier = content.indexOf(":");
 
-			var index:Int; // Placeholder index (`{` + index + `}`)
-			var modKey:String = ""; // Placeholder modifier key (`{index:` + modKey + `}`)
-			var modArg:String = ""; // Placeholder modifier argument (`{index:modKey` + modArg + `}`)
+			var index:Int; // Placeholder index (`{index}`)
+			var modKey:String = ""; // Placeholder modifier key (`{index:modKey}`)
+			var modArg:String = ""; // Placeholder modifier argument (`{index:modKey` + modArg}`)
 
 			if (modifier == -1) {
 				index = Std.parseInt(content) ?? 0;
@@ -137,10 +137,12 @@ class StringUtil {
 				modArg = content.substr(modifier + 2).trim();
 			}
 
-			var formatter:Null<StringFormatter> = switch(modKey.toUpperCase()) {
-				case "X": new util.formatter.HexFormatter();
+			// Polymorphism: Add all formatters here to return the formatted string!
+			var formatter:StringFormatter = switch(modKey) {
+				case "X" | "x": new util.formatter.HexFormatter(modKey);
+				case "U" | "u": new util.formatter.CaseFormatter(modKey);
 				//case "C": new util.formatter.Formatter();
-				default: new StringFormatter();
+				default: new StringFormatter(modKey);
 			}
 
 			f.addSub(str, 0, i);
@@ -182,6 +184,7 @@ class StringUtil {
 
 	/**
 		Formats a `Float` into `Hex` values
+
 		Very similar with `StringTools.hex`
 		@param n The Float to parse
 		@param digits How many digits right to pad.
@@ -213,7 +216,7 @@ class StringUtil {
 	**/
 	public static function replaceMulti(s:String, sub:Array<String>, by:Array<String>):String {
 		if (by.length != sub.length)
-			throw "`by` argument is not the same length as `sub`.";
+			throw "'by' argument is not the same length as 'sub'.";
 
 		for (i in 0...sub.length) {
 			s = s.replace(sub[i], by[i]);
@@ -223,7 +226,17 @@ class StringUtil {
 	}
 
 	/**
-		Function to get the longest String from a list of Strings
+		Function to get the first longest String from a list of Strings
+
+		EXAMPLE:
+		```haxe
+		var long = StringUtil.getLongest(["the", "longest", "string"]);
+		trace(long) // -> longest
+
+		var b = StringUtil.getLongest(["Haxe", "OpenFL", "Flixel"]);
+		trace(b) // -> OpenFL, because its the first longest string
+		```
+
 		@param a The list of Strings to use
 		@return String
 	**/

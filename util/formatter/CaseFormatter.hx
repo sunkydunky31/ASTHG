@@ -7,14 +7,17 @@
 package util.formatter;
 
 /**
-	Base class used to create more formatters
-
-	Ignore this class, until you want to add more of them.
+	Formats the string to `UPPERCASE` or `lowercase`
 **/
-class Formatter extends util.StringFormatter {
+class CaseFormatter extends util.StringFormatter {
 	public function new(key:String) { super(key); }
 
 	override public function apply(v:Null<Dynamic>, ?arg:String = null):String {
-		return v;
+		v = Std.string(v);
+
+		if (util.StringUtil.isBlank(v))
+			throw new haxe.Exception("The value to format is blank!");
+
+		return (key == "U") ? v : v.toLowerCase();
 	}
 }
