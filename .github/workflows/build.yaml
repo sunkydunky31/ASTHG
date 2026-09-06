@@ -68,13 +68,15 @@ jobs:
           haxelib --global install hmm --quiet
           haxelib --global run hmm setup
           haxelib --global run hmm install
-      - name: "Compile HXCPP" # Required since we're using FunkinCrew version...
-        run: |
-          cd .haxelib/hxcpp/git/tools/hxcpp
-          haxe compile.hxml
-          cd ../../../../..
-      - name: "Build the Game (${{github.event.inputs.build-type}})"
-        run: haxelib run lime build cpp ${{ github.event.inputs.build-type == 'debug' && '-debug' || (github.event.inputs.build-type == 'final' && '-final' || '') }} # We can't use: run, -watch, test; because it's a online VM, not a local one
+      - name: "Build the Game (Debug)"
+        if: ${{ github.event.inputs.build-type == 'release' }}
+        run: haxelib run lime build cpp -debug
+      - name: "Build the Game (Debug)"
+        if: ${{ github.event.inputs.build-type == 'debug' || github.event.inputs.build-type == '' }}
+        run: haxelib run lime build cpp -debug
+      - name: "Build the Game (Final)"
+        if: ${{ github.event.inputs.build-type == 'final'}}
+        run: haxelib run lime build cpp -final
       - name: "Upload Build Artifacts"
         uses: actions/upload-artifact@v6
         with:
