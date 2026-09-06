@@ -10,17 +10,19 @@ class HexFormatter extends StringFormatter {
 	public function new(key:String) { super(key); }
 
 	override public function apply(v:Null<Dynamic>, ?arg:String = null):String {
-		if (util.StringUtil.isBlank(Std.string(v)))
-			throw new haxe.Exception("The value to format is blank!");
+		if (v == null)
+			throw new haxe.Exception("The value to format is null!");
 
 		var padding = Std.parseInt(arg) ?? 0;
 
+		// The gotten value
 		var got = "";
 		if (v is Int) {
-			var r = Std.int(v);
+			var r:Int = v;
 			got = StringTools.hex(r, padding);
 		}
 		else if (v is Float) {
+			var r:Float = v;
 			got = StringUtil.hexFloat(v, padding);
 		}
 		else {
