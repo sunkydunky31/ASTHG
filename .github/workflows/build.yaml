@@ -68,7 +68,7 @@ jobs:
           haxelib --global install hmm --quiet
           haxelib --global run hmm setup
           haxelib --global run hmm install
-      - name: "Build the Game (Debug)"
+      - name: "Build the Game (Release)"
         if: ${{ github.event.inputs.build-type == 'release' }}
         run: haxelib run lime build cpp -debug
       - name: "Build the Game (Debug)"
@@ -77,8 +77,21 @@ jobs:
       - name: "Build the Game (Final)"
         if: ${{ github.event.inputs.build-type == 'final'}}
         run: haxelib run lime build cpp -final
-      - name: "Upload Build Artifacts"
+      - name: "Upload Build Artifacts (Release)"
+        if: ${{ github.event.inputs.build-type == 'release' }}
         uses: actions/upload-artifact@v6
         with:
-          name: ${{ format('ASTHE ({0}) - {1}', (github.event.inputs.build-type), runner.os) }}
-          path: ${{ format('export/{0}/{1}/bin', github.event.inputs.build-type, matrix.target) }}
+          name: 'ASTHE (Release) - ${{ runner.os }}'
+          path: 'export/release/${{ matrix.target }}/bin'
+      - name: "Upload Build Artifacts (Debug)"
+        if: ${{ github.event.inputs.build-type == 'debug' || github.event.inputs.build-type == '' }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: 'ASTHE (Debug) - ${{ runner.os }}'
+          path: 'export/debug/${{ matrix.target }}/bin'
+      - name: "Upload Build Artifacts (Final)"
+        if: ${{ github.event.inputs.build-type == 'final' }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: 'ASTHE (Final) - ${{ runner.os }}'
+          path: 'export/final/${{ matrix.target }}/bin'
